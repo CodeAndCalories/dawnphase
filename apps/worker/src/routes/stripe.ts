@@ -29,7 +29,7 @@ stripe.post("/checkout", async (c) => {
       "line_items[0][quantity]": "1",
       // 7-day trial — card is required but not charged until day 8
       "subscription_data[trial_period_days]": String(TRIAL_DAYS),
-      success_url: `${appUrl}/dashboard?trial=started`,
+      success_url: `${appUrl}/dashboard?checkout=success`,
       cancel_url: `${appUrl}/`,
       "metadata[user_id]": userId,
       allow_promotion_codes: "true",

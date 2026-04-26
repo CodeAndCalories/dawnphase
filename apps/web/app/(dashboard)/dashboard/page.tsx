@@ -80,7 +80,7 @@ function getLast7Days(): string[] {
 
 export default function DashboardPage() {
   // ── Auth + subscription gate ────────────────────────────────────────────────
-  const { user, loading: authLoading, redirecting } = useRequireSubscription();
+  const { user, loading: authLoading, redirecting, activating, statusMessage } = useRequireSubscription();
 
   // ── Page data ───────────────────────────────────────────────────────────────
   const [cycles,      setCycles]      = useState<Cycle[]>([]);
@@ -122,8 +122,8 @@ export default function DashboardPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
-        {redirecting && (
-          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        {statusMessage && (
+          <p className="text-sm text-[#8C6B5A]">{statusMessage}</p>
         )}
       </div>
     );
@@ -158,6 +158,19 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* Activation banner — shown when webhook hasn't fired within 10 s */}
+      {activating && (
+        <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
+          <span>⏳ Your account is being activated — this usually takes a few seconds.</span>
+          <button
+            onClick={() => window.location.reload()}
+            className="shrink-0 font-medium underline hover:no-underline"
+          >
+            Refresh
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
