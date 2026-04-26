@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "lucide-react";
 
 // ─── shared primitives ────────────────────────────────────────────────────────
@@ -39,8 +40,11 @@ function Nav() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5">
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
         {/* Logo */}
-        <a href="/" className="font-display text-lg font-bold text-dawn-charcoal tracking-tight shrink-0">
-          Dawn Phase
+        <a href="/" className="flex items-center gap-2.5 shrink-0">
+          <Image src="/logo.png" alt="Dawn Phase" width={36} height={36} className="rounded-lg" />
+          <span className="font-display text-lg font-bold text-dawn-charcoal tracking-tight">
+            Dawn Phase
+          </span>
         </a>
 
         {/* Centre links */}

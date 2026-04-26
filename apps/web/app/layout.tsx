@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Dawn Phase — Know Your Cycle. Own Your Health.",
+    default: "Dawn Phase — Know your cycle. Own your health.",
     template: "%s | Dawn Phase",
   },
   description:
@@ -24,10 +24,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "https://www.dawnphase.com"
   ),
+  icons: {
+    icon: [
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/favicon-180.png",
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
-    title: "Dawn Phase — Know Your Cycle. Own Your Health.",
-    description:
-      "Cycle & perimenopause tracking built for women who want to understand their hormones — not just count days.",
+    title: "Dawn Phase — Know your cycle. Own your health.",
+    description: "Privacy-first cycle and perimenopause tracker.",
     url: "https://www.dawnphase.com",
     siteName: "Dawn Phase",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -35,9 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dawn Phase — Know Your Cycle. Own Your Health.",
-    description:
-      "Cycle & perimenopause tracking built for women who want to understand their hormones.",
+    title: "Dawn Phase — Know your cycle. Own your health.",
+    description: "Privacy-first cycle and perimenopause tracker.",
     images: ["/og-image.png"],
   },
 };
