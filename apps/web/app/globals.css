@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-geist-sans: "Geist", system-ui, sans-serif;
+    --font-geist-mono: "Geist Mono", monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+  }
+}
+
+@layer utilities {
+  .dawn-gradient {
+    background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 40%, #fff7ed 100%);
+  }
+
+  .dawn-hero-gradient {
+    background: linear-gradient(135deg, #4a044e 0%, #7c3aed 50%, #db2777 100%);
+  }
+}

@@ -1,0 +1,104 @@
+import { Hono } from "hono";
+import { z } from "zod";
+import { zValidator } from "@hono/zod-validator";
+import type { Env, User } from "../types";
+import { dbFirst, dbRun, newId } from "../lib/db";
+import { signJWT, verifyJWT } from "../lib/jwt";
+import { sendEmail, welcomeEmail } from "../lib/email";
+
+const auth = new Hono<{ Bindings: Env }>();
+
+const signupSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+  name: z.string().min(1),
+});
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+async function hashPassword(password: string): Promise<string> {
+  const data = new TextEncoder().encode(password);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+auth.post("/signup", zValidator("json", signupSchema), async (c) => {
+  const { email, password, name } = c.req.valid("json");
+
+  const existing = await dbFirst<User>(c.env.DB, "SELECT id FROM users WHERE email = ?", [email]);
+  if (existing) {
+    return c.json({ message: "Email already in use" }, 409);
+  }
+
+  const id = newId();
+  const passwordHash = await hashPassword(password);
+
+  await dbRun(c.env.DB,
+    "INSERT INTO users (id, email, name, password_hash, plan, cycle_length, period_length, created_at) VALUES (?, ?, ?, ?, 'free', 28, 5, datetime('now'))",
+    [id, email, name, passwordHash]
+  );
+
+  const token = await signJWT({ sub: id, email, plan: "free" }, c.env.JWT_SECRET);
+
+  // Fire-and-forget welcome email
+  sendEmail(c.env.RESEND_API_KEY, {
+    to: email,
+    subject: "Welcome to Dawn Phase!",
+    html: welcomeEmail(name),
+  }).catch(() => {});
+
+  return c.json({ token, user: { id, email, name, plan: "free" } }, 201);
+});
+
+auth.post("/login", zValidator("json", loginSchema), async (c) => {
+  const { email, password } = c.req.valid("json");
+
+  const user = await dbFirst<User>(c.env.DB, "SELECT * FROM users WHERE email = ?", [email]);
+  if (!user) {
+    return c.json({ message: "Invalid email or password" }, 401);
+  }
+
+  const passwordHash = await hashPassword(password);
+  if (passwordHash !== user.password_hash) {
+    return c.json({ message: "Invalid email or password" }, 401);
+  }
+
+  const token = await signJWT(
+    { sub: user.id, email: user.email, plan: user.plan },
+    c.env.JWT_SECRET
+  );
+
+  return c.json({
+    token,
+    user: { id: user.id, email: user.email, name: user.name, plan: user.plan },
+  });
+});
+
+auth.get("/me", async (c) => {
+  const authorization = c.req.header("Authorization");
+  if (!authorization?.startsWith("Bearer ")) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+
+  const token = authorization.slice(7);
+  const payload = await verifyJWT(token, c.env.JWT_SECRET);
+  if (!payload) {
+    return c.json({ message: "Invalid or expired token" }, 401);
+  }
+
+  const user = await dbFirst<User>(
+    c.env.DB,
+    "SELECT id, email, name, plan, cycle_length, period_length, created_at FROM users WHERE id = ?",
+    [payload.sub]
+  );
+
+  if (!user) return c.json({ message: "User not found" }, 404);
+  return c.json({ user });
+});
+
+export default auth;

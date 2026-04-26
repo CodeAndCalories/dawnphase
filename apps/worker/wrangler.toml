@@ -1,0 +1,28 @@
+name = "dawnphase-worker"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "production"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dawnphase-db"
+database_id = "YOUR_D1_DATABASE_ID"   # replace after: wrangler d1 create dawnphase-db
+
+[env.development]
+name = "dawnphase-worker-dev"
+[env.development.vars]
+ENVIRONMENT = "development"
+
+[env.staging]
+name = "dawnphase-worker-staging"
+[env.staging.vars]
+ENVIRONMENT = "staging"
+
+# Secrets set via: wrangler secret put SECRET_NAME
+# JWT_SECRET
+# RESEND_API_KEY
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET

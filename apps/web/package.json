@@ -1,0 +1,39 @@
+{
+  "name": "@dawnphase/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "build:pages": "npx @cloudflare/next-on-pages",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "pages:dev": "wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+  },
+  "dependencies": {
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@cloudflare/next-on-pages": "^1.13.6",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0",
+    "date-fns": "^4.1.0",
+    "recharts": "^2.15.0",
+    "lucide-react": "^0.487.0",
+    "react-hook-form": "^7.55.0",
+    "zod": "^3.24.2",
+    "@hookform/resolvers": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "@tailwindcss/postcss": "^4.1.4",
+    "tailwindcss": "^4.1.4",
+    "wrangler": "^4.9.1"
+  }
+}

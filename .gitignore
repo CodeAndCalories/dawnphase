@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment — never commit real secrets
+.env
+.env.local
+.dev.vars
+
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel/
+
+# Cloudflare
+.wrangler/
+
+# Build output
+dist/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Claude Code local settings
+.claude/
