@@ -161,7 +161,7 @@ export default function DashboardPage() {
       {/* Activation banner — shown when webhook hasn't fired within 10 s */}
       {activating && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
-          <span>⏳ Your account is being activated — this usually takes a few seconds.</span>
+          <span>✓ Payment received. Finishing setup… this usually takes a few seconds.</span>
           <button
             onClick={() => window.location.reload()}
             className="shrink-0 font-medium underline hover:no-underline"

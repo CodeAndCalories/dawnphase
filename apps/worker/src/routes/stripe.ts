@@ -17,6 +17,16 @@ stripe.post("/checkout", async (c) => {
   const userId = c.get("userId");
   const appUrl = c.env.APP_URL ?? "https://www.dawnphase.com";
 
+  // Fetch user email so we can pass it to Stripe for fallback matching.
+  const userRecord = await dbFirst<{ id: string; email: string }>(
+    c.env.DB,
+    "SELECT id, email FROM users WHERE id = ?",
+    [userId]
+  );
+  if (!userRecord) {
+    return c.json({ message: "User not found" }, 404);
+  }
+
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
     headers: {
@@ -31,7 +41,11 @@ stripe.post("/checkout", async (c) => {
       "subscription_data[trial_period_days]": String(TRIAL_DAYS),
       success_url: `${appUrl}/dashboard?checkout=success`,
       cancel_url: `${appUrl}/`,
-      "metadata[user_id]": userId,
+      // Three ways for the webhook to find the user — metadata, reference
+      // id, and email — so a stale or missing field never silently drops updates.
+      "metadata[user_id]":   userId,
+      client_reference_id:   userId,
+      customer_email:        userRecord.email,
       allow_promotion_codes: "true",
     }),
   });
@@ -120,20 +134,44 @@ stripe.post("/webhook", async (c) => {
   // transition to `active` once the trial ends and payment succeeds.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    const userId = (session.metadata as Record<string, string>)?.user_id;
     const customerId = session.customer as string;
 
-    if (userId && customerId) {
-      await dbRun(
-        c.env.DB,
-        `UPDATE users
-         SET subscription_status = 'trialing',
-             stripe_customer_id  = ?
-         WHERE id = ?`,
-        [customerId, userId]
-      );
-      console.log(`User ${userId} → trialing (customer ${customerId})`);
+    // Resolve userId via three fallbacks so a stale/missing field never
+    // silently drops the update.
+    let userId =
+      (session.metadata as Record<string, string> | null)?.user_id ||
+      (session.client_reference_id as string | null);
+
+    if (!userId) {
+      const email =
+        (session.customer_details as Record<string, string> | null)?.email ||
+        (session.customer_email as string | null);
+      if (email) {
+        const found = await dbFirst<{ id: string }>(
+          c.env.DB,
+          "SELECT id FROM users WHERE email = ?",
+          [email]
+        );
+        if (found) userId = found.id;
+      }
     }
+
+    if (!userId) {
+      console.error("Webhook: could not resolve userId for session", session.id);
+      return c.json({ received: true });
+    }
+
+    const result = await dbRun(
+      c.env.DB,
+      `UPDATE users
+       SET subscription_status = 'trialing',
+           stripe_customer_id  = ?
+       WHERE id = ?`,
+      [customerId, userId]
+    );
+    console.log(
+      `User ${userId} → trialing (customer ${customerId}) changes=${result.meta.changes}`
+    );
   }
 
   // Fired on every subscription state change (trial end, payment, cancel, etc.)
