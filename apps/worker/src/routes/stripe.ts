@@ -32,6 +32,7 @@ stripe.post("/checkout", async (c) => {
       success_url: `${appUrl}/dashboard?trial=started`,
       cancel_url: `${appUrl}/`,
       "metadata[user_id]": userId,
+      allow_promotion_codes: "true",
     }),
   });
 
