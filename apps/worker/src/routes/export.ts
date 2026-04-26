@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import type { Env, Cycle, CycleLog, User } from "../types";
+import type { Env, Cycle, DailyLog, User } from "../types";
 import { dbAll, dbFirst } from "../lib/db";
 
 const exportRoute = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
@@ -8,23 +8,38 @@ exportRoute.get("/csv", async (c) => {
   const userId = c.get("userId");
 
   const [user, logs] = await Promise.all([
-    dbFirst<User>(c.env.DB, "SELECT name, email FROM users WHERE id = ?", [userId]),
-    dbAll<CycleLog>(
+    dbFirst<Pick<User, "email">>(
       c.env.DB,
-      "SELECT * FROM cycle_logs WHERE user_id = ? ORDER BY date ASC",
+      "SELECT email FROM users WHERE id = ?",
+      [userId]
+    ),
+    dbAll<DailyLog>(
+      c.env.DB,
+      "SELECT * FROM daily_logs WHERE user_id = ? ORDER BY date ASC",
       [userId]
     ),
   ]);
 
-  const headers = ["date", "flow", "mood", "symptoms", "energy", "sleep_hours", "notes"];
+  const headers = [
+    "date", "flow_intensity", "mood", "energy",
+    "cramps", "bloating", "headache", "sleep_hours",
+    "hot_flashes", "night_sweats", "brain_fog", "custom_symptoms", "notes",
+  ];
+
   const rows = logs.map((l) =>
     [
       l.date,
-      l.flow ?? "",
+      l.flow_intensity ?? "",
       l.mood ? JSON.parse(l.mood).join(";") : "",
-      l.symptoms ? JSON.parse(l.symptoms).join(";") : "",
       l.energy ?? "",
+      l.cramps ?? "",
+      l.bloating ?? "",
+      l.headache ?? "",
       l.sleep_hours ?? "",
+      l.hot_flashes ?? "",
+      l.night_sweats ?? "",
+      l.brain_fog ?? "",
+      l.custom_symptoms ? JSON.parse(l.custom_symptoms).join(";") : "",
       `"${(l.notes ?? "").replace(/"/g, '""')}"`,
     ].join(",")
   );

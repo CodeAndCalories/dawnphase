@@ -27,18 +27,25 @@ cycles.post("/", zValidator("json", createSchema), async (c) => {
   // Close any open cycle
   await dbRun(
     c.env.DB,
-    "UPDATE cycles SET end_date = date(?, '-1 day'), cycle_length = julianday(date(?, '-1 day')) - julianday(start_date) + 1 WHERE user_id = ? AND end_date IS NULL",
+    `UPDATE cycles
+     SET end_date = date(?, '-1 day'),
+         cycle_length = CAST(julianday(date(?, '-1 day')) - julianday(start_date) + 1 AS INTEGER)
+     WHERE user_id = ? AND end_date IS NULL`,
     [start_date, start_date, userId]
   );
 
   const id = newId();
   await dbRun(
     c.env.DB,
-    "INSERT INTO cycles (id, user_id, start_date, created_at) VALUES (?, ?, ?, datetime('now'))",
+    "INSERT INTO cycles (id, user_id, start_date) VALUES (?, ?, ?)",
     [id, userId, start_date]
   );
 
-  const cycle = await dbFirst<Cycle>(c.env.DB, "SELECT * FROM cycles WHERE id = ?", [id]);
+  const cycle = await dbFirst<Cycle>(
+    c.env.DB,
+    "SELECT * FROM cycles WHERE id = ?",
+    [id]
+  );
   return c.json({ cycle }, 201);
 });
 

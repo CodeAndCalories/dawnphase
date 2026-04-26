@@ -30,7 +30,11 @@ async function hashPassword(password: string): Promise<string> {
 auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   const { email, password, name } = c.req.valid("json");
 
-  const existing = await dbFirst<User>(c.env.DB, "SELECT id FROM users WHERE email = ?", [email]);
+  const existing = await dbFirst<{ id: string }>(
+    c.env.DB,
+    "SELECT id FROM users WHERE email = ?",
+    [email]
+  );
   if (existing) {
     return c.json({ message: "Email already in use" }, 409);
   }
@@ -38,27 +42,41 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   const id = newId();
   const passwordHash = await hashPassword(password);
 
-  await dbRun(c.env.DB,
-    "INSERT INTO users (id, email, name, password_hash, plan, cycle_length, period_length, created_at) VALUES (?, ?, ?, ?, 'free', 28, 5, datetime('now'))",
-    [id, email, name, passwordHash]
+  await dbRun(
+    c.env.DB,
+    `INSERT INTO users
+       (id, email, password_hash, mode, subscription_status, trial_ends_at, created_at)
+     VALUES
+       (?, ?, ?, 'cycle', 'trialing', datetime('now', '+7 days'), datetime('now'))`,
+    [id, email, passwordHash]
   );
 
-  const token = await signJWT({ sub: id, email, plan: "free" }, c.env.JWT_SECRET);
+  const token = await signJWT(
+    { sub: id, email, status: "trialing" },
+    c.env.JWT_SECRET
+  );
 
-  // Fire-and-forget welcome email
+  // Fire-and-forget welcome email — name comes from signup body, not DB
   sendEmail(c.env.RESEND_API_KEY, {
     to: email,
     subject: "Welcome to Dawn Phase!",
     html: welcomeEmail(name),
   }).catch(() => {});
 
-  return c.json({ token, user: { id, email, name, plan: "free" } }, 201);
+  return c.json(
+    { token, user: { id, email, name, mode: "cycle", status: "trialing" } },
+    201
+  );
 });
 
 auth.post("/login", zValidator("json", loginSchema), async (c) => {
   const { email, password } = c.req.valid("json");
 
-  const user = await dbFirst<User>(c.env.DB, "SELECT * FROM users WHERE email = ?", [email]);
+  const user = await dbFirst<User>(
+    c.env.DB,
+    "SELECT * FROM users WHERE email = ?",
+    [email]
+  );
   if (!user) {
     return c.json({ message: "Invalid email or password" }, 401);
   }
@@ -69,13 +87,18 @@ auth.post("/login", zValidator("json", loginSchema), async (c) => {
   }
 
   const token = await signJWT(
-    { sub: user.id, email: user.email, plan: user.plan },
+    { sub: user.id, email: user.email, status: user.subscription_status },
     c.env.JWT_SECRET
   );
 
   return c.json({
     token,
-    user: { id: user.id, email: user.email, name: user.name, plan: user.plan },
+    user: {
+      id: user.id,
+      email: user.email,
+      mode: user.mode,
+      status: user.subscription_status,
+    },
   });
 });
 
@@ -93,7 +116,8 @@ auth.get("/me", async (c) => {
 
   const user = await dbFirst<User>(
     c.env.DB,
-    "SELECT id, email, name, plan, cycle_length, period_length, created_at FROM users WHERE id = ?",
+    `SELECT id, email, mode, subscription_status, trial_ends_at, created_at
+     FROM users WHERE id = ?`,
     [payload.sub]
   );
 

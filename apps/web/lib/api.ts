@@ -1,5 +1,6 @@
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL ?? "https://api.dawnphase.com";
+  process.env.NEXT_PUBLIC_WORKER_URL ??
+  "https://dawnphase-worker.axigamingclips.workers.dev";
 
 async function request<T>(
   path: string,

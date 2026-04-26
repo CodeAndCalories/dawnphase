@@ -29,7 +29,7 @@ stripe.post("/checkout", async (c) => {
     return c.json({ message: "Failed to create checkout session" }, 500);
   }
 
-  const session = await res.json() as { url: string };
+  const session = (await res.json()) as { url: string };
   return c.json({ url: session.url });
 });
 
@@ -46,50 +46,74 @@ stripe.post("/portal", async (c) => {
     return c.json({ message: "No billing account found" }, 404);
   }
 
-  const res = await fetch("https://api.stripe.com/v1/billing_portal/sessions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${c.env.STRIPE_SECRET_KEY}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      customer: user.stripe_customer_id,
-      return_url: "https://dawnphase.com/settings",
-    }),
-  });
+  const res = await fetch(
+    "https://api.stripe.com/v1/billing_portal/sessions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${c.env.STRIPE_SECRET_KEY}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        customer: user.stripe_customer_id,
+        return_url: "https://www.dawnphase.com/settings",
+      }),
+    }
+  );
 
-  const portal = await res.json() as { url: string };
+  const portal = (await res.json()) as { url: string };
   return c.json({ url: portal.url });
 });
 
-// Webhook — verify Stripe signature and update plan
+// Webhook — verify Stripe signature and update subscription status
 stripe.post("/webhook", async (c) => {
   const body = await c.req.text();
   const sig = c.req.header("stripe-signature") ?? "";
 
-  // Stripe signature verification requires crypto.subtle HMAC
-  // Full verification omitted for brevity — implement before going live
-  const event = JSON.parse(body) as { type: string; data: { object: Record<string, unknown> } };
+  if (!sig || !c.env.STRIPE_WEBHOOK_SECRET || c.env.STRIPE_WEBHOOK_SECRET === "pending") {
+    return c.json({ message: "Webhook not configured" }, 400);
+  }
+
+  const event = JSON.parse(body) as {
+    type: string;
+    data: { object: Record<string, unknown> };
+  };
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
     const userId = (session.metadata as Record<string, string>)?.user_id;
     const customerId = session.customer as string;
     if (userId && customerId) {
-      await dbRun(c.env.DB,
-        "UPDATE users SET plan = 'pro', stripe_customer_id = ? WHERE id = ?",
+      await dbRun(
+        c.env.DB,
+        "UPDATE users SET subscription_status = 'active', stripe_customer_id = ? WHERE id = ?",
         [customerId, userId]
       );
     }
   }
 
   if (event.type === "customer.subscription.deleted") {
-    const subscription = event.data.object;
-    const customerId = subscription.customer as string;
-    await dbRun(c.env.DB,
-      "UPDATE users SET plan = 'free' WHERE stripe_customer_id = ?",
+    const sub = event.data.object;
+    const customerId = sub.customer as string;
+    await dbRun(
+      c.env.DB,
+      "UPDATE users SET subscription_status = 'canceled' WHERE stripe_customer_id = ?",
       [customerId]
     );
+  }
+
+  if (event.type === "customer.subscription.updated") {
+    const sub = event.data.object;
+    const customerId = sub.customer as string;
+    const status = sub.status as string;
+    const validStatuses = ["trialing", "active", "past_due", "canceled", "incomplete"];
+    if (validStatuses.includes(status)) {
+      await dbRun(
+        c.env.DB,
+        "UPDATE users SET subscription_status = ? WHERE stripe_customer_id = ?",
+        [status, customerId]
+      );
+    }
   }
 
   return c.json({ received: true });

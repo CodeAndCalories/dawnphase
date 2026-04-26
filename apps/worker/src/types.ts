@@ -10,42 +10,48 @@ export interface Env {
 export interface JWTPayload {
   sub: string;   // user id
   email: string;
-  plan: "free" | "pro";
+  status: "trialing" | "active" | "past_due" | "canceled" | "incomplete";
   iat: number;
   exp: number;
 }
 
+// Maps to the `users` table in D1
 export interface User {
   id: string;
   email: string;
-  name: string;
   password_hash: string;
-  plan: "free" | "pro";
-  stripe_customer_id: string | null;
-  cycle_length: number;
-  period_length: number;
+  mode: "cycle" | "perimenopause";
   created_at: string;
+  stripe_customer_id: string | null;
+  subscription_status: "trialing" | "active" | "past_due" | "canceled" | "incomplete";
+  trial_ends_at: string | null;
 }
 
-export interface CycleLog {
+// Maps to the `daily_logs` table in D1
+export interface DailyLog {
   id: string;
   user_id: string;
-  date: string;
-  flow: "none" | "spotting" | "light" | "medium" | "heavy" | null;
-  mood: string | null;       // JSON array
-  symptoms: string | null;   // JSON array
-  energy: number | null;     // 1-5
+  date: string;                  // YYYY-MM-DD
+  flow_intensity: "none" | "spotting" | "light" | "medium" | "heavy" | null;
+  mood: string | null;           // JSON array of strings
+  energy: number | null;         // 1–5
+  cramps: number | null;         // 0–3
+  bloating: number | null;       // 0–3
+  headache: number | null;       // 0–3
   sleep_hours: number | null;
   notes: string | null;
-  created_at: string;
+  // perimenopause columns
+  hot_flashes: number | null;    // 0–3
+  night_sweats: number | null;   // 0–3
+  brain_fog: number | null;      // 0–3
+  custom_symptoms: string | null; // JSON array of strings
 }
 
+// Maps to the `cycles` table in D1
 export interface Cycle {
   id: string;
   user_id: string;
-  start_date: string;
-  end_date: string | null;
-  cycle_length: number | null;
-  period_length: number | null;
-  created_at: string;
+  start_date: string;            // YYYY-MM-DD
+  end_date: string | null;       // YYYY-MM-DD; null while open
+  cycle_length: number | null;   // computed when end_date is set
 }
