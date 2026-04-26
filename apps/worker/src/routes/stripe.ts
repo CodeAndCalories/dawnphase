@@ -4,7 +4,7 @@ import { dbRun, dbFirst } from "../lib/db";
 
 const stripe = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
 
-const PRICE_ID_PRO = "price_YOUR_STRIPE_PRICE_ID"; // replace with real Stripe price ID
+const PRICE_ID_PRO = "price_1TQKJWPLESHBmj2PxyzGZit7";
 
 stripe.post("/checkout", async (c) => {
   const userId = c.get("userId");
@@ -19,8 +19,8 @@ stripe.post("/checkout", async (c) => {
       mode: "subscription",
       "line_items[0][price]": PRICE_ID_PRO,
       "line_items[0][quantity]": "1",
-      success_url: "https://dawnphase.com/dashboard?upgraded=1",
-      cancel_url: "https://dawnphase.com/settings",
+      success_url: "https://www.dawnphase.com/dashboard",
+      cancel_url: "https://www.dawnphase.com",
       "metadata[user_id]": userId,
     }),
   });
