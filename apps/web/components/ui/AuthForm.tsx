@@ -122,41 +122,58 @@ function SignupForm() {
     setError(null);
     setLoading(true);
     try {
-      // Step 1 — create account (stores JWT in localStorage)
+      // Step 1 — create account; JWT stored in localStorage by signup()
       await signup(values.email, values.password, values.name);
 
       // Step 2 — redirect to Stripe checkout (7-day trial)
       setStep("billing");
-      try {
-        const { url } = await api.post<{ url: string }>(
-          "/stripe/checkout",
-          {}
-        );
-        window.location.href = url;
-      } catch {
-        // Stripe not configured yet — go straight to dashboard
-        window.location.href = "/dashboard";
-      }
+      const { url } = await api.post<{ url: string }>("/stripe/checkout", {});
+      window.location.href = url;
     } catch (err) {
+      // If we're already past account creation (step === "billing") the
+      // account exists but Stripe failed — send to dashboard instead of
+      // leaving the user stranded.
+      if (step === "billing") {
+        window.location.href = "/dashboard";
+        return;
+      }
       setError(err instanceof Error ? err.message : "Something went wrong");
       setLoading(false);
     }
   }
 
+  // Full-page overlay while redirecting to Stripe — user should never
+  // see the form again at this point.
+  if (step === "billing" && loading) {
+    return (
+      <div className="bg-white rounded-2xl shadow-sm border border-[rgba(232,99,122,0.15)] p-12 flex flex-col items-center gap-5 text-center">
+        <div className="w-10 h-10 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        <div>
+          <p className="font-semibold text-[#C94B6D] text-lg">
+            Setting up your trial…
+          </p>
+          <p className="text-sm text-[#8C6B5A] mt-1">
+            Taking you to secure checkout
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-5"
+      className="bg-white rounded-2xl shadow-sm border border-[rgba(232,99,122,0.15)] p-8 space-y-5"
     >
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
           Your name
         </label>
         <input
           {...register("name")}
           type="text"
           placeholder="Luna"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
         />
         {formState.errors.name && (
           <p className="mt-1 text-xs text-red-500">
@@ -166,14 +183,14 @@ function SignupForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
           Email
         </label>
         <input
           {...register("email")}
           type="email"
           placeholder="you@example.com"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
         />
         {formState.errors.email && (
           <p className="mt-1 text-xs text-red-500">
@@ -183,14 +200,14 @@ function SignupForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
           Password
         </label>
         <input
           {...register("password")}
           type="password"
           placeholder="••••••••"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
         />
         {formState.errors.password && (
           <p className="mt-1 text-xs text-red-500">
@@ -208,14 +225,14 @@ function SignupForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60 text-sm"
+        className="w-full py-3 bg-[#E8637A] hover:bg-[#C94B6D] text-white font-semibold rounded-xl transition-colors disabled:opacity-60 text-sm"
       >
-        {loading
-          ? step === "billing"
-            ? "Redirecting to billing…"
-            : "Creating account…"
-          : "Create account & start trial"}
+        {loading ? "Creating account…" : "Start your free trial"}
       </button>
+
+      <p className="text-center text-xs text-[#8C6B5A]/70">
+        No charge for 7 days. Card required to start trial.
+      </p>
     </form>
   );
 }
