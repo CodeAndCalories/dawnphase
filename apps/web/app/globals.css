@@ -1,31 +1,27 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-geist-sans: "Geist", system-ui, sans-serif;
-    --font-geist-mono: "Geist Mono", monospace;
-  }
+@theme {
+  /* Brand colours */
+  --color-dawn-rose:    #E8A0A0;
+  --color-dawn-purple:  #8B7BB5;
+  --color-dawn-warm:    #FDF8F5;
+  --color-dawn-charcoal:#1C1C2E;
 
-  * {
-    box-sizing: border-box;
-  }
+  /* Font families — resolved from next/font CSS vars at runtime */
+  --font-family-display: var(--font-sora, "Sora", system-ui, sans-serif);
+  --font-family-sans:    var(--font-dm-sans, "DM Sans", system-ui, sans-serif);
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
 
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white text-gray-900;
-  }
-}
-
-@layer utilities {
-  .dawn-gradient {
-    background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 40%, #fff7ed 100%);
-  }
-
-  .dawn-hero-gradient {
-    background: linear-gradient(135deg, #4a044e 0%, #7c3aed 50%, #db2777 100%);
+    @apply bg-white text-dawn-charcoal font-sans;
   }
 }
