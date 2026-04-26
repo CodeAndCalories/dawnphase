@@ -22,9 +22,8 @@ name = "dawnphase-worker-staging"
 [env.staging.vars]
 ENVIRONMENT = "staging"
 
-[triggers]
-crons = ["0 9 * * *"]  # daily at 09:00 UTC — period reminder check
-
+# [triggers]
+# crons = ["0 9 * * *"]  # daily 09:00 UTC reminder — re-enable when a cron slot is free
 # Secrets set via: wrangler secret put SECRET_NAME
 # JWT_SECRET
 # RESEND_API_KEY
