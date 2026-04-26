@@ -9,7 +9,7 @@ ENVIRONMENT = "production"
 [[d1_databases]]
 binding = "DB"
 database_name = "dawnphase-db"
-database_id = "YOUR_D1_DATABASE_ID"   # replace after: wrangler d1 create dawnphase-db
+database_id = "ca93dc53-cc61-4f45-9d8d-64971d36301f"
 
 [env.development]
 name = "dawnphase-worker-dev"
