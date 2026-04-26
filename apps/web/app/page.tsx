@@ -4,7 +4,7 @@ import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "l
 
 function PillLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-purple border border-dawn-purple/30 bg-dawn-purple/5 rounded-full px-4 py-1.5">
+    <span className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-rose border border-dawn-rose/30 bg-dawn-rose/5 rounded-full px-4 py-1.5">
       {children}
     </span>
   );
@@ -23,8 +23,8 @@ function CtaButton({
     "inline-block rounded-full px-8 py-3.5 text-sm font-semibold transition-all duration-200";
   const styles =
     variant === "primary"
-      ? "bg-dawn-rose text-white shadow-lg shadow-dawn-rose/30 hover:scale-[1.02] hover:shadow-xl hover:shadow-dawn-rose/40"
-      : "text-dawn-charcoal underline underline-offset-4 decoration-dawn-rose/50 hover:decoration-dawn-rose";
+      ? "bg-gradient-to-br from-dawn-rose to-dawn-purple text-white shadow-lg shadow-dawn-rose/30 hover:scale-[1.02] hover:shadow-xl hover:shadow-dawn-rose/40"
+      : "text-dp-taupe underline underline-offset-4 decoration-dawn-rose/50 hover:decoration-dawn-rose";
   return (
     <a href={href} className={`${base} ${styles}`}>
       {children}
@@ -70,7 +70,7 @@ function Nav() {
           </a>
           <a
             href="/signup"
-            className="bg-dawn-rose text-white rounded-full px-5 py-2 text-sm font-semibold hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/20"
+            className="bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-5 py-2 text-sm font-semibold hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/20"
           >
             Start free trial
           </a>
@@ -88,25 +88,25 @@ function Hero() {
       className="relative overflow-hidden pt-28 pb-32 px-6"
       style={{
         background: `
-          radial-gradient(ellipse 80% 60% at 10% -10%, #E8A0A080 0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 90% 5%,  #8B7BB550 0%, transparent 55%),
-          radial-gradient(ellipse 70% 60% at 50% 110%,#E8A0A040 0%, transparent 60%),
-          #FDF8F5
+          radial-gradient(ellipse 80% 60% at 10% -10%, #E8637A70 0%, transparent 60%),
+          radial-gradient(ellipse 60% 50% at 90% 5%,  #F4956A50 0%, transparent 55%),
+          radial-gradient(ellipse 70% 60% at 50% 110%,#E8637A30 0%, transparent 60%),
+          #FDF6F0
         `,
       }}
     >
       <div className="max-w-[1200px] mx-auto text-center">
         <PillLabel>Privacy-first hormone tracking</PillLabel>
 
-        <h1 className="font-display mt-6 text-5xl md:text-[4.5rem] font-bold text-dawn-charcoal leading-[1.08] tracking-tight max-w-3xl mx-auto">
+        <h1 className="font-display mt-6 text-5xl md:text-[4.5rem] font-bold text-dp-deeprose leading-[1.08] tracking-tight max-w-3xl mx-auto">
           Know your cycle.{" "}
           <span className="text-dawn-rose">Own your health.</span>
         </h1>
 
-        <p className="mt-6 text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto">
+        <p className="mt-6 text-lg md:text-xl text-dp-taupe leading-relaxed max-w-2xl mx-auto">
           Dawn Phase tracks your period, predicts every phase, and logs symptoms
           — so you finally understand what your body is telling you.{" "}
-          <span className="text-dawn-charcoal font-medium">
+          <span className="text-dp-deeprose font-medium">
             No data selling. Ever.
           </span>
         </p>
@@ -126,7 +126,7 @@ function Hero() {
             "Cancel anytime",
             "Doctor-ready export",
           ].map((item) => (
-            <span key={item} className="flex items-center gap-1.5 text-sm text-gray-400">
+            <span key={item} className="flex items-center gap-1.5 text-sm text-dp-taupe/70">
               <span className="w-1 h-1 rounded-full bg-dawn-rose inline-block" />
               {item}
             </span>
@@ -159,11 +159,11 @@ const steps = [
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-6 bg-white">
+    <section id="how-it-works" className="py-24 px-6 bg-dp-cream-lt">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Simple by design</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dawn-charcoal tracking-tight">
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
             Up and running in 2 minutes
           </h2>
         </div>
@@ -178,10 +178,10 @@ function HowItWorks() {
                 <div className="w-16 h-16 rounded-2xl bg-dawn-warm border border-dawn-rose/20 flex items-center justify-center mb-5 shadow-sm">
                   <span className="font-display text-xl font-bold text-dawn-rose">{s.num}</span>
                 </div>
-                <h3 className="font-display text-xl font-semibold text-dawn-charcoal mb-3">
+                <h3 className="font-display text-xl font-semibold text-dp-deeprose mb-3">
                   {s.title}
                 </h3>
-                <p className="text-gray-500 leading-relaxed text-sm">{s.body}</p>
+                <p className="text-dp-taupe leading-relaxed text-sm">{s.body}</p>
               </div>
             </div>
           ))}
@@ -232,7 +232,7 @@ function Features() {
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Everything you need</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dawn-charcoal tracking-tight">
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
             Built around your cycle,
             <br />
             not just your period.
@@ -243,13 +243,13 @@ function Features() {
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-white rounded-2xl p-6 border border-black/[0.07] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
             >
               <div className="w-11 h-11 rounded-xl bg-dawn-warm flex items-center justify-center mb-4">
                 <f.icon className="w-5 h-5 text-dawn-purple" strokeWidth={1.8} />
               </div>
-              <h3 className="font-display font-semibold text-dawn-charcoal mb-2">{f.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{f.body}</p>
+              <h3 className="font-display font-semibold text-dp-deeprose mb-2">{f.title}</h3>
+              <p className="text-sm text-dp-taupe leading-relaxed">{f.body}</p>
             </div>
           ))}
         </div>
@@ -262,27 +262,27 @@ function Features() {
 
 function ForWho() {
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-24 px-6 bg-dawn-warm">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Made for you</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dawn-charcoal tracking-tight">
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
             Wherever you are in life
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Card 1 */}
-          <div className="rounded-2xl border border-black/[0.07] shadow-md overflow-hidden">
+          <div className="rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-md overflow-hidden">
             <div className="h-2 bg-dawn-rose" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-rose bg-dawn-rose/10 rounded-full px-3 py-1 mb-4">
                 Ages 20–39
               </div>
-              <h3 className="font-display text-2xl font-bold text-dawn-charcoal mb-3">
+              <h3 className="font-display text-2xl font-bold text-dp-deeprose mb-3">
                 Tracking your cycle
               </h3>
-              <p className="text-gray-500 leading-relaxed mb-6">
+              <p className="text-dp-taupe leading-relaxed mb-6">
                 You want to understand your hormones, predict your period, manage
                 PMS, and stop being surprised every month. Dawn Phase maps your
                 four phases so you can plan your life around your energy — not
@@ -290,7 +290,7 @@ function ForWho() {
               </p>
               <ul className="space-y-2">
                 {["Period & ovulation predictions", "Phase-by-phase energy insights", "PMS pattern tracking", "Fertility awareness support"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-sm text-gray-600">
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-dp-taupe">
                     <Check className="w-4 h-4 text-dawn-rose shrink-0" strokeWidth={2.5} />
                     {item}
                   </li>
@@ -300,16 +300,16 @@ function ForWho() {
           </div>
 
           {/* Card 2 */}
-          <div className="rounded-2xl border border-black/[0.07] shadow-md overflow-hidden">
+          <div className="rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-md overflow-hidden">
             <div className="h-2 bg-dawn-purple" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-purple bg-dawn-purple/10 rounded-full px-3 py-1 mb-4">
                 Ages 40+
               </div>
-              <h3 className="font-display text-2xl font-bold text-dawn-charcoal mb-3">
+              <h3 className="font-display text-2xl font-bold text-dp-deeprose mb-3">
                 Navigating perimenopause
               </h3>
-              <p className="text-gray-500 leading-relaxed mb-6">
+              <p className="text-dp-taupe leading-relaxed mb-6">
                 Your cycle is changing and no one is explaining why. Hot flashes,
                 brain fog, night sweats, irregular periods — Dawn Phase&apos;s
                 perimenopause mode tracks all of it so you can go to your doctor
@@ -317,7 +317,7 @@ function ForWho() {
               </p>
               <ul className="space-y-2">
                 {["Irregular cycle tracking", "Hot flash & night sweat logging", "Brain fog & sleep tracking", "Doctor-ready PDF export"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-sm text-gray-600">
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-dp-taupe">
                     <Check className="w-4 h-4 text-dawn-purple shrink-0" strokeWidth={2.5} />
                     {item}
                   </li>
@@ -350,13 +350,13 @@ function Pricing() {
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Simple pricing</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dawn-charcoal tracking-tight">
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
             One plan. Everything included.
           </h2>
         </div>
 
         <div className="max-w-sm mx-auto">
-          <div className="bg-white rounded-2xl border border-black/[0.07] shadow-xl p-8">
+          <div className="bg-dp-cream-lt rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-xl p-8">
             {/* Badge */}
             <div className="inline-block bg-dawn-rose/10 text-dawn-rose text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1 mb-6">
               7-day free trial
@@ -364,17 +364,17 @@ function Pricing() {
 
             {/* Price */}
             <div className="flex items-baseline gap-1 mb-1">
-              <span className="font-display text-5xl font-bold text-dawn-charcoal">$14.99</span>
-              <span className="text-gray-400 text-sm">/ month</span>
+              <span className="font-display text-5xl font-bold text-dp-deeprose">$14.99</span>
+              <span className="text-dp-taupe/70 text-sm">/ month</span>
             </div>
-            <p className="text-sm text-gray-400 mb-8">
+            <p className="text-sm text-dp-taupe/70 mb-8">
               Try free for 7 days — no credit card required upfront.
             </p>
 
             {/* Features */}
             <ul className="space-y-3 mb-8">
               {pricingFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-gray-700">
+                <li key={f} className="flex items-center gap-3 text-sm text-dp-taupe">
                   <Check className="w-4 h-4 text-dawn-rose shrink-0" strokeWidth={2.5} />
                   {f}
                 </li>
@@ -383,12 +383,12 @@ function Pricing() {
 
             <a
               href="/signup"
-              className="block w-full text-center bg-dawn-rose text-white rounded-full py-3.5 font-semibold text-sm hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/30"
+              className="block w-full text-center bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full py-3.5 font-semibold text-sm hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/30"
             >
               Start free trial
             </a>
 
-            <p className="mt-4 text-center text-xs text-gray-400">
+            <p className="mt-4 text-center text-xs text-dp-taupe/70">
               Cancel anytime · Your data stays yours
             </p>
           </div>
@@ -402,21 +402,21 @@ function Pricing() {
 
 function FinalCta() {
   return (
-    <section className="py-28 px-6 bg-dawn-charcoal">
+    <section className="py-28 px-6" style={{ backgroundColor: "#2D1B1E" }}>
       <div className="max-w-[1200px] mx-auto text-center">
         <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight max-w-2xl mx-auto">
           Your body has been talking.
           <br />
           <span className="text-dawn-rose">It&apos;s time to listen.</span>
         </h2>
-        <p className="mt-5 text-gray-400 text-lg max-w-lg mx-auto">
+        <p className="mt-5 text-dp-taupe/70 text-lg max-w-lg mx-auto">
           Join thousands of women who finally understand their cycle — and use
           that knowledge every single day.
         </p>
         <div className="mt-10">
           <a
             href="/signup"
-            className="inline-block bg-dawn-rose text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-dawn-rose/30"
+            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-dawn-rose/30"
           >
             Start your free trial today
           </a>
@@ -433,7 +433,7 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="bg-dawn-charcoal border-t border-white/5 py-12 px-6">
+    <footer className="border-t border-white/5 py-12 px-6" style={{ backgroundColor: "#2D1B1E" }}>
       <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <span className="font-display text-lg font-bold text-white tracking-tight">
           Dawn Phase
