@@ -165,7 +165,16 @@ export default function DashboardPage() {
               : "No cycle recorded yet — start logging to track your cycle"}
           </p>
         </div>
-        <QuickLogButton />
+        <div className="flex items-center gap-2">
+          <a
+            href="/cycles/new"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E8637A] text-white text-sm font-medium rounded-full hover:bg-[#C94B6D] transition-colors"
+          >
+            <span aria-hidden>🩸</span>
+            Log period
+          </a>
+          <QuickLogButton />
+        </div>
       </div>
 
       {/* User status strip */}
@@ -196,13 +205,16 @@ export default function DashboardPage() {
             badge={phase.badge}
           />
         ) : (
-          <div className="rounded-2xl border border-dashed border-gray-200 p-6 flex flex-col items-center justify-center text-center">
-            <p className="text-sm text-gray-500 mb-3">No cycle data yet</p>
+          <div className="rounded-2xl border-2 border-dashed border-[#E8637A]/30 bg-[#FDF6F0] p-6 flex flex-col items-center justify-center text-center gap-3">
+            <span className="text-3xl" aria-hidden>🩸</span>
+            <p className="text-sm font-medium text-[#2D1B1E]">
+              Start by logging your last period
+            </p>
             <a
-              href="/log"
-              className="text-sm font-medium text-purple-600 hover:underline"
+              href="/cycles/new"
+              className="inline-flex items-center gap-1 px-4 py-2 bg-[#E8637A] text-white text-sm font-semibold rounded-full hover:bg-[#C94B6D] transition-colors"
             >
-              Log your first day →
+              Log period start →
             </a>
           </div>
         )}
