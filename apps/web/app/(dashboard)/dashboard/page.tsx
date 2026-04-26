@@ -118,16 +118,21 @@ function Card({
   children,
   className = "",
   hero = false,
+  padding = "p-6",
+  style,
 }: {
   children: React.ReactNode;
   className?: string;
   hero?: boolean;
+  padding?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <div
-      className={`bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 ${
+      className={`bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] ${padding} ${
         hero ? "shadow-md" : "shadow-sm"
       } ${className}`}
+      style={style}
     >
       {children}
     </div>
@@ -230,7 +235,7 @@ export default function DashboardPage() {
         : null;
 
   return (
-    <div className="max-w-5xl mx-auto space-y-5 pb-4">
+    <div className="w-full max-w-6xl space-y-5 pb-4">
       {/* Activation banner */}
       {activating && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
@@ -244,11 +249,22 @@ export default function DashboardPage() {
         </div>
       )}
 
+      {/* Welcome header */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold text-[#C94B6D]">Welcome back</h1>
+        <p className="text-[#8C6B5A] text-sm mt-1">Here&apos;s your cycle at a glance.</p>
+      </div>
+
       {/* ── ROW 1: Hero + secondary cards ──────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         {/* Hero card — 2/3 width */}
-        <Card hero className="md:col-span-2">
+        <Card
+          hero
+          padding="p-8"
+          className="md:col-span-2 min-h-[220px]"
+          style={{ background: "linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)" }}
+        >
           <CardHeading>Your cycle today</CardHeading>
 
           {phase && cycleDay ? (

@@ -7,6 +7,7 @@ import {
   Droplets,
   TrendingUp,
   Settings,
+  CreditCard,
   LogOut,
 } from "lucide-react";
 import { api } from "@/lib/api";
@@ -99,6 +100,15 @@ export default function Sidebar() {
               </a>
             );
           })}
+
+          {/* Manage billing — button styled as a nav link, desktop only */}
+          <button
+            onClick={openBillingPortal}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#8C6B5A] hover:bg-[#E8637A]/10 hover:text-[#C94B6D] transition-colors"
+          >
+            <CreditCard size={16} strokeWidth={2} />
+            Manage billing
+          </button>
         </nav>
 
         {/* Bottom user area */}
@@ -111,21 +121,13 @@ export default function Sidebar() {
             >
               {email}
             </p>
-            <div className="flex items-center gap-2 flex-wrap">
-              {sub && (
-                <span
-                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${sub.cls}`}
-                >
-                  {sub.label}
-                </span>
-              )}
-              <button
-                onClick={openBillingPortal}
-                className="text-[10px] text-[#8C6B5A] hover:text-[#C94B6D] underline decoration-dotted transition-colors"
+            {sub && (
+              <span
+                className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${sub.cls}`}
               >
-                Manage billing
-              </button>
-            </div>
+                {sub.label}
+              </span>
+            )}
           </div>
 
           {/* Logout */}

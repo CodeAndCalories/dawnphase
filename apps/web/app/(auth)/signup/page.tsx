@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import AuthForm from "@/components/ui/AuthForm";
 
 export default function SignupPage() {
@@ -8,9 +9,19 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <a href="/" className="inline-block">
-            <span className="font-display text-2xl font-bold text-[#C94B6D]">
-              Dawn Phase
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Dawn Phase"
+              width={48}
+              height={48}
+              className="mx-auto mb-2 rounded-xl"
+            />
+          </a>
+          <a
+            href="/"
+            className="block text-center text-[#C94B6D] font-semibold text-lg hover:opacity-80 transition-opacity"
+          >
+            Dawn Phase
           </a>
           <h1 className="font-display mt-6 text-3xl font-bold text-[#C94B6D]">
             Start your free trial
