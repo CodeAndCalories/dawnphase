@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -14,6 +14,10 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#E8637A",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Dawn Phase — Know your cycle. Own your health.",
@@ -24,6 +28,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "https://www.dawnphase.com"
   ),
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Dawn Phase",
+  },
   icons: {
     icon: [
       { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
@@ -55,6 +65,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sora.variable} ${dmSans.variable}`}>
+      <head>
+        <link rel="apple-touch-icon" href="/favicon-180.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+      </head>
       <body className="font-sans antialiased">{children}</body>
     </html>
   );
