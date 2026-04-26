@@ -56,11 +56,11 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
     c.env.JWT_SECRET
   );
 
-  // Fire-and-forget welcome email — name comes from signup body, not DB
+  // Fire-and-forget welcome email
   sendEmail(c.env.RESEND_API_KEY, {
     to: email,
-    subject: "Welcome to Dawn Phase!",
-    html: welcomeEmail(name),
+    subject: "Welcome to Dawn Phase 🌅",
+    html: welcomeEmail(email),
   }).catch(() => {});
 
   return c.json(

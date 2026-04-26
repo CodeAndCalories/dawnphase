@@ -11,6 +11,7 @@ import insightsRoutes from "./routes/insights";
 import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
+import cronRoutes, { processReminders } from "./routes/cron";
 
 type Variables = { userId: string };
 
@@ -41,6 +42,7 @@ app.get("/health", (c) => c.json({ status: "ok", env: c.env.ENVIRONMENT }));
 // Public routes
 app.route("/auth", authRoutes);
 app.route("/stripe", stripeRoutes);
+app.route("/cron", cronRoutes);
 
 // Auth middleware
 const requireAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> =
@@ -82,4 +84,16 @@ app.onError((err, c) => {
   return c.json({ message: "Internal server error" }, 500);
 });
 
-export default app;
+// Export fetch handler + scheduled handler for Cloudflare Cron Triggers.
+// The scheduled() handler fires when wrangler.toml [triggers] crons match;
+// it runs the same processReminders logic as GET /cron/reminders.
+export default {
+  fetch: app.fetch.bind(app),
+  async scheduled(
+    _event: ScheduledController,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<void> {
+    ctx.waitUntil(processReminders(env));
+  },
+};
