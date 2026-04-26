@@ -10,6 +10,7 @@ import logsRoutes from "./routes/logs";
 import insightsRoutes from "./routes/insights";
 import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
+import remindersRoutes from "./routes/reminders";
 
 type Variables = { userId: string };
 
@@ -61,6 +62,7 @@ app.use("/cycles/*", requireAuth);
 app.use("/logs/*", requireAuth);
 app.use("/insights/*", requireAuth);
 app.use("/export/*", requireAuth);
+app.use("/reminders/*", requireAuth);
 app.use("/stripe/checkout", requireAuth);
 app.use("/stripe/portal", requireAuth);
 
@@ -69,6 +71,7 @@ app.route("/cycles", cyclesRoutes);
 app.route("/logs", logsRoutes);
 app.route("/insights", insightsRoutes);
 app.route("/export", exportRoutes);
+app.route("/reminders", remindersRoutes);
 
 // 404
 app.notFound((c) => c.json({ message: "Not found" }, 404));

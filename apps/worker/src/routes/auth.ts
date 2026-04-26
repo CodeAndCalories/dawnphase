@@ -125,4 +125,42 @@ auth.get("/me", async (c) => {
   return c.json({ user });
 });
 
+const patchMeSchema = z.object({
+  mode: z.enum(["cycle", "perimenopause"]),
+});
+
+auth.patch("/me", zValidator("json", patchMeSchema), async (c) => {
+  const authorization = c.req.header("Authorization");
+  if (!authorization?.startsWith("Bearer ")) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+  const token = authorization.slice(7);
+  const payload = await verifyJWT(token, c.env.JWT_SECRET);
+  if (!payload) return c.json({ message: "Invalid or expired token" }, 401);
+
+  const { mode } = c.req.valid("json");
+  await dbRun(c.env.DB, "UPDATE users SET mode = ? WHERE id = ?", [mode, payload.sub]);
+
+  const user = await dbFirst<User>(
+    c.env.DB,
+    "SELECT id, email, mode, subscription_status, trial_ends_at, created_at FROM users WHERE id = ?",
+    [payload.sub]
+  );
+  if (!user) return c.json({ message: "User not found" }, 404);
+  return c.json({ user });
+});
+
+auth.delete("/me", async (c) => {
+  const authorization = c.req.header("Authorization");
+  if (!authorization?.startsWith("Bearer ")) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+  const token = authorization.slice(7);
+  const payload = await verifyJWT(token, c.env.JWT_SECRET);
+  if (!payload) return c.json({ message: "Invalid or expired token" }, 401);
+
+  await dbRun(c.env.DB, "DELETE FROM users WHERE id = ?", [payload.sub]);
+  return c.json({ message: "Account deleted" });
+});
+
 export default auth;
