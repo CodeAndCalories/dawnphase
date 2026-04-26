@@ -1,30 +1,491 @@
-import type { Metadata } from "next";
-import CycleLengthChart from "@/components/dashboard/CycleLengthChart";
-import SymptomsHeatmap from "@/components/dashboard/SymptomsHeatmap";
-import InsightCard from "@/components/dashboard/InsightCard";
+"use client";
 
-export const metadata: Metadata = { title: "Insights" };
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { api } from "@/lib/api";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+interface InsightsResponse {
+  cycles_tracked: number;
+  avg_cycle_length: number | null;
+  top_symptoms: { symptom: string; count: number }[];
+  cycle_lengths: number[];
+}
+
+interface Cycle {
+  id: string;
+  start_date: string;
+  end_date: string | null;
+  cycle_length: number | null;
+}
+
+interface DailyLog {
+  date: string;
+  energy: number | null;
+  mood: string | null;       // JSON string: e.g. '["😊"]'
+  cramps: number | null;
+  bloating: number | null;
+  headache: number | null;
+  brain_fog: number | null;
+  hot_flashes: number | null;
+  night_sweats: number | null;
+  custom_symptoms: string | null; // JSON string
+}
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+
+const PHASES = ["Menstrual", "Follicular", "Ovulatory", "Luteal"] as const;
+type Phase = (typeof PHASES)[number];
+
+const PHASE_META: Record<Phase, { color: string; bg: string; days: string }> = {
+  Menstrual:  { color: "#F87171", bg: "bg-rose-50",   days: "Days 1–5"   },
+  Follicular: { color: "#A78BFA", bg: "bg-violet-50", days: "Days 6–13"  },
+  Ovulatory:  { color: "#FBBF24", bg: "bg-amber-50",  days: "Day 14"     },
+  Luteal:     { color: "#818CF8", bg: "bg-indigo-50", days: "Days 15–28" },
+};
+
+const MOOD_SCORE: Record<string, number> = {
+  "😢": 1, "😟": 2, "😐": 3, "🙂": 4, "😊": 5,
+};
+
+// ── Phase helpers ─────────────────────────────────────────────────────────────
+
+function getPhase(day: number): Phase {
+  if (day <= 5)  return "Menstrual";
+  if (day <= 13) return "Follicular";
+  if (day === 14) return "Ovulatory";
+  return "Luteal";
+}
+
+function getCycleDay(logDate: string, cycles: Cycle[]): number | null {
+  // Find the most-recent cycle that started on or before this log date.
+  const sorted = [...cycles].sort((a, b) =>
+    b.start_date.localeCompare(a.start_date)
+  );
+  const cycle = sorted.find((c) => c.start_date <= logDate);
+  if (!cycle) return null;
+  const start = new Date(cycle.start_date + "T00:00:00");
+  const log   = new Date(logDate         + "T00:00:00");
+  const day   = Math.round((log.getTime() - start.getTime()) / 86_400_000) + 1;
+  return day >= 1 && day <= 60 ? day : null; // sanity cap at 60 days
+}
+
+// ── Analysis ──────────────────────────────────────────────────────────────────
+
+function energyByDay(logs: DailyLog[], cycles: Cycle[]): (number | null)[] {
+  const sums   = new Array<number>(28).fill(0);
+  const counts = new Array<number>(28).fill(0);
+  for (const log of logs) {
+    if (!log.energy) continue;
+    const day = getCycleDay(log.date, cycles);
+    if (!day || day > 28) continue;
+    sums[day - 1]   += log.energy;
+    counts[day - 1] += 1;
+  }
+  return sums.map((s, i) => (counts[i] > 0 ? s / counts[i] : null));
+}
+
+function symptomsByPhase(
+  logs: DailyLog[],
+  cycles: Cycle[]
+): Record<Phase, { symptom: string; count: number }[]> {
+  const acc: Record<Phase, Record<string, number>> = {
+    Menstrual: {}, Follicular: {}, Ovulatory: {}, Luteal: {},
+  };
+  for (const log of logs) {
+    const day = getCycleDay(log.date, cycles);
+    if (!day) continue;
+    const phase = getPhase(Math.min(day, 28));
+    const p = acc[phase];
+    if (log.cramps)       p["Cramps"]       = (p["Cramps"]       ?? 0) + 1;
+    if (log.bloating)     p["Bloating"]     = (p["Bloating"]     ?? 0) + 1;
+    if (log.headache)     p["Headache"]     = (p["Headache"]     ?? 0) + 1;
+    if (log.brain_fog)    p["Brain fog"]    = (p["Brain fog"]    ?? 0) + 1;
+    if (log.hot_flashes)  p["Hot flashes"]  = (p["Hot flashes"]  ?? 0) + 1;
+    if (log.night_sweats) p["Night sweats"] = (p["Night sweats"] ?? 0) + 1;
+    try {
+      if (log.custom_symptoms) {
+        (JSON.parse(log.custom_symptoms) as string[]).forEach(
+          (s) => (p[s] = (p[s] ?? 0) + 1)
+        );
+      }
+    } catch {}
+  }
+  return Object.fromEntries(
+    PHASES.map((phase) => [
+      phase,
+      Object.entries(acc[phase])
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 3)
+        .map(([symptom, count]) => ({ symptom, count })),
+    ])
+  ) as Record<Phase, { symptom: string; count: number }[]>;
+}
+
+function moodByPhase(
+  logs: DailyLog[],
+  cycles: Cycle[]
+): Record<Phase, number | null> {
+  const sums   = { Menstrual: 0, Follicular: 0, Ovulatory: 0, Luteal: 0 };
+  const counts = { Menstrual: 0, Follicular: 0, Ovulatory: 0, Luteal: 0 };
+  for (const log of logs) {
+    if (!log.mood) continue;
+    const day = getCycleDay(log.date, cycles);
+    if (!day) continue;
+    const phase = getPhase(Math.min(day, 28));
+    try {
+      (JSON.parse(log.mood) as string[]).forEach((emoji) => {
+        const score = MOOD_SCORE[emoji];
+        if (score) { sums[phase] += score; counts[phase]++; }
+      });
+    } catch {}
+  }
+  return Object.fromEntries(
+    PHASES.map((p) => [p, counts[p] > 0 ? sums[p] / counts[p] : null])
+  ) as Record<Phase, number | null>;
+}
+
+function logStreak(logs: DailyLog[]): { streak: number; total: number } {
+  const total   = logs.length;
+  const dateSet = new Set(logs.map((l) => l.date));
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    if (dateSet.has(d.toISOString().slice(0, 10))) streak++;
+    else break;
+  }
+  return { streak, total };
+}
+
+// ── Small UI components ───────────────────────────────────────────────────────
+
+function StatCard({
+  label, value, sub,
+}: { label: string; value: string; sub?: string }) {
+  return (
+    <div className="bg-[#FDF6F0] rounded-2xl p-5">
+      <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
+        {label}
+      </p>
+      <p className="text-3xl font-bold text-[#2D1B1E] leading-none">{value}</p>
+      {sub && <p className="text-xs text-[#8C6B5A] mt-1">{sub}</p>}
+    </div>
+  );
+}
+
+function SectionCard({
+  title, children,
+}: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+      <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+        {title}
+      </h2>
+      {children}
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function InsightsPage() {
+  const router = useRouter();
+
+  const [loading,   setLoading]   = useState(true);
+  const [insights,  setInsights]  = useState<InsightsResponse | null>(null);
+  const [cycles,    setCycles]    = useState<Cycle[]>([]);
+  const [logs,      setLogs]      = useState<DailyLog[]>([]);
+
+  useEffect(() => {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
+    if (!token) { router.push("/login"); return; }
+
+    Promise.all([
+      api.get<InsightsResponse>("/insights"),
+      api.get<{ cycles: Cycle[] }>("/cycles"),
+      api.get<{ logs: DailyLog[] }>("/logs?limit=90"),
+    ])
+      .then(([ins, cyc, log]) => {
+        setInsights(ins);
+        setCycles(cyc.cycles);
+        setLogs(log.logs);
+      })
+      .catch(() => router.push("/login"))
+      .finally(() => setLoading(false));
+  }, [router]);
+
+  // ── Loading ──────────────────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // ── Empty state ───────────────────────────────────────────────────────────────
+  if (cycles.length < 2) {
+    const { total } = logStreak(logs);
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-6 max-w-sm mx-auto">
+        <span className="text-5xl" aria-hidden>📊</span>
+        <div>
+          <h2 className="text-xl font-semibold text-[#C94B6D]">
+            Log for 2+ cycles to see your patterns
+          </h2>
+          <p className="text-sm text-[#8C6B5A] mt-1">
+            Dawn Phase needs at least two period starts to calculate averages
+            and phase trends.
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div className="w-full space-y-2">
+          <div className="flex justify-between text-xs text-[#8C6B5A]">
+            <span>{cycles.length} / 2 period starts logged</span>
+            <span>{total} day{total !== 1 ? "s" : ""} logged</span>
+          </div>
+          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#E8637A] rounded-full transition-all"
+              style={{ width: `${Math.min(100, (cycles.length / 2) * 100)}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 w-full">
+          <a
+            href="/cycles/new"
+            className="w-full min-h-[44px] flex items-center justify-center bg-[#E8637A] text-white font-semibold text-sm rounded-2xl hover:bg-[#C94B6D] transition-colors"
+          >
+            Log period start →
+          </a>
+          <a
+            href="/log"
+            className="w-full min-h-[44px] flex items-center justify-center border-2 border-[#E8637A] text-[#E8637A] font-semibold text-sm rounded-2xl hover:bg-[#E8637A] hover:text-white transition-all"
+          >
+            Log today's symptoms
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Full insights ─────────────────────────────────────────────────────────────
+  const { avg_cycle_length, top_symptoms } = insights!;
+  const { streak, total } = logStreak(logs);
+  const energyData   = energyByDay(logs, cycles);
+  const phaseSymptoms = symptomsByPhase(logs, cycles);
+  const phaseMood    = moodByPhase(logs, cycles);
+
+  // For the energy chart, determine max for scaling
+  const energyMax = Math.max(
+    ...energyData.filter((v): v is number => v !== null),
+    1
+  );
+
   return (
-    <div className="space-y-6">
+    <div className="max-w-3xl space-y-5 pb-12">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Insights</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Patterns and trends from your last 6 cycles
+        <h1 className="text-2xl font-bold text-[#C94B6D]">Insights</h1>
+        <p className="text-sm text-[#8C6B5A] mt-1">
+          Patterns from your last {cycles.length} cycle{cycles.length !== 1 ? "s" : ""}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <InsightCard label="Avg cycle length" value="28 days" trend="+1" />
-        <InsightCard label="Avg period length" value="5 days" trend="0" />
-        <InsightCard label="Cycles tracked" value="7" />
+      {/* ── Stat cards ────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-3 gap-3">
+        <StatCard
+          label="Avg cycle"
+          value={avg_cycle_length ? `${avg_cycle_length}d` : "—"}
+          sub="based on completed cycles"
+        />
+        <StatCard
+          label="Cycles tracked"
+          value={cycles.length.toString()}
+          sub={`${insights!.cycles_tracked} completed`}
+        />
+        <StatCard
+          label="Days logged"
+          value={total.toString()}
+          sub={streak > 0 ? `${streak}-day streak 🔥` : "keep logging!"}
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CycleLengthChart />
-        <SymptomsHeatmap />
-      </div>
+      {/* ── Energy by cycle day ───────────────────────────────────────────── */}
+      <SectionCard title="Energy across your cycle">
+        <div className="space-y-2">
+          {/* Bars */}
+          <div className="flex items-end gap-px h-20" aria-label="Energy by cycle day">
+            {energyData.map((val, i) => {
+              const day   = i + 1;
+              const phase = getPhase(day);
+              const pct   = val != null ? (val / energyMax) * 100 : 0;
+              return (
+                <div
+                  key={day}
+                  title={`Day ${day} (${phase}): ${val != null ? val.toFixed(1) : "no data"}`}
+                  className="flex-1 rounded-t-sm"
+                  style={{
+                    height: val != null ? `${Math.max(pct, 8)}%` : "4px",
+                    backgroundColor:
+                      val != null ? PHASE_META[phase].color : "#E5E7EB",
+                    opacity: val != null ? 1 : 0.4,
+                  }}
+                />
+              );
+            })}
+          </div>
+          {/* Phase band labels */}
+          <div className="flex text-[10px] text-[#8C6B5A]">
+            {/* Menstrual 5/28, Follicular 8/28, Ovulatory 1/28, Luteal 14/28 */}
+            {(
+              [
+                ["Menstrual", 5],
+                ["Follicular", 8],
+                ["Ovul.", 1],
+                ["Luteal", 14],
+              ] as [string, number][]
+            ).map(([label, span]) => (
+              <div
+                key={label}
+                className="text-center overflow-hidden"
+                style={{ flex: span }}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="text-xs text-[#8C6B5A]">
+          Average energy (1–5) per cycle day across all your logs. Hover bars for detail.
+        </p>
+      </SectionCard>
+
+      {/* ── Symptoms per phase ────────────────────────────────────────────── */}
+      <SectionCard title="Common symptoms per phase">
+        <div className="grid grid-cols-2 gap-3">
+          {PHASES.map((phase) => {
+            const syms = phaseSymptoms[phase];
+            const meta = PHASE_META[phase];
+            return (
+              <div
+                key={phase}
+                className={`${meta.bg} rounded-xl p-4 space-y-2`}
+              >
+                <div className="flex items-center gap-2">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: meta.color }}
+                    aria-hidden
+                  />
+                  <span className="text-xs font-semibold text-[#2D1B1E]">
+                    {phase}
+                  </span>
+                  <span className="text-[10px] text-[#8C6B5A] ml-auto">
+                    {meta.days}
+                  </span>
+                </div>
+                {syms.length > 0 ? (
+                  <ul className="space-y-1.5">
+                    {syms.map(({ symptom, count }) => (
+                      <li
+                        key={symptom}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span className="text-[#2D1B1E]">{symptom}</span>
+                        <span className="text-xs text-[#8C6B5A] font-medium">
+                          ×{count}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-[#8C6B5A] italic">
+                    No symptoms logged
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </SectionCard>
+
+      {/* ── Mood by phase ─────────────────────────────────────────────────── */}
+      <SectionCard title="Average mood by phase">
+        <div className="space-y-3">
+          {PHASES.map((phase) => {
+            const val  = phaseMood[phase];
+            const pct  = val != null ? (val / 5) * 100 : 0;
+            const meta = PHASE_META[phase];
+            const emoji =
+              val == null       ? "—"
+              : val < 2        ? "😢"
+              : val < 3        ? "😟"
+              : val < 4        ? "😐"
+              : val < 4.5      ? "🙂"
+              :                  "😊";
+            return (
+              <div key={phase} className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-[#2D1B1E] font-medium w-24">{phase}</span>
+                  <div className="flex-1 mx-3">
+                    <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{
+                          width: `${pct}%`,
+                          backgroundColor: meta.color,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span className="text-[#8C6B5A] w-16 text-right">
+                    {val != null ? `${val.toFixed(1)} / 5` : "no data"}{" "}
+                    <span>{emoji}</span>
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </SectionCard>
+
+      {/* ── Top symptoms overall ──────────────────────────────────────────── */}
+      {top_symptoms.length > 0 && (
+        <SectionCard title="Most common symptoms (all cycles)">
+          <div className="space-y-3">
+            {top_symptoms.map(({ symptom, count }, i) => {
+              const pct = (count / top_symptoms[0].count) * 100;
+              return (
+                <div key={symptom} className="space-y-1">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[#2D1B1E]">
+                      <span className="text-[#8C6B5A] w-4 inline-block">
+                        {i + 1}.
+                      </span>{" "}
+                      {symptom}
+                    </span>
+                    <span className="text-[#8C6B5A] font-medium">
+                      {count}×
+                    </span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[#E8637A] transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </SectionCard>
+      )}
     </div>
   );
 }
