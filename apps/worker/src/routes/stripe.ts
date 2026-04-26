@@ -27,36 +27,48 @@ stripe.post("/checkout", async (c) => {
     return c.json({ message: "User not found" }, 404);
   }
 
-  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${c.env.STRIPE_SECRET_KEY}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      mode: "subscription",
-      "line_items[0][price]": PRICE_ID_PRO,
-      "line_items[0][quantity]": "1",
-      // 7-day trial — card is required but not charged until day 8
-      "subscription_data[trial_period_days]": String(TRIAL_DAYS),
-      success_url: `${appUrl}/dashboard?checkout=success`,
-      cancel_url: `${appUrl}/`,
-      // Three ways for the webhook to find the user — metadata, reference
-      // id, and email — so a stale or missing field never silently drops updates.
-      "metadata[user_id]":   userId,
-      client_reference_id:   userId,
-      customer_email:        userRecord.email,
-      allow_promotion_codes: "true",
-    }),
-  });
+  console.log(`[stripe/checkout] userId=${userId} email=${userRecord.email}`);
+
+  let res: Response;
+  try {
+    res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${c.env.STRIPE_SECRET_KEY}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        mode: "subscription",
+        "line_items[0][price]": PRICE_ID_PRO,
+        "line_items[0][quantity]": "1",
+        // 7-day trial — card is required but not charged until day 8
+        "subscription_data[trial_period_days]": String(TRIAL_DAYS),
+        success_url: `${appUrl}/dashboard?checkout=success`,
+        cancel_url:  `${appUrl}/`,
+        // Three ways for the webhook to find the user — metadata, reference
+        // id, and email — so a stale or missing field never silently drops updates.
+        "metadata[user_id]":   userId,
+        client_reference_id:   userId,
+        customer_email:        userRecord.email,
+        allow_promotion_codes: "true",
+      }),
+    });
+  } catch (fetchErr) {
+    console.error("[stripe/checkout] fetch threw:", fetchErr);
+    return c.json({ message: `Stripe request failed: ${String(fetchErr)}` }, 500);
+  }
 
   if (!res.ok) {
-    const err = await res.json() as { error?: { message?: string } };
-    console.error("Stripe checkout error:", err);
-    return c.json(
-      { message: err.error?.message ?? "Failed to create checkout session" },
-      500
-    );
+    // res.json() can itself throw if Stripe returns non-JSON — handle safely.
+    let errMsg = `Stripe ${res.status}`;
+    try {
+      const body = await res.json() as { error?: { message?: string } };
+      errMsg = body.error?.message ?? JSON.stringify(body);
+    } catch {
+      errMsg = await res.text().catch(() => `Stripe ${res.status} (unreadable body)`);
+    }
+    console.error("[stripe/checkout] Stripe API error:", errMsg);
+    return c.json({ message: errMsg }, 500);
   }
 
   const session = (await res.json()) as { url: string; id: string };
