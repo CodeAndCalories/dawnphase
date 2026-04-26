@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
-import CycleCalendarWidget from "@/components/dashboard/CycleCalendarWidget";
-import PhaseCard from "@/components/dashboard/PhaseCard";
-import QuickLogButton from "@/components/dashboard/QuickLogButton";
-import UpcomingEvents from "@/components/dashboard/UpcomingEvents";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 interface Cycle {
   id: string;
@@ -20,73 +18,141 @@ interface DailyLog {
   id: string;
   user_id: string;
   date: string;
+  mood: string | null;        // JSON: e.g. '["😊"]'
+  energy: number | null;
+  sleep_hours: number | null;
 }
 
-function getPhaseInfo(day: number) {
-  if (day >= 1 && day <= 5)
+// ── Phase helpers ─────────────────────────────────────────────────────────────
+
+type PhaseName = "Menstrual" | "Follicular" | "Ovulatory" | "Luteal";
+
+interface PhaseInfo {
+  name: PhaseName;
+  tip: string;
+  accent: string;   // Tailwind text colour class
+  dotColor: string; // hex for inline use
+}
+
+function getPhaseInfo(day: number): PhaseInfo {
+  if (day <= 5)
     return {
       name: "Menstrual",
-      color: "bg-rose-50 border-rose-200",
-      badge: "bg-rose-100 text-rose-800",
-      description:
-        "Rest and restoration. Your body is shedding the uterine lining. Prioritize gentle movement and self-care.",
+      tip: "Rest is productive. Gentle movement and warmth support your body right now.",
+      accent: "text-rose-500",
+      dotColor: "#F87171",
     };
-  if (day >= 6 && day <= 13)
+  if (day <= 13)
     return {
       name: "Follicular",
-      color: "bg-purple-50 border-purple-200",
-      badge: "bg-purple-100 text-purple-800",
-      description:
-        "Rising energy and creativity. Estrogen is climbing. Great time to start new projects and socialize.",
+      tip: "Energy is building. Great time to start new projects and connect socially.",
+      accent: "text-violet-500",
+      dotColor: "#8B5CF6",
     };
   if (day === 14)
     return {
       name: "Ovulatory",
-      color: "bg-amber-50 border-amber-200",
-      badge: "bg-amber-100 text-amber-800",
-      description:
-        "Peak energy and confidence. Great time for big conversations and creative work.",
+      tip: "Peak energy and communication. Make the most of your clarity today.",
+      accent: "text-amber-500",
+      dotColor: "#F59E0B",
     };
   return {
     name: "Luteal",
-    color: "bg-indigo-50 border-indigo-200",
-    badge: "bg-indigo-100 text-indigo-800",
-    description:
-      "Wind-down phase. Progesterone rises. Focus on calming activities and nourishing foods.",
+    tip: "Wind down gradually. Reduce caffeine, prioritise sleep, and be gentle with yourself.",
+    accent: "text-indigo-500",
+    dotColor: "#6366F1",
   };
 }
 
-function formatTrialEnd(trialEndsAt: string): string {
-  const end = new Date(trialEndsAt);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const diffDays = Math.ceil(
-    (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-  );
-  if (diffDays <= 0) return "Trial ended";
-  if (diffDays === 1) return "Trial ends tomorrow";
-  return `Trial ends in ${diffDays} days`;
+function daysToNextPhase(day: number): { label: string; days: number } {
+  if (day <= 5)   return { label: "Follicular",  days: 6 - day };
+  if (day <= 13)  return { label: "Ovulatory",   days: 14 - day };
+  if (day === 14) return { label: "Luteal",      days: 1 };
+  return            { label: "Next period",   days: Math.max(1, 29 - day) };
 }
 
-function getLast7Days(): string[] {
-  const days: string[] = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    days.push(d.toISOString().slice(0, 10));
+// ── Data helpers ──────────────────────────────────────────────────────────────
+
+const MOOD_SCORE: Record<string, number> = {
+  "😢": 1, "😟": 2, "😐": 3, "🙂": 4, "😊": 5,
+};
+const MOOD_EMOJI = ["", "😢", "😟", "😐", "🙂", "😊"];
+
+function parseMood(raw: string | null): string | null {
+  if (!raw) return null;
+  try {
+    const arr = JSON.parse(raw) as string[];
+    return arr[0] ?? null;
+  } catch {
+    return null;
   }
-  return days;
 }
+
+function avgMoodScore(logs: DailyLog[]): number | null {
+  const scores = logs
+    .map((l) => {
+      const emoji = parseMood(l.mood);
+      return emoji ? (MOOD_SCORE[emoji] ?? null) : null;
+    })
+    .filter((s): s is number => s !== null);
+  if (!scores.length) return null;
+  return scores.reduce((a, b) => a + b, 0) / scores.length;
+}
+
+function formatShortDate(iso: string) {
+  return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
+function predictedNext(latestCycle: Cycle, avgLen: number): Date {
+  const d = new Date(latestCycle.start_date + "T00:00:00");
+  d.setDate(d.getDate() + avgLen);
+  return d;
+}
+
+// ── Small shared card shell ────────────────────────────────────────────────────
+
+function Card({
+  children,
+  className = "",
+  hero = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  hero?: boolean;
+}) {
+  return (
+    <div
+      className={`bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 ${
+        hero ? "shadow-md" : "shadow-sm"
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+function CardHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-3">
+      {children}
+    </p>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
-  // ── Auth + subscription gate ────────────────────────────────────────────────
-  const { user, loading: authLoading, redirecting, activating, statusMessage } = useRequireSubscription();
+  // ── Auth + subscription gate ───────────────────────────────────────────────
+  const { user, loading: authLoading, activating, statusMessage } =
+    useRequireSubscription();
 
-  // ── Page data ───────────────────────────────────────────────────────────────
+  // ── Data ───────────────────────────────────────────────────────────────────
   const [cycles,      setCycles]      = useState<Cycle[]>([]);
   const [logs,        setLogs]        = useState<DailyLog[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
-  const [billingLoading, setBillingLoading] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -94,30 +160,16 @@ export default function DashboardPage() {
       api.get<{ cycles: Cycle[] }>("/cycles"),
       api.get<{ logs: DailyLog[] }>("/logs?limit=7"),
     ])
-      .then(([cyclesRes, logsRes]) => {
-        setCycles(cyclesRes.cycles);
-        setLogs(logsRes.logs);
+      .then(([c, l]) => {
+        setCycles(c.cycles);
+        setLogs(l.logs);
       })
       .finally(() => setDataLoading(false));
   }, [user]);
 
-  // ── Combined loading state ──────────────────────────────────────────────────
   const loading = authLoading || dataLoading;
 
-  async function handleBillingPortal() {
-    setBillingLoading(true);
-    try {
-      const res = await api.post<{ url: string }>("/stripe/portal", {});
-      window.location.href = res.url;
-    } catch {
-      window.location.href =
-        "https://billing.stripe.com/p/login/eVq8wR3AQ3Aeejr5zEcs800";
-    } finally {
-      setBillingLoading(false);
-    }
-  }
-
-  // ── Loading / redirect screens ──────────────────────────────────────────────
+  // ── Loading screen ─────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
@@ -131,34 +183,55 @@ export default function DashboardPage() {
 
   if (!user) return null;
 
-  // ── Derived display values ──────────────────────────────────────────────────
-  const latestCycle = cycles[0] ?? null;
+  // ── Derived values ─────────────────────────────────────────────────────────
+  const latestCycle   = cycles[0] ?? null;
+  const completedLens = cycles
+    .map((c) => c.cycle_length)
+    .filter((n): n is number => n !== null);
+  const avgLen = completedLens.length
+    ? Math.round(completedLens.reduce((a, b) => a + b, 0) / completedLens.length)
+    : 28;
+
   const cycleDay = latestCycle
     ? Math.max(
         1,
         Math.ceil(
           (new Date().setHours(0, 0, 0, 0) -
             new Date(latestCycle.start_date).setHours(0, 0, 0, 0)) /
-            (1000 * 60 * 60 * 24)
+            86_400_000
         ) + 1
       )
     : null;
 
   const phase = cycleDay ? getPhaseInfo(cycleDay) : null;
-  const logDates = new Set(logs.map((l) => l.date));
-  const last7 = getLast7Days();
 
-  const subStatus = user.subscription_status;
-  const subBadge =
-    subStatus === "active"
-      ? "bg-green-100 text-green-800"
-      : subStatus === "trialing"
-        ? "bg-blue-100 text-blue-800"
-        : "bg-red-100 text-red-800";
+  const nextPeriodDate = latestCycle ? predictedNext(latestCycle, avgLen) : null;
+  const daysToNextPeriod = nextPeriodDate
+    ? Math.max(1, Math.ceil((nextPeriodDate.getTime() - new Date().setHours(0,0,0,0)) / 86_400_000))
+    : null;
+  const nextPhase = cycleDay ? daysToNextPhase(cycleDay) : null;
+
+  // Recent check-ins (last 3 logs)
+  const recentLogs = logs.slice(0, 3);
+
+  // This cycle stats (from fetched logs)
+  const cycleMoodAvg = avgMoodScore(logs);
+  const energyValues = logs.map((l) => l.energy).filter((e): e is number => e !== null);
+  const cycleEnergyAvg = energyValues.length
+    ? energyValues.reduce((a, b) => a + b, 0) / energyValues.length
+    : null;
+
+  // Quick insight
+  const quickInsight =
+    completedLens.length >= 2
+      ? `Your average cycle is ${avgLen} days`
+      : cycles.length >= 1
+        ? "Log 2 full cycles to unlock insights"
+        : null;
 
   return (
-    <div className="space-y-6">
-      {/* Activation banner — shown when webhook hasn't fired within 10 s */}
+    <div className="max-w-5xl mx-auto space-y-5 pb-4">
+      {/* Activation banner */}
       {activating && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
           <span>✓ Payment received. Finishing setup… this usually takes a few seconds.</span>
@@ -171,126 +244,235 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Your cycle</h1>
-          <p className="text-gray-500 text-sm mt-1">
-            {cycleDay
-              ? <><span>Today is cycle day </span><strong>{cycleDay}</strong></>
-              : "No cycle recorded yet — start logging to track your cycle"}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <a
-            href="/cycles/new"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E8637A] text-white text-sm font-medium rounded-full hover:bg-[#C94B6D] transition-colors"
-          >
-            <span aria-hidden>🩸</span>
-            Log period
-          </a>
-          <QuickLogButton />
-        </div>
-      </div>
+      {/* ── ROW 1: Hero + secondary cards ──────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-      {/* User status strip */}
-      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-gray-500">{user.email}</span>
-          <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium capitalize">
-            {user.mode === "perimenopause" ? "Perimenopause mode" : "Cycle tracking"}
-          </span>
-          <span className={`px-2 py-0.5 rounded-full font-medium ${subBadge}`}>
-            {subStatus === "trialing" && user.trial_ends_at
-              ? formatTrialEnd(user.trial_ends_at)
-              : subStatus === "active"
-                ? "Active subscription"
-                : subStatus === "canceled"
-                  ? "Subscription canceled"
-                  : "Payment past due"}
-          </span>
-        </div>
-        <button
-          onClick={handleBillingPortal}
-          disabled={billingLoading}
-          className="inline-flex items-center gap-1 text-gray-400 hover:text-[#E8637A] transition-colors disabled:opacity-50"
-        >
-          {billingLoading ? "Opening…" : "Manage billing"}
-          {!billingLoading && (
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 10L10 2M10 2H5M10 2V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+        {/* Hero card — 2/3 width */}
+        <Card hero className="md:col-span-2">
+          <CardHeading>Your cycle today</CardHeading>
+
+          {phase && cycleDay ? (
+            <div className="space-y-4">
+              {/* Phase name + day */}
+              <div>
+                <h1 className={`text-4xl font-bold tracking-tight ${phase.accent}`}>
+                  {phase.name}
+                </h1>
+                <p className="text-[#8C6B5A] mt-1 text-sm font-medium">
+                  Cycle day {cycleDay}
+                  {nextPeriodDate && (
+                    <> · Next period around{" "}
+                      <span className="text-[#2D1B1E] font-semibold">
+                        {nextPeriodDate.toLocaleDateString("en-US", {
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </span>
+                    </>
+                  )}
+                </p>
+              </div>
+
+              {/* Phase tip */}
+              <p className="text-sm text-[#8C6B5A] leading-relaxed border-l-2 border-[#E8637A]/30 pl-3">
+                {phase.tip}
+              </p>
+
+              {/* Action buttons */}
+              <div className="flex flex-wrap gap-3 pt-1">
+                <a
+                  href="/log"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#E8637A] to-[#F4956A] text-white text-sm font-semibold rounded-full hover:opacity-90 transition-opacity shadow-sm"
+                >
+                  Log today
+                </a>
+                <a
+                  href="/cycles/new"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#E8637A] text-[#E8637A] text-sm font-semibold rounded-full hover:bg-[#E8637A] hover:text-white transition-all"
+                >
+                  Log period
+                </a>
+              </div>
+            </div>
+          ) : (
+            /* Empty state */
+            <div className="flex flex-col items-center justify-center py-8 text-center gap-4">
+              <span className="text-5xl" aria-hidden>🌸</span>
+              <div>
+                <p className="font-semibold text-[#2D1B1E] text-lg">
+                  Start your cycle tracking
+                </p>
+                <p className="text-sm text-[#8C6B5A] mt-1">
+                  Log your last period to unlock phase predictions, cycle day
+                  tracking, and personalised insights.
+                </p>
+              </div>
+              <a
+                href="/cycles/new"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#E8637A] to-[#F4956A] text-white text-sm font-semibold rounded-full hover:opacity-90 transition-opacity shadow-sm"
+              >
+                Log period start →
+              </a>
+            </div>
           )}
-        </button>
-      </div>
+        </Card>
 
-      {/* Phase grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {phase && cycleDay ? (
-          <PhaseCard
-            phase={phase.name}
-            day={cycleDay}
-            description={phase.description}
-            color={phase.color}
-            badge={phase.badge}
-          />
-        ) : (
-          <div className="rounded-2xl border-2 border-dashed border-[#E8637A]/30 bg-[#FDF6F0] p-6 flex flex-col items-center justify-center text-center gap-3">
-            <span className="text-3xl" aria-hidden>🩸</span>
-            <p className="text-sm font-medium text-[#2D1B1E]">
-              Start by logging your last period
-            </p>
-            <a
-              href="/cycles/new"
-              className="inline-flex items-center gap-1 px-4 py-2 bg-[#E8637A] text-white text-sm font-semibold rounded-full hover:bg-[#C94B6D] transition-colors"
-            >
-              Log period start →
-            </a>
-          </div>
-        )}
-        <UpcomingEvents cycleDay={cycleDay} />
-        <CycleCalendarWidget cycleDay={cycleDay} />
-      </div>
-
-      {/* Recent 7-day log strip */}
-      <div className="rounded-2xl border border-gray-100 bg-white p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-900">Last 7 days</h3>
-          <a href="/log" className="text-xs text-purple-600 hover:underline font-medium">
-            Log today →
-          </a>
-        </div>
-        {logs.length === 0 ? (
-          <p className="text-sm text-gray-500">
-            No logs yet.{" "}
-            <a href="/log" className="text-purple-600 hover:underline font-medium">
-              Start logging today →
-            </a>
-          </p>
-        ) : (
-          <div className="flex gap-2">
-            {last7.map((date) => {
-              const hasLog = logDates.has(date);
-              const label = new Date(date + "T00:00:00").toLocaleDateString(
-                "en-US",
-                { weekday: "short", month: "short", day: "numeric" }
-              );
-              return (
-                <div key={date} className="flex flex-col items-center gap-1">
-                  <div
-                    title={label}
-                    className={`w-8 h-8 rounded-full ${hasLog ? "bg-purple-500" : "bg-gray-100"}`}
-                  />
-                  <span className="text-[10px] text-gray-400">
-                    {new Date(date + "T00:00:00").toLocaleDateString("en-US", {
-                      weekday: "short",
-                    })}
+        {/* Right column — stacked secondary cards */}
+        <div className="flex flex-col gap-5">
+          {/* Upcoming */}
+          <Card className="flex-1">
+            <CardHeading>Upcoming</CardHeading>
+            {cycleDay && nextPhase && daysToNextPeriod ? (
+              <ul className="space-y-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-sm text-[#2D1B1E]">Next period</span>
+                  <span className="text-xs font-semibold text-[#E8637A] bg-[#E8637A]/10 px-2.5 py-1 rounded-full">
+                    in {daysToNextPeriod}d
                   </span>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-sm text-[#2D1B1E]">{nextPhase.label} phase</span>
+                  <span className="text-xs font-semibold text-[#8C6B5A] bg-gray-100 px-2.5 py-1 rounded-full">
+                    in {nextPhase.days}d
+                  </span>
+                </li>
+              </ul>
+            ) : (
+              <p className="text-sm text-[#8C6B5A]">
+                Log a period to see predictions.
+              </p>
+            )}
+          </Card>
+
+          {/* Quick insight */}
+          <Card className="flex-1">
+            <CardHeading>Quick insight</CardHeading>
+            {quickInsight ? (
+              <p className="text-sm text-[#2D1B1E] font-medium leading-relaxed">
+                {quickInsight}
+              </p>
+            ) : (
+              <p className="text-sm text-[#8C6B5A]">
+                Log your first period to start building insights.
+              </p>
+            )}
+            {completedLens.length >= 2 && (
+              <a
+                href="/insights"
+                className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline"
+              >
+                See all insights →
+              </a>
+            )}
+          </Card>
+        </div>
+      </div>
+
+      {/* ── ROW 2: Recent check-ins + This cycle ───────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        {/* Recent check-ins */}
+        <Card>
+          <CardHeading>Recent check-ins</CardHeading>
+          {recentLogs.length === 0 ? (
+            <div className="text-center py-4 space-y-2">
+              <p className="text-sm text-[#8C6B5A]">No logs yet.</p>
+              <a
+                href="/log"
+                className="inline-block text-sm text-[#E8637A] font-semibold hover:underline"
+              >
+                Start logging today →
+              </a>
+            </div>
+          ) : (
+            <ul className="divide-y divide-gray-50">
+              {recentLogs.map((log) => {
+                const moodEmoji = parseMood(log.mood);
+                return (
+                  <li key={log.date} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+                    <span className="text-sm font-medium text-[#2D1B1E]">
+                      {formatShortDate(log.date)}
+                    </span>
+                    <div className="flex items-center gap-3 text-xs text-[#8C6B5A]">
+                      {moodEmoji && (
+                        <span className="text-base leading-none" title="Mood">
+                          {moodEmoji}
+                        </span>
+                      )}
+                      {log.energy != null && (
+                        <span className="flex items-center gap-0.5">
+                          <span className="text-[#C94B6D] font-semibold">
+                            {log.energy}
+                          </span>
+                          <span>/5 energy</span>
+                        </span>
+                      )}
+                      {log.sleep_hours != null && (
+                        <span>{log.sleep_hours}h sleep</span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          {logs.length > 0 && (
+            <a
+              href="/log"
+              className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline"
+            >
+              Log today →
+            </a>
+          )}
+        </Card>
+
+        {/* This cycle */}
+        <Card>
+          <CardHeading>This cycle</CardHeading>
+          {!latestCycle ? (
+            <p className="text-sm text-[#8C6B5A]">No cycle logged yet.</p>
+          ) : (
+            <div className="grid grid-cols-3 gap-4">
+              {/* Days logged */}
+              <div className="text-center space-y-1">
+                <p className="text-3xl font-bold text-[#C94B6D]">
+                  {logs.length}
+                </p>
+                <p className="text-xs text-[#8C6B5A] leading-tight">
+                  days logged
+                  <br />
+                  <span className="text-[10px] opacity-70">(last 7)</span>
+                </p>
+              </div>
+
+              {/* Avg mood */}
+              <div className="text-center space-y-1">
+                <p className="text-3xl font-bold text-[#C94B6D]">
+                  {cycleMoodAvg != null
+                    ? MOOD_EMOJI[Math.round(cycleMoodAvg)]
+                    : "—"}
+                </p>
+                <p className="text-xs text-[#8C6B5A] leading-tight">
+                  avg mood
+                </p>
+              </div>
+
+              {/* Avg energy */}
+              <div className="text-center space-y-1">
+                <p className="text-3xl font-bold text-[#C94B6D]">
+                  {cycleEnergyAvg != null
+                    ? cycleEnergyAvg.toFixed(1)
+                    : "—"}
+                </p>
+                <p className="text-xs text-[#8C6B5A] leading-tight">
+                  avg energy
+                  <br />
+                  <span className="text-[10px] opacity-70">out of 5</span>
+                </p>
+              </div>
+            </div>
+          )}
+        </Card>
       </div>
     </div>
   );
