@@ -93,6 +93,7 @@ export default function DashboardPage() {
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [logs, setLogs] = useState<DailyLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [billingLoading, setBillingLoading] = useState(false);
 
   useEffect(() => {
     const token =
@@ -145,6 +146,19 @@ export default function DashboardPage() {
   const logDates = new Set(logs.map((l) => l.date));
   const last7 = getLast7Days();
 
+  async function handleBillingPortal() {
+    setBillingLoading(true);
+    try {
+      const res = await api.post<{ url: string }>("/stripe/portal", {});
+      window.location.href = res.url;
+    } catch {
+      window.location.href =
+        "https://billing.stripe.com/p/login/eVq8wR3AQ3Aeejr5zEcs800";
+    } finally {
+      setBillingLoading(false);
+    }
+  }
+
   const subStatus = user.subscription_status;
   const subBadge =
     subStatus === "active"
@@ -178,20 +192,34 @@ export default function DashboardPage() {
       </div>
 
       {/* User status strip */}
-      <div className="flex flex-wrap items-center gap-3 text-xs">
-        <span className="text-gray-500">{user.email}</span>
-        <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium capitalize">
-          {user.mode === "perimenopause" ? "Perimenopause mode" : "Cycle tracking"}
-        </span>
-        <span className={`px-2 py-0.5 rounded-full font-medium ${subBadge}`}>
-          {subStatus === "trialing" && user.trial_ends_at
-            ? formatTrialEnd(user.trial_ends_at)
-            : subStatus === "active"
-              ? "Active subscription"
-              : subStatus === "canceled"
-                ? "Subscription canceled"
-                : "Payment past due"}
-        </span>
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-gray-500">{user.email}</span>
+          <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 font-medium capitalize">
+            {user.mode === "perimenopause" ? "Perimenopause mode" : "Cycle tracking"}
+          </span>
+          <span className={`px-2 py-0.5 rounded-full font-medium ${subBadge}`}>
+            {subStatus === "trialing" && user.trial_ends_at
+              ? formatTrialEnd(user.trial_ends_at)
+              : subStatus === "active"
+                ? "Active subscription"
+                : subStatus === "canceled"
+                  ? "Subscription canceled"
+                  : "Payment past due"}
+          </span>
+        </div>
+        <button
+          onClick={handleBillingPortal}
+          disabled={billingLoading}
+          className="inline-flex items-center gap-1 text-gray-400 hover:text-[#E8637A] transition-colors disabled:opacity-50"
+        >
+          {billingLoading ? "Opening…" : "Manage billing"}
+          {!billingLoading && (
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 10L10 2M10 2H5M10 2V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Phase grid */}
