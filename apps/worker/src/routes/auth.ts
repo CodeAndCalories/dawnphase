@@ -42,17 +42,20 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   const id = newId();
   const passwordHash = await hashPassword(password);
 
+  // subscription_status starts as 'incomplete' until Stripe checkout
+  // completes. The webhook (checkout.session.completed) flips it to
+  // 'trialing' and sets trial_ends_at at that point.
   await dbRun(
     c.env.DB,
     `INSERT INTO users
-       (id, email, password_hash, mode, subscription_status, trial_ends_at, created_at)
+       (id, email, password_hash, mode, subscription_status, created_at)
      VALUES
-       (?, ?, ?, 'cycle', 'trialing', datetime('now', '+7 days'), datetime('now'))`,
+       (?, ?, ?, 'cycle', 'incomplete', datetime('now'))`,
     [id, email, passwordHash]
   );
 
   const token = await signJWT(
-    { sub: id, email, status: "trialing" },
+    { sub: id, email, status: "incomplete" },
     c.env.JWT_SECRET
   );
 
@@ -64,7 +67,7 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   }).catch(() => {});
 
   return c.json(
-    { token, user: { id, email, name, mode: "cycle", status: "trialing" } },
+    { token, user: { id, email, name, mode: "cycle", status: "incomplete" } },
     201
   );
 });

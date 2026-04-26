@@ -1,18 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRequireSubscription, type User } from "@/lib/auth";
 import { api } from "@/lib/api";
-
-// ── Types ────────────────────────────────────────────────────────────────────
-
-interface User {
-  id: string;
-  email: string;
-  mode: "cycle" | "perimenopause";
-  subscription_status: "trialing" | "active" | "past_due" | "canceled" | "incomplete";
-  trial_ends_at: string | null;
-}
 
 interface Reminder {
   active: number;
@@ -56,12 +46,14 @@ const SUB_BADGE: Record<string, string> = {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function SettingsPage() {
-  const router = useRouter();
+  // ── Auth + subscription gate ────────────────────────────────────────────────
+  const { user: authUser, loading: authLoading, redirecting } = useRequireSubscription();
 
-  // Remote state
-  const [user,     setUser]    = useState<User | null>(null);
-  const [reminder, setReminder]= useState<Reminder>({ active: 1, reminder_days_before: 3 });
-  const [loading,  setLoading] = useState(true);
+  // Local copy of user so handleModeChange can update it without re-running
+  // the hook (which only fetches once on mount).
+  const [user,        setUser]       = useState<User | null>(null);
+  const [reminder,    setReminder]   = useState<Reminder>({ active: 1, reminder_days_before: 3 });
+  const [dataLoading, setDataLoading]= useState(true);
 
   // Mode save
   const [modeSaving, setModeSaving] = useState(false);
@@ -87,27 +79,19 @@ export default function SettingsPage() {
   const [deleting,     setDeleting]     = useState(false);
   const [deleteError,  setDeleteError]  = useState<string | null>(null);
 
-  // ── Load ───────────────────────────────────────────────────────────────────
+  // ── Load reminders once auth resolves ─────────────────────────────────────
   useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
-    if (!token) { router.push("/login"); return; }
-
-    Promise.all([
-      api.get<{ user: User }>("/auth/me"),
-      api.get<{ reminder: Reminder }>("/reminders").catch(() => null),
-    ])
-      .then(([meRes, remRes]) => {
-        setUser(meRes.user);
-        if (remRes) {
-          setReminder(remRes.reminder);
-          setRemEnabled(remRes.reminder.active === 1);
-          setRemDays(remRes.reminder.reminder_days_before);
-        }
+    if (!authUser) return;
+    setUser(authUser); // seed local user from hook
+    api.get<{ reminder: Reminder }>("/reminders")
+      .then((remRes) => {
+        setReminder(remRes.reminder);
+        setRemEnabled(remRes.reminder.active === 1);
+        setRemDays(remRes.reminder.reminder_days_before);
       })
-      .catch(() => router.push("/login"))
-      .finally(() => setLoading(false));
-  }, [router]);
+      .catch(() => {}) // no reminders yet — defaults are fine
+      .finally(() => setDataLoading(false));
+  }, [authUser]);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
 
@@ -187,7 +171,7 @@ export default function SettingsPage() {
     try {
       await api.delete("/auth/me");
       localStorage.removeItem("dp_token");
-      router.push("/login");
+      window.location.href = "/login";
     } catch (err) {
       setDeleteError(err instanceof Error ? err.message : "Could not delete account");
       setDeleting(false);
@@ -196,10 +180,13 @@ export default function SettingsPage() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
-  if (loading) {
+  if (authLoading || dataLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        {redirecting && (
+          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        )}
       </div>
     );
   }

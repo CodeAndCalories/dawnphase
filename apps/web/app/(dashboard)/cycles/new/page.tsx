@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
 
 interface Cycle {
@@ -33,30 +33,19 @@ function hasRecentCycle(cycles: Cycle[]): boolean {
 }
 
 export default function NewCyclePage() {
-  const router = useRouter();
+  // ── Auth + subscription gate ────────────────────────────────────────────────
+  const { loading, redirecting } = useRequireSubscription();
 
-  const today     = toISODate(new Date());
-  const minDate   = toISODate(addDays(new Date(), -7));
+  const today   = toISODate(new Date());
+  const minDate = toISODate(addDays(new Date(), -7));
 
-  // state
-  const [loading,     setLoading]     = useState(true);
+  // ── Form state ───────────────────────────────────────────────────────────────
   const [startDate,   setStartDate]   = useState(today);
   const [flow,        setFlow]        = useState<FlowValue>("medium");
   const [irregular,   setIrregular]   = useState(false);
   const [submitting,  setSubmitting]  = useState(false);
   const [error,       setError]       = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState(false);
-
-  // ── auth + preflight ──────────────────────────────────────────────────────
-  useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
-    if (!token) { router.push("/login"); return; }
-
-    api.get<{ cycles: Cycle[] }>("/cycles")
-      .then(() => setLoading(false))
-      .catch(() => router.push("/login"));
-  }, [router]);
 
   // We fetch cycles inside submit so the check is always fresh.
   async function attemptSubmit() {
@@ -87,7 +76,7 @@ export default function NewCyclePage() {
         flow_intensity: flow,
         is_irregular:  irregular,
       });
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
       setSubmitting(false);
@@ -101,8 +90,11 @@ export default function NewCyclePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        {redirecting && (
+          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        )}
       </div>
     );
   }

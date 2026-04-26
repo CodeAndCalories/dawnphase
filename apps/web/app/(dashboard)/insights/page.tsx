@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -192,18 +192,16 @@ function SectionCard({
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function InsightsPage() {
-  const router = useRouter();
+  // ── Auth + subscription gate ────────────────────────────────────────────────
+  const { user, loading: authLoading, redirecting } = useRequireSubscription();
 
-  const [loading,   setLoading]   = useState(true);
-  const [insights,  setInsights]  = useState<InsightsResponse | null>(null);
-  const [cycles,    setCycles]    = useState<Cycle[]>([]);
-  const [logs,      setLogs]      = useState<DailyLog[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [insights,    setInsights]    = useState<InsightsResponse | null>(null);
+  const [cycles,      setCycles]      = useState<Cycle[]>([]);
+  const [logs,        setLogs]        = useState<DailyLog[]>([]);
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
-    if (!token) { router.push("/login"); return; }
-
+    if (!user) return;
     Promise.all([
       api.get<InsightsResponse>("/insights"),
       api.get<{ cycles: Cycle[] }>("/cycles"),
@@ -214,15 +212,17 @@ export default function InsightsPage() {
         setCycles(cyc.cycles);
         setLogs(log.logs);
       })
-      .catch(() => router.push("/login"))
-      .finally(() => setLoading(false));
-  }, [router]);
+      .finally(() => setDataLoading(false));
+  }, [user]);
 
   // ── Loading ──────────────────────────────────────────────────────────────────
-  if (loading) {
+  if (authLoading || dataLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        {redirecting && (
+          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        )}
       </div>
     );
   }

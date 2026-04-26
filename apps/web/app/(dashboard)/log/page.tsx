@@ -1,16 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
-
-// ── Types ────────────────────────────────────────────────────────────────────
-
-interface UserMe {
-  id: string;
-  email: string;
-  mode: "cycle" | "perimenopause";
-}
 
 interface DailyLogFromAPI {
   date: string;
@@ -83,18 +75,19 @@ function safeParseJSON(s: string | null): string[] {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function LogPage() {
-  const router = useRouter();
   const today = todayStr();
 
-  // Meta state
-  const [loading,     setLoading]    = useState(true);
-  const [userMode,    setUserMode]   = useState<"cycle" | "perimenopause">("cycle");
-  const [hasExisting, setHasExisting]= useState(false);
-  const [saving,      setSaving]     = useState(false);
-  const [saved,       setSaved]      = useState(false);
-  const [error,       setError]      = useState<string | null>(null);
+  // ── Auth + subscription gate ────────────────────────────────────────────────
+  const { user, loading: authLoading, redirecting } = useRequireSubscription();
 
-  // Form state
+  // ── Meta state ──────────────────────────────────────────────────────────────
+  const [dataLoading, setDataLoading] = useState(true);
+  const [hasExisting, setHasExisting] = useState(false);
+  const [saving,      setSaving]      = useState(false);
+  const [saved,       setSaved]       = useState(false);
+  const [error,       setError]       = useState<string | null>(null);
+
+  // ── Form state ───────────────────────────────────────────────────────────────
   const [flow,     setFlow]    = useState<FlowValue>("none");
   const [mood,     setMood]    = useState<string | null>(null);
   const [energy,   setEnergy]  = useState(3);
@@ -102,45 +95,35 @@ export default function LogPage() {
   const [symptoms, setSymptoms]= useState<Set<string>>(new Set());
   const [notes,    setNotes]   = useState("");
 
-  // ── Auth + hydrate ──────────────────────────────────────────────────────────
+  // ── Hydrate today's log once auth resolves ──────────────────────────────────
   useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
-    if (!token) { router.push("/login"); return; }
-
-    Promise.all([
-      api.get<{ user: UserMe }>("/auth/me"),
-      api.get<{ log: DailyLogFromAPI }>(`/logs/${today}`).catch(() => null),
-    ])
-      .then(([meRes, logRes]) => {
-        setUserMode(meRes.user.mode);
-
-        if (logRes) {
-          const l = logRes.log;
-          setHasExisting(true);
-          if (l.flow_intensity && l.flow_intensity !== "spotting") {
-            setFlow(l.flow_intensity);
-          }
-          const moodArr = safeParseJSON(l.mood);
-          if (moodArr[0]) setMood(moodArr[0]);
-          if (l.energy)      setEnergy(l.energy);
-          if (l.sleep_hours) setSleep(l.sleep_hours);
-          if (l.notes)       setNotes(l.notes);
-
-          const s = new Set<string>();
-          if (l.cramps)       s.add("cramps");
-          if (l.bloating)     s.add("bloating");
-          if (l.headache)     s.add("headache");
-          if (l.brain_fog)    s.add("brain_fog");
-          if (l.hot_flashes)  s.add("hot_flashes");
-          if (l.night_sweats) s.add("night_sweats");
-          safeParseJSON(l.custom_symptoms).forEach(k => s.add(k));
-          setSymptoms(s);
+    if (!user) return;
+    api.get<{ log: DailyLogFromAPI }>(`/logs/${today}`)
+      .then((logRes) => {
+        const l = logRes.log;
+        setHasExisting(true);
+        if (l.flow_intensity && l.flow_intensity !== "spotting") {
+          setFlow(l.flow_intensity);
         }
+        const moodArr = safeParseJSON(l.mood);
+        if (moodArr[0]) setMood(moodArr[0]);
+        if (l.energy)      setEnergy(l.energy);
+        if (l.sleep_hours) setSleep(l.sleep_hours);
+        if (l.notes)       setNotes(l.notes);
+
+        const s = new Set<string>();
+        if (l.cramps)       s.add("cramps");
+        if (l.bloating)     s.add("bloating");
+        if (l.headache)     s.add("headache");
+        if (l.brain_fog)    s.add("brain_fog");
+        if (l.hot_flashes)  s.add("hot_flashes");
+        if (l.night_sweats) s.add("night_sweats");
+        safeParseJSON(l.custom_symptoms).forEach(k => s.add(k));
+        setSymptoms(s);
       })
-      .catch(() => router.push("/login"))
-      .finally(() => setLoading(false));
-  }, [router, today]);
+      .catch(() => {}) // 404 = no log yet today — fine
+      .finally(() => setDataLoading(false));
+  }, [user, today]);
 
   // ── Submit ──────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
@@ -164,7 +147,7 @@ export default function LogPage() {
         notes: notes.trim(),
       });
       setSaved(true);
-      setTimeout(() => router.push("/dashboard"), 1500);
+      setTimeout(() => { window.location.href = "/dashboard"; }, 1500);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -181,16 +164,20 @@ export default function LogPage() {
     });
   }
 
+  const userMode = user?.mode ?? "cycle";
   const orderedSymptoms =
     userMode === "perimenopause"
       ? [...ALL_SYMPTOMS.filter(s => s.periPriority), ...ALL_SYMPTOMS.filter(s => !s.periPriority)]
       : ALL_SYMPTOMS;
 
   // ── Render ───────────────────────────────────────────────────────────────────
-  if (loading) {
+  if (authLoading || dataLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        {redirecting && (
+          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        )}
       </div>
     );
   }

@@ -1,21 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
 import CycleCalendarWidget from "@/components/dashboard/CycleCalendarWidget";
 import PhaseCard from "@/components/dashboard/PhaseCard";
 import QuickLogButton from "@/components/dashboard/QuickLogButton";
 import UpcomingEvents from "@/components/dashboard/UpcomingEvents";
-
-interface User {
-  id: string;
-  email: string;
-  mode: string;
-  subscription_status: string;
-  trial_ends_at: string | null;
-  created_at: string;
-}
 
 interface Cycle {
   id: string;
@@ -88,63 +79,30 @@ function getLast7Days(): string[] {
 }
 
 export default function DashboardPage() {
-  const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [cycles, setCycles] = useState<Cycle[]>([]);
-  const [logs, setLogs] = useState<DailyLog[]>([]);
-  const [loading, setLoading] = useState(true);
+  // ── Auth + subscription gate ────────────────────────────────────────────────
+  const { user, loading: authLoading, redirecting } = useRequireSubscription();
+
+  // ── Page data ───────────────────────────────────────────────────────────────
+  const [cycles,      setCycles]      = useState<Cycle[]>([]);
+  const [logs,        setLogs]        = useState<DailyLog[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
   const [billingLoading, setBillingLoading] = useState(false);
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("dp_token") : null;
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-
+    if (!user) return;
     Promise.all([
-      api.get<{ user: User }>("/auth/me"),
       api.get<{ cycles: Cycle[] }>("/cycles"),
       api.get<{ logs: DailyLog[] }>("/logs?limit=7"),
     ])
-      .then(([meRes, cyclesRes, logsRes]) => {
-        setUser(meRes.user);
+      .then(([cyclesRes, logsRes]) => {
         setCycles(cyclesRes.cycles);
         setLogs(logsRes.logs);
       })
-      .catch(() => {
-        router.push("/login");
-      })
-      .finally(() => setLoading(false));
-  }, [router]);
+      .finally(() => setDataLoading(false));
+  }, [user]);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-8 h-8 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!user) return null;
-
-  const latestCycle = cycles[0] ?? null;
-  const cycleDay = latestCycle
-    ? Math.max(
-        1,
-        Math.ceil(
-          (new Date().setHours(0, 0, 0, 0) -
-            new Date(latestCycle.start_date).setHours(0, 0, 0, 0)) /
-            (1000 * 60 * 60 * 24)
-        ) + 1
-      )
-    : null;
-
-  const phase = cycleDay ? getPhaseInfo(cycleDay) : null;
-
-  const logDates = new Set(logs.map((l) => l.date));
-  const last7 = getLast7Days();
+  // ── Combined loading state ──────────────────────────────────────────────────
+  const loading = authLoading || dataLoading;
 
   async function handleBillingPortal() {
     setBillingLoading(true);
@@ -158,6 +116,37 @@ export default function DashboardPage() {
       setBillingLoading(false);
     }
   }
+
+  // ── Loading / redirect screens ──────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
+        <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+        {redirecting && (
+          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+        )}
+      </div>
+    );
+  }
+
+  if (!user) return null;
+
+  // ── Derived display values ──────────────────────────────────────────────────
+  const latestCycle = cycles[0] ?? null;
+  const cycleDay = latestCycle
+    ? Math.max(
+        1,
+        Math.ceil(
+          (new Date().setHours(0, 0, 0, 0) -
+            new Date(latestCycle.start_date).setHours(0, 0, 0, 0)) /
+            (1000 * 60 * 60 * 24)
+        ) + 1
+      )
+    : null;
+
+  const phase = cycleDay ? getPhaseInfo(cycleDay) : null;
+  const logDates = new Set(logs.map((l) => l.date));
+  const last7 = getLast7Days();
 
   const subStatus = user.subscription_status;
   const subBadge =
@@ -175,7 +164,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-gray-900">Your cycle</h1>
           <p className="text-gray-500 text-sm mt-1">
             {cycleDay
-              ? <>Today is cycle day <strong>{cycleDay}</strong></>
+              ? <><span>Today is cycle day </span><strong>{cycleDay}</strong></>
               : "No cycle recorded yet — start logging to track your cycle"}
           </p>
         </div>
@@ -277,11 +266,7 @@ export default function DashboardPage() {
                 <div key={date} className="flex flex-col items-center gap-1">
                   <div
                     title={label}
-                    className={`w-8 h-8 rounded-full ${
-                      hasLog
-                        ? "bg-purple-500"
-                        : "bg-gray-100"
-                    }`}
+                    className={`w-8 h-8 rounded-full ${hasLog ? "bg-purple-500" : "bg-gray-100"}`}
                   />
                   <span className="text-[10px] text-gray-400">
                     {new Date(date + "T00:00:00").toLocaleDateString("en-US", {
