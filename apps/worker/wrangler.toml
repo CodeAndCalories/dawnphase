@@ -5,6 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 ENVIRONMENT = "production"
+APP_URL = "https://www.dawnphase.com"
 
 [[d1_databases]]
 binding = "DB"

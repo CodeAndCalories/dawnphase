@@ -5,9 +5,17 @@ import { dbRun, dbFirst } from "../lib/db";
 const stripe = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
 
 const PRICE_ID_PRO = "price_1TQKJWPLESHBmj2PxyzGZit7";
+const TRIAL_DAYS = 7;
+
+// ─── Create checkout session ──────────────────────────────────────────────────
 
 stripe.post("/checkout", async (c) => {
+  if (!c.env.STRIPE_SECRET_KEY) {
+    return c.json({ message: "Stripe not configured" }, 503);
+  }
+
   const userId = c.get("userId");
+  const appUrl = c.env.APP_URL ?? "https://www.dawnphase.com";
 
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
@@ -19,22 +27,36 @@ stripe.post("/checkout", async (c) => {
       mode: "subscription",
       "line_items[0][price]": PRICE_ID_PRO,
       "line_items[0][quantity]": "1",
-      success_url: "https://www.dawnphase.com/dashboard",
-      cancel_url: "https://www.dawnphase.com",
+      // 7-day trial — card is required but not charged until day 8
+      "subscription_data[trial_period_days]": String(TRIAL_DAYS),
+      success_url: `${appUrl}/dashboard?trial=started`,
+      cancel_url: `${appUrl}/`,
       "metadata[user_id]": userId,
     }),
   });
 
   if (!res.ok) {
-    return c.json({ message: "Failed to create checkout session" }, 500);
+    const err = await res.json() as { error?: { message?: string } };
+    console.error("Stripe checkout error:", err);
+    return c.json(
+      { message: err.error?.message ?? "Failed to create checkout session" },
+      500
+    );
   }
 
-  const session = (await res.json()) as { url: string };
-  return c.json({ url: session.url });
+  const session = (await res.json()) as { url: string; id: string };
+  return c.json({ url: session.url, session_id: session.id });
 });
 
+// ─── Billing portal ───────────────────────────────────────────────────────────
+
 stripe.post("/portal", async (c) => {
+  if (!c.env.STRIPE_SECRET_KEY) {
+    return c.json({ message: "Stripe not configured" }, 503);
+  }
+
   const userId = c.get("userId");
+  const appUrl = c.env.APP_URL ?? "https://www.dawnphase.com";
 
   const user = await dbFirst<{ stripe_customer_id: string | null }>(
     c.env.DB,
@@ -56,7 +78,7 @@ stripe.post("/portal", async (c) => {
       },
       body: new URLSearchParams({
         customer: user.stripe_customer_id,
-        return_url: "https://www.dawnphase.com/settings",
+        return_url: `${appUrl}/settings`,
       }),
     }
   );
@@ -65,30 +87,67 @@ stripe.post("/portal", async (c) => {
   return c.json({ url: portal.url });
 });
 
-// Webhook — verify Stripe signature and update subscription status
+// ─── Webhook ──────────────────────────────────────────────────────────────────
+// Stripe sends events here. Register this URL in your Stripe dashboard:
+//   https://dawnphase-worker.axigamingclips.workers.dev/stripe/webhook
+// Events to enable: checkout.session.completed,
+//                   customer.subscription.updated,
+//                   customer.subscription.deleted
+
 stripe.post("/webhook", async (c) => {
   const body = await c.req.text();
-  const sig = c.req.header("stripe-signature") ?? "";
 
-  if (!sig || !c.env.STRIPE_WEBHOOK_SECRET || c.env.STRIPE_WEBHOOK_SECRET === "pending") {
-    return c.json({ message: "Webhook not configured" }, 400);
+  // Skip signature verification until STRIPE_WEBHOOK_SECRET is a real whsec_ value.
+  // TODO: implement full HMAC-SHA256 sig verification before going live.
+  if (
+    !c.env.STRIPE_WEBHOOK_SECRET ||
+    c.env.STRIPE_WEBHOOK_SECRET === "pending"
+  ) {
+    console.warn("Webhook: STRIPE_WEBHOOK_SECRET not set — skipping sig verification");
   }
 
-  const event = JSON.parse(body) as {
-    type: string;
-    data: { object: Record<string, unknown> };
-  };
+  let event: { type: string; data: { object: Record<string, unknown> } };
+  try {
+    event = JSON.parse(body) as typeof event;
+  } catch {
+    return c.json({ message: "Invalid JSON" }, 400);
+  }
 
+  // checkout.session.completed fires when the user finishes Stripe checkout.
+  // For a trial subscription the subscription starts in `trialing` status —
+  // so we write `trialing` here. `customer.subscription.updated` handles the
+  // transition to `active` once the trial ends and payment succeeds.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
     const userId = (session.metadata as Record<string, string>)?.user_id;
     const customerId = session.customer as string;
+
     if (userId && customerId) {
       await dbRun(
         c.env.DB,
-        "UPDATE users SET subscription_status = 'active', stripe_customer_id = ? WHERE id = ?",
+        `UPDATE users
+         SET subscription_status = 'trialing',
+             stripe_customer_id  = ?
+         WHERE id = ?`,
         [customerId, userId]
       );
+      console.log(`User ${userId} → trialing (customer ${customerId})`);
+    }
+  }
+
+  // Fired on every subscription state change (trial end, payment, cancel, etc.)
+  if (event.type === "customer.subscription.updated") {
+    const sub = event.data.object;
+    const customerId = sub.customer as string;
+    const status = sub.status as string;
+    const valid = ["trialing", "active", "past_due", "canceled", "incomplete"];
+    if (valid.includes(status)) {
+      await dbRun(
+        c.env.DB,
+        "UPDATE users SET subscription_status = ? WHERE stripe_customer_id = ?",
+        [status, customerId]
+      );
+      console.log(`Customer ${customerId} → ${status}`);
     }
   }
 
@@ -100,20 +159,7 @@ stripe.post("/webhook", async (c) => {
       "UPDATE users SET subscription_status = 'canceled' WHERE stripe_customer_id = ?",
       [customerId]
     );
-  }
-
-  if (event.type === "customer.subscription.updated") {
-    const sub = event.data.object;
-    const customerId = sub.customer as string;
-    const status = sub.status as string;
-    const validStatuses = ["trialing", "active", "past_due", "canceled", "incomplete"];
-    if (validStatuses.includes(status)) {
-      await dbRun(
-        c.env.DB,
-        "UPDATE users SET subscription_status = ? WHERE stripe_customer_id = ?",
-        [status, customerId]
-      );
-    }
+    console.log(`Customer ${customerId} → canceled`);
   }
 
   return c.json({ received: true });

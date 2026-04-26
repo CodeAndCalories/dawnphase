@@ -5,6 +5,7 @@ export interface Env {
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
   ENVIRONMENT: string;
+  APP_URL: string;   // frontend origin, e.g. https://www.dawnphase.com
 }
 
 export interface JWTPayload {

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { login, signup } from "@/lib/api";
+import { login, signup, api } from "@/lib/api";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -111,6 +111,7 @@ function LoginForm() {
 function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState<"account" | "billing">("account");
 
   const { register, handleSubmit, formState } = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
@@ -121,11 +122,23 @@ function SignupForm() {
     setError(null);
     setLoading(true);
     try {
+      // Step 1 — create account (stores JWT in localStorage)
       await signup(values.email, values.password, values.name);
-      window.location.href = "/dashboard";
+
+      // Step 2 — redirect to Stripe checkout (7-day trial)
+      setStep("billing");
+      try {
+        const { url } = await api.post<{ url: string }>(
+          "/stripe/checkout",
+          {}
+        );
+        window.location.href = url;
+      } catch {
+        // Stripe not configured yet — go straight to dashboard
+        window.location.href = "/dashboard";
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
       setLoading(false);
     }
   }
@@ -197,7 +210,11 @@ function SignupForm() {
         disabled={loading}
         className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60 text-sm"
       >
-        {loading ? "Please wait…" : "Create account"}
+        {loading
+          ? step === "billing"
+            ? "Redirecting to billing…"
+            : "Creating account…"
+          : "Create account & start trial"}
       </button>
     </form>
   );
