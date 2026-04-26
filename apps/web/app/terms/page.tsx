@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -9,17 +10,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
-      {/* Header */}
-      <header className="border-b border-gray-100 bg-[#FFF9F6]/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-[800px] mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="font-bold text-[#C94B6D] text-lg tracking-tight">
-            Dawn Phase
-          </Link>
-          <Link href="/" className="text-sm text-[#8C6B5A] hover:text-[#C94B6D] transition-colors">
-            ← Back
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Content */}
       <main className="max-w-[800px] mx-auto px-6 py-12 space-y-10">
