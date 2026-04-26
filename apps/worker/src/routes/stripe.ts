@@ -15,6 +15,11 @@ stripe.post("/checkout", async (c) => {
   }
 
   const userId = c.get("userId");
+  if (!userId) {
+    console.error("[stripe/checkout] userId missing from context — requireAuth may not have run");
+    return c.json({ message: "Unauthorized — no userId in context" }, 401);
+  }
+
   const appUrl = c.env.APP_URL ?? "https://www.dawnphase.com";
 
   // Fetch user email so we can pass it to Stripe for fallback matching.

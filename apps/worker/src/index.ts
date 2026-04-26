@@ -39,12 +39,11 @@ app.use(
 // Health check
 app.get("/health", (c) => c.json({ status: "ok", env: c.env.ENVIRONMENT }));
 
-// Public routes
+// Public routes (no auth required)
 app.route("/auth", authRoutes);
-app.route("/stripe", stripeRoutes);
 app.route("/cron", cronRoutes);
 
-// Auth middleware
+// Auth middleware — must be registered BEFORE the routes it protects
 const requireAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> =
   async (c, next) => {
     const authorization = c.req.header("Authorization");
@@ -60,15 +59,18 @@ const requireAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> =
     return next();
   };
 
-app.use("/cycles/*", requireAuth);
-app.use("/logs/*", requireAuth);
+app.use("/cycles/*",   requireAuth);
+app.use("/logs/*",     requireAuth);
 app.use("/insights/*", requireAuth);
-app.use("/export/*", requireAuth);
-app.use("/reminders/*", requireAuth);
+app.use("/export/*",   requireAuth);
+app.use("/reminders/*",requireAuth);
+// Stripe middleware registered BEFORE app.route("/stripe", ...) so
+// requireAuth executes before the checkout/portal handlers.
 app.use("/stripe/checkout", requireAuth);
-app.use("/stripe/portal", requireAuth);
+app.use("/stripe/portal",   requireAuth);
 
-// Protected routes
+// Protected routes (all middleware above must be registered first)
+app.route("/stripe", stripeRoutes);
 app.route("/cycles", cyclesRoutes);
 app.route("/logs", logsRoutes);
 app.route("/insights", insightsRoutes);
