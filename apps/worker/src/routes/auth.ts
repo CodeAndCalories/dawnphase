@@ -4,7 +4,7 @@ import { zValidator } from "@hono/zod-validator";
 import type { Env, User } from "../types";
 import { dbFirst, dbRun, newId } from "../lib/db";
 import { signJWT, verifyJWT } from "../lib/jwt";
-import { sendEmail, welcomeEmail } from "../lib/email";
+import { sendEmail, welcomeEmail, passwordResetEmail } from "../lib/email";
 
 const auth = new Hono<{ Bindings: Env }>();
 
@@ -164,6 +164,82 @@ auth.delete("/me", async (c) => {
 
   await dbRun(c.env.DB, "DELETE FROM users WHERE id = ?", [payload.sub]);
   return c.json({ message: "Account deleted" });
+});
+
+// ── Forgot password ────────────────────────────────────────────────────────────
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+});
+
+auth.post("/forgot-password", zValidator("json", forgotPasswordSchema), async (c) => {
+  const { email } = c.req.valid("json");
+  const appUrl = c.env.APP_URL ?? "https://www.dawnphase.com";
+
+  const user = await dbFirst<{ id: string }>(
+    c.env.DB,
+    "SELECT id FROM users WHERE email = ?",
+    [email]
+  );
+
+  if (user) {
+    const token = crypto.randomUUID();
+    const expires = Date.now() + 3_600_000; // 1 hour
+
+    await dbRun(
+      c.env.DB,
+      "UPDATE users SET reset_token = ?, reset_token_expires = ? WHERE id = ?",
+      [token, expires, user.id]
+    );
+
+    const resetUrl = `${appUrl}/reset-password?token=${token}`;
+
+    sendEmail(c.env.RESEND_API_KEY, {
+      to: email,
+      subject: "Reset your Dawn Phase password",
+      html: passwordResetEmail(email, resetUrl),
+    }).catch(() => {});
+  }
+
+  // Always return 200 — don't reveal whether the email exists.
+  return c.json({
+    message: "If that email is registered, a reset link is on its way.",
+  });
+});
+
+// ── Reset password ─────────────────────────────────────────────────────────────
+
+const resetPasswordSchema = z.object({
+  token:    z.string().min(1),
+  password: z.string().min(8),
+});
+
+auth.post("/reset-password", zValidator("json", resetPasswordSchema), async (c) => {
+  const { token, password } = c.req.valid("json");
+
+  const user = await dbFirst<{ id: string }>(
+    c.env.DB,
+    "SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > ?",
+    [token, Date.now()]
+  );
+
+  if (!user) {
+    return c.json({ message: "Invalid or expired link" }, 400);
+  }
+
+  const passwordHash = await hashPassword(password);
+
+  await dbRun(
+    c.env.DB,
+    `UPDATE users
+     SET password_hash         = ?,
+         reset_token           = NULL,
+         reset_token_expires   = NULL
+     WHERE id = ?`,
+    [passwordHash, user.id]
+  );
+
+  return c.json({ message: "Password updated successfully" });
 });
 
 export default auth;

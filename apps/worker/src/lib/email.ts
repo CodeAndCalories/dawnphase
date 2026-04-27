@@ -163,3 +163,34 @@ export function periodReminderEmail(opts: PeriodReminderOptions): string {
     </div>
   `);
 }
+
+// ── Password reset email ──────────────────────────────────────────────────────
+
+export function passwordResetEmail(email: string, resetUrl: string): string {
+  return emailWrapper(`
+    <h1 style="margin:0 0 20px;font-size:24px;font-weight:700;color:#C94B6D;line-height:1.2">
+      Reset your password
+    </h1>
+    <p style="margin:0 0 8px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      Hi ${email},
+    </p>
+    <p style="margin:0 0 28px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      We received a request to reset your Dawn Phase password. Click the button
+      below to choose a new one.
+    </p>
+
+    <!-- CTA button -->
+    <div style="margin:0 0 32px">
+      <a href="${resetUrl}"
+         style="display:inline-block;padding:14px 32px;background:#E8637A;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        Reset your password →
+      </a>
+    </div>
+
+    <p style="margin:0;padding:16px;background:#FDF6F0;border-radius:10px;font-size:13px;color:#8C6B5A;line-height:1.6">
+      This link expires in <strong style="color:#2D1B1E">1 hour</strong>. If you
+      didn&apos;t request a password reset you can safely ignore this email — your
+      password will not change.
+    </p>
+  `);
+}

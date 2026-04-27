@@ -15,7 +15,15 @@ export default function LoginPage() {
             <p className="mt-2 text-[#8C6B5A]">Sign in to your account</p>
           </div>
           <AuthForm mode="login" />
-          <p className="mt-6 text-center text-sm text-[#8C6B5A]">
+          <p className="mt-4 text-center">
+            <a
+              href="/forgot-password"
+              className="text-sm text-[#E8637A] hover:underline"
+            >
+              Forgot password?
+            </a>
+          </p>
+          <p className="mt-4 text-center text-sm text-[#8C6B5A]">
             Don&apos;t have an account?{" "}
             <a href="/signup" className="font-medium text-[#E8637A] hover:underline">
               Sign up free
