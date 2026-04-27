@@ -4,7 +4,8 @@ import { dbRun, dbFirst } from "../lib/db";
 
 const stripe = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
 
-const PRICE_ID_PRO = "price_1TQKJWPLESHBmj2PxyzGZit7";
+const PRICE_ID_MONTHLY = "price_1TQKJWPLESHBmj2PxyzGZit7";
+const PRICE_ID_ANNUAL  = "price_1TQfD1PLESHBmj2PU0HJs0Hf";
 const TRIAL_DAYS = 7;
 
 // ─── Create checkout session ──────────────────────────────────────────────────
@@ -32,7 +33,11 @@ stripe.post("/checkout", async (c) => {
     return c.json({ message: "User not found" }, 404);
   }
 
-  console.log(`[stripe/checkout] userId=${userId} email=${userRecord.email}`);
+  // Read optional plan selection from request body
+  const reqBody = await c.req.json().catch(() => ({})) as { plan?: string };
+  const priceId = reqBody.plan === "annual" ? PRICE_ID_ANNUAL : PRICE_ID_MONTHLY;
+
+  console.log(`[stripe/checkout] userId=${userId} email=${userRecord.email} plan=${reqBody.plan ?? "monthly"}`);
 
   let res: Response;
   try {
@@ -44,7 +49,7 @@ stripe.post("/checkout", async (c) => {
       },
       body: new URLSearchParams({
         mode: "subscription",
-        "line_items[0][price]": PRICE_ID_PRO,
+        "line_items[0][price]": priceId,
         "line_items[0][quantity]": "1",
         // 7-day trial — card is required but not charged until day 8
         "subscription_data[trial_period_days]": String(TRIAL_DAYS),

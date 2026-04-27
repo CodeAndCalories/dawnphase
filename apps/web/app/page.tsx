@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "lucide-react";
+import PricingSection from "@/components/landing/PricingSection";
 
 // ─── shared primitives ────────────────────────────────────────────────────────
 
@@ -364,69 +365,8 @@ function ForWho() {
 
 // ─── Pricing ──────────────────────────────────────────────────────────────────
 
-const pricingFeatures = [
-  "All cycle & perimenopause tracking",
-  "Symptom journal — 40+ categories",
-  "Phase calendar & predictions",
-  "Hormone phase education",
-  "Doctor PDF export",
-  "Email reminders",
-  "Cancel anytime",
-  "Your data stays yours",
-];
-
 function Pricing() {
-  return (
-    <section id="pricing" className="py-24 px-6 bg-dawn-warm">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="text-center mb-16">
-          <PillLabel>Simple pricing</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
-            One plan. Everything included.
-          </h2>
-        </div>
-
-        <div className="max-w-sm mx-auto">
-          <div className="bg-dp-cream-lt rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-xl p-8">
-            {/* Badge */}
-            <div className="inline-block bg-dawn-rose/10 text-dawn-rose text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1 mb-6">
-              7-day free trial
-            </div>
-
-            {/* Price */}
-            <div className="flex items-baseline gap-1 mb-1">
-              <span className="font-display text-5xl font-bold text-dp-deeprose">$14.99</span>
-              <span className="text-dp-taupe/70 text-sm">/ month</span>
-            </div>
-            <p className="text-sm text-dp-taupe/70 mb-8">
-              Try free for 7 days — no credit card required upfront.
-            </p>
-
-            {/* Features */}
-            <ul className="space-y-3 mb-8">
-              {pricingFeatures.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-sm text-dp-taupe">
-                  <Check className="w-4 h-4 text-dawn-rose shrink-0" strokeWidth={2.5} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href="/signup"
-              className="block w-full text-center bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full py-3.5 font-semibold text-sm hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/30"
-            >
-              Start free trial
-            </a>
-
-            <p className="mt-4 text-center text-xs text-dp-taupe/70">
-              Cancel anytime · Your data stays yours
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <PricingSection />;
 }
 
 // ─── Final CTA ────────────────────────────────────────────────────────────────

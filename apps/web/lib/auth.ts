@@ -146,7 +146,11 @@ export function useRequireSubscription(): {
         setRedirecting(true);
         setStatusMessage("Setting up your account…");
         try {
-          const { url } = await api.post<{ url: string }>("/stripe/checkout", {});
+          const plan =
+            typeof window !== "undefined"
+              ? (localStorage.getItem("dp_plan") ?? "monthly")
+              : "monthly";
+          const { url } = await api.post<{ url: string }>("/stripe/checkout", { plan });
           if (!mounted) return;
           window.location.href = url;
         } catch {

@@ -127,7 +127,11 @@ function SignupForm() {
 
       // Step 2 — redirect to Stripe checkout (7-day trial)
       setStep("billing");
-      const { url } = await api.post<{ url: string }>("/stripe/checkout", {});
+      const plan =
+        typeof window !== "undefined"
+          ? (localStorage.getItem("dp_plan") ?? "monthly")
+          : "monthly";
+      const { url } = await api.post<{ url: string }>("/stripe/checkout", { plan });
       window.location.href = url;
     } catch (err) {
       // If we're already past account creation (step === "billing") the
