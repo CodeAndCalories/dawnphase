@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 import { symptoms, PHASE_COLORS } from "@/data/symptoms";
+import { MedicalWebPageSchema } from "@/components/SchemaMarkup";
 
 // ── Static params ─────────────────────────────────────────────────────────────
 
@@ -46,6 +47,11 @@ export default async function SymptomPage({
 
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
+      <MedicalWebPageSchema
+        name={symptom.name}
+        description={symptom.description}
+        url={`https://www.dawnphase.com/symptoms/${symptom.slug}`}
+      />
       <Header />
 
       <main className="max-w-3xl mx-auto px-6 py-12">

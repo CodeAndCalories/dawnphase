@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { WebsiteSchema } from "@/components/SchemaMarkup";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -69,7 +70,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon-180.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <WebsiteSchema />
+        {children}
+      </body>
     </html>
   );
 }

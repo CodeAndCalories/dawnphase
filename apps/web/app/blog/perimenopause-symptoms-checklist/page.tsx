@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import RelatedArticles from "@/components/blog/RelatedArticles";
+import { ArticleSchema } from "@/components/SchemaMarkup";
 
 export const metadata: Metadata = {
   title: "Perimenopause Symptoms Checklist — 35 Signs to Track",
@@ -84,6 +85,13 @@ export default function Post() {
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
       <Header />
+      <ArticleSchema
+        title="Perimenopause Symptoms Checklist — 35 Signs to Track"
+        description="A comprehensive checklist of 35 perimenopause symptoms across five categories — with guidance on what to track and when to see a doctor."
+        url="https://www.dawnphase.com/blog/perimenopause-symptoms-checklist"
+        datePublished="2026-04-26"
+        dateModified="2026-04-26"
+      />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import RelatedArticles from "@/components/blog/RelatedArticles";
+import { ArticleSchema } from "@/components/SchemaMarkup";
 
 export const metadata: Metadata = {
   title: "What Age Does Perimenopause Start?",
@@ -18,6 +19,13 @@ export default function Post() {
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
       <Header />
+      <ArticleSchema
+        title="What Age Does Perimenopause Start?"
+        description="Perimenopause typically begins in the 40s but can start earlier. Here's what affects the timing, what early signs to watch for, and why tracking matters."
+        url="https://www.dawnphase.com/blog/perimenopause-age"
+        datePublished="2026-04-26"
+        dateModified="2026-04-26"
+      />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
         <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">

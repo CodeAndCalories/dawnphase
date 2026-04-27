@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import RelatedArticles from "@/components/blog/RelatedArticles";
+import { ArticleSchema } from "@/components/SchemaMarkup";
 
 export const metadata: Metadata = {
   title: "Why Tracking Your Cycle With PCOS Is Different",
@@ -18,6 +19,13 @@ export default function Post() {
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
       <Header />
+      <ArticleSchema
+        title="Why Tracking Your Cycle With PCOS Is Different"
+        description="Standard cycle tracking apps assume a regular 28-day cycle. PCOS doesn't work like that. Here's what makes PCOS tracking different and what to look for in an app."
+        url="https://www.dawnphase.com/blog/tracking-cycle-pcos"
+        datePublished="2026-04-26"
+        dateModified="2026-04-26"
+      />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
         <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "lucide-react";
 import PricingSection from "@/components/landing/PricingSection";
+import { FAQSchema } from "@/components/SchemaMarkup";
 
 // ─── shared primitives ────────────────────────────────────────────────────────
 
@@ -504,6 +505,9 @@ function Footer() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen">
+      <FAQSchema
+        questions={FAQS.map((f) => ({ question: f.q, answer: f.a }))}
+      />
       <Nav />
       <Hero />
       <StatsBar />
