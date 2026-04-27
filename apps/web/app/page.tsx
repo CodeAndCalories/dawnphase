@@ -451,6 +451,7 @@ function Footer() {
             ["Pricing", "#pricing"],
             ["Privacy Policy", "/privacy"],
             ["Terms of Service", "/terms"],
+            ["Contact", "/contact"],
           ].map(([label, href]) => (
             <a
               key={label}
