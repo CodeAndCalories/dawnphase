@@ -144,7 +144,10 @@ export default function Sidebar() {
       </aside>
 
       {/* ── Mobile bottom tab bar (shown below md) ──────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#FDF6F0] border-t border-[rgba(232,99,122,0.12)] z-40 flex items-center justify-around px-2">
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-[#FDF6F0] border-t border-[rgba(232,99,122,0.2)] z-50 flex items-center justify-around px-2"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
         {NAV.map(({ href, label, Icon }) => {
           const active =
             href === "/dashboard"
@@ -160,6 +163,12 @@ export default function Sidebar() {
             >
               <Icon size={20} strokeWidth={active ? 2.5 : 2} />
               <span className="text-[10px] font-medium leading-none">{label}</span>
+              {/* Active dot indicator */}
+              <span
+                className={`w-1 h-1 rounded-full mt-0.5 transition-opacity ${
+                  active ? "bg-[#E8637A] opacity-100" : "opacity-0"
+                }`}
+              />
             </a>
           );
         })}

@@ -1,4 +1,5 @@
 import Sidebar from "@/components/dashboard/Sidebar";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +9,8 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-[#FFF9F6]">
       <Sidebar />
-      {/* Offset for fixed desktop sidebar; bottom padding for mobile tab bar */}
+      <PWAInstallPrompt />
+      {/* Offset for fixed desktop sidebar; pb-20 clears 64px tab bar on mobile */}
       <main className="md:pl-60 pb-20 md:pb-0 min-h-screen">
         <div className="px-4 md:px-8 py-6">{children}</div>
       </main>
