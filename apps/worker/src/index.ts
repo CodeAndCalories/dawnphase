@@ -36,14 +36,13 @@ app.use(
   })
 );
 
-// Health check
-app.get("/health", (c) => c.json({ status: "ok", env: c.env.ENVIRONMENT }));
+// Health check — no env info in response to avoid leaking deployment details
+app.get("/health", (c) => c.json({ status: "ok" }));
 
-// Public routes (no auth required)
-app.route("/auth", authRoutes);
-app.route("/cron", cronRoutes);
+// ── Auth middleware ─────────────────────────────────────────────────────────
+// Defined FIRST so it can be applied to any path, including sub-paths of
+// routes that are otherwise public (e.g. /auth/me within /auth/*).
 
-// Auth middleware — must be registered BEFORE the routes it protects
 const requireAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> =
   async (c, next) => {
     const authorization = c.req.header("Authorization");
@@ -59,22 +58,39 @@ const requireAuth: MiddlewareHandler<{ Bindings: Env; Variables: Variables }> =
     return next();
   };
 
-app.use("/cycles/*",   requireAuth);
-app.use("/logs/*",     requireAuth);
-app.use("/insights/*", requireAuth);
-app.use("/export/*",   requireAuth);
-app.use("/reminders/*",requireAuth);
-// Stripe middleware registered BEFORE app.route("/stripe", ...) so
-// requireAuth executes before the checkout/portal handlers.
+// ── Route-level auth middleware ─────────────────────────────────────────────
+// All app.use() calls must come BEFORE the corresponding app.route() call
+// so that middleware executes before route handlers (Hono processes in
+// registration order).
+
+// /auth/me (GET, PATCH, DELETE) — not in the approved public list.
+// The route handlers also self-verify JWTs for belt-and-suspenders safety.
+app.use("/auth/me", requireAuth);
+
+// Public routes — no auth required
+// POST /auth/signup, /auth/login, /auth/forgot-password, /auth/reset-password
+// GET  /auth/me, PATCH /auth/me, DELETE /auth/me  ← protected above
+app.route("/auth", authRoutes);
+
+// GET /cron/reminders — spec-approved public (called by Cloudflare cron trigger)
+app.route("/cron", cronRoutes);
+
+// Protected resource routes
+app.use("/cycles/*",       requireAuth);
+app.use("/logs/*",         requireAuth);
+app.use("/insights/*",     requireAuth);
+app.use("/export/*",       requireAuth);
+app.use("/reminders/*",    requireAuth);
+// Stripe: checkout and portal require auth; webhook is intentionally public
+// (Stripe calls it directly — it has no user JWT, and verifies via webhook secret)
 app.use("/stripe/checkout", requireAuth);
 app.use("/stripe/portal",   requireAuth);
 
-// Protected routes (all middleware above must be registered first)
-app.route("/stripe", stripeRoutes);
-app.route("/cycles", cyclesRoutes);
-app.route("/logs", logsRoutes);
-app.route("/insights", insightsRoutes);
-app.route("/export", exportRoutes);
+app.route("/stripe",    stripeRoutes);
+app.route("/cycles",    cyclesRoutes);
+app.route("/logs",      logsRoutes);
+app.route("/insights",  insightsRoutes);
+app.route("/export",    exportRoutes);
 app.route("/reminders", remindersRoutes);
 
 // 404
@@ -87,8 +103,6 @@ app.onError((err, c) => {
 });
 
 // Export fetch handler + scheduled handler for Cloudflare Cron Triggers.
-// The scheduled() handler fires when wrangler.toml [triggers] crons match;
-// it runs the same processReminders logic as GET /cron/reminders.
 export default {
   fetch: app.fetch.bind(app),
   async scheduled(
