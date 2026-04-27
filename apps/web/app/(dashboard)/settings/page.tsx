@@ -401,17 +401,14 @@ export default function SettingsPage() {
             {exporting ? "Exporting…" : "Export my data (CSV)"}
           </button>
 
-          <div className="relative">
-            <button
-              disabled
-              className="min-h-[44px] px-5 py-2.5 rounded-xl border-2 border-gray-200 text-gray-400 text-sm font-semibold cursor-not-allowed"
-            >
-              Download doctor report (PDF)
-            </button>
-            <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-[#E8637A] text-white px-1.5 py-0.5 rounded-full">
-              Soon
-            </span>
-          </div>
+          <a
+            href="/report"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-xl border-2 border-[#E8637A] text-[#E8637A] text-sm font-semibold hover:bg-[#E8637A] hover:text-white transition-all"
+          >
+            Doctor visit report ↗
+          </a>
         </div>
 
         <div className="pt-2 border-t border-gray-200">
