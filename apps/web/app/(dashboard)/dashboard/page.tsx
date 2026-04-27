@@ -18,7 +18,7 @@ interface DailyLog {
   id: string;
   user_id: string;
   date: string;
-  mood: string | null;        // JSON: e.g. '["😊"]'
+  mood: string | null;
   energy: number | null;
   sleep_hours: number | null;
 }
@@ -30,8 +30,9 @@ type PhaseName = "Menstrual" | "Follicular" | "Ovulatory" | "Luteal";
 interface PhaseInfo {
   name: PhaseName;
   tip: string;
-  accent: string;   // Tailwind text colour class
-  dotColor: string; // hex for inline use
+  accent: string;
+  dotColor: string;
+  bgRgba: string; // for radial gradient
 }
 
 function getPhaseInfo(day: number): PhaseInfo {
@@ -40,35 +41,135 @@ function getPhaseInfo(day: number): PhaseInfo {
       name: "Menstrual",
       tip: "Rest is productive. Gentle movement and warmth support your body right now.",
       accent: "text-rose-500",
-      dotColor: "#F87171",
+      dotColor: "#E8637A",
+      bgRgba: "rgba(232,99,122,0.08)",
     };
   if (day <= 13)
     return {
       name: "Follicular",
       tip: "Energy is building. Great time to start new projects and connect socially.",
       accent: "text-violet-500",
-      dotColor: "#8B5CF6",
+      dotColor: "#F4956A",
+      bgRgba: "rgba(244,149,106,0.08)",
     };
   if (day === 14)
     return {
       name: "Ovulatory",
       tip: "Peak energy and communication. Make the most of your clarity today.",
       accent: "text-amber-500",
-      dotColor: "#F59E0B",
+      dotColor: "#F5C842",
+      bgRgba: "rgba(245,200,66,0.08)",
     };
   return {
     name: "Luteal",
     tip: "Wind down gradually. Reduce caffeine, prioritise sleep, and be gentle with yourself.",
     accent: "text-indigo-500",
-    dotColor: "#6366F1",
+    dotColor: "#8B7BB5",
+    bgRgba: "rgba(139,123,181,0.08)",
   };
 }
 
 function daysToNextPhase(day: number): { label: string; days: number } {
-  if (day <= 5)   return { label: "Follicular",  days: 6 - day };
-  if (day <= 13)  return { label: "Ovulatory",   days: 14 - day };
-  if (day === 14) return { label: "Luteal",      days: 1 };
-  return            { label: "Next period",   days: Math.max(1, 29 - day) };
+  if (day <= 5)   return { label: "Follicular", days: 6 - day };
+  if (day <= 13)  return { label: "Ovulatory",  days: 14 - day };
+  if (day === 14) return { label: "Luteal",     days: 1 };
+  return            { label: "Next period", days: Math.max(1, 29 - day) };
+}
+
+// ── Greeting ──────────────────────────────────────────────────────────────────
+
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h >= 6  && h < 12) return "Good morning";
+  if (h >= 12 && h < 18) return "Good afternoon";
+  return "Good evening";
+}
+
+// ── Phase arc SVG ─────────────────────────────────────────────────────────────
+
+function CycleArcSVG({
+  cycleDay,
+  totalDays,
+  phaseColor,
+}: {
+  cycleDay: number;
+  totalDays: number;
+  phaseColor: string;
+}) {
+  const R   = 78;
+  const CX  = 100;
+  const CY  = 100;
+  const GAP = 0.012;
+
+  // Map a fraction (0–1) of the cycle to (x,y) on the upper semicircle
+  function pt(f: number, r = R) {
+    const θ = f * Math.PI;
+    return {
+      x: +((CX - r * Math.cos(θ)).toFixed(3)),
+      y: +((CY - r * Math.sin(θ)).toFixed(3)),
+    };
+  }
+
+  // SVG arc path for a stroke-based segment
+  function arcPath(f1: number, f2: number): string {
+    const p1 = pt(f1);
+    const p2 = pt(f2);
+    const large = (f2 - f1) > 0.5 ? 1 : 0;
+    return `M ${p1.x} ${p1.y} A ${R} ${R} 0 ${large} 0 ${p2.x} ${p2.y}`;
+  }
+
+  // Segment boundaries — ovulatory gets min 5% for visibility
+  const menEnd  = 5 / totalDays;
+  const folEnd  = 13 / totalDays;
+  const ovuEnd  = Math.max(14 / totalDays, folEnd + 0.05);
+
+  const segs = [
+    { f1: 0,            f2: menEnd  - GAP, color: "#E8637A" },
+    { f1: menEnd  + GAP, f2: folEnd  - GAP, color: "#F4956A" },
+    { f1: folEnd  + GAP, f2: ovuEnd  - GAP, color: "#F5C842" },
+    { f1: ovuEnd  + GAP, f2: 1,             color: "#8B7BB5" },
+  ].filter(s => s.f2 > s.f1 + 0.001); // drop degenerate segments
+
+  // Dot at middle of current day
+  const dotFrac = Math.min((cycleDay - 0.5) / totalDays, 0.985);
+  const dot = pt(dotFrac);
+
+  return (
+    <svg
+      width="200"
+      height="104"
+      viewBox="0 0 200 104"
+      role="img"
+      aria-label="Cycle phase arc"
+    >
+      <defs>
+        <radialGradient id="arcGlow" cx="50%" cy="100%" r="55%">
+          <stop offset="0%"   stopColor={phaseColor} stopOpacity="0.18" />
+          <stop offset="70%"  stopColor={phaseColor} stopOpacity="0.04" />
+          <stop offset="100%" stopColor={phaseColor} stopOpacity="0"    />
+        </radialGradient>
+      </defs>
+
+      {/* Soft glow ellipse */}
+      <ellipse cx="100" cy="104" rx="100" ry="58" fill="url(#arcGlow)" />
+
+      {/* Arc segments */}
+      {segs.map((seg, i) => (
+        <path
+          key={i}
+          d={arcPath(seg.f1, seg.f2)}
+          stroke={seg.color}
+          strokeWidth="10"
+          strokeLinecap="butt"
+          fill="none"
+        />
+      ))}
+
+      {/* Current-day indicator dot */}
+      <circle cx={dot.x} cy={dot.y} r="7.5" fill="white" stroke={phaseColor} strokeWidth="2.5" />
+      <circle cx={dot.x} cy={dot.y} r="3.5" fill={phaseColor} />
+    </svg>
+  );
 }
 
 // ── Data helpers ──────────────────────────────────────────────────────────────
@@ -80,30 +181,19 @@ const MOOD_EMOJI = ["", "😢", "😟", "😐", "🙂", "😊"];
 
 function parseMood(raw: string | null): string | null {
   if (!raw) return null;
-  try {
-    const arr = JSON.parse(raw) as string[];
-    return arr[0] ?? null;
-  } catch {
-    return null;
-  }
+  try { return (JSON.parse(raw) as string[])[0] ?? null; } catch { return null; }
 }
 
 function avgMoodScore(logs: DailyLog[]): number | null {
   const scores = logs
-    .map((l) => {
-      const emoji = parseMood(l.mood);
-      return emoji ? (MOOD_SCORE[emoji] ?? null) : null;
-    })
+    .map(l => { const e = parseMood(l.mood); return e ? (MOOD_SCORE[e] ?? null) : null; })
     .filter((s): s is number => s !== null);
   if (!scores.length) return null;
   return scores.reduce((a, b) => a + b, 0) / scores.length;
 }
 
 function formatShortDate(iso: string) {
-  return new Date(iso + "T00:00:00").toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
+  return new Date(iso + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 function predictedNext(latestCycle: Cycle, avgLen: number): Date {
@@ -112,14 +202,10 @@ function predictedNext(latestCycle: Cycle, avgLen: number): Date {
   return d;
 }
 
-// ── Small shared card shell ────────────────────────────────────────────────────
+// ── Card shell ────────────────────────────────────────────────────────────────
 
 function Card({
-  children,
-  className = "",
-  hero = false,
-  padding = "p-6",
-  style,
+  children, className = "", hero = false, padding = "p-6", style,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -130,7 +216,9 @@ function Card({
   return (
     <div
       className={`bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] ${padding} ${
-        hero ? "shadow-md" : "shadow-sm"
+        hero
+          ? "shadow-md"
+          : "shadow-sm md:hover:shadow-md md:hover:-translate-y-0.5 transition-all duration-200"
       } ${className}`}
       style={style}
     >
@@ -150,14 +238,16 @@ function CardHeading({ children }: { children: React.ReactNode }) {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
-  // ── Auth + subscription gate ───────────────────────────────────────────────
   const { user, loading: authLoading, activating, statusMessage } =
     useRequireSubscription();
 
-  // ── Data ───────────────────────────────────────────────────────────────────
   const [cycles,      setCycles]      = useState<Cycle[]>([]);
   const [logs,        setLogs]        = useState<DailyLog[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [greeting,    setGreeting]    = useState("Welcome back");
+
+  // Set time-of-day greeting on mount (client-only)
+  useEffect(() => { setGreeting(getGreeting()); }, []);
 
   useEffect(() => {
     if (!user) return;
@@ -165,23 +255,17 @@ export default function DashboardPage() {
       api.get<{ cycles: Cycle[] }>("/cycles"),
       api.get<{ logs: DailyLog[] }>("/logs?limit=7"),
     ])
-      .then(([c, l]) => {
-        setCycles(c.cycles);
-        setLogs(l.logs);
-      })
+      .then(([c, l]) => { setCycles(c.cycles); setLogs(l.logs); })
       .finally(() => setDataLoading(false));
   }, [user]);
 
   const loading = authLoading || dataLoading;
 
-  // ── Loading screen ─────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
-        {statusMessage && (
-          <p className="text-sm text-[#8C6B5A]">{statusMessage}</p>
-        )}
+        {statusMessage && <p className="text-sm text-[#8C6B5A]">{statusMessage}</p>}
       </div>
     );
   }
@@ -190,49 +274,43 @@ export default function DashboardPage() {
 
   // ── Derived values ─────────────────────────────────────────────────────────
   const latestCycle   = cycles[0] ?? null;
-  const completedLens = cycles
-    .map((c) => c.cycle_length)
-    .filter((n): n is number => n !== null);
+  const completedLens = cycles.map(c => c.cycle_length).filter((n): n is number => n !== null);
   const avgLen = completedLens.length
     ? Math.round(completedLens.reduce((a, b) => a + b, 0) / completedLens.length)
     : 28;
 
   const cycleDay = latestCycle
-    ? Math.max(
-        1,
-        Math.ceil(
-          (new Date().setHours(0, 0, 0, 0) -
-            new Date(latestCycle.start_date).setHours(0, 0, 0, 0)) /
-            86_400_000
-        ) + 1
-      )
+    ? Math.max(1, Math.ceil(
+        (new Date().setHours(0,0,0,0) - new Date(latestCycle.start_date).setHours(0,0,0,0)) / 86_400_000
+      ) + 1)
     : null;
 
   const phase = cycleDay ? getPhaseInfo(cycleDay) : null;
 
-  const nextPeriodDate = latestCycle ? predictedNext(latestCycle, avgLen) : null;
+  const nextPeriodDate   = latestCycle ? predictedNext(latestCycle, avgLen) : null;
   const daysToNextPeriod = nextPeriodDate
     ? Math.max(1, Math.ceil((nextPeriodDate.getTime() - new Date().setHours(0,0,0,0)) / 86_400_000))
     : null;
   const nextPhase = cycleDay ? daysToNextPhase(cycleDay) : null;
 
-  // Recent check-ins (last 3 logs)
-  const recentLogs = logs.slice(0, 3);
-
-  // This cycle stats (from fetched logs)
-  const cycleMoodAvg = avgMoodScore(logs);
-  const energyValues = logs.map((l) => l.energy).filter((e): e is number => e !== null);
+  const recentLogs     = logs.slice(0, 3);
+  const cycleMoodAvg   = avgMoodScore(logs);
+  const energyValues   = logs.map(l => l.energy).filter((e): e is number => e !== null);
   const cycleEnergyAvg = energyValues.length
     ? energyValues.reduce((a, b) => a + b, 0) / energyValues.length
     : null;
 
-  // Quick insight
-  const quickInsight =
-    completedLens.length >= 2
-      ? `Your average cycle is ${avgLen} days`
-      : cycles.length >= 1
-        ? "Log 2 full cycles to unlock insights"
-        : null;
+  const quickInsight = completedLens.length >= 2
+    ? `Your average cycle is ${avgLen} days`
+    : cycles.length >= 1 ? "Log 2 full cycles to unlock insights" : null;
+
+  // Phase-aware hero background
+  const heroBackground = phase
+    ? `radial-gradient(ellipse at top right, ${phase.bgRgba} 0%, transparent 70%), linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)`
+    : "linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)";
+
+  // Arc total days: use actual avg if we have completed cycles, else 28
+  const arcTotalDays = completedLens.length > 0 ? avgLen : 28;
 
   return (
     <div className="w-full max-w-6xl space-y-5 pb-4">
@@ -240,74 +318,80 @@ export default function DashboardPage() {
       {activating && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
           <span>✓ Payment received. Finishing setup… this usually takes a few seconds.</span>
-          <button
-            onClick={() => window.location.reload()}
-            className="shrink-0 font-medium underline hover:no-underline"
-          >
+          <button onClick={() => window.location.reload()} className="shrink-0 font-medium underline hover:no-underline">
             Refresh
           </button>
         </div>
       )}
 
-      {/* Welcome header */}
+      {/* Welcome header — time-of-day greeting */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-[#C94B6D]">Welcome back</h1>
+        <h1 className="text-2xl font-semibold text-[#C94B6D]">{greeting}</h1>
         <p className="text-[#8C6B5A] text-sm mt-1">Here&apos;s your cycle at a glance.</p>
       </div>
 
-      {/* ── ROW 1: Hero + secondary cards ──────────────────────────────── */}
+      {/* ── ROW 1: Hero + right cards ──────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        {/* Hero card — 2/3 width */}
+        {/* Hero card — coral left accent, phase-aware radial bg */}
         <Card
           hero
           padding="p-8"
           className="md:col-span-2 min-h-[220px]"
-          style={{ background: "linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)" }}
+          style={{
+            background: heroBackground,
+            borderLeft: "3px solid #E8637A",
+          }}
         >
           <CardHeading>Your cycle today</CardHeading>
 
           {phase && cycleDay ? (
-            <div className="space-y-4">
-              {/* Phase name + day */}
-              <div>
-                <h1 className={`text-4xl font-bold tracking-tight ${phase.accent}`}>
-                  {phase.name}
-                </h1>
-                <p className="text-[#8C6B5A] mt-1 text-sm font-medium">
-                  Cycle day {cycleDay}
-                  {nextPeriodDate && (
-                    <> · Next period around{" "}
-                      <span className="text-[#2D1B1E] font-semibold">
-                        {nextPeriodDate.toLocaleDateString("en-US", {
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </span>
-                    </>
-                  )}
+            <div className="flex items-start gap-6">
+              {/* Left: text content */}
+              <div className="flex-1 space-y-4">
+                <div>
+                  <h2 className={`text-4xl font-bold tracking-tight ${phase.accent}`}>
+                    {phase.name}
+                  </h2>
+                  <p className="text-[#8C6B5A] mt-1 text-sm font-medium">
+                    Cycle day {cycleDay}
+                    {nextPeriodDate && (
+                      <> · Next period around{" "}
+                        <span className="text-[#2D1B1E] font-semibold">
+                          {nextPeriodDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+                        </span>
+                      </>
+                    )}
+                  </p>
+                </div>
+
+                <p className="text-sm text-[#8C6B5A] leading-relaxed border-l-2 border-[#E8637A]/30 pl-3">
+                  {phase.tip}
                 </p>
+
+                <div className="flex flex-wrap gap-3 pt-1">
+                  <a
+                    href="/log"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#E8637A] to-[#F4956A] text-white text-sm font-semibold rounded-full hover:opacity-90 transition-opacity shadow-sm"
+                  >
+                    Log today
+                  </a>
+                  <a
+                    href="/cycles/new"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#E8637A] text-[#E8637A] text-sm font-semibold rounded-full hover:bg-[#E8637A] hover:text-white transition-all"
+                  >
+                    Log period
+                  </a>
+                </div>
               </div>
 
-              {/* Phase tip */}
-              <p className="text-sm text-[#8C6B5A] leading-relaxed border-l-2 border-[#E8637A]/30 pl-3">
-                {phase.tip}
-              </p>
-
-              {/* Action buttons */}
-              <div className="flex flex-wrap gap-3 pt-1">
-                <a
-                  href="/log"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#E8637A] to-[#F4956A] text-white text-sm font-semibold rounded-full hover:opacity-90 transition-opacity shadow-sm"
-                >
-                  Log today
-                </a>
-                <a
-                  href="/cycles/new"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-[#E8637A] text-[#E8637A] text-sm font-semibold rounded-full hover:bg-[#E8637A] hover:text-white transition-all"
-                >
-                  Log period
-                </a>
+              {/* Right: phase arc SVG — hidden on small screens */}
+              <div className="hidden sm:flex shrink-0 items-center justify-center">
+                <CycleArcSVG
+                  cycleDay={Math.min(cycleDay, arcTotalDays)}
+                  totalDays={arcTotalDays}
+                  phaseColor={phase.dotColor}
+                />
               </div>
             </div>
           ) : (
@@ -315,12 +399,9 @@ export default function DashboardPage() {
             <div className="flex flex-col items-center justify-center py-8 text-center gap-4">
               <span className="text-5xl" aria-hidden>🌸</span>
               <div>
-                <p className="font-semibold text-[#2D1B1E] text-lg">
-                  Start your cycle tracking
-                </p>
+                <p className="font-semibold text-[#2D1B1E] text-lg">Start your cycle tracking</p>
                 <p className="text-sm text-[#8C6B5A] mt-1">
-                  Log your last period to unlock phase predictions, cycle day
-                  tracking, and personalised insights.
+                  Log your last period to unlock phase predictions, cycle day tracking, and personalised insights.
                 </p>
               </div>
               <a
@@ -333,30 +414,32 @@ export default function DashboardPage() {
           )}
         </Card>
 
-        {/* Right column — stacked secondary cards */}
+        {/* Right column */}
         <div className="flex flex-col gap-5">
-          {/* Upcoming */}
+          {/* Upcoming — prominent days-until display */}
           <Card className="flex-1">
             <CardHeading>Upcoming</CardHeading>
-            {cycleDay && nextPhase && daysToNextPeriod ? (
-              <ul className="space-y-3">
-                <li className="flex items-center justify-between">
-                  <span className="text-sm text-[#2D1B1E]">Next period</span>
-                  <span className="text-xs font-semibold text-[#E8637A] bg-[#E8637A]/10 px-2.5 py-1 rounded-full">
-                    in {daysToNextPeriod}d
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-sm text-[#2D1B1E]">{nextPhase.label} phase</span>
-                  <span className="text-xs font-semibold text-[#8C6B5A] bg-gray-100 px-2.5 py-1 rounded-full">
-                    in {nextPhase.days}d
-                  </span>
-                </li>
-              </ul>
+            {cycleDay && daysToNextPeriod && nextPeriodDate ? (
+              <div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-4xl font-bold text-[#E8637A] leading-none">{daysToNextPeriod}</span>
+                  <span className="text-base font-semibold text-[#E8637A]">days</span>
+                </div>
+                <p className="text-sm text-[#8C6B5A] mt-1">until your next period</p>
+                <p className="text-xs text-[#8C6B5A] mt-1 font-medium">
+                  {nextPeriodDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
+                </p>
+                {nextPhase && nextPhase.label !== "Next period" && (
+                  <div className="mt-3 pt-3 border-t border-gray-100">
+                    <p className="text-xs text-[#8C6B5A]">
+                      <span className="font-medium text-[#2D1B1E]">{nextPhase.label}</span> phase in{" "}
+                      <span className="font-medium text-[#2D1B1E]">{nextPhase.days}d</span>
+                    </p>
+                  </div>
+                )}
+              </div>
             ) : (
-              <p className="text-sm text-[#8C6B5A]">
-                Log a period to see predictions.
-              </p>
+              <p className="text-sm text-[#8C6B5A]">Log a period to see predictions.</p>
             )}
           </Card>
 
@@ -364,19 +447,12 @@ export default function DashboardPage() {
           <Card className="flex-1">
             <CardHeading>Quick insight</CardHeading>
             {quickInsight ? (
-              <p className="text-sm text-[#2D1B1E] font-medium leading-relaxed">
-                {quickInsight}
-              </p>
+              <p className="text-sm text-[#2D1B1E] font-medium leading-relaxed">{quickInsight}</p>
             ) : (
-              <p className="text-sm text-[#8C6B5A]">
-                Log your first period to start building insights.
-              </p>
+              <p className="text-sm text-[#8C6B5A]">Log your first period to start building insights.</p>
             )}
             {completedLens.length >= 2 && (
-              <a
-                href="/insights"
-                className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline"
-              >
+              <a href="/insights" className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline">
                 See all insights →
               </a>
             )}
@@ -384,7 +460,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── ROW 2: Recent check-ins + This cycle ───────────────────────── */}
+      {/* ── ROW 2: Recent check-ins + This cycle ──────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
         {/* Recent check-ins */}
@@ -393,39 +469,26 @@ export default function DashboardPage() {
           {recentLogs.length === 0 ? (
             <div className="text-center py-4 space-y-2">
               <p className="text-sm text-[#8C6B5A]">No logs yet.</p>
-              <a
-                href="/log"
-                className="inline-block text-sm text-[#E8637A] font-semibold hover:underline"
-              >
+              <a href="/log" className="inline-block text-sm text-[#E8637A] font-semibold hover:underline">
                 Start logging today →
               </a>
             </div>
           ) : (
             <ul className="divide-y divide-gray-50">
-              {recentLogs.map((log) => {
+              {recentLogs.map(log => {
                 const moodEmoji = parseMood(log.mood);
                 return (
                   <li key={log.date} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                    <span className="text-sm font-medium text-[#2D1B1E]">
-                      {formatShortDate(log.date)}
-                    </span>
+                    <span className="text-sm font-medium text-[#2D1B1E]">{formatShortDate(log.date)}</span>
                     <div className="flex items-center gap-3 text-xs text-[#8C6B5A]">
-                      {moodEmoji && (
-                        <span className="text-base leading-none" title="Mood">
-                          {moodEmoji}
-                        </span>
-                      )}
+                      {moodEmoji && <span className="text-base leading-none" title="Mood">{moodEmoji}</span>}
                       {log.energy != null && (
                         <span className="flex items-center gap-0.5">
-                          <span className="text-[#C94B6D] font-semibold">
-                            {log.energy}
-                          </span>
+                          <span className="text-[#C94B6D] font-semibold">{log.energy}</span>
                           <span>/5 energy</span>
                         </span>
                       )}
-                      {log.sleep_hours != null && (
-                        <span>{log.sleep_hours}h sleep</span>
-                      )}
+                      {log.sleep_hours != null && <span>{log.sleep_hours}h sleep</span>}
                     </div>
                   </li>
                 );
@@ -433,10 +496,7 @@ export default function DashboardPage() {
             </ul>
           )}
           {logs.length > 0 && (
-            <a
-              href="/log"
-              className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline"
-            >
+            <a href="/log" className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline">
               Log today →
             </a>
           )}
@@ -449,41 +509,24 @@ export default function DashboardPage() {
             <p className="text-sm text-[#8C6B5A]">No cycle logged yet.</p>
           ) : (
             <div className="grid grid-cols-3 gap-4">
-              {/* Days logged */}
               <div className="text-center space-y-1">
-                <p className="text-3xl font-bold text-[#C94B6D]">
-                  {logs.length}
-                </p>
+                <p className="text-3xl font-bold text-[#C94B6D]">{logs.length}</p>
                 <p className="text-xs text-[#8C6B5A] leading-tight">
-                  days logged
-                  <br />
-                  <span className="text-[10px] opacity-70">(last 7)</span>
+                  days logged<br /><span className="text-[10px] opacity-70">(last 7)</span>
                 </p>
               </div>
-
-              {/* Avg mood */}
               <div className="text-center space-y-1">
                 <p className="text-3xl font-bold text-[#C94B6D]">
-                  {cycleMoodAvg != null
-                    ? MOOD_EMOJI[Math.round(cycleMoodAvg)]
-                    : "—"}
+                  {cycleMoodAvg != null ? MOOD_EMOJI[Math.round(cycleMoodAvg)] : "—"}
                 </p>
-                <p className="text-xs text-[#8C6B5A] leading-tight">
-                  avg mood
-                </p>
+                <p className="text-xs text-[#8C6B5A] leading-tight">avg mood</p>
               </div>
-
-              {/* Avg energy */}
               <div className="text-center space-y-1">
                 <p className="text-3xl font-bold text-[#C94B6D]">
-                  {cycleEnergyAvg != null
-                    ? cycleEnergyAvg.toFixed(1)
-                    : "—"}
+                  {cycleEnergyAvg != null ? cycleEnergyAvg.toFixed(1) : "—"}
                 </p>
                 <p className="text-xs text-[#8C6B5A] leading-tight">
-                  avg energy
-                  <br />
-                  <span className="text-[10px] opacity-70">out of 5</span>
+                  avg energy<br /><span className="text-[10px] opacity-70">out of 5</span>
                 </p>
               </div>
             </div>
