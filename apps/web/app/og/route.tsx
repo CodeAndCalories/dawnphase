@@ -22,21 +22,14 @@ export async function GET(request: Request) {
       >
         {/* Top: logo + brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div
-            style={{
-              width: "48px",
-              height: "48px",
-              background: "linear-gradient(135deg, #E8637A, #F4956A)",
-              borderRadius: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontSize: "24px",
-            }}
-          >
-            🌅
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://www.dawnphase.com/logo.png"
+            width="48"
+            height="48"
+            style={{ borderRadius: "12px" }}
+            alt="Dawn Phase"
+          />
           <span style={{ color: "#C94B6D", fontSize: "28px", fontWeight: "600" }}>
             Dawn Phase
           </span>
