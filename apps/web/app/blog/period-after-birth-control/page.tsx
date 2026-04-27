@@ -88,7 +88,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
           <p>See a healthcare provider if:</p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>You have had no period for more than three months after stopping a combined pill or progestogen-only pill (this is called post-pill amenorrhoea and warrants investigation)</li>
+            <li>You have had no period for around three months or longer after stopping a combined pill or progestogen-only pill (this is called post-pill amenorrhoea and warrants investigation)</li>
             <li>Cycles remain highly irregular (under 21 days or over 45 days) after six months</li>
             <li>Periods become extremely heavy or painful</li>
             <li>You have symptoms that suggest you may not be ovulating (no discernible cycle pattern, no changes in cervical mucus)</li>

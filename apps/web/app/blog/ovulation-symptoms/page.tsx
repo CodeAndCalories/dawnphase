@@ -29,7 +29,7 @@ export default function Post() {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
           <p className="text-sm text-amber-800 font-medium mb-1">Medical disclaimer</p>
           <p className="text-sm text-amber-700">
-            This article is for educational purposes only and is not medical advice. Ovulation signs vary widely between individuals and cycles. Do not use this information for contraceptive purposes — consult a healthcare provider for guidance on fertility or contraception.
+            This article is for educational purposes only and is not medical advice. Ovulation signs vary widely between individuals and cycles. Do not use this information for contraceptive purposes — consult a healthcare provider for guidance on fertility or contraception. Ovulation signs and OPKs can help identify patterns, but should not be relied on alone to prevent pregnancy.
           </p>
         </div>
 

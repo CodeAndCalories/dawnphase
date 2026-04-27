@@ -29,7 +29,7 @@ export default function Post() {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
           <p className="text-sm text-amber-800 font-medium mb-1">Important medical disclaimer</p>
           <p className="text-sm text-amber-700">
-            This article is for educational and informational purposes only. It is not a diagnostic tool and cannot tell you whether you have PMDD or PMS. Only a qualified healthcare provider can make a diagnosis. If you are experiencing severe premenstrual symptoms — especially thoughts of self-harm or suicidal ideation — please reach out to a doctor or mental health professional promptly.
+            This article is for educational and informational purposes only. It is not a diagnostic tool and cannot tell you whether you have PMDD or PMS. Only a qualified healthcare provider can make a diagnosis. If you are experiencing severe premenstrual symptoms — especially thoughts of self-harm or suicidal ideation — please reach out to a doctor or mental health professional promptly. If you have thoughts of self-harm or feel unsafe, please contact local emergency services or a crisis support line immediately.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default function Post() {
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Treatment options</h2>
           <p>
-            PMDD is a recognised and treatable condition. Options that a doctor may discuss include:
+            PMDD is a clinically recognized condition, and treatment options are available through a qualified healthcare professional. Options that a doctor may discuss include:
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>SSRIs</strong> — selective serotonin reuptake inhibitors, often taken either continuously or only in the luteal phase, are considered a first-line option for PMDD</li>
