@@ -51,6 +51,31 @@ const POSTS: Record<string, { title: string; excerpt: string; readTime: string }
     excerpt: "Most people begin perimenopause in their 40s, but it can start earlier. What affects timing and early signs.",
     readTime: "6 min read",
   },
+  "natural-cycles-alternative": {
+    title: "Natural Cycles Alternatives — Privacy-First Options in 2026",
+    excerpt: "What to consider when choosing a cycle tracking app if Natural Cycles doesn't fit your needs.",
+    readTime: "6 min read",
+  },
+  "cycle-syncing-explained": {
+    title: "Cycle Syncing — Does It Actually Work?",
+    excerpt: "The science behind adjusting workouts and diet to your cycle phases — what's evidence-based and what isn't.",
+    readTime: "6 min read",
+  },
+  "hormonal-imbalance-signs": {
+    title: "10 Signs of Hormonal Imbalance in Women",
+    excerpt: "Irregular periods, fatigue, mood swings and more — common signs that hormones may be out of balance.",
+    readTime: "7 min read",
+  },
+  "perimenopause-vs-menopause": {
+    title: "Perimenopause vs Menopause — Key Differences",
+    excerpt: "Perimenopause and menopause are often confused. Here's how to tell them apart and know where you are.",
+    readTime: "6 min read",
+  },
+  "tracking-cycle-pcos": {
+    title: "Why Tracking Your Cycle With PCOS Is Different",
+    excerpt: "Standard apps assume 28-day cycles. PCOS doesn't work like that. Here's what to prioritise instead.",
+    readTime: "6 min read",
+  },
 };
 
 interface Props {
