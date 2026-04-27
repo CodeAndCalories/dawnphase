@@ -27,11 +27,14 @@ ENVIRONMENT = "staging"
 # Attempt to re-enable here; if deploy fails with 10072 on the
 # schedules step, comment these out again and trigger via the HTTP
 # endpoints: GET /cron/reminders and GET /cron/monthly instead.
-[triggers]
-crons = [
-  "0 9 * * *",    # daily 09:00 UTC — period reminders
-  "0 9 1 * *",    # 09:00 UTC on 1st of each month — monthly reports
-]
+# [triggers]
+# crons = [
+#   "0 9 * * *",    # daily 09:00 UTC — period reminders
+#   "0 9 1 * *",    # 09:00 UTC on 1st of each month — monthly reports
+# ]
+# NOTE: account is at the 5-cron-trigger free-plan limit (error 10072).
+# Free up a slot in the Cloudflare dashboard, then uncomment above.
+# Until then, trigger manually: GET /cron/reminders, GET /cron/monthly
 
 # Secrets set via: wrangler secret put SECRET_NAME
 # JWT_SECRET
