@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Perimenopause Symptoms Checklist — 35 Signs to Track",
@@ -167,7 +168,10 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase perimenopause mode helps</h2>
 
           <p>
-            Dawn Phase includes a dedicated perimenopause tracking mode that surfaces the symptoms most relevant to this transition — hot flashes, night sweats, brain fog, and mood shifts — alongside your standard cycle and daily symptom log.
+            Dawn Phase includes a dedicated perimenopause tracking mode that surfaces the symptoms most relevant to this transition alongside your standard cycle and daily symptom log. Explore individual symptom guides:{" "}
+            <Link href="/symptoms/hot-flashes-causes" className="text-[#E8637A] hover:underline font-medium">hot flashes</Link>,{" "}
+            <Link href="/symptoms/night-sweats-perimenopause" className="text-[#E8637A] hover:underline font-medium">night sweats</Link>, and{" "}
+            <Link href="/symptoms/brain-fog-perimenopause" className="text-[#E8637A] hover:underline font-medium">brain fog during perimenopause</Link>.
           </p>
           <p>
             The app estimates your cycle day based on what you log, while noting that irregular cycles can make predictions less certain. The insights view highlights patterns across your logs so you can see which symptoms cluster around which phase. You can export your full history as a CSV at any time — ideal for taking to GP appointments or specialist consultations.
@@ -178,6 +182,11 @@ export default function Post() {
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
+
+        <RelatedArticles
+          currentSlug="perimenopause-symptoms-checklist"
+          slugs={["perimenopause-age", "pmdd-vs-pms", "luteal-phase-symptoms"]}
+        />
 
         {/* CTA */}
         <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>

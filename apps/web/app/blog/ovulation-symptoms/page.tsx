@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "8 Signs of Ovulation — What Your Body Is Telling You",
@@ -91,6 +92,11 @@ export default function Post() {
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
+
+        <RelatedArticles
+          currentSlug="ovulation-symptoms"
+          slugs={["pcos-cycle-tracking", "period-after-birth-control", "luteal-phase-symptoms"]}
+        />
 
         <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Track your ovulation signs</h3>

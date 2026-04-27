@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "What Age Does Perimenopause Start?",
@@ -101,6 +102,11 @@ export default function Post() {
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
+
+        <RelatedArticles
+          currentSlug="perimenopause-age"
+          slugs={["perimenopause-symptoms-checklist", "luteal-phase-symptoms", "pmdd-vs-pms"]}
+        />
 
         <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Start tracking your perimenopause symptoms</h3>

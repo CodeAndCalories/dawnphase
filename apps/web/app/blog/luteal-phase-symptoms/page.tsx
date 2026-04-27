@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Luteal Phase Symptoms — What's Normal and What's Not",
@@ -126,13 +127,22 @@ export default function Post() {
             <li>Whether lifestyle factors — sleep, stress, alcohol — make symptoms better or worse</li>
           </ul>
           <p>
-            Dawn Phase tracks your cycle day and phase in real time, making it easy to see at a glance whether you&apos;re in your luteal phase and how your current symptoms compare to your historical average.
+            Dawn Phase tracks your cycle day and phase in real time, making it easy to see at a glance whether you&apos;re in your luteal phase. For deeper dives into specific symptoms, see:{" "}
+            <Link href="/symptoms/bloating-before-period" className="text-[#E8637A] hover:underline font-medium">bloating before period</Link>,{" "}
+            <Link href="/symptoms/mood-swings-before-period" className="text-[#E8637A] hover:underline font-medium">mood swings before period</Link>.
+            You can also calculate your luteal phase length with our free{" "}
+            <Link href="/luteal-phase-calculator" className="text-[#E8637A] hover:underline font-medium">luteal phase calculator</Link>.
           </p>
 
         </div>
 
+        <RelatedArticles
+          currentSlug="luteal-phase-symptoms"
+          slugs={["pmdd-vs-pms", "how-long-should-period-last", "pcos-cycle-tracking"]}
+        />
+
         {/* CTA */}
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
+        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Track your luteal phase with Dawn Phase</h3>
           <p className="mb-6 opacity-90">Daily symptom logging. Phase tracking. 7-day free trial.</p>
           <a

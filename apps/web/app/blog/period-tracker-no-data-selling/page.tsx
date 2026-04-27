@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "The Best Period Tracker That Doesn't Sell Your Data (2026)",
@@ -119,8 +120,13 @@ export default function Post() {
 
         </div>
 
+        <RelatedArticles
+          currentSlug="period-tracker-no-data-selling"
+          slugs={["flo-alternative", "perimenopause-symptoms-checklist", "pmdd-vs-pms"]}
+        />
+
         {/* CTA */}
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
+        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Track your cycle privately</h3>
           <p className="mb-6 opacity-90">No data selling. No ads. Just your patterns, yours alone.</p>
           <a

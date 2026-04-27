@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "How to Track Your Cycle With PCOS — A Complete Guide",
@@ -101,7 +102,11 @@ export default function Post() {
             Dawn Phase doesn&apos;t assume a 28-day cycle. It calculates your current cycle day from your logged period start date, shows your phase based on the most likely progression given your cycle history, and updates predictions as your pattern becomes clearer.
           </p>
           <p>
-            Critically, Dawn Phase doesn&apos;t break when you skip a month or have a 60-day cycle. It simply waits for your next period log and recalibrates. The symptom log works independently of cycle predictions — so even if the cycle tracking is uncertain, your daily symptom data is still accumulating and useful.
+            Critically, Dawn Phase doesn&apos;t break when you skip a month or have a 60-day cycle. It simply waits for your next period log and recalibrates. See our detailed guide on{" "}
+            <Link href="/symptoms/irregular-periods-pcos" className="text-[#E8637A] hover:underline font-medium">tracking irregular periods with PCOS</Link>.
+            You can also use our free{" "}
+            <Link href="/cycle-calculator" className="text-[#E8637A] hover:underline font-medium">cycle length calculator</Link>{" "}
+            to get an initial estimate of your average cycle length.
           </p>
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Tips for spotting patterns with unpredictable cycles</h2>
@@ -115,8 +120,13 @@ export default function Post() {
 
         </div>
 
+        <RelatedArticles
+          currentSlug="pcos-cycle-tracking"
+          slugs={["ovulation-symptoms", "period-after-birth-control", "how-long-should-period-last"]}
+        />
+
         {/* CTA */}
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
+        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Track your cycle with PCOS</h3>
           <p className="mb-6 opacity-90">Irregular cycle support included. 7-day free trial.</p>
           <a

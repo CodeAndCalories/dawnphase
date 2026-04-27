@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Best Flo App Alternatives in 2026 — Private & Accurate",
@@ -34,7 +35,8 @@ export default function Post() {
         <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
 
           <p className="text-lg text-[#8C6B5A]">
-            Flo is one of the most widely used period tracking apps. It has also faced regulatory scrutiny over data privacy practices. If you&apos;re looking for a better alternative, here&apos;s an honest comparison.
+            Flo is one of the most widely used period tracking apps. It has also faced regulatory scrutiny over data privacy practices. If you&apos;re looking for a better alternative, here&apos;s an honest comparison. For a deeper look at why data privacy in period apps matters, see:{" "}
+            <Link href="/blog/period-tracker-no-data-selling" className="text-[#E8637A] hover:underline font-medium">The best period tracker that doesn&apos;t sell your data</Link>.
           </p>
 
           <p className="text-sm text-[#8C6B5A] bg-[#FFF0F0] border border-[rgba(232,99,122,0.2)] rounded-lg p-3 mb-6">
@@ -114,8 +116,13 @@ export default function Post() {
 
         </div>
 
+        <RelatedArticles
+          currentSlug="flo-alternative"
+          slugs={["period-tracker-no-data-selling", "perimenopause-symptoms-checklist", "pcos-cycle-tracking"]}
+        />
+
         {/* CTA */}
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
+        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Try Dawn Phase free for 7 days</h3>
           <p className="mb-6 opacity-90">No data selling. No ads. Cancel anytime.</p>
           <a

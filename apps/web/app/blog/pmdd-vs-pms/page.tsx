@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "PMDD vs PMS — How to Tell the Difference",
@@ -111,13 +112,20 @@ export default function Post() {
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How tracking helps</h2>
           <p>
-            Whether your symptoms are PMS or PMDD, daily tracking across multiple cycles provides the pattern data that makes clinical conversations more productive. Recording symptom severity, cycle day, sleep, and mood each day — even for just two or three months — transforms vague descriptions into objective evidence.
+            Whether your symptoms are PMS or PMDD, daily tracking across multiple cycles provides the pattern data that makes clinical conversations more productive. Recording symptom severity, cycle day, sleep, and mood each day — even for just two or three months — transforms vague descriptions into objective evidence. See also our dedicated{" "}
+            <Link href="/symptoms/pms-vs-pmdd" className="text-[#E8637A] hover:underline font-medium">PMS vs PMDD symptom guide</Link>{" "}
+            with causes, tracking tips, and when to seek care.
           </p>
         </div>
 
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. If you are experiencing thoughts of self-harm, please contact a healthcare provider or crisis service.
         </p>
+
+        <RelatedArticles
+          currentSlug="pmdd-vs-pms"
+          slugs={["luteal-phase-symptoms", "perimenopause-symptoms-checklist", "how-long-should-period-last"]}
+        />
 
         <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Track your premenstrual patterns</h3>
