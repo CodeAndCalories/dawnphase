@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "The Best Period Tracker That Doesn't Sell Your Data (2026)",
     description:
       "Period apps have a data problem. Here's what Flo, Clue and others actually do with your cycle data — and how to choose a private period tracker.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=The%20Best%20Period%20Tracker%20That%20Doesn't%20Sell%20Your%20Data%20(2026)&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

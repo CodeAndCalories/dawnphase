@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "How Long Should Your Period Last? What's Normal",
     description:
       "The normal range for period length is 2–7 days. Here's what affects duration, what short or long periods can mean, and when to see a doctor.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=How%20Long%20Should%20Your%20Period%20Last%3F%20What's%20Normal&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

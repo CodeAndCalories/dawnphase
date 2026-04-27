@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Your First Period After Stopping Birth Control",
     description:
       "What to expect after stopping the pill or hormonal birth control — timeline, irregular cycles, what to track, and when to see a doctor.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Your%20First%20Period%20After%20Stopping%20Birth%20Control&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

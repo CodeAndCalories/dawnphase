@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "10 Signs of Hormonal Imbalance in Women",
     description:
       "Irregular periods, mood swings, fatigue, and unexplained weight changes can all signal hormonal imbalance. Here's what to look for and when to seek help.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=10%20Signs%20of%20Hormonal%20Imbalance%20in%20Women&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

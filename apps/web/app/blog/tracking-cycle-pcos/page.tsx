@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Why Tracking Your Cycle With PCOS Is Different",
     description:
       "Standard cycle tracking apps assume a regular 28-day cycle. PCOS doesn't work like that. Here's what makes PCOS tracking different and what to look for in an app.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Why%20Tracking%20Your%20Cycle%20With%20PCOS%20Is%20Different&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "What Age Does Perimenopause Start?",
     description:
       "Perimenopause typically begins in the 40s but can start earlier. Here's what affects the timing, what early signs to watch for, and why tracking matters.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=What%20Age%20Does%20Perimenopause%20Start%3F&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

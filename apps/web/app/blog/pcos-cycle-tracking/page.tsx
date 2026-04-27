@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "How to Track Your Cycle With PCOS — A Complete Guide",
     description:
       "PCOS makes cycle tracking harder — but not impossible. Here's what to track, how to spot patterns, and how Dawn Phase supports irregular cycles.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=How%20to%20Track%20Your%20Cycle%20With%20PCOS%20%E2%80%94%20A%20Complete%20Guide&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

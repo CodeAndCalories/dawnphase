@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Perimenopause Symptoms Checklist — 35 Signs to Track",
     description:
       "A comprehensive checklist of 35 perimenopause symptoms across five categories — with guidance on what to track and when to see a doctor.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Perimenopause%20Symptoms%20Checklist%20%E2%80%94%2035%20Signs%20to%20Track&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

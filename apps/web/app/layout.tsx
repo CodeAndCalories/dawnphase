@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     description: "Privacy-first cycle and perimenopause tracker.",
     url: "https://www.dawnphase.com",
     siteName: "Dawn Phase",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: "https://www.dawnphase.com/og?title=Know%20your%20cycle.%20Own%20your%20health.", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {

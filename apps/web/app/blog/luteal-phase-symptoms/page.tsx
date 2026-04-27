@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Luteal Phase Symptoms — What's Normal and What's Not",
     description:
       "From PMS to PMDD, this guide explains what happens in the luteal phase, common symptoms, short luteal phase signs, and when to see a doctor.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Luteal%20Phase%20Symptoms%20%E2%80%94%20What's%20Normal%20and%20What's%20Not&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

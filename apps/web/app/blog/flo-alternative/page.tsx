@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Best Flo App Alternatives in 2026 — Private & Accurate",
     description:
       "Looking for a Flo alternative? We compare Dawn Phase, Clue, and Natural Cycles on privacy, price, and perimenopause support.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Best%20Flo%20App%20Alternatives%20in%202026%20%E2%80%94%20Private%20%26%20Accurate&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

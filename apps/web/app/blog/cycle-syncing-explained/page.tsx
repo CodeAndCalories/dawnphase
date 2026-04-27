@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Cycle Syncing — Does It Actually Work?",
     description:
       "Cycle syncing means adjusting diet, exercise, and work habits to your cycle phase. Here's what the evidence says and how to use your cycle data practically.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Cycle%20Syncing%20%E2%80%94%20Does%20It%20Actually%20Work%3F&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "PMDD vs PMS — How to Tell the Difference",
     description:
       "PMS and PMDD both cause premenstrual symptoms, but PMDD involves severe mood disruption. Here's how to understand the differences and what to do next.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=PMDD%20vs%20PMS%20%E2%80%94%20How%20to%20Tell%20the%20Difference&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "8 Signs of Ovulation — What Your Body Is Telling You",
     description:
       "Cervical mucus changes, BBT shifts, light spotting, and more — here are eight signs that ovulation may be occurring and how to track them.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=What%20Your%20Body%20Is%20Telling%20You%3A%208%20Signs%20of%20Ovulation&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

@@ -25,7 +25,15 @@ export async function generateMetadata({
   return {
     title,
     description: symptom.description,
-    openGraph: { title, description: symptom.description },
+    openGraph: {
+      title,
+      description: symptom.description,
+      images: [{
+        url: `https://www.dawnphase.com/og?title=${encodeURIComponent(symptom.name)}&subtitle=${encodeURIComponent("Dawn Phase — Symptom guide")}`,
+        width: 1200,
+        height: 630,
+      }],
+    },
   };
 }
 

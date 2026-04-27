@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Perimenopause vs Menopause — Key Differences",
     description:
       "Perimenopause and menopause are often confused. Here's how to tell them apart, what each stage involves, and how to know where you are in the transition.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Perimenopause%20vs%20Menopause%20%E2%80%94%20Key%20Differences&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 

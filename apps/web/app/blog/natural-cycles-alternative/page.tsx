@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     title: "Natural Cycles Alternatives — Privacy-First Options in 2026",
     description:
       "Looking for a Natural Cycles alternative? Here's what to consider when choosing a fertility awareness or cycle tracking app that prioritises your privacy.",
+    images: [{
+      url: "https://www.dawnphase.com/og?title=Natural%20Cycles%20Alternatives%20%E2%80%94%20Privacy-First%20Options%20in%202026&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
+      width: 1200,
+      height: 630,
+    }],
   },
 };
 
