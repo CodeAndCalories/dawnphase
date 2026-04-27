@@ -23,6 +23,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/perimenopause-symptoms-checklist", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/pcos-cycle-tracking",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/luteal-phase-symptoms",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/ovulation-symptoms",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/period-after-birth-control",       lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/pmdd-vs-pms",                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/how-long-should-period-last",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/perimenopause-age",                lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Contact + Legal
     { url: "https://www.dawnphase.com/contact",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.5 },
     { url: "https://www.dawnphase.com/privacy",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },

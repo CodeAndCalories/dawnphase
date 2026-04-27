@@ -49,6 +49,41 @@ const POSTS = [
       "From PMS to PMDD, this guide explains what happens during the luteal phase, what symptoms to expect, and when to see a doctor.",
     readTime: "6 min read",
   },
+  {
+    slug: "ovulation-symptoms",
+    title: "8 Signs of Ovulation — What Your Body Is Telling You",
+    excerpt:
+      "Cervical mucus changes, BBT rise, OPK results, and more — eight signs ovulation may be occurring and how to track them reliably.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "period-after-birth-control",
+    title: "Your First Period After Stopping Birth Control",
+    excerpt:
+      "What to expect after stopping the pill or hormonal contraception — timeline, why cycles are irregular, and when to see a doctor.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "pmdd-vs-pms",
+    title: "PMDD vs PMS — How to Tell the Difference",
+    excerpt:
+      "PMS and PMDD share premenstrual timing but differ dramatically in severity and impact. Here's how to understand the difference.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "how-long-should-period-last",
+    title: "How Long Should Your Period Last? What's Normal",
+    excerpt:
+      "The typical range is 2–7 days, but a lot affects period length. Here's what's normal, what isn't, and when to see a doctor.",
+    readTime: "5 min read",
+  },
+  {
+    slug: "perimenopause-age",
+    title: "What Age Does Perimenopause Start?",
+    excerpt:
+      "Most people begin perimenopause in their 40s, but it can start earlier. Here's what affects timing and the early signs to watch for.",
+    readTime: "6 min read",
+  },
 ];
 
 export default function BlogIndexPage() {
