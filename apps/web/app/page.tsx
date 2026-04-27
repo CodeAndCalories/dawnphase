@@ -85,6 +85,32 @@ function Nav() {
   );
 }
 
+// ─── Stats bar ────────────────────────────────────────────────────────────────
+
+function StatsBar() {
+  return (
+    <section className="py-10 px-6 bg-[#FDF6F0] border-y border-[rgba(232,99,122,0.12)]">
+      <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-6">
+        <p className="text-sm font-semibold text-[#C94B6D] uppercase tracking-widest text-center">
+          Join women who finally understand their cycles
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16">
+          {[
+            { value: "7-day free trial",  label: "No charge until day 8" },
+            { value: "Privacy-first",     label: "Your data is never sold" },
+            { value: "Cancel anytime",    label: "No lock-in, no questions" },
+          ].map(({ value, label }) => (
+            <div key={value} className="text-center">
+              <p className="text-xl font-bold text-[#2D1B1E] leading-none">{value}</p>
+              <p className="text-xs text-[#8C6B5A] mt-1">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
 function Hero() {
@@ -405,6 +431,68 @@ function Pricing() {
 
 // ─── Final CTA ────────────────────────────────────────────────────────────────
 
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+const FAQS = [
+  {
+    q: "Is my data really private?",
+    a: "Yes. Dawn Phase is subscription-only — we have no reason to sell your data. There are no advertisers, no data brokers, and no third-party analytics. You can export or delete everything anytime from Settings.",
+  },
+  {
+    q: "Does it work for irregular cycles?",
+    a: "Yes. Dawn Phase supports cycles from 21–45 days and is designed specifically for people with PCOS and those in the perimenopause transition who experience unpredictable cycle timing.",
+  },
+  {
+    q: "What happens after the 7-day trial?",
+    a: "You'll be charged $14.99/month. Cancel anytime before the trial ends and you won't be charged anything. There are no cancellation fees.",
+  },
+  {
+    q: "Can I export my data?",
+    a: "Yes. Export everything as a CSV spreadsheet or generate a doctor-ready PDF report anytime from the Settings page. Your health data belongs to you.",
+  },
+  {
+    q: "Does it work on my phone?",
+    a: "Yes. Dawn Phase works in any modern mobile browser. You can also add it to your home screen like an app — no App Store required.",
+  },
+];
+
+function FAQ() {
+  return (
+    <section className="py-20 px-6 bg-[#FFF9F6]">
+      <div className="max-w-[720px] mx-auto">
+        <h2 className="font-display text-3xl font-bold text-[#2D1B1E] text-center mb-10">
+          Common questions
+        </h2>
+        <div className="space-y-3">
+          {FAQS.map(({ q, a }) => (
+            <details
+              key={q}
+              className="group rounded-2xl border border-[rgba(232,99,122,0.15)] bg-white overflow-hidden"
+            >
+              <summary
+                className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none"
+                // removes default marker in Firefox
+              >
+                <span className="font-semibold text-[#C94B6D] text-base leading-snug">{q}</span>
+                {/* Chevron rotates on open via CSS sibling trick isn't available, use pseudo via group */}
+                <span
+                  className="shrink-0 w-6 h-6 rounded-full bg-[#E8637A]/10 text-[#E8637A] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
+                  aria-hidden
+                >
+                  +
+                </span>
+              </summary>
+              <div className="px-6 pb-5 pt-1">
+                <p className="text-[#8C6B5A] text-sm leading-relaxed">{a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta() {
   return (
     <section className="py-28 px-6" style={{ backgroundColor: "#2D1B1E" }}>
@@ -478,10 +566,12 @@ export default function LandingPage() {
     <div className="min-h-screen">
       <Nav />
       <Hero />
+      <StatsBar />
       <HowItWorks />
       <Features />
       <ForWho />
       <Pricing />
+      <FAQ />
       <FinalCta />
       <Footer />
     </div>
