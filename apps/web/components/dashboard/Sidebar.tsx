@@ -20,13 +20,15 @@ const NAV = [
   { href: "/settings",    label: "Settings",   Icon: Settings         },
 ];
 
-const SUB_BADGE: Record<string, { label: string; cls: string }> = {
-  trialing:   { label: "Trial",        cls: "bg-blue-100   text-blue-800"   },
-  active:     { label: "Active",       cls: "bg-green-100  text-green-800"  },
-  past_due:   { label: "Past due",     cls: "bg-red-100    text-red-700"    },
-  canceled:   { label: "Canceled",     cls: "bg-gray-100   text-gray-500"   },
-  incomplete: { label: "Incomplete",   cls: "bg-yellow-100 text-yellow-800" },
-};
+// "incomplete" means checkout completed but webhook hasn't updated the
+// DB yet — treat it identically to "trialing" from the user's perspective.
+function getSubBadge(status: string): { label: string; cls: string } {
+  if (status === "active")   return { label: "Active",   cls: "bg-green-100 text-green-800" };
+  if (status === "past_due") return { label: "Past due", cls: "bg-amber-100 text-amber-800" };
+  if (status === "canceled") return { label: "Canceled", cls: "bg-red-100   text-red-700"   };
+  // trialing, incomplete, or anything else → show Trial
+  return { label: "Trial", cls: "bg-blue-100 text-blue-800" };
+}
 
 function getJWTPayload(): { email: string; status: string } | null {
   if (typeof window === "undefined") return null;
@@ -62,7 +64,7 @@ export default function Sidebar() {
   const payload  = getJWTPayload();
   const email    = payload?.email ?? "";
   const status   = payload?.status ?? "";
-  const sub      = SUB_BADGE[status];
+  const sub      = getSubBadge(status);
 
   return (
     <>
