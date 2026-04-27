@@ -22,8 +22,17 @@ name = "dawnphase-worker-staging"
 [env.staging.vars]
 ENVIRONMENT = "staging"
 
-# [triggers]
-# crons = ["0 9 * * *"]  # daily 09:00 UTC reminder — re-enable when a cron slot is free
+# Cron triggers — free plan allows 5 total across ALL workers.
+# Previously commented out due to error 10072 (account at limit).
+# Attempt to re-enable here; if deploy fails with 10072 on the
+# schedules step, comment these out again and trigger via the HTTP
+# endpoints: GET /cron/reminders and GET /cron/monthly instead.
+[triggers]
+crons = [
+  "0 9 * * *",    # daily 09:00 UTC — period reminders
+  "0 9 1 * *",    # 09:00 UTC on 1st of each month — monthly reports
+]
+
 # Secrets set via: wrangler secret put SECRET_NAME
 # JWT_SECRET
 # RESEND_API_KEY

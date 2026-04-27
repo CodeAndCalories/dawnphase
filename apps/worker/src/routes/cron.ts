@@ -1,7 +1,13 @@
 import { Hono } from "hono";
-import type { Env } from "../types";
+import type { Env, DailyLog } from "../types";
 import { dbAll } from "../lib/db";
-import { sendEmail, periodReminderEmail, type CyclePhase } from "../lib/email";
+import {
+  sendEmail,
+  periodReminderEmail,
+  monthlyReportEmail,
+  type CyclePhase,
+  type MonthlyReportOptions,
+} from "../lib/email";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -9,6 +15,14 @@ interface ReminderRow {
   id: string;
   email: string;
   reminder_days_before: number;
+  avg_cycle_length: number | null;
+  last_period_start: string | null;
+}
+
+interface MonthlyUserRow {
+  id: string;
+  email: string;
+  cycles_this_month: number;
   avg_cycle_length: number | null;
   last_period_start: string | null;
 }
@@ -30,13 +44,17 @@ function formatDate(date: Date): string {
 }
 
 function getPhase(cycleDay: number): CyclePhase {
-  if (cycleDay <= 5)  return "Menstrual";
-  if (cycleDay <= 13) return "Follicular";
+  if (cycleDay <= 5)   return "Menstrual";
+  if (cycleDay <= 13)  return "Follicular";
   if (cycleDay === 14) return "Ovulatory";
   return "Luteal";
 }
 
-// ── Core reminder logic (shared by HTTP route and scheduled handler) ──────────
+const MOOD_MAP: Record<string, number> = {
+  "😢": 1, "😟": 2, "😐": 3, "🙂": 4, "😊": 5,
+};
+
+// ── Daily period reminders ─────────────────────────────────────────────────────
 
 export async function processReminders(
   env: Env
@@ -44,8 +62,6 @@ export async function processReminders(
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
 
-  // Fetch all users who have active reminders and an active/trialing subscription,
-  // along with their average cycle length and most recent period start.
   const rows = await dbAll<ReminderRow>(
     env.DB,
     `SELECT
@@ -76,26 +92,15 @@ export async function processReminders(
   let errors = 0;
 
   for (const row of rows) {
-    // Skip users with no cycle data — nothing to predict from.
-    if (!row.last_period_start) {
-      skipped++;
-      continue;
-    }
+    if (!row.last_period_start) { skipped++; continue; }
 
-    const avgLength = row.avg_cycle_length ?? 28;
-    const lastPeriod = new Date(row.last_period_start + "T00:00:00Z");
+    const avgLength    = row.avg_cycle_length ?? 28;
+    const lastPeriod   = new Date(row.last_period_start + "T00:00:00Z");
     const predictedNext = addDays(lastPeriod, avgLength);
+    const msPerDay     = 1000 * 60 * 60 * 24;
+    const daysUntil    = Math.round((predictedNext.getTime() - today.getTime()) / msPerDay);
 
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const daysUntil = Math.round(
-      (predictedNext.getTime() - today.getTime()) / msPerDay
-    );
-
-    // Only send if today matches the user's chosen lead time exactly.
-    if (daysUntil !== row.reminder_days_before) {
-      skipped++;
-      continue;
-    }
+    if (daysUntil !== row.reminder_days_before) { skipped++; continue; }
 
     const cycleDay = Math.max(
       1,
@@ -104,35 +109,181 @@ export async function processReminders(
 
     try {
       await sendEmail(env.RESEND_API_KEY, {
-        to: row.email,
+        to:      row.email,
         subject: `Your period may be coming in ${daysUntil} day${daysUntil === 1 ? "" : "s"} 🌸`,
-        html: periodReminderEmail({
-          email: row.email,
-          daysAway: daysUntil,
+        html:    periodReminderEmail({
+          email:         row.email,
+          daysAway:      daysUntil,
           predictedDate: formatDate(predictedNext),
-          phase: getPhase(cycleDay),
+          phase:         getPhase(cycleDay),
         }),
       });
       sent++;
-      console.log(`[cron] Reminder sent → ${row.email} (in ${daysUntil}d)`);
+      console.log(`[cron/reminders] sent → ${row.email} (in ${daysUntil}d)`);
     } catch (err) {
       errors++;
-      console.error(`[cron] Failed to send reminder to ${row.email}:`, err);
+      console.error(`[cron/reminders] failed → ${row.email}:`, err);
     }
   }
 
-  console.log(`[cron] Reminders complete — sent:${sent} skipped:${skipped} errors:${errors}`);
+  console.log(`[cron/reminders] complete — sent:${sent} skipped:${skipped} errors:${errors}`);
   return { sent, skipped, errors };
 }
 
-// ── HTTP route (GET /cron/reminders) ─────────────────────────────────────────
-// Useful for manual triggering and debugging. In production the Cloudflare
-// Cron Trigger fires the scheduled() handler directly.
+// ── Monthly cycle report ───────────────────────────────────────────────────────
+
+export async function processMonthlyReports(
+  env: Env
+): Promise<{ sent: number; skipped: number; errors: number }> {
+  const now = new Date();
+  now.setUTCHours(0, 0, 0, 0);
+
+  // 30-day window ending today
+  const cutoff = addDays(now, -30).toISOString().slice(0, 10);
+  const today  = now.toISOString().slice(0, 10);
+
+  // Report month label = previous calendar month (cron fires on the 1st)
+  const prevMonthDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+  const month = prevMonthDate.toLocaleDateString("en-US", {
+    month: "long",
+    year:  "numeric",
+    timeZone: "UTC",
+  });
+
+  // Single query: all eligible users + aggregate cycle info
+  const users = await dbAll<MonthlyUserRow>(
+    env.DB,
+    `SELECT
+       u.id,
+       u.email,
+       (SELECT COUNT(*) FROM cycles c WHERE c.user_id = u.id AND c.start_date >= ?) AS cycles_this_month,
+       (SELECT CAST(ROUND(AVG(c2.cycle_length)) AS INTEGER)
+        FROM cycles c2
+        WHERE c2.user_id = u.id AND c2.cycle_length IS NOT NULL) AS avg_cycle_length,
+       (SELECT c3.start_date FROM cycles c3 WHERE c3.user_id = u.id
+        ORDER BY c3.start_date DESC LIMIT 1) AS last_period_start
+     FROM users u
+     WHERE u.subscription_status IN ('active', 'trialing')`,
+    [cutoff]
+  );
+
+  let sent = 0;
+  let skipped = 0;
+  let errors = 0;
+
+  for (const user of users) {
+    // Fetch this user's logs for the 30-day window
+    const logs = await dbAll<DailyLog>(
+      env.DB,
+      "SELECT * FROM daily_logs WHERE user_id = ? AND date >= ? AND date <= ? ORDER BY date DESC",
+      [user.id, cutoff, today]
+    );
+
+    // Skip users with no activity at all
+    if (logs.length === 0 && !user.last_period_start) {
+      skipped++;
+      continue;
+    }
+
+    // ── Compute stats from logs ─────────────────────────────────────────────
+    const symptomCounts: Record<string, number> = {};
+    let moodSum = 0;    let moodN = 0;
+    let energySum = 0;  let energyN = 0;
+    let sleepSum = 0;   let sleepN = 0;
+
+    for (const log of logs) {
+      if (log.cramps)       symptomCounts["Cramps"]       = (symptomCounts["Cramps"]       ?? 0) + 1;
+      if (log.bloating)     symptomCounts["Bloating"]     = (symptomCounts["Bloating"]     ?? 0) + 1;
+      if (log.headache)     symptomCounts["Headache"]     = (symptomCounts["Headache"]     ?? 0) + 1;
+      if (log.brain_fog)    symptomCounts["Brain fog"]    = (symptomCounts["Brain fog"]    ?? 0) + 1;
+      if (log.hot_flashes)  symptomCounts["Hot flashes"]  = (symptomCounts["Hot flashes"]  ?? 0) + 1;
+      if (log.night_sweats) symptomCounts["Night sweats"] = (symptomCounts["Night sweats"] ?? 0) + 1;
+      if (log.custom_symptoms) {
+        try {
+          for (const s of JSON.parse(log.custom_symptoms) as string[]) {
+            symptomCounts[s] = (symptomCounts[s] ?? 0) + 1;
+          }
+        } catch {}
+      }
+      if (log.mood) {
+        try {
+          const emoji = (JSON.parse(log.mood) as string[])[0];
+          const score = emoji ? MOOD_MAP[emoji] : null;
+          if (score) { moodSum += score; moodN++; }
+        } catch {}
+      }
+      if (log.energy      != null) { energySum += log.energy;      energyN++; }
+      if (log.sleep_hours != null) { sleepSum  += log.sleep_hours; sleepN++;  }
+    }
+
+    const topSymptoms = Object.entries(symptomCounts)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 3)
+      .map(([s]) => s);
+
+    const avgMood   = moodN   > 0 ? +(moodSum   / moodN).toFixed(1)   : null;
+    const avgEnergy = energyN > 0 ? +(energySum / energyN).toFixed(1) : null;
+    const avgSleep  = sleepN  > 0 ? +(sleepSum  / sleepN).toFixed(1)  : null;
+
+    // ── Phase + predicted next period ──────────────────────────────────────
+    let currentPhase: string | null = null;
+    let daysUntilNextPeriod: number | null = null;
+
+    if (user.last_period_start) {
+      const lastPeriod = new Date(user.last_period_start + "T00:00:00Z");
+      const msPerDay   = 1000 * 60 * 60 * 24;
+      const daysSince  = Math.max(1, Math.round((now.getTime() - lastPeriod.getTime()) / msPerDay) + 1);
+      const avgLen     = user.avg_cycle_length ?? 28;
+      const predictedNext = addDays(lastPeriod, avgLen);
+      const daysLeft   = Math.round((predictedNext.getTime() - now.getTime()) / msPerDay);
+
+      currentPhase         = getPhase(Math.min(daysSince, 60));
+      daysUntilNextPeriod  = daysLeft > 0 ? daysLeft : null;
+    }
+
+    // ── Send ───────────────────────────────────────────────────────────────
+    const reportOpts: MonthlyReportOptions = {
+      email: user.email,
+      month,
+      cyclesTracked:       user.cycles_this_month,
+      avgCycleLength:      user.avg_cycle_length,
+      topSymptoms,
+      avgMood,
+      avgEnergy,
+      avgSleep,
+      currentPhase,
+      daysUntilNextPeriod,
+    };
+
+    try {
+      await sendEmail(env.RESEND_API_KEY, {
+        to:      user.email,
+        subject: `Your Dawn Phase Report — ${month} 🌅`,
+        html:    monthlyReportEmail(reportOpts),
+      });
+      sent++;
+      console.log(`[cron/monthly] sent → ${user.email} (${month})`);
+    } catch (err) {
+      errors++;
+      console.error(`[cron/monthly] failed → ${user.email}:`, err);
+    }
+  }
+
+  console.log(`[cron/monthly] complete — sent:${sent} skipped:${skipped} errors:${errors}`);
+  return { sent, skipped, errors };
+}
+
+// ── HTTP routes ────────────────────────────────────────────────────────────────
 
 const cron = new Hono<{ Bindings: Env }>();
 
 cron.get("/reminders", async (c) => {
   const result = await processReminders(c.env);
+  return c.json(result);
+});
+
+cron.get("/monthly", async (c) => {
+  const result = await processMonthlyReports(c.env);
   return c.json(result);
 });
 

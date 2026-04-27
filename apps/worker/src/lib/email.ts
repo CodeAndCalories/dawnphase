@@ -194,3 +194,109 @@ export function passwordResetEmail(email: string, resetUrl: string): string {
     </p>
   `);
 }
+
+// ── Monthly cycle report email ────────────────────────────────────────────────
+
+export interface MonthlyReportOptions {
+  email: string;
+  month: string;                      // e.g. "April 2026"
+  cyclesTracked: number;
+  avgCycleLength: number | null;
+  topSymptoms: string[];              // top 3 names
+  avgMood: number | null;             // 1–5
+  avgEnergy: number | null;           // 1–5
+  avgSleep: number | null;            // hours
+  currentPhase: string | null;
+  daysUntilNextPeriod: number | null;
+}
+
+const MOOD_EMOJI_LIST = ["", "😢", "😟", "😐", "🙂", "😊"];
+
+function moodEmoji(score: number | null): string {
+  if (score == null) return "—";
+  return MOOD_EMOJI_LIST[Math.max(1, Math.min(5, Math.round(score)))];
+}
+
+export function monthlyReportEmail(opts: MonthlyReportOptions): string {
+  const {
+    email, month, cyclesTracked, avgCycleLength,
+    topSymptoms, avgMood, avgSleep,
+    currentPhase, daysUntilNextPeriod,
+  } = opts;
+
+  const symptomPills = topSymptoms.length > 0
+    ? topSymptoms.map((s) =>
+        `<span style="display:inline-block;margin:0 6px 6px 0;padding:5px 14px;background:#E8637A;color:#fff;border-radius:999px;font-size:12px;font-weight:700">${s}</span>`
+      ).join("")
+    : `<span style="font-size:13px;color:#8C6B5A">No symptoms logged this month</span>`;
+
+  const phaseBlock = currentPhase
+    ? `<p style="margin:0 0 8px;font-size:15px;color:#2D1B1E;line-height:1.6">You&apos;re currently in your <strong>${currentPhase}</strong> phase.</p>`
+    : "";
+
+  const nextPeriodBlock = daysUntilNextPeriod != null
+    ? `<p style="margin:0 0 8px;font-size:15px;color:#2D1B1E;line-height:1.6">Next period in approximately <strong>${daysUntilNextPeriod} day${daysUntilNextPeriod === 1 ? "" : "s"}</strong>.</p>`
+    : "";
+
+  return emailWrapper(`
+    <h1 style="margin:0 0 6px;font-size:24px;font-weight:700;color:#C94B6D;line-height:1.2">
+      Your ${month} cycle summary
+    </h1>
+    <p style="margin:0 0 24px;font-size:14px;color:#8C6B5A">
+      Hi ${email} — here&apos;s your last 30 days at a glance.
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 28px;border-collapse:collapse">
+      <tr>
+        <td width="50%" style="padding:0 6px 10px 0;vertical-align:top">
+          <div style="background:#FDF6F0;border-radius:12px;padding:14px 10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:#8C6B5A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Cycles tracked</div>
+            <div style="font-size:30px;font-weight:700;color:#C94B6D;line-height:1">${cyclesTracked}</div>
+          </div>
+        </td>
+        <td width="50%" style="padding:0 0 10px 6px;vertical-align:top">
+          <div style="background:#FDF6F0;border-radius:12px;padding:14px 10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:#8C6B5A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Avg cycle</div>
+            <div style="font-size:30px;font-weight:700;color:#C94B6D;line-height:1">${avgCycleLength ? avgCycleLength + "d" : "—"}</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="50%" style="padding:0 6px 0 0;vertical-align:top">
+          <div style="background:#FDF6F0;border-radius:12px;padding:14px 10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:#8C6B5A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Avg mood</div>
+            <div style="font-size:30px;font-weight:700;color:#C94B6D;line-height:1">${moodEmoji(avgMood)}</div>
+          </div>
+        </td>
+        <td width="50%" style="padding:0 0 0 6px;vertical-align:top">
+          <div style="background:#FDF6F0;border-radius:12px;padding:14px 10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;color:#8C6B5A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Avg sleep</div>
+            <div style="font-size:30px;font-weight:700;color:#C94B6D;line-height:1">${avgSleep != null ? avgSleep + "h" : "—"}</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin:0 0 8px;font-size:13px;font-weight:700;color:#2D1B1E;text-transform:uppercase;letter-spacing:0.06em">Top symptoms this month:</p>
+    <div style="margin:0 0 24px">${symptomPills}</div>
+
+    ${phaseBlock}${nextPeriodBlock}
+    ${(phaseBlock || nextPeriodBlock) ? '<div style="margin-bottom:20px"></div>' : ""}
+
+    <p style="margin:0 0 28px;padding:14px 16px;background:#FDF6F0;border-radius:10px;border-left:3px solid #E8637A;font-size:14px;color:#2D1B1E;line-height:1.6">
+      Every cycle you track builds a clearer picture of your health.
+    </p>
+
+    <div style="margin:0 0 24px;text-align:center">
+      <a href="https://www.dawnphase.com/insights"
+         style="display:inline-block;padding:14px 32px;background:#E8637A;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        View your full insights →
+      </a>
+    </div>
+
+    <p style="margin:0;font-size:12px;color:#8C6B5A;text-align:center;line-height:1.6">
+      You&apos;re receiving this because you have an active Dawn Phase subscription.<br>
+      <a href="https://www.dawnphase.com/settings" style="color:#8C6B5A">Manage preferences in Settings</a>
+    </p>
+  `);
+}

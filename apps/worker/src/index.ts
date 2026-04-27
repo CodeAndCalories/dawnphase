@@ -11,7 +11,7 @@ import insightsRoutes from "./routes/insights";
 import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
-import cronRoutes, { processReminders } from "./routes/cron";
+import cronRoutes, { processReminders, processMonthlyReports } from "./routes/cron";
 
 type Variables = { userId: string };
 
@@ -103,13 +103,20 @@ app.onError((err, c) => {
 });
 
 // Export fetch handler + scheduled handler for Cloudflare Cron Triggers.
+// Dispatch by cron pattern so each schedule runs the correct job.
 export default {
   fetch: app.fetch.bind(app),
   async scheduled(
-    _event: ScheduledController,
+    event: ScheduledController,
     env: Env,
     ctx: ExecutionContext
   ): Promise<void> {
-    ctx.waitUntil(processReminders(env));
+    if (event.cron === "0 9 1 * *") {
+      // 1st of month at 09:00 UTC → monthly cycle report
+      ctx.waitUntil(processMonthlyReports(env));
+    } else {
+      // Daily 09:00 UTC (or any other cron) → period reminders
+      ctx.waitUntil(processReminders(env));
+    }
   },
 };
