@@ -179,6 +179,44 @@ const MOOD_SCORE: Record<string, number> = {
 };
 const MOOD_EMOJI = ["", "😢", "😟", "😐", "🙂", "😊"];
 
+// ── Cycle sync suggestions ────────────────────────────────────────────────────
+
+const PHASE_SUGGESTIONS: Record<string, string[]> = {
+  Menstrual: [
+    "Prioritize rest and gentle movement today",
+    "Hydrate well and keep meals simple and nourishing",
+    "Good time to track cramps, flow intensity, and energy",
+  ],
+  Follicular: [
+    "Energy tends to rise — good time for planning and creative work",
+    "Notice any shifts in mood, focus, or motivation",
+    "Great phase for higher intensity workouts if you feel up to it",
+  ],
+  Ovulatory: [
+    "Social energy and confidence may feel naturally higher",
+    "Notice changes in discharge, libido, or body temperature",
+    "Log any peak energy or mood moments today",
+  ],
+  Luteal: [
+    "Simplify your schedule where you can",
+    "Prioritize sleep and steady, grounding meals",
+    "Track PMS symptoms — bloating, headaches, mood shifts",
+  ],
+  Perimenopause: [
+    "Track hot flashes, night sweats, and sleep quality today",
+    "Note any mood or energy patterns across the week",
+    "Bring your symptom log to your next doctor visit",
+  ],
+};
+
+const PHASE_BADGE_STYLE: Record<string, string> = {
+  Menstrual:     "bg-rose-50   text-rose-700   border border-rose-200",
+  Follicular:    "bg-violet-50 text-violet-700 border border-violet-200",
+  Ovulatory:     "bg-amber-50  text-amber-700  border border-amber-200",
+  Luteal:        "bg-indigo-50 text-indigo-700 border border-indigo-200",
+  Perimenopause: "bg-purple-50 text-purple-700 border border-purple-200",
+};
+
 function parseMood(raw: string | null): string | null {
   if (!raw) return null;
   try { return (JSON.parse(raw) as string[])[0] ?? null; } catch { return null; }
@@ -460,8 +498,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── ROW 2: Recent check-ins + This cycle ──────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {/* ── ROW 2: Recent check-ins + This cycle + Suggestions ─────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         {/* Recent check-ins */}
         <Card>
@@ -503,7 +541,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* This cycle */}
-        <Card>
+        <Card className="md:col-span-1">
           <CardHeading>This cycle</CardHeading>
           {!latestCycle ? (
             <p className="text-sm text-[#8C6B5A]">No cycle logged yet.</p>
@@ -532,6 +570,51 @@ export default function DashboardPage() {
             </div>
           )}
         </Card>
+
+        {/* What to expect this week */}
+        {(() => {
+          const key = user.mode === "perimenopause"
+            ? "Perimenopause"
+            : phase?.name ?? null;
+          const suggestions = key ? PHASE_SUGGESTIONS[key] : null;
+          const badgeStyle  = key ? PHASE_BADGE_STYLE[key] : null;
+
+          return (
+            <Card className="flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <CardHeading>What to expect this week</CardHeading>
+                {key && badgeStyle && (
+                  <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${badgeStyle}`}>
+                    {key}
+                  </span>
+                )}
+              </div>
+
+              {suggestions ? (
+                <ul className="space-y-3 flex-1">
+                  {suggestions.map((tip) => (
+                    <li key={tip} className="flex items-start gap-2.5 text-sm text-[#2D1B1E]">
+                      <span
+                        className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+                        style={{ backgroundColor: "#E8637A" }}
+                        aria-hidden
+                      />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-[#8C6B5A] flex-1">
+                  Log your period to unlock personalised suggestions.
+                </p>
+              )}
+
+              <p className="mt-4 pt-3 border-t border-gray-100 text-[10px] text-[#8C6B5A]/70 leading-snug">
+                Suggestions are educational only and not medical advice.
+              </p>
+            </Card>
+          );
+        })()}
       </div>
     </div>
   );
