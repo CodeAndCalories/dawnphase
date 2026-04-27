@@ -100,8 +100,15 @@ export default function Post() {
         <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
 
           <p className="text-lg text-[#8C6B5A]">
-            Perimenopause can start as early as your mid-30s and last a decade. Many women don&apos;t recognise the early signs — because no one talks about them. This checklist covers all 35 recognised symptoms, organised so you can track them systematically.
+            Perimenopause can start as early as your mid-30s and last a decade. Many women don&apos;t recognise the early signs — because no one talks about them. This checklist covers 35 commonly reported symptoms, organised so you can track them systematically.
           </p>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
+            <p className="text-sm text-amber-800 font-medium mb-1">Medical disclaimer</p>
+            <p className="text-sm text-amber-700">
+              This article is for educational purposes only and is not medical advice. Dawn Phase is not a medical device and does not diagnose or treat any condition. If you experience heavy bleeding, bleeding after menopause, severe pain, chest pain, or sudden neurological symptoms, seek medical care promptly.
+            </p>
+          </div>
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What is perimenopause and when does it start?</h2>
 
@@ -121,7 +128,7 @@ export default function Post() {
             <li>Hot flashes or night sweats</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The 35 perimenopause symptoms</h2>
+          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">35 commonly reported perimenopause symptoms</h2>
 
           <div className="space-y-6">
             {CATEGORIES.map((cat) => (
@@ -142,7 +149,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why tracking matters for doctor visits</h2>
 
           <p>
-            Most GPs receive very little training in perimenopause — surveys consistently find that fewer than 30% of UK medical students feel adequately prepared to discuss it. When you arrive at an appointment able to show a 3-month symptom log, the dynamic changes completely.
+            Many patients report feeling dismissed or underprepared for perimenopause conversations, which is why bringing a symptom log to appointments can help make them more productive. When you arrive with a 3-month record, you give your doctor something concrete to work with.
           </p>
           <p>
             What to bring to your doctor:
@@ -163,13 +170,17 @@ export default function Post() {
             Dawn Phase includes a dedicated perimenopause tracking mode that surfaces the symptoms most relevant to this transition — hot flashes, night sweats, brain fog, and mood shifts — alongside your standard cycle and daily symptom log.
           </p>
           <p>
-            The app calculates your cycle day and phase even when cycles become irregular, and the insights view highlights patterns across your logs so you can see which symptoms cluster around which phase. You can export your full history as a CSV at any time — ideal for taking to GP appointments or specialist consultations.
+            The app estimates your cycle day based on what you log, while noting that irregular cycles can make predictions less certain. The insights view highlights patterns across your logs so you can see which symptoms cluster around which phase. You can export your full history as a CSV at any time — ideal for taking to GP appointments or specialist consultations.
           </p>
 
         </div>
 
+        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+          This content is for informational purposes only and is not a substitute for professional medical advice.
+        </p>
+
         {/* CTA */}
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
+        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
           <h3 className="text-2xl font-bold mb-2">Start tracking your symptoms today</h3>
           <p className="mb-6 opacity-90">Perimenopause mode included. 7-day free trial.</p>
           <a

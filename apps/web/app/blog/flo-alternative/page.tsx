@@ -34,15 +34,19 @@ export default function Post() {
         <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
 
           <p className="text-lg text-[#8C6B5A]">
-            Flo is the most downloaded period app in the world. It&apos;s also under an FTC consent order for sharing intimate user data without consent. If you&apos;re looking for a better alternative, here&apos;s an honest comparison.
+            Flo is one of the most widely used period tracking apps. It has also faced regulatory scrutiny over data privacy practices. If you&apos;re looking for a better alternative, here&apos;s an honest comparison.
+          </p>
+
+          <p className="text-sm text-[#8C6B5A] bg-[#FFF0F0] border border-[rgba(232,99,122,0.2)] rounded-lg p-3 mb-6">
+            Competitor information is based on publicly available sources and may change. Always verify current pricing and features directly with each provider.
           </p>
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why women are leaving Flo</h2>
 
           <p>Three reasons come up again and again in app store reviews and Reddit threads:</p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Data privacy concerns.</strong> The 2023 FTC settlement confirmed what many suspected — Flo was sharing period data with Facebook and advertising companies. Even after the settlement, data is stored on Flo&apos;s servers and subject to their terms.</li>
-            <li><strong>Subscription price creep.</strong> Flo Premium has increased steadily and now sits at around $12.99/month for a month-to-month subscription, with aggressive upsell prompts even during emotionally sensitive moments (pregnancy loss screens, for instance).</li>
+            <li><strong>Data privacy concerns.</strong> Flo previously settled FTC allegations that it shared users&apos; health information with third-party analytics and advertising platforms, contrary to its privacy promises. Data is stored on Flo&apos;s servers and subject to their terms.</li>
+            <li><strong>Subscription price creep.</strong> Flo offers a premium subscription (pricing subject to change), with frequent upgrade prompts throughout the app.</li>
             <li><strong>Ads and notifications.</strong> The free tier is increasingly cluttered with fertility product ads, sponsored content, and push notifications designed to maximise engagement rather than help you understand your body.</li>
           </ul>
 
@@ -70,13 +74,13 @@ export default function Post() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {[
-                  ["No data selling", "✓", "Settled FTC", "✓", "✓"],
-                  ["No advertising model", "✓", "✗", "Partial", "✓"],
-                  ["Price / month", "$14.99", "$12.99", "$9.99", "$13.99"],
-                  ["Perimenopause mode", "✓", "Limited", "✗", "✗"],
-                  ["Data export (CSV)", "✓", "✗", "✓", "✓"],
+                  ["Data privacy history", "No data selling policy", "FTC settlement (see their site)", "No data selling policy", "No data selling policy"],
+                  ["Advertising model", "No", "Check their site", "Check their site", "No"],
+                  ["Price / month", "$14.99", "See their website", "See their website", "See their website"],
+                  ["Perimenopause mode", "✓", "Limited", "Limited", "Limited"],
+                  ["Data export", "CSV download", "Check their site", "✓", "✓"],
                   ["Irregular cycle support", "✓", "✓", "✓", "Limited"],
-                  ["No ads", "✓", "Paid only", "Paid only", "✓"],
+                  ["Free tier with ads", "No (paid only)", "Check their site", "Check their site", "No"],
                 ].map(([feat, dp, flo, clue, nc]) => (
                   <tr key={feat} className="bg-white">
                     <td className="px-4 py-3 text-[#2D1B1E] font-medium">{feat}</td>
@@ -92,7 +96,7 @@ export default function Post() {
 
           <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase: the Flo alternative built for privacy</h2>
           <p>
-            Dawn Phase is a subscription-only period and perimenopause tracker. There is no free tier with ads, no data broker partnerships, and no advertising SDK anywhere in the codebase. The business model is straightforward: you pay $14.99/month (with a 7-day free trial), and in return you get a tracker that works entirely in your interest.
+            Dawn Phase is a subscription-only period and perimenopause tracker. Dawn Phase does not use an advertising-based business model — there is no free tier with ads and no data broker partnerships. The business model is straightforward: you pay $14.99/month (with a 7-day free trial), and in return you get a tracker that works entirely in your interest.
           </p>
           <p>
             Key features that differentiate Dawn Phase from Flo:
@@ -101,7 +105,7 @@ export default function Post() {
             <li><strong>Perimenopause mode</strong> — dedicated tracking for hot flashes, night sweats, brain fog, and other perimenopausal symptoms that Flo treats as an afterthought.</li>
             <li><strong>Phase-based insights</strong> — understand how your follicular, ovulatory, and luteal phases affect your mood, energy, and sleep — not just when your next period is.</li>
             <li><strong>CSV export</strong> — download your full symptom history at any time. It&apos;s your data.</li>
-            <li><strong>Account deletion</strong> — removing your account instantly and permanently deletes all stored data.</li>
+            <li><strong>Account deletion</strong> — deleting your account removes your Dawn Phase tracking data from our active database.</li>
           </ul>
 
           <p>
