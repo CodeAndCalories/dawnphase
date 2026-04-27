@@ -119,6 +119,41 @@ const POSTS = [
       "Standard apps assume a 28-day cycle. PCOS doesn't work like that — here's what to prioritise in a period tracker instead.",
     readTime: "6 min read",
   },
+  {
+    slug: "period-tracker-for-pcos",
+    title: "Best Period Tracker App for PCOS in 2026",
+    excerpt:
+      "Standard period trackers fail with PCOS. Here's what irregular cycle tracking needs and what to look for in an app.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "period-tracker-data-privacy",
+    title: "Does Your Period Tracker Share Data With Facebook?",
+    excerpt:
+      "Some period apps have faced regulatory scrutiny over data sharing. Here's what to look for in a privacy-first tracker.",
+    readTime: "5 min read",
+  },
+  {
+    slug: "follicular-phase-explained",
+    title: "The Follicular Phase — What It Is and What to Expect",
+    excerpt:
+      "The follicular phase starts on day 1 and ends at ovulation. Here's the hormonal picture, energy patterns, and how to track it.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "tired-before-period",
+    title: "Why Am I So Tired Before My Period? Causes and Tips",
+    excerpt:
+      "Progesterone, falling serotonin, and sleep disruption all drive pre-period fatigue. Here's why it happens and what helps.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "how-to-track-perimenopause",
+    title: "How to Track Perimenopause Symptoms — A Practical Guide",
+    excerpt:
+      "What to log daily, what patterns to look for, and how to turn your tracking data into useful evidence for doctor appointments.",
+    readTime: "7 min read",
+  },
 ];
 
 export default function BlogIndexPage() {
