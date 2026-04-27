@@ -6,11 +6,27 @@ import { api } from "@/lib/api";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+interface CorrelationItem {
+  type: "symptom_phase" | "energy_phase" | "mood_phase" | "sleep_phase";
+  symptom: string;
+  phase: string;
+  occurrences: number;
+  total_logs: number;
+  label: string;
+}
+
 interface InsightsResponse {
   cycles_tracked: number;
   avg_cycle_length: number | null;
   top_symptoms: { symptom: string; count: number }[];
   cycle_lengths: number[];
+  // Correlation engine fields
+  confidence?: "early" | "developing" | "established";
+  logs_count?: number;
+  cycles_count?: number;
+  correlations?: CorrelationItem[];
+  cycle_comparison?: { symptom: string; this_cycle: number; last_cycle: number }[];
+  perimenopause_note?: string | null;
 }
 
 interface Cycle {
@@ -315,6 +331,139 @@ export default function InsightsPage() {
           sub={streak > 0 ? `${streak}-day streak 🔥` : "keep logging!"}
         />
       </div>
+
+      {/* ── YOUR PATTERNS ───────────────────────────────────────────────── */}
+      {(() => {
+        const conf        = insights?.confidence;
+        const correlations = insights?.correlations ?? [];
+        const comparison  = insights?.cycle_comparison ?? [];
+        const logsN       = insights?.logs_count ?? logs.length;
+        const periNote    = insights?.perimenopause_note;
+        const isPeri      = user?.mode === "perimenopause";
+
+        // Warm label per confidence
+        const warmLabel   = conf === "established" ? "Pattern spotted"
+          : conf === "developing"                  ? "Worth noticing"
+          :                                          "Your recent trend";
+
+        return (
+          <div className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-6 space-y-5">
+            {/* Section header */}
+            <div className="flex items-center gap-3">
+              <h2 className="text-base font-bold text-[#2D1B1E]">
+                {conf === "established" ? "Pattern spotlight"
+                  : conf === "developing" ? "Possible patterns"
+                  : "Building your picture"}
+              </h2>
+              {conf === "developing" && (
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  Developing
+                </span>
+              )}
+              {conf === "established" && (
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+                  Established
+                </span>
+              )}
+            </div>
+
+            {/* ── Early state ────────────────────────────────────────────── */}
+            {(conf === "early" || !conf) && (
+              <div className="space-y-4">
+                <p className="text-sm text-[#8C6B5A]">
+                  Log for{" "}
+                  <strong className="text-[#2D1B1E]">
+                    {Math.max(0, 2 - cycles.length)} more cycle{cycles.length < 1 ? "s" : ""}
+                  </strong>{" "}
+                  to start seeing patterns.
+                </p>
+                {/* Progress bar */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs text-[#8C6B5A]">
+                    <span>{cycles.length} / 2 cycles</span>
+                    <span>{logsN} days logged</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[#E8637A] rounded-full transition-all"
+                      style={{ width: `${Math.min(100, (cycles.length / 2) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-[#8C6B5A]">
+                  Every day you log adds to your personal health picture.
+                </p>
+              </div>
+            )}
+
+            {/* ── Developing / Established correlations ──────────────────── */}
+            {conf && conf !== "early" && (
+              <>
+                {conf === "developing" && (
+                  <p className="text-xs text-[#8C6B5A] bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
+                    These are early trends based on limited data. Keep logging for clearer patterns.
+                  </p>
+                )}
+
+                {isPeri && periNote && (
+                  <p className="text-xs text-[#8C6B5A] italic">{periNote}</p>
+                )}
+
+                {correlations.length === 0 ? (
+                  <p className="text-sm text-[#8C6B5A]">Keep logging to build your first patterns.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {correlations.map((item, i) => (
+                      <div
+                        key={i}
+                        className="bg-[#FDF6F0] rounded-xl p-4 space-y-1.5 border border-[rgba(232,99,122,0.08)]"
+                      >
+                        <p className="text-[10px] font-bold text-[#E8637A] uppercase tracking-wide">
+                          {warmLabel}
+                        </p>
+                        <p className="text-sm text-[#2D1B1E] leading-snug">{item.label}</p>
+                        <p className="text-[10px] text-[#8C6B5A]">
+                          Based on your last {logsN} log{logsN !== 1 ? "s" : ""}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Cycle comparison */}
+                {comparison.length > 0 && conf === "established" && (
+                  <div className="pt-3 border-t border-gray-100 space-y-2">
+                    <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+                      This cycle vs last
+                    </p>
+                    <div className="space-y-2">
+                      {comparison.map((row) => {
+                        const diff  = row.this_cycle - row.last_cycle;
+                        const trend = diff > 0 ? "up" : diff < 0 ? "down" : "same";
+                        const trendColor = trend === "up" ? "text-rose-500" : trend === "down" ? "text-green-600" : "text-[#8C6B5A]";
+                        return (
+                          <div key={row.symptom} className="flex items-center justify-between text-sm">
+                            <span className="text-[#2D1B1E]">{row.symptom}</span>
+                            <span className={`font-medium ${trendColor}`}>
+                              {row.this_cycle} {trend !== "same" && `(${trend === "up" ? "+" : ""}${diff} from last)`}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Disclaimer */}
+                <p className="text-[10px] text-[#8C6B5A]/80 pt-1 border-t border-gray-50">
+                  Insights are based on your logged data only and are for informational purposes.
+                  They are not medical advice or a diagnosis.
+                </p>
+              </>
+            )}
+          </div>
+        );
+      })()}
 
       {/* ── Energy by cycle day ───────────────────────────────────────────── */}
       <SectionCard title="Energy across your cycle">
