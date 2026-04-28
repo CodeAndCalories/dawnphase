@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { symptoms } from "@/data/symptoms";
+import { conditions } from "@/data/conditions";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const symptomUrls: MetadataRoute.Sitemap = symptoms.map((s) => ({
@@ -9,10 +10,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const conditionUrls: MetadataRoute.Sitemap = conditions.map((c) => ({
+    url: `https://www.dawnphase.com/conditions/${c.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     { url: "https://www.dawnphase.com",                                       lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
     { url: "https://www.dawnphase.com/cycle-calculator",                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/luteal-phase-calculator",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // Conditions
+    ...conditionUrls,
     // Symptoms
     { url: "https://www.dawnphase.com/symptoms",                              lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     ...symptomUrls,
