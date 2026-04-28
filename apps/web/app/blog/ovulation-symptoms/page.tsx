@@ -102,6 +102,19 @@ export default function Post() {
           </p>
         </div>
 
+        <div className="my-8 p-5 rounded-xl bg-[#FDF6F0] border border-[rgba(232,99,122,0.25)]">
+          <p className="text-sm font-semibold text-[#C94B6D] mb-1">Free tool</p>
+          <p className="text-sm text-[#8C6B5A] mb-3">
+            Calculate your fertile window and peak ovulation day based on your last period date.
+          </p>
+          <a
+            href="/tools/ovulation-calculator"
+            className="inline-block text-sm font-semibold text-white bg-[#E8637A] px-4 py-2 rounded-full hover:opacity-90 transition-opacity"
+          >
+            Try the ovulation calculator →
+          </a>
+        </div>
+
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>

@@ -19,8 +19,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: "https://www.dawnphase.com",                                       lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
+    // Tools
+    { url: "https://www.dawnphase.com/tools",                                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: "https://www.dawnphase.com/cycle-calculator",                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/luteal-phase-calculator",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/tools/ovulation-calculator",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/tools/period-due-date",                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/tools/pms-tracker",                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Conditions
     ...conditionUrls,
     // Symptoms

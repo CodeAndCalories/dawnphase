@@ -149,6 +149,19 @@ export default function Post() {
 
         </div>
 
+        <div className="my-8 p-5 rounded-xl bg-[#FDF6F0] border border-[rgba(232,99,122,0.25)]">
+          <p className="text-sm font-semibold text-[#C94B6D] mb-1">Free tool</p>
+          <p className="text-sm text-[#8C6B5A] mb-3">
+            Rate your premenstrual symptoms on a 1–5 scale and find out whether your PMS is mild, moderate, or severe.
+          </p>
+          <a
+            href="/tools/pms-tracker"
+            className="inline-block text-sm font-semibold text-white bg-[#E8637A] px-4 py-2 rounded-full hover:opacity-90 transition-opacity"
+          >
+            Try the PMS symptom checker →
+          </a>
+        </div>
+
         <RelatedArticles
           currentSlug="luteal-phase-symptoms"
           slugs={["pmdd-vs-pms", "how-long-should-period-last", "pcos-cycle-tracking"]}

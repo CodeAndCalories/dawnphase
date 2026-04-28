@@ -108,6 +108,19 @@ export default function Post() {
           </p>
         </div>
 
+        <div className="my-8 p-5 rounded-xl bg-[#FDF6F0] border border-[rgba(232,99,122,0.25)]">
+          <p className="text-sm font-semibold text-[#C94B6D] mb-1">Free tool</p>
+          <p className="text-sm text-[#8C6B5A] mb-3">
+            Find out exactly when your next period is due and how many days away it is.
+          </p>
+          <a
+            href="/tools/period-due-date"
+            className="inline-block text-sm font-semibold text-white bg-[#E8637A] px-4 py-2 rounded-full hover:opacity-90 transition-opacity"
+          >
+            Try the period due date calculator →
+          </a>
+        </div>
+
         <p className="text-xs text-[#8C6B5A] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
