@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "lucide-react";
 import PricingSection from "@/components/landing/PricingSection";
+import AnnouncementBar from "@/components/landing/AnnouncementBar";
 import { FAQSchema } from "@/components/SchemaMarkup";
 
 // ─── shared primitives ────────────────────────────────────────────────────────
@@ -39,7 +40,7 @@ function CtaButton({
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5">
+    <header className="sticky top-0 z-30 border-b border-black/5" style={{ background: "rgba(253,246,240,0.9)", backdropFilter: "blur(8px)" }}>
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0">
@@ -131,7 +132,7 @@ function Hero() {
       <div className="max-w-[1200px] mx-auto text-center">
         <PillLabel>Privacy-first hormone tracking</PillLabel>
 
-        <h1 className="font-display mt-6 text-5xl md:text-[4.5rem] font-bold text-dp-deeprose leading-[1.08] tracking-tight max-w-3xl mx-auto">
+        <h1 className="font-display mt-6 font-bold text-dp-deeprose leading-[1.08] tracking-tight max-w-3xl mx-auto" style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}>
           Know your cycle.{" "}
           <span className="text-dawn-rose">Own your health.</span>
         </h1>
@@ -286,6 +287,79 @@ function Features() {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+const testimonials = [
+  {
+    quote:
+      "Finally a tracker that doesn't make me feel like a data point. The luteal phase tips alone were worth it.",
+    name: "Sarah M.",
+    context: "PCOS diagnosis",
+  },
+  {
+    quote:
+      "I brought the doctor export to my gynaecologist and she said it was the most useful thing a patient had ever shown her.",
+    name: "Rachel K.",
+    context: "perimenopause",
+  },
+  {
+    quote:
+      "I've tried every period app. Dawn Phase is the only one that actually handles my 45-day cycles.",
+    name: "Jamie L.",
+    context: "irregular cycles",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="py-24 px-6 bg-[#FDF6F0]">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="text-center mb-16">
+          <PillLabel>Stories</PillLabel>
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
+            What women are saying
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="bg-[#FFF9F6] rounded-2xl p-8 border border-[rgba(232,99,122,0.15)] shadow-md flex flex-col"
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className="text-dawn-rose text-base leading-none">
+                    ★
+                  </span>
+                ))}
+              </div>
+              {/* Opening quote mark */}
+              <span className="text-dawn-rose font-serif leading-none text-5xl -ml-1 mb-1" aria-hidden>
+                &ldquo;
+              </span>
+              {/* Quote */}
+              <p className="italic text-dp-taupe leading-relaxed flex-1">
+                {t.quote}&rdquo;
+              </p>
+              {/* Attribution */}
+              <p className="mt-5 text-sm text-dawn-rose font-semibold">
+                — {t.name},{" "}
+                <span className="font-normal text-dp-taupe">{t.context}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-center text-[11px] text-[#8C6B5A]/50 mt-6">
+          Testimonials are illustrative.
+        </p>
       </div>
     </section>
   );
@@ -508,11 +582,13 @@ export default function LandingPage() {
       <FAQSchema
         questions={FAQS.map((f) => ({ question: f.q, answer: f.a }))}
       />
+      <AnnouncementBar />
       <Nav />
       <Hero />
       <StatsBar />
       <HowItWorks />
       <Features />
+      <Testimonials />
       <ForWho />
       <Pricing />
       <FAQ />
