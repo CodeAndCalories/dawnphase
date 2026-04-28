@@ -195,6 +195,68 @@ export function passwordResetEmail(email: string, resetUrl: string): string {
   `);
 }
 
+// ── Lead capture email ────────────────────────────────────────────────────────
+
+export function leadCaptureEmail(
+  email: string,
+  _source: string,
+  results: Record<string, string>
+): string {
+  const resultRows = Object.entries(results)
+    .map(
+      ([label, value]) => `
+      <tr>
+        <td style="padding:8px 0;font-size:14px;color:#8C6B5A;vertical-align:top">${label}</td>
+        <td style="padding:8px 0;font-size:14px;font-weight:600;color:#2D1B1E;text-align:right;vertical-align:top">${value}</td>
+      </tr>`
+    )
+    .join("");
+
+  const resultsBlock = resultRows
+    ? `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 28px;border-collapse:collapse;border:1px solid #F0E0D8;border-radius:12px;overflow:hidden">
+        <tbody>${resultRows}</tbody>
+       </table>`
+    : "";
+
+  return emailWrapper(`
+    <h1 style="margin:0 0 8px;font-size:24px;font-weight:700;color:#C94B6D;line-height:1.2">
+      Here are your results 🌅
+    </h1>
+    <p style="margin:0 0 24px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      Hi ${email},
+    </p>
+
+    ${resultsBlock}
+
+    <p style="margin:0 0 16px;font-size:13px;font-weight:700;color:#2D1B1E;text-transform:uppercase;letter-spacing:0.06em">
+      Dawn Phase also lets you:
+    </p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 32px;width:100%">
+      ${[
+        ["📅", "Track changes across multiple cycles"],
+        ["🌙", "See which phase you're in every day"],
+        ["📄", "Get a doctor-ready report of your patterns"],
+      ]
+        .map(
+          ([icon, text]) => `
+      <tr>
+        <td style="padding:6px 0;vertical-align:top;width:28px;font-size:16px">${icon}</td>
+        <td style="padding:6px 0;vertical-align:top;font-size:14px;color:#2D1B1E;line-height:1.5">${text}</td>
+      </tr>`
+        )
+        .join("")}
+    </table>
+
+    <div style="margin:0 0 16px">
+      <a href="https://www.dawnphase.com/signup"
+         style="display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#E8637A,#A855C8);color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        Start tracking free for 7 days →
+      </a>
+    </div>
+    <p style="margin:0;font-size:12px;color:#8C6B5A">No card required for 7 days.</p>
+  `);
+}
+
 // ── Monthly cycle report email ────────────────────────────────────────────────
 
 export interface MonthlyReportOptions {

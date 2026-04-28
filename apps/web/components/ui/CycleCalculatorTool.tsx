@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { addDays, formatDate } from "@/lib/utils";
 
+const WORKER_URL = process.env.NEXT_PUBLIC_WORKER_URL ?? "";
+
 export default function CycleCalculatorTool() {
   const [lmp, setLmp] = useState("");
   const [cycleLength, setCycleLength] = useState("28");
@@ -13,6 +15,9 @@ export default function CycleCalculatorTool() {
     fertileEnd: Date;
   } | null>(null);
 
+  const [email, setEmail] = useState("");
+  const [leadStatus, setLeadStatus] = useState<"idle" | "loading" | "success" | "exists">("idle");
+
   function calculate() {
     const lmpDate = new Date(lmp);
     const length = parseInt(cycleLength, 10);
@@ -21,6 +26,39 @@ export default function CycleCalculatorTool() {
     const fertileStart = addDays(ovulation, -5);
     const fertileEnd = addDays(ovulation, 1);
     setResult({ nextPeriod, ovulation, fertileStart, fertileEnd });
+    setLeadStatus("idle");
+  }
+
+  async function handleEmailSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!result) return;
+    setLeadStatus("loading");
+
+    try {
+      const res = await fetch(`${WORKER_URL}/leads`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          source: "cycle-calculator",
+          results: {
+            "Next period": formatDate(result.nextPeriod),
+            "Ovulation day": formatDate(result.ovulation),
+            "Fertile window": `${formatDate(result.fertileStart)} – ${formatDate(result.fertileEnd)}`,
+          },
+        }),
+      });
+
+      if (res.ok) {
+        // Check if user already has a full account
+        const data = await res.json() as { ok: boolean; hasAccount?: boolean };
+        setLeadStatus(data.hasAccount ? "exists" : "success");
+      } else {
+        setLeadStatus("idle");
+      }
+    } catch {
+      setLeadStatus("idle");
+    }
   }
 
   return (
@@ -63,27 +101,62 @@ export default function CycleCalculatorTool() {
       </div>
 
       {result && (
-        <div className="border-t border-gray-100 pt-6 space-y-4">
-          <h3 className="font-semibold text-gray-900">Your estimates</h3>
-          <div className="grid grid-cols-1 gap-3">
-            {[
-              { label: "Next period", value: formatDate(result.nextPeriod), color: "bg-rose-50 border-rose-100 text-rose-700" },
-              { label: "Ovulation day", value: formatDate(result.ovulation), color: "bg-amber-50 border-amber-100 text-amber-700" },
-              { label: "Fertile window", value: `${formatDate(result.fertileStart)} – ${formatDate(result.fertileEnd)}`, color: "bg-green-50 border-green-100 text-green-700" },
-            ].map((r) => (
-              <div key={r.label} className={`flex justify-between items-center px-4 py-3 rounded-xl border ${r.color}`}>
-                <span className="text-sm font-medium">{r.label}</span>
-                <span className="text-sm font-semibold">{r.value}</span>
-              </div>
-            ))}
+        <>
+          <div className="border-t border-gray-100 pt-6 space-y-4">
+            <h3 className="font-semibold text-gray-900">Your estimates</h3>
+            <div className="grid grid-cols-1 gap-3">
+              {[
+                { label: "Next period", value: formatDate(result.nextPeriod), color: "bg-rose-50 border-rose-100 text-rose-700" },
+                { label: "Ovulation day", value: formatDate(result.ovulation), color: "bg-amber-50 border-amber-100 text-amber-700" },
+                { label: "Fertile window", value: `${formatDate(result.fertileStart)} – ${formatDate(result.fertileEnd)}`, color: "bg-green-50 border-green-100 text-green-700" },
+              ].map((r) => (
+                <div key={r.label} className={`flex justify-between items-center px-4 py-3 rounded-xl border ${r.color}`}>
+                  <span className="text-sm font-medium">{r.label}</span>
+                  <span className="text-sm font-semibold">{r.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-xs text-gray-400 mt-2">
-            Want to track across cycles?{" "}
-            <a href="/signup" className="text-purple-600 hover:underline font-medium">
-              Try Dawn Phase free →
-            </a>
-          </p>
-        </div>
+
+          {/* Email capture */}
+          <div className="mt-6 p-5 rounded-xl bg-[#FFF9F6] border border-[rgba(232,99,122,0.3)]">
+            {leadStatus === "success" ? (
+              <p className="text-sm font-semibold text-[#C94B6D]">✓ Check your inbox!</p>
+            ) : leadStatus === "exists" ? (
+              <p className="text-sm text-[#8C6B5A]">
+                You already have an account —{" "}
+                <a href="/login" className="text-[#C94B6D] font-semibold hover:underline">
+                  log in to track your cycle →
+                </a>
+              </p>
+            ) : (
+              <form onSubmit={handleEmailSubmit} className="space-y-3">
+                <div>
+                  <p className="font-semibold text-[#2D1B1E] text-sm mb-1">Save your results</p>
+                  <p className="text-xs text-[#8C6B5A]">
+                    Get cycle insights and track changes over time. Free for 7 days.
+                  </p>
+                </div>
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-[rgba(232,99,122,0.3)] focus:outline-none focus:ring-2 focus:ring-[#E8637A]/30 text-sm bg-white"
+                />
+                <button
+                  type="submit"
+                  disabled={leadStatus === "loading"}
+                  className="w-full py-3 rounded-xl bg-gradient-to-br from-[#E8637A] to-[#A855C8] text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
+                >
+                  {leadStatus === "loading" ? "Sending…" : "Send me my results"}
+                </button>
+                <p className="text-xs text-[#8C6B5A] text-center">No spam. Unsubscribe anytime.</p>
+              </form>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

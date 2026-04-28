@@ -67,3 +67,15 @@ CREATE TABLE IF NOT EXISTS reminders (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_reminders_user ON reminders (user_id);
+
+-- ─── email_leads ──────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS email_leads (
+  id         TEXT    PRIMARY KEY,
+  email      TEXT    UNIQUE NOT NULL,
+  source     TEXT    NOT NULL,
+  created_at TEXT    DEFAULT (datetime('now')),
+  emailed_at TEXT,
+  converted  INTEGER DEFAULT 0
+);
+
+CREATE INDEX IF NOT EXISTS idx_email_leads_email ON email_leads (email);

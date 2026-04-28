@@ -12,6 +12,7 @@ import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
 import cronRoutes, { processReminders, processMonthlyReports } from "./routes/cron";
+import leadsRoutes from "./routes/leads";
 
 type Variables = { userId: string };
 
@@ -71,6 +72,9 @@ app.use("/auth/me", requireAuth);
 // POST /auth/signup, /auth/login, /auth/forgot-password, /auth/reset-password
 // GET  /auth/me, PATCH /auth/me, DELETE /auth/me  ← protected above
 app.route("/auth", authRoutes);
+
+// POST /leads — public lead capture from free tools (no auth required)
+app.route("/leads", leadsRoutes);
 
 // GET /cron/reminders — spec-approved public (called by Cloudflare cron trigger)
 app.route("/cron", cronRoutes);
