@@ -170,13 +170,11 @@ export default function PmsTrackerTool() {
 
             {severity.pmddFlag && (
               <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200">
-                <p className="text-sm text-amber-800 font-medium mb-1">
-                  Could this be PMDD?
-                </p>
                 <p className="text-sm text-amber-700 leading-relaxed">
-                  Your score pattern suggests it may be worth tracking your symptoms
-                  prospectively across 2+ cycles and discussing results with a
-                  healthcare provider. Only a qualified clinician can diagnose PMDD.
+                  Your score suggests severe premenstrual symptoms. This is not a
+                  PMDD diagnosis — only a qualified healthcare professional can
+                  diagnose PMDD. Consider speaking to your doctor and tracking your
+                  symptoms across 2+ cycles.
                 </p>
               </div>
             )}
