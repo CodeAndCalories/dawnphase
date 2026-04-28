@@ -15,6 +15,41 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "irregular-periods-causes",
+    title: "Irregular Periods — 8 Common Causes and When to See a Doctor",
+    excerpt:
+      "Outside the 21–35 day range, or varying by more than a week? Here are 8 common causes and how to figure out which applies to you.",
+    readTime: "7 min read",
+  },
+  {
+    slug: "perimenopause-brain-fog",
+    title: "Perimenopause Brain Fog — Why It Happens and How to Track It",
+    excerpt:
+      "Brain fog is one of the most commonly reported — and most dismissed — perimenopause symptoms. Here's the hormonal cause and how tracking helps.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "what-is-cycle-syncing",
+    title: "What Is Cycle Syncing? The Science Behind It",
+    excerpt:
+      "Adjusting exercise, diet, and work to your cycle phases is popular. Here's what the research actually supports and what's still contested.",
+    readTime: "7 min read",
+  },
+  {
+    slug: "cycle-tracking-for-beginners",
+    title: "How to Start Tracking Your Cycle — A Beginner's Guide",
+    excerpt:
+      "Never tracked your cycle before? This guide covers what to log, how to understand your four phases, and how to start today.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "endometriosis-symptom-tracking",
+    title: "Tracking Endometriosis Symptoms — What to Log and Why It Matters",
+    excerpt:
+      "Women with endometriosis wait an average of 7–10 years for diagnosis. Detailed symptom tracking builds the evidence that can speed that up.",
+    readTime: "7 min read",
+  },
+  {
     slug: "period-tracker-no-data-selling",
     title: "The Best Period Tracker That Doesn't Sell Your Data (2026)",
     excerpt:

@@ -101,6 +101,31 @@ const POSTS: Record<string, { title: string; excerpt: string; readTime: string }
     excerpt: "What to log, how often, and how to use your tracking data at doctor appointments.",
     readTime: "7 min read",
   },
+  "endometriosis-symptom-tracking": {
+    title: "Tracking Endometriosis Symptoms — What to Log and Why It Matters",
+    excerpt: "Women with endometriosis wait 7–10 years on average for diagnosis. Detailed tracking builds the evidence that can speed that up.",
+    readTime: "7 min read",
+  },
+  "cycle-tracking-for-beginners": {
+    title: "How to Start Tracking Your Cycle — A Beginner's Guide",
+    excerpt: "What to log, how to understand your four phases, and how to start today — no prior knowledge needed.",
+    readTime: "6 min read",
+  },
+  "what-is-cycle-syncing": {
+    title: "What Is Cycle Syncing? The Science Behind It",
+    excerpt: "Adjusting exercise, diet, and schedule to your cycle phases — what the research actually supports.",
+    readTime: "7 min read",
+  },
+  "perimenopause-brain-fog": {
+    title: "Perimenopause Brain Fog — Why It Happens and How to Track It",
+    excerpt: "Brain fog is one of the most commonly reported perimenopause symptoms. Here's the hormonal cause and how tracking helps.",
+    readTime: "6 min read",
+  },
+  "irregular-periods-causes": {
+    title: "Irregular Periods — 8 Common Causes and When to See a Doctor",
+    excerpt: "Outside 21–35 days, or varying by more than a week? Here are 8 common causes and how to identify yours.",
+    readTime: "7 min read",
+  },
 };
 
 interface Props {
