@@ -286,6 +286,19 @@ export default function DashboardPage() {
   const [dataLoading, setDataLoading] = useState(true);
   const [greeting,    setGreeting]    = useState("Welcome back");
 
+  // Capture checkout=success synchronously at mount, before the auth hook
+  // strips it from the URL in its useEffect.
+  const [isCheckoutReturn] = useState(() =>
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("checkout") === "success"
+  );
+
+  // Onboarding modal state
+  const [showOnboarding,   setShowOnboarding]   = useState(false);
+  const [onboardMode,      setOnboardMode]      = useState<"cycle" | "perimenopause">("cycle");
+  const [onboardBirthDate, setOnboardBirthDate] = useState("");
+  const [onboardSaving,    setOnboardSaving]    = useState(false);
+
   // Set time-of-day greeting on mount (client-only)
   useEffect(() => { setGreeting(getGreeting()); }, []);
 
@@ -298,6 +311,16 @@ export default function DashboardPage() {
       .then(([c, l]) => { setCycles(c.cycles); setLogs(l.logs); })
       .finally(() => setDataLoading(false));
   }, [user]);
+
+  // Show onboarding modal once after a successful checkout
+  useEffect(() => {
+    if (!user) return;
+    if (!isCheckoutReturn) return;
+    if (typeof window !== "undefined" && localStorage.getItem("dp_onboarded")) return;
+    setOnboardMode(user.mode);
+    setOnboardBirthDate(user.birth_date ?? "");
+    setShowOnboarding(true);
+  }, [user, isCheckoutReturn]);
 
   const loading = authLoading || dataLoading;
 
@@ -352,8 +375,85 @@ export default function DashboardPage() {
   // Arc total days: use actual avg if we have completed cycles, else 28
   const arcTotalDays = completedLens.length > 0 ? avgLen : 28;
 
+  async function handleOnboardSave() {
+    setOnboardSaving(true);
+    try {
+      await api.patch("/auth/me", {
+        mode: onboardMode,
+        birth_date: onboardBirthDate || null,
+      });
+    } catch {
+      // Best-effort — don't block dismissal on transient API error
+    } finally {
+      if (typeof window !== "undefined") localStorage.setItem("dp_onboarded", "1");
+      setShowOnboarding(false);
+      setOnboardSaving(false);
+    }
+  }
+
   return (
     <div className="w-full max-w-6xl space-y-5 pb-4">
+      {/* ── Onboarding modal ─────────────────────────────────────────────── */}
+      {showOnboarding && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
+            <div className="text-center space-y-1">
+              <p className="text-3xl">🌸</p>
+              <h2 className="text-lg font-bold text-[#2D1B1E]">Welcome to Dawn Phase!</h2>
+              <p className="text-sm text-[#8C6B5A]">Let&apos;s set up your experience in 30 seconds.</p>
+            </div>
+
+            {/* Mode */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+                What mode suits you?
+              </p>
+              <div className="flex gap-3">
+                {(["cycle", "perimenopause"] as const).map(m => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setOnboardMode(m)}
+                    className={`flex-1 min-h-[44px] rounded-full text-sm font-medium border-2 transition-all ${
+                      onboardMode === m
+                        ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
+                        : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    }`}
+                  >
+                    {m === "cycle" ? "Cycle tracking" : "Perimenopause"}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Birth date */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+                Date of birth{" "}
+                <span className="font-normal normal-case text-[#8C6B5A]">
+                  (optional — unlocks ✨ Cosmic view)
+                </span>
+              </p>
+              <input
+                type="date"
+                value={onboardBirthDate}
+                onChange={e => setOnboardBirthDate(e.target.value)}
+                max={new Date().toISOString().split("T")[0]}
+                className="w-full min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
+              />
+            </div>
+
+            <button
+              onClick={handleOnboardSave}
+              disabled={onboardSaving}
+              className="w-full min-h-[52px] bg-[#E8637A] hover:bg-[#C94B6D] text-white font-semibold text-base rounded-2xl transition-colors disabled:opacity-60 shadow-sm"
+            >
+              {onboardSaving ? "Saving…" : "Let’s go →"}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Activation banner */}
       {activating && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
