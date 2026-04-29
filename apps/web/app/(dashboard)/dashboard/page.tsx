@@ -21,6 +21,7 @@ interface DailyLog {
   mood: string | null;
   energy: number | null;
   sleep_hours: number | null;
+  notes: string | null;
 }
 
 // ── Phase helpers ─────────────────────────────────────────────────────────────
@@ -516,18 +517,25 @@ export default function DashboardPage() {
               {recentLogs.map(log => {
                 const moodEmoji = parseMood(log.mood);
                 return (
-                  <li key={log.date} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-                    <span className="text-sm font-medium text-[#2D1B1E]">{formatShortDate(log.date)}</span>
-                    <div className="flex items-center gap-3 text-xs text-[#8C6B5A]">
-                      {moodEmoji && <span className="text-base leading-none" title="Mood">{moodEmoji}</span>}
-                      {log.energy != null && (
-                        <span className="flex items-center gap-0.5">
-                          <span className="text-[#C94B6D] font-semibold">{log.energy}</span>
-                          <span>/5 energy</span>
-                        </span>
-                      )}
-                      {log.sleep_hours != null && <span>{log.sleep_hours}h sleep</span>}
+                  <li key={log.date} className="py-3 first:pt-0 last:pb-0 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-[#2D1B1E]">{formatShortDate(log.date)}</span>
+                      <div className="flex items-center gap-3 text-xs text-[#8C6B5A]">
+                        {moodEmoji && <span className="text-base leading-none" title="Mood">{moodEmoji}</span>}
+                        {log.energy != null && (
+                          <span className="flex items-center gap-0.5">
+                            <span className="text-[#C94B6D] font-semibold">{log.energy}</span>
+                            <span>/5 energy</span>
+                          </span>
+                        )}
+                        {log.sleep_hours != null && <span>{log.sleep_hours}h sleep</span>}
+                      </div>
                     </div>
+                    {log.notes && (
+                      <p className="text-xs italic text-[#8C6B5A] leading-relaxed line-clamp-2">
+                        &ldquo;{log.notes}&rdquo;
+                      </p>
+                    )}
                   </li>
                 );
               })}

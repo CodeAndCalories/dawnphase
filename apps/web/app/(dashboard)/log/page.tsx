@@ -332,18 +332,25 @@ export default function LogPage() {
           </div>
         </section>
 
-        {/* ── Notes ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        {/* ── Today's notes ── */}
+        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-3">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
-            Notes <span className="font-normal normal-case text-[#8C6B5A]">(optional)</span>
+            Today&apos;s notes
           </h2>
+          <label className="block text-sm text-[#8C6B5A]">
+            How are you feeling today? (optional)
+          </label>
           <textarea
             value={notes}
-            onChange={e => setNotes(e.target.value)}
-            rows={3}
-            placeholder="Anything else worth noting today…"
+            onChange={e => setNotes(e.target.value.slice(0, 500))}
+            rows={4}
+            maxLength={500}
+            placeholder="Any thoughts, feelings, or patterns you noticed today..."
             className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm text-[#2D1B1E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/40 resize-none"
           />
+          <p className={`text-xs text-right ${notes.length >= 500 ? "text-red-500" : "text-[#8C6B5A]"}`}>
+            {notes.length}/500
+          </p>
         </section>
 
         {error && (
