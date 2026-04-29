@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
+import { getZodiacSign, getCosmicMessage, ZODIAC_SYMBOLS, type CyclePhase } from "@/lib/cosmic-messages";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -624,6 +625,52 @@ export default function DashboardPage() {
           );
         })()}
       </div>
+
+      {/* ── Cosmic view ───────────────────────────────────────────────────── */}
+      {(() => {
+        if (!user.birth_date) return null;
+        const sign = getZodiacSign(user.birth_date);
+        const message = phase
+          ? getCosmicMessage(sign, phase.name as CyclePhase)
+          : null;
+        return (
+          <div
+            className="rounded-2xl border border-purple-100 p-6 shadow-sm"
+            style={{ background: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ede9fe 100%)" }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <p className="text-xs font-semibold text-purple-600 uppercase tracking-widest">
+                ✨ Cosmic view
+              </p>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-500 border border-purple-200">
+                Just for fun
+              </span>
+            </div>
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
+              <span className="text-2xl leading-none">{ZODIAC_SYMBOLS[sign]}</span>
+              <span className="text-sm font-semibold text-purple-700">{sign}</span>
+              {phase && (
+                <>
+                  <span className="text-purple-300 select-none">·</span>
+                  <span className="text-sm text-purple-600">{phase.name} phase</span>
+                </>
+              )}
+            </div>
+            {message ? (
+              <p className="text-sm text-purple-900 leading-relaxed italic">
+                &ldquo;{message}&rdquo;
+              </p>
+            ) : (
+              <p className="text-sm text-purple-600">
+                Log your first period to unlock your personalised cosmic insight.
+              </p>
+            )}
+            <p className="mt-4 text-[10px] text-purple-400 leading-snug">
+              ★ For entertainment only — not medical or astrological advice.
+            </p>
+          </div>
+        );
+      })()}
     </div>
   );
 }

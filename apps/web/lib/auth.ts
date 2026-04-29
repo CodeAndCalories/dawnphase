@@ -10,6 +10,7 @@ export interface User {
   id: string;
   email: string;
   mode: "cycle" | "perimenopause";
+  birth_date: string | null;
   subscription_status:
     | "trialing"
     | "active"

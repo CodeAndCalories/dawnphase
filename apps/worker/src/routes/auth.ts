@@ -119,7 +119,7 @@ auth.get("/me", async (c) => {
 
   const user = await dbFirst<User>(
     c.env.DB,
-    `SELECT id, email, mode, subscription_status, trial_ends_at, created_at
+    `SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, created_at
      FROM users WHERE id = ?`,
     [payload.sub]
   );
@@ -129,7 +129,8 @@ auth.get("/me", async (c) => {
 });
 
 const patchMeSchema = z.object({
-  mode: z.enum(["cycle", "perimenopause"]),
+  mode: z.enum(["cycle", "perimenopause"]).optional(),
+  birth_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().optional(),
 });
 
 auth.patch("/me", zValidator("json", patchMeSchema), async (c) => {
@@ -141,12 +142,21 @@ auth.patch("/me", zValidator("json", patchMeSchema), async (c) => {
   const payload = await verifyJWT(token, c.env.JWT_SECRET);
   if (!payload) return c.json({ message: "Invalid or expired token" }, 401);
 
-  const { mode } = c.req.valid("json");
-  await dbRun(c.env.DB, "UPDATE users SET mode = ? WHERE id = ?", [mode, payload.sub]);
+  const body = c.req.valid("json");
+  const sets: string[] = [];
+  const vals: (string | null)[] = [];
+
+  if (body.mode !== undefined)       { sets.push("mode = ?");       vals.push(body.mode); }
+  if (body.birth_date !== undefined) { sets.push("birth_date = ?"); vals.push(body.birth_date); }
+
+  if (sets.length > 0) {
+    vals.push(payload.sub);
+    await dbRun(c.env.DB, `UPDATE users SET ${sets.join(", ")} WHERE id = ?`, vals);
+  }
 
   const user = await dbFirst<User>(
     c.env.DB,
-    "SELECT id, email, mode, subscription_status, trial_ends_at, created_at FROM users WHERE id = ?",
+    "SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, created_at FROM users WHERE id = ?",
     [payload.sub]
   );
   if (!user) return c.json({ message: "User not found" }, 404);

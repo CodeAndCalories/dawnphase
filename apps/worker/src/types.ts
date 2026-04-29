@@ -22,6 +22,7 @@ export interface User {
   email: string;
   password_hash: string;
   mode: "cycle" | "perimenopause";
+  birth_date: string | null;
   created_at: string;
   stripe_customer_id: string | null;
   subscription_status: "trialing" | "active" | "past_due" | "canceled" | "incomplete";

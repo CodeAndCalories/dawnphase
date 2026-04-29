@@ -59,6 +59,12 @@ export default function SettingsPage() {
   const [modeSaving, setModeSaving] = useState(false);
   const [modeSaved,  setModeSaved]  = useState(false);
 
+  // Birth date
+  const [birthDate,    setBirthDate]    = useState("");
+  const [birthSaving,  setBirthSaving]  = useState(false);
+  const [birthSaved,   setBirthSaved]   = useState(false);
+  const [birthError,   setBirthError]   = useState<string | null>(null);
+
   // Portal
   const [portalLoading, setPortalLoading] = useState(false);
   const [portalError,   setPortalError]   = useState<string | null>(null);
@@ -82,7 +88,8 @@ export default function SettingsPage() {
   // ── Load reminders once auth resolves ─────────────────────────────────────
   useEffect(() => {
     if (!authUser) return;
-    setUser(authUser); // seed local user from hook
+    setUser(authUser);
+    setBirthDate(authUser.birth_date ?? "");
     api.get<{ reminder: Reminder }>("/reminders")
       .then((remRes) => {
         setReminder(remRes.reminder);
@@ -94,6 +101,24 @@ export default function SettingsPage() {
   }, [authUser]);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
+
+  async function handleBirthSave() {
+    setBirthSaving(true);
+    setBirthSaved(false);
+    setBirthError(null);
+    try {
+      const res = await api.patch<{ user: User }>("/auth/me", {
+        birth_date: birthDate || null,
+      });
+      setUser(res.user);
+      setBirthSaved(true);
+      setTimeout(() => setBirthSaved(false), 2000);
+    } catch (err) {
+      setBirthError(err instanceof Error ? err.message : "Could not save");
+    } finally {
+      setBirthSaving(false);
+    }
+  }
 
   async function handleModeChange(mode: "cycle" | "perimenopause") {
     if (!user || user.mode === mode) return;
@@ -280,6 +305,33 @@ export default function SettingsPage() {
           {modeSaved && (
             <p className="text-xs text-green-700">✓ Mode updated</p>
           )}
+        </div>
+
+        {/* Birth date — optional, powers Cosmic view */}
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+            Date of birth{" "}
+            <span className="font-normal normal-case text-[#8C6B5A]/70">
+              (optional — unlocks ✨ Cosmic view)
+            </span>
+          </p>
+          <div className="flex gap-3 items-center flex-wrap">
+            <input
+              type="date"
+              value={birthDate}
+              onChange={e => setBirthDate(e.target.value)}
+              max={new Date().toISOString().split("T")[0]}
+              className="min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
+            />
+            <button
+              onClick={handleBirthSave}
+              disabled={birthSaving}
+              className="min-h-[44px] px-5 py-2 rounded-xl bg-[#E8637A] hover:bg-[#C94B6D] text-white text-sm font-semibold transition-colors disabled:opacity-60"
+            >
+              {birthSaving ? "Saving…" : birthSaved ? "✓ Saved" : "Save"}
+            </button>
+          </div>
+          {birthError && <p className="text-xs text-red-600">{birthError}</p>}
         </div>
       </section>
 
