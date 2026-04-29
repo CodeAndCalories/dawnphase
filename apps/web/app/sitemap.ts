@@ -57,7 +57,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/cycle-tracking-for-beginners",    lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/what-is-cycle-syncing",           lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/perimenopause-brain-fog",         lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: "https://www.dawnphase.com/blog/irregular-periods-causes",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/irregular-periods-causes",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/cycle-mood-journal",                 lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/cycle-syncing-zodiac",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/tracking-endometriosis-diary",       lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Contact + Legal
     { url: "https://www.dawnphase.com/contact",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.5 },
     { url: "https://www.dawnphase.com/privacy",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },

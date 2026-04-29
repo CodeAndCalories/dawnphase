@@ -126,6 +126,21 @@ const POSTS: Record<string, { title: string; excerpt: string; readTime: string }
     excerpt: "Outside 21–35 days, or varying by more than a week? Here are 8 common causes and how to identify yours.",
     readTime: "7 min read",
   },
+  "cycle-mood-journal": {
+    title: "Why Keeping a Cycle Mood Journal Changes Everything",
+    excerpt: "Mood changes across your cycle are hormonally driven and predictable. Here's how to track them and what the patterns reveal.",
+    readTime: "7 min read",
+  },
+  "cycle-syncing-zodiac": {
+    title: "Cycle Syncing and Astrology — Fun Ways to Connect With Your Body",
+    excerpt: "Cycle phases and zodiac signs are both frameworks for self-understanding. Here's how they overlap — and why it's just for fun.",
+    readTime: "5 min read",
+  },
+  "tracking-endometriosis-diary": {
+    title: "How to Keep an Endometriosis Symptom Diary",
+    excerpt: "A detailed daily diary can shorten the 7–10 year endo diagnosis gap. Here's exactly what to track and how to present it to a specialist.",
+    readTime: "8 min read",
+  },
 };
 
 interface Props {
