@@ -287,6 +287,13 @@ function Features() {
               <p className="text-sm text-dp-taupe leading-relaxed">{f.body}</p>
             </div>
           ))}
+          <div className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+            <div className="w-11 h-11 rounded-xl bg-dawn-warm flex items-center justify-center mb-4 text-xl leading-none">
+              ✨
+            </div>
+            <h3 className="font-display font-semibold text-dp-deeprose mb-2">Cosmic view</h3>
+            <p className="text-sm text-dp-taupe leading-relaxed">See your cycle phase combined with your zodiac sign for a fun daily perspective. Just for entertainment.</p>
+          </div>
         </div>
       </div>
     </section>
