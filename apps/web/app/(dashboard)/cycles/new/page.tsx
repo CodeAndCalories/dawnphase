@@ -28,7 +28,7 @@ function addDays(d: Date, n: number) {
 }
 
 function hasRecentCycle(cycles: Cycle[]): boolean {
-  const cutoff = addDays(new Date(), -7).setHours(0, 0, 0, 0);
+  const cutoff = addDays(new Date(), -14).setHours(0, 0, 0, 0);
   return cycles.some(c => new Date(c.start_date + "T00:00:00").getTime() >= cutoff);
 }
 
@@ -37,7 +37,9 @@ export default function NewCyclePage() {
   const { loading, redirecting } = useRequireSubscription();
 
   const today   = toISODate(new Date());
-  const minDate = toISODate(addDays(new Date(), -7));
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+  const minDate = twelveMonthsAgo.toISOString().split('T')[0];
 
   // ── Form state ───────────────────────────────────────────────────────────────
   const [startDate,   setStartDate]   = useState(today);
@@ -109,7 +111,7 @@ export default function NewCyclePage() {
               Already logged recently
             </h2>
             <p className="text-sm text-[#8C6B5A] leading-relaxed">
-              You already logged a period within the last 7 days. Are you sure
+              You already logged a period within the last 14 days. Are you sure
               you want to add another?
             </p>
             <div className="flex gap-3 pt-1">
@@ -157,7 +159,7 @@ export default function NewCyclePage() {
             className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
           />
           <p className="text-xs text-[#8C6B5A]">
-            You can enter today or any date up to 7 days ago.
+            Select any date from the last 12 months.
           </p>
         </section>
 
