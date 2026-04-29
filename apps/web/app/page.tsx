@@ -57,6 +57,7 @@ function Nav() {
             ["How it works", "#how-it-works"],
             ["Pricing", "#pricing"],
             ["Blog", "/blog"],
+            ["Tools", "/tools"],
           ].map(([label, href]) => (
             <a
               key={label}
