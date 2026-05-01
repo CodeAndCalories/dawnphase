@@ -15,6 +15,27 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "how-to-track-ovulation-pcos",
+    title: "How to Track Ovulation With PCOS — A Practical Guide",
+    excerpt:
+      "Standard ovulation trackers fail with PCOS. Here's how BBT, OPKs, and cervical mucus work with irregular cycles — and how to read the signs correctly.",
+    readTime: "7 min read",
+  },
+  {
+    slug: "pcos-symptoms-tracker",
+    title: "PCOS Symptoms Tracker — What to Log Every Day",
+    excerpt:
+      "A daily symptom log is one of the most practical tools for understanding your PCOS pattern and getting more from medical appointments. Here's what to track.",
+    readTime: "6 min read",
+  },
+  {
+    slug: "luteal-phase-defect",
+    title: "Luteal Phase Defect — Signs, Causes and How to Track It",
+    excerpt:
+      "A short luteal phase (under 10 days) can cause spotting before periods, short cycles, and difficulty conceiving. Here's what the research says and how cycle tracking helps.",
+    readTime: "6 min read",
+  },
+  {
     slug: "irregular-periods-causes",
     title: "Irregular Periods — 8 Common Causes and When to See a Doctor",
     excerpt:
