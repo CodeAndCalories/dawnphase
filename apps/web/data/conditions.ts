@@ -44,18 +44,41 @@ export const conditions: Condition[] = [
     ],
     symptoms: ["irregular-periods-pcos", "acne-hormonal", "fatigue-luteal-phase"],
     relatedBlogs: [
-      { slug: "pcos-cycle-tracking",      title: "How to Track Your Cycle With PCOS — A Complete Guide" },
-      { slug: "period-tracker-for-pcos",  title: "Best Period Tracker App for PCOS in 2026" },
-      { slug: "tracking-cycle-pcos",      title: "Why Tracking Your Cycle With PCOS Is Different" },
+      { slug: "how-to-track-ovulation-pcos", title: "How to Track Ovulation With PCOS — A Practical Guide" },
+      { slug: "pcos-symptoms-tracker",       title: "PCOS Symptoms Tracker — What to Log Every Day" },
+      { slug: "pcos-cycle-tracking",         title: "How to Track Your Cycle With PCOS — A Complete Guide" },
+      { slug: "period-tracker-for-pcos",     title: "Best Period Tracker App for PCOS in 2026" },
+      { slug: "tracking-cycle-pcos",         title: "Why Tracking Your Cycle With PCOS Is Different" },
+      { slug: "luteal-phase-defect",         title: "Luteal Phase Defect — Signs, Causes and How to Track It" },
     ],
     faqs: [
       {
         q: "Can you track cycles with PCOS?",
-        a: "Yes — Dawn Phase supports cycles from 21–90 days and doesn't assume a 28-day cycle.",
+        a: "Yes — Dawn Phase supports cycles from 21–90 days and doesn't assume a 28-day cycle. The goal is logging every day and looking for patterns across multiple cycles rather than predicting the next one.",
       },
       {
         q: "Will it predict my period with PCOS?",
-        a: "It estimates based on your logged history. With irregular cycles, predictions improve the more you log.",
+        a: "It estimates based on your logged history. With irregular cycles, predictions improve the more you log — but treat them as a rough guide rather than a reliable window.",
+      },
+      {
+        q: "How do I track ovulation with PCOS?",
+        a: "Combine BBT (basal body temperature) charting with OPK tests. BBT charting confirms ovulation happened — a sustained rise of ~0.2°C lasting three or more days is strong evidence. OPKs alone are unreliable with PCOS because LH is often chronically elevated, producing false positives.",
+      },
+      {
+        q: "What daily symptoms should I log with PCOS?",
+        a: "Beyond period dates, track acne, energy levels, bloating, mood, anxiety, sleep quality, hair shedding, and sugar or carb cravings. Daily logging — not just around your period — reveals hormonal patterns tied to cycle phase shifts that aren't obvious day-to-day.",
+      },
+      {
+        q: "My cycles are 60+ days. How does tracking work?",
+        a: "Dawn Phase tracks your current cycle day from your logged period start date. Whether you're on day 20 or day 65, the data stays coherent. When your next period starts, you log it and the app recalibrates.",
+      },
+      {
+        q: "How long before cycle tracking is useful with PCOS?",
+        a: "Most people see meaningful patterns after 3–6 months of daily logging. One cycle tells you very little with PCOS. But even the first few weeks of data are more useful at a doctor's appointment than trying to recall symptoms from memory.",
+      },
+      {
+        q: "Is PCOS tracking useful even if I'm not trying to conceive?",
+        a: "Yes. Understanding your hormonal patterns, tracking androgen symptoms like acne and hair changes, and building a symptom record for your endocrinologist are all valuable independent of fertility goals.",
       },
     ],
   },
