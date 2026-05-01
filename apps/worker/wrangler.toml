@@ -30,3 +30,4 @@ crons = ["0 9 * * *", "0 9 1 * *"]
 # RESEND_API_KEY
 # STRIPE_SECRET_KEY
 # STRIPE_WEBHOOK_SECRET
+# ADMIN_KEY

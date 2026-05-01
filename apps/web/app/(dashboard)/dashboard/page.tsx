@@ -299,6 +299,10 @@ export default function DashboardPage() {
   const [onboardBirthDate, setOnboardBirthDate] = useState("");
   const [onboardSaving,    setOnboardSaving]    = useState(false);
 
+  // Post-signup feedback modal
+  const [showFeedback,    setShowFeedback]    = useState(false);
+  const [feedbackSending, setFeedbackSending] = useState(false);
+
   // Set time-of-day greeting on mount (client-only)
   useEffect(() => { setGreeting(getGreeting()); }, []);
 
@@ -388,6 +392,24 @@ export default function DashboardPage() {
       if (typeof window !== "undefined") localStorage.setItem("dp_onboarded", "1");
       setShowOnboarding(false);
       setOnboardSaving(false);
+      // Show feedback modal 2 s after onboarding closes (if not already done)
+      if (typeof window !== "undefined" && !localStorage.getItem("dp_feedback_done")) {
+        setTimeout(() => setShowFeedback(true), 2000);
+      }
+    }
+  }
+
+  async function handleFeedbackSelect(value: string) {
+    if (feedbackSending) return;
+    setFeedbackSending(true);
+    try {
+      await api.post("/feedback", { type: "signup_reason", value });
+    } catch {
+      // Best-effort — don't block dismissal
+    } finally {
+      if (typeof window !== "undefined") localStorage.setItem("dp_feedback_done", "1");
+      setShowFeedback(false);
+      setFeedbackSending(false);
     }
   }
 
@@ -449,6 +471,47 @@ export default function DashboardPage() {
               className="w-full min-h-[52px] bg-[#E8637A] hover:bg-[#C94B6D] text-white font-semibold text-base rounded-2xl transition-colors disabled:opacity-60 shadow-sm"
             >
               {onboardSaving ? "Saving…" : "Let’s go →"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Post-signup feedback modal ───────────────────────────────── */}
+      {showFeedback && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
+            <div className="text-center space-y-1">
+              <p className="text-2xl">💬</p>
+              <h2 className="text-base font-bold text-[#2D1B1E]">Quick question</h2>
+              <p className="text-sm text-[#8C6B5A]">What brought you here today?</p>
+            </div>
+            <div className="space-y-2">
+              {[
+                "Privacy concerns with my current app",
+                "PCOS or irregular cycles",
+                "Perimenopause symptoms",
+                "Just curious / trying it out",
+              ].map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  disabled={feedbackSending}
+                  onClick={() => handleFeedbackSelect(option)}
+                  className="w-full min-h-[44px] px-4 py-3 text-sm text-left rounded-xl border-2 border-gray-200 bg-white text-[#2D1B1E] hover:border-[#E8637A] hover:bg-[#FFF0F3] transition-all disabled:opacity-60"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") localStorage.setItem("dp_feedback_done", "1");
+                setShowFeedback(false);
+              }}
+              className="w-full text-xs text-[#8C6B5A] hover:text-[#C94B6D] transition-colors pt-1"
+            >
+              Skip
             </button>
           </div>
         </div>

@@ -69,6 +69,12 @@ export default function SettingsPage() {
   const [portalLoading, setPortalLoading] = useState(false);
   const [portalError,   setPortalError]   = useState<string | null>(null);
 
+  // Cancellation feedback
+  const [showCancelFeedback,    setShowCancelFeedback]    = useState(false);
+  const [cancelValue,           setCancelValue]           = useState("");
+  const [cancelNotes,           setCancelNotes]           = useState("");
+  const [cancelSubmitting,      setCancelSubmitting]      = useState(false);
+
   // Reminders (local form state, separate from remote)
   const [remEnabled,    setRemEnabled]    = useState(true);
   const [remDays,       setRemDays]       = useState(3);
@@ -90,6 +96,14 @@ export default function SettingsPage() {
     if (!authUser) return;
     setUser(authUser);
     setBirthDate(authUser.birth_date ?? "");
+    // Show cancellation feedback if subscription just became canceled
+    if (
+      authUser.subscription_status === "canceled" &&
+      typeof window !== "undefined" &&
+      !localStorage.getItem("dp_cancel_feedback_done")
+    ) {
+      setShowCancelFeedback(true);
+    }
     api.get<{ reminder: Reminder }>("/reminders")
       .then((remRes) => {
         setReminder(remRes.reminder);
@@ -190,6 +204,24 @@ export default function SettingsPage() {
     }
   }
 
+  async function handleCancelFeedbackSubmit() {
+    if (!cancelValue || cancelSubmitting) return;
+    setCancelSubmitting(true);
+    try {
+      await api.post("/feedback", {
+        type: "cancellation",
+        value: cancelValue,
+        notes: cancelNotes.trim() || undefined,
+      });
+    } catch {
+      // Best-effort
+    } finally {
+      if (typeof window !== "undefined") localStorage.setItem("dp_cancel_feedback_done", "1");
+      setShowCancelFeedback(false);
+      setCancelSubmitting(false);
+    }
+  }
+
   async function handleDeleteAccount() {
     setDeleting(true);
     setDeleteError(null);
@@ -248,6 +280,74 @@ export default function SettingsPage() {
                 className="flex-1 min-h-[44px] rounded-xl bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors disabled:opacity-60"
               >
                 {deleting ? "Deleting…" : "Yes, delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Cancellation feedback modal ──────────────────────────────── */}
+      {showCancelFeedback && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
+            <div className="text-center space-y-1">
+              <p className="text-2xl">💙</p>
+              <h2 className="text-base font-bold text-[#2D1B1E]">We&apos;re sorry to see you go</h2>
+              <p className="text-sm text-[#8C6B5A]">What could we have done better?</p>
+            </div>
+            <div className="space-y-2">
+              {[
+                "Missing features I need",
+                "Too expensive",
+                "Didn't use it enough",
+                "Found a better option",
+                "Technical issues",
+              ].map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setCancelValue(option)}
+                  className={`w-full min-h-[44px] px-4 py-3 text-sm text-left rounded-xl border-2 transition-all ${
+                    cancelValue === option
+                      ? "border-[#E8637A] bg-[#FFF0F3] text-[#C94B6D] font-medium"
+                      : "border-gray-200 bg-white text-[#2D1B1E] hover:border-[#E8637A]"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+                Tell us more <span className="font-normal normal-case">(optional)</span>
+              </p>
+              <textarea
+                value={cancelNotes}
+                onChange={e => setCancelNotes(e.target.value)}
+                rows={3}
+                maxLength={2000}
+                placeholder="Any details help us improve…"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] resize-none focus:outline-none focus:border-[#E8637A] transition-colors"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") localStorage.setItem("dp_cancel_feedback_done", "1");
+                  setShowCancelFeedback(false);
+                }}
+                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-gray-400 transition-colors"
+              >
+                Skip
+              </button>
+              <button
+                type="button"
+                onClick={handleCancelFeedbackSubmit}
+                disabled={!cancelValue || cancelSubmitting}
+                className="flex-1 min-h-[44px] rounded-xl bg-[#E8637A] hover:bg-[#C94B6D] text-white text-sm font-semibold transition-colors disabled:opacity-60"
+              >
+                {cancelSubmitting ? "Sending…" : "Send feedback"}
               </button>
             </div>
           </div>

@@ -13,6 +13,8 @@ import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
 import cronRoutes, { processReminders, processMonthlyReports } from "./routes/cron";
 import leadsRoutes from "./routes/leads";
+import feedbackRoutes from "./routes/feedback";
+import adminRoutes from "./routes/admin";
 
 type Variables = { userId: string };
 
@@ -32,7 +34,7 @@ app.use(
       return allowed.includes(origin) ? origin : "https://www.dawnphase.com";
     },
     allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allowHeaders: ["Content-Type", "Authorization"],
+    allowHeaders: ["Content-Type", "Authorization", "X-Admin-Key"],
     maxAge: 86400,
   })
 );
@@ -75,6 +77,12 @@ app.route("/auth", authRoutes);
 
 // POST /leads — public lead capture from free tools (no auth required)
 app.route("/leads", leadsRoutes);
+
+// POST /feedback — public; attaches user_id if token present
+app.route("/feedback", feedbackRoutes);
+
+// GET /admin/feedback — admin-key protected
+app.route("/admin", adminRoutes);
 
 // GET /cron/reminders — spec-approved public (called by Cloudflare cron trigger)
 app.route("/cron", cronRoutes);
