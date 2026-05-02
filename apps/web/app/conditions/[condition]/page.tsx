@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import ExitIntent from "@/components/ExitIntent";
 import { conditions } from "@/data/conditions";
 import { symptoms } from "@/data/symptoms";
 import { ArticleSchema, FAQSchema, MedicalWebPageSchema } from "@/components/SchemaMarkup";
@@ -82,6 +83,7 @@ export default async function ConditionPage({
       />
 
       <Header />
+      <ExitIntent />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}

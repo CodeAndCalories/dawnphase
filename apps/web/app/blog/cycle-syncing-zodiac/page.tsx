@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import BlogCTA from "@/components/BlogCTA";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import { ArticleSchema } from "@/components/SchemaMarkup";
 
@@ -108,14 +110,9 @@ export default function Post() {
           slugs={["cycle-syncing-explained", "what-is-cycle-syncing", "cycle-tracking-for-beginners"]}
         />
 
-        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #a78bfa, #c084fc)" }}>
-          <h3 className="text-2xl font-bold mb-2">✨ Try your Cosmic View</h3>
-          <p className="mb-6 opacity-90">Add your birth date in settings to unlock your daily zodiac + cycle phase message.</p>
-          <a href="/signup" className="inline-block bg-white text-purple-600 font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm">
-            Start your 7-day free trial →
-          </a>
-        </div>
+        <BlogCTA variant="general" />
       </main>
+      <StickyMobileCTA />
     </div>
   );
 }

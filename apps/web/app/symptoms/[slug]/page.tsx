@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import ExitIntent from "@/components/ExitIntent";
 import { symptoms, PHASE_COLORS } from "@/data/symptoms";
 import { MedicalWebPageSchema } from "@/components/SchemaMarkup";
 
@@ -61,6 +62,7 @@ export default async function SymptomPage({
         url={`https://www.dawnphase.com/symptoms/${symptom.slug}`}
       />
       <Header />
+      <ExitIntent />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link

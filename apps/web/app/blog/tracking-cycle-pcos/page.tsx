@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
+import BlogCTA from "@/components/BlogCTA";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 import RelatedArticles from "@/components/blog/RelatedArticles";
 import { ArticleSchema } from "@/components/SchemaMarkup";
 
@@ -133,14 +135,9 @@ export default function Post() {
           slugs={["pcos-cycle-tracking", "ovulation-symptoms", "hormonal-imbalance-signs"]}
         />
 
-        <div className="mt-6 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}>
-          <h3 className="text-2xl font-bold mb-2">Tracking designed for irregular cycles</h3>
-          <p className="mb-6 opacity-90">No 28-day assumptions. Log what happens, see the patterns. 7-day free trial.</p>
-          <a href="/signup" className="inline-block bg-white text-[#E8637A] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm">
-            Start your 7-day free trial →
-          </a>
-        </div>
+        <BlogCTA variant="pcos" />
       </main>
+      <StickyMobileCTA />
     </div>
   );
 }
