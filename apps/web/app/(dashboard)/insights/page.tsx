@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
+import SymptomHeatmap from "@/components/dashboard/SymptomHeatmap";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -384,6 +385,9 @@ export default function InsightsPage() {
           </div>
         </div>
       </SectionCard>
+
+      {/* ── Symptom heatmap ───────────────────────────────────────────────── */}
+      <SymptomHeatmap logs={logs} />
 
       {/* ── YOUR PATTERNS ───────────────────────────────────────────────── */}
       {(() => {
