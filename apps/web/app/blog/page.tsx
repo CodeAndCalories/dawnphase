@@ -15,6 +15,27 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "pcos-irregular-periods",
+    title: "PCOS and Irregular Periods — What's Normal and What to Track",
+    excerpt:
+      "Fewer than 8 periods a year, cycles over 35 days, or months without a period — here's what's clinically irregular with PCOS, what anovulatory cycles mean, and how to track when there's no fixed pattern.",
+    readTime: "7 min read",
+  },
+  {
+    slug: "pcos-and-pmdd",
+    title: "PCOS and PMDD — Can You Have Both?",
+    excerpt:
+      "PCOS and PMDD share overlapping mood symptoms but have different causes and timing. Here's how they can coexist, the key diagnostic difference, and why cycle day data matters for both.",
+    readTime: "7 min read",
+  },
+  {
+    slug: "best-app-pcos-2026",
+    title: "Best Apps for PCOS Management in 2026",
+    excerpt:
+      "No single app covers all of PCOS. Here's how to think through cycle tracking, symptom logging, nutrition, and mindfulness apps — and what to look for in each category.",
+    readTime: "6 min read",
+  },
+  {
     slug: "how-to-track-ovulation-pcos",
     title: "How to Track Ovulation With PCOS — A Practical Guide",
     excerpt:
