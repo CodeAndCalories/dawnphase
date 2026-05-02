@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/symptoms",                              lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     ...symptomUrls,
     // Blog
-    { url: "https://www.dawnphase.com/blog",                                  lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
+    { url: "https://www.dawnphase.com/blog",                                  lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
     { url: "https://www.dawnphase.com/blog/period-tracker-no-data-selling",   lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/flo-alternative",                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/perimenopause-symptoms-checklist", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
