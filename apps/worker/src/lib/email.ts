@@ -257,6 +257,40 @@ export function leadCaptureEmail(
   `);
 }
 
+// ── Streak milestone email ────────────────────────────────────────────────────
+
+export function streakMilestoneEmail(email: string, streakDays: number): string {
+  return emailWrapper(`
+    <h1 style="margin:0 0 20px;font-size:24px;font-weight:700;color:#C94B6D;line-height:1.2">
+      🔥 ${streakDays}-day streak!
+    </h1>
+    <p style="margin:0 0 8px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      Hi ${email},
+    </p>
+    <p style="margin:0 0 28px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      You&apos;ve logged <strong>${streakDays} days in a row</strong>. That&apos;s a real commitment to understanding your cycle.
+    </p>
+
+    <!-- Milestone highlight -->
+    <div style="margin:0 0 32px;padding:20px 24px;background:linear-gradient(135deg,#FFF0F0,#FDF6F0);border-radius:12px;border-left:3px solid #E8637A;text-align:center">
+      <p style="margin:0 0 8px;font-size:40px;line-height:1">🔥</p>
+      <p style="margin:0;font-size:28px;font-weight:700;color:#C94B6D">${streakDays} days</p>
+    </div>
+
+    <p style="margin:0 0 28px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      The more you log, the clearer your patterns become. Every entry builds a more complete picture of your cycle and health.
+    </p>
+
+    <!-- CTA button -->
+    <div style="margin:0 0 8px">
+      <a href="https://www.dawnphase.com/log"
+         style="display:inline-block;padding:14px 32px;background:#E8637A;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        Keep your streak going →
+      </a>
+    </div>
+  `);
+}
+
 // ── Monthly cycle report email ────────────────────────────────────────────────
 
 export interface MonthlyReportOptions {

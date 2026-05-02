@@ -284,6 +284,7 @@ export default function DashboardPage() {
 
   const [cycles,      setCycles]      = useState<Cycle[]>([]);
   const [logs,        setLogs]        = useState<DailyLog[]>([]);
+  const [streak,      setStreak]      = useState<number>(0);
   const [dataLoading, setDataLoading] = useState(true);
   const [greeting,    setGreeting]    = useState("Welcome back");
 
@@ -311,9 +312,9 @@ export default function DashboardPage() {
     if (!user) return;
     Promise.all([
       api.get<{ cycles: Cycle[] }>("/cycles"),
-      api.get<{ logs: DailyLog[] }>("/logs?limit=7"),
+      api.get<{ logs: DailyLog[]; streak: number }>("/logs?limit=7"),
     ])
-      .then(([c, l]) => { setCycles(c.cycles); setLogs(l.logs); })
+      .then(([c, l]) => { setCycles(c.cycles); setLogs(l.logs); setStreak(l.streak ?? 0); })
       .finally(() => setDataLoading(false));
   }, [user]);
 
@@ -719,28 +720,53 @@ export default function DashboardPage() {
           {!latestCycle ? (
             <p className="text-sm text-[#8C6B5A]">No cycle logged yet.</p>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center space-y-1">
-                <p className="text-3xl font-bold text-[#C94B6D]">{logs.length}</p>
-                <p className="text-xs text-[#8C6B5A] leading-tight">
-                  days logged<br /><span className="text-[10px] opacity-70">(last 7)</span>
-                </p>
+            <>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center space-y-1">
+                  <p className="text-3xl font-bold text-[#C94B6D]">{logs.length}</p>
+                  <p className="text-xs text-[#8C6B5A] leading-tight">
+                    days logged<br /><span className="text-[10px] opacity-70">(last 7)</span>
+                  </p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-3xl font-bold text-[#C94B6D]">
+                    {cycleMoodAvg != null ? MOOD_EMOJI[Math.round(cycleMoodAvg)] : "—"}
+                  </p>
+                  <p className="text-xs text-[#8C6B5A] leading-tight">avg mood</p>
+                </div>
+                <div className="text-center space-y-1">
+                  <p className="text-3xl font-bold text-[#C94B6D]">
+                    {cycleEnergyAvg != null ? cycleEnergyAvg.toFixed(1) : "—"}
+                  </p>
+                  <p className="text-xs text-[#8C6B5A] leading-tight">
+                    avg energy<br /><span className="text-[10px] opacity-70">out of 5</span>
+                  </p>
+                </div>
               </div>
-              <div className="text-center space-y-1">
-                <p className="text-3xl font-bold text-[#C94B6D]">
-                  {cycleMoodAvg != null ? MOOD_EMOJI[Math.round(cycleMoodAvg)] : "—"}
-                </p>
-                <p className="text-xs text-[#8C6B5A] leading-tight">avg mood</p>
+
+              {/* Streak */}
+              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center gap-2 flex-wrap">
+                {streak >= 1 ? (
+                  <>
+                    <span className="text-sm font-semibold text-[#E8637A]">
+                      🔥 {streak} day streak
+                    </span>
+                    {streak >= 30 && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                        🏆 30 day streak!
+                      </span>
+                    )}
+                    {streak >= 7 && streak < 30 && (
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-50 text-violet-700 border border-violet-200">
+                        ⭐ Week streak!
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-sm text-[#8C6B5A]">Start your streak today</span>
+                )}
               </div>
-              <div className="text-center space-y-1">
-                <p className="text-3xl font-bold text-[#C94B6D]">
-                  {cycleEnergyAvg != null ? cycleEnergyAvg.toFixed(1) : "—"}
-                </p>
-                <p className="text-xs text-[#8C6B5A] leading-tight">
-                  avg energy<br /><span className="text-[10px] opacity-70">out of 5</span>
-                </p>
-              </div>
-            </div>
+            </>
           )}
         </Card>
 

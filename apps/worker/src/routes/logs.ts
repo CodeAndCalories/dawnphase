@@ -3,18 +3,50 @@ import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import type { Env, DailyLog } from "../types";
 import { dbAll, dbFirst, dbRun, newId } from "../lib/db";
+import { sendEmail, streakMilestoneEmail } from "../lib/email";
 
 const logs = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
+
+const STREAK_MILESTONES = [7, 14, 30, 60, 90];
+
+function computeStreak(datesSortedDesc: string[]): number {
+  if (datesSortedDesc.length === 0) return 0;
+
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
+  const yest = new Date(now);
+  yest.setDate(yest.getDate() - 1);
+  const yesterdayStr = yest.toISOString().slice(0, 10);
+
+  const mostRecent = datesSortedDesc[0];
+  if (mostRecent !== todayStr && mostRecent !== yesterdayStr) return 0;
+
+  const dateSet = new Set(datesSortedDesc);
+  let streak = 0;
+  const cursor = new Date(mostRecent + "T00:00:00");
+
+  while (dateSet.has(cursor.toISOString().slice(0, 10))) {
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  return streak;
+}
 
 logs.get("/", async (c) => {
   const userId = c.get("userId");
   const limit = Math.min(parseInt(c.req.query("limit") ?? "30", 10), 90);
+
+  // Fetch enough rows to compute an accurate streak (up to 90 days)
+  const fetchLimit = Math.max(limit, 90);
   const rows = await dbAll<DailyLog>(
     c.env.DB,
     "SELECT * FROM daily_logs WHERE user_id = ? ORDER BY date DESC LIMIT ?",
-    [userId, limit]
+    [userId, fetchLimit]
   );
-  return c.json({ logs: rows });
+
+  const streak = computeStreak(rows.map((r) => r.date));
+  return c.json({ logs: rows.slice(0, limit), streak });
 });
 
 const logSchema = z.object({
@@ -123,6 +155,34 @@ logs.post("/", zValidator("json", logSchema), async (c) => {
     "SELECT * FROM daily_logs WHERE id = ?",
     [id]
   );
+
+  // Streak milestone email — non-blocking, only on new inserts
+  try {
+    const recentDates = await dbAll<{ date: string }>(
+      c.env.DB,
+      "SELECT date FROM daily_logs WHERE user_id = ? ORDER BY date DESC LIMIT 90",
+      [userId]
+    );
+    const currentStreak = computeStreak(recentDates.map((r) => r.date));
+    if (STREAK_MILESTONES.includes(currentStreak)) {
+      const userRow = await dbFirst<{ email: string }>(
+        c.env.DB,
+        "SELECT email FROM users WHERE id = ?",
+        [userId]
+      );
+      if (userRow?.email && c.env.RESEND_API_KEY) {
+        // Fire-and-forget: non-critical side effect
+        sendEmail(c.env.RESEND_API_KEY, {
+          to: userRow.email,
+          subject: `🔥 ${currentStreak}-day streak — you're building real cycle insights!`,
+          html: streakMilestoneEmail(userRow.email, currentStreak),
+        }).catch(() => {});
+      }
+    }
+  } catch {
+    // Never block the response for analytics side-effects
+  }
+
   return c.json({ log }, 201);
 });
 

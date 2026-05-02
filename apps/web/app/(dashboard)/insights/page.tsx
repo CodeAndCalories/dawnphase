@@ -162,9 +162,11 @@ function moodByPhase(
   ) as Record<Phase, number | null>;
 }
 
-function logStreak(logs: DailyLog[]): { streak: number; total: number } {
+function logStreak(logs: DailyLog[]): { streak: number; longest: number; total: number } {
   const total   = logs.length;
   const dateSet = new Set(logs.map((l) => l.date));
+
+  // Current consecutive streak ending today or yesterday
   let streak = 0;
   const today = new Date();
   for (let i = 0; i < 365; i++) {
@@ -173,7 +175,25 @@ function logStreak(logs: DailyLog[]): { streak: number; total: number } {
     if (dateSet.has(d.toISOString().slice(0, 10))) streak++;
     else break;
   }
-  return { streak, total };
+
+  // Longest consecutive streak in available data
+  const dates = [...dateSet].sort();
+  let longest = dates.length > 0 ? 1 : 0;
+  let current = dates.length > 0 ? 1 : 0;
+  for (let i = 1; i < dates.length; i++) {
+    const diff =
+      (new Date(dates[i] + "T00:00:00").getTime() -
+        new Date(dates[i - 1] + "T00:00:00").getTime()) /
+      86_400_000;
+    if (diff === 1) {
+      current++;
+      if (current > longest) longest = current;
+    } else {
+      current = 1;
+    }
+  }
+
+  return { streak, longest, total };
 }
 
 // ── Small UI components ───────────────────────────────────────────────────────
@@ -293,7 +313,7 @@ export default function InsightsPage() {
 
   // ── Full insights ─────────────────────────────────────────────────────────────
   const { avg_cycle_length, top_symptoms } = insights!;
-  const { streak, total } = logStreak(logs);
+  const { streak, longest, total } = logStreak(logs);
   const energyData   = energyByDay(logs, cycles);
   const phaseSymptoms = symptomsByPhase(logs, cycles);
   const phaseMood    = moodByPhase(logs, cycles);
@@ -331,6 +351,39 @@ export default function InsightsPage() {
           sub={streak > 0 ? `${streak}-day streak 🔥` : "keep logging!"}
         />
       </div>
+
+      {/* ── Your consistency ──────────────────────────────────────────────── */}
+      <SectionCard title="Your consistency">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="text-center space-y-1.5">
+            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">
+              {streak > 0 ? streak : "—"}
+            </p>
+            <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+              Current streak
+            </p>
+            <p className="text-xs text-[#8C6B5A]">
+              {streak > 0 ? "🔥 days in a row" : "log today to start"}
+            </p>
+          </div>
+          <div className="text-center space-y-1.5">
+            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">
+              {longest > 0 ? longest : "—"}
+            </p>
+            <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+              Longest streak
+            </p>
+            <p className="text-xs text-[#8C6B5A]">days</p>
+          </div>
+          <div className="text-center space-y-1.5">
+            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">{total}</p>
+            <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
+              Total logged
+            </p>
+            <p className="text-xs text-[#8C6B5A]">days overall</p>
+          </div>
+        </div>
+      </SectionCard>
 
       {/* ── YOUR PATTERNS ───────────────────────────────────────────────── */}
       {(() => {
