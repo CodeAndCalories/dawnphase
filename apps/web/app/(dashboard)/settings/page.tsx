@@ -17,6 +17,14 @@ interface ShareStatus {
   created_at: string;
 }
 
+interface ReferralStats {
+  total_referrals: number;
+  converted: number;
+  pending: number;
+  code: string | null;
+  url: string | null;
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 const API_BASE =
@@ -91,6 +99,11 @@ export default function SettingsPage() {
   const [remSaved,      setRemSaved]      = useState(false);
   const [remError,      setRemError]      = useState<string | null>(null);
 
+  // Referral
+  const [referralStats,     setReferralStats]      = useState<ReferralStats | null>(null);
+  const [referralGenerating, setReferralGenerating] = useState(false);
+  const [referralCopied,    setReferralCopied]     = useState(false);
+
   // Partner share
   const [shareData,         setShareData]         = useState<ShareStatus | null>(null);
   const [shareCreating,     setShareCreating]     = useState(false);
@@ -132,6 +145,9 @@ export default function SettingsPage() {
         .catch(() => {}),
       api.get<{ share: ShareStatus | null }>("/share/status")
         .then((res) => setShareData(res.share))
+        .catch(() => {}),
+      api.get<ReferralStats>("/referral/stats")
+        .then((res) => setReferralStats(res))
         .catch(() => {}),
     ]).finally(() => setDataLoading(false));
   }, [authUser]);
@@ -243,6 +259,34 @@ export default function SettingsPage() {
       setShowCancelFeedback(false);
       setCancelSubmitting(false);
     }
+  }
+
+  async function handleReferralGenerate() {
+    setReferralGenerating(true);
+    try {
+      const res = await api.post<{ code: string; url: string }>("/referral/generate", {});
+      setReferralStats((prev) => ({
+        total_referrals: prev?.total_referrals ?? 0,
+        converted:       prev?.converted       ?? 0,
+        pending:         prev?.pending         ?? 0,
+        code: res.code,
+        url:  res.url,
+      }));
+    } catch {
+      // silent — user stays on the "get link" state
+    } finally {
+      setReferralGenerating(false);
+    }
+  }
+
+  async function handleReferralCopy() {
+    const url = referralStats?.url;
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      setReferralCopied(true);
+      setTimeout(() => setReferralCopied(false), 2000);
+    } catch {}
   }
 
   async function handleShareCreate() {
@@ -620,6 +664,79 @@ export default function SettingsPage() {
         >
           {remSaving ? "Saving…" : remSaved ? "✓ Saved" : "Save reminders"}
         </button>
+      </section>
+
+      {/* ── REFER A FRIEND ───────────────────────────────────────────────── */}
+      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <div>
+          <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
+            Refer a friend
+          </h2>
+          <p className="text-sm font-semibold text-[#2D1B1E]">Give a month, get a month</p>
+          <p className="text-sm text-[#8C6B5A] leading-relaxed mt-1">
+            Share your referral link. When a friend starts a paid subscription, you both get a free month added to your account.
+          </p>
+          <p className="text-xs text-[#8C6B5A]/70 mt-1 italic">
+            Rewards applied manually while we build automation — we&apos;ll email you!
+          </p>
+        </div>
+
+        {!referralStats?.code ? (
+          <button
+            onClick={handleReferralGenerate}
+            disabled={referralGenerating}
+            className="min-h-[44px] px-5 py-2.5 bg-[#E8637A] hover:bg-[#C94B6D] text-white text-sm font-semibold rounded-xl transition-colors disabled:opacity-60"
+          >
+            {referralGenerating ? "Generating…" : "Get my referral link"}
+          </button>
+        ) : (
+          <div className="space-y-3">
+            {/* URL + copy */}
+            <div className="flex items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-2 flex-wrap">
+              <p className="text-xs text-[#2D1B1E] font-mono flex-1 break-all">
+                {referralStats.url}
+              </p>
+              <button
+                onClick={handleReferralCopy}
+                className="shrink-0 min-h-[36px] px-3 rounded-lg bg-[#E8637A]/10 text-[#C94B6D] text-xs font-semibold hover:bg-[#E8637A]/20 transition-colors"
+              >
+                {referralCopied ? "✓ Copied" : "Copy"}
+              </button>
+            </div>
+
+            {/* Stats */}
+            <p className="text-xs text-[#8C6B5A]">
+              <span className="font-semibold text-[#2D1B1E]">{referralStats.total_referrals}</span>{" "}
+              friend{referralStats.total_referrals !== 1 ? "s" : ""} referred
+              {referralStats.converted > 0 && (
+                <> ·{" "}
+                  <span className="font-semibold text-[#2D1B1E]">{referralStats.converted}</span>{" "}
+                  converted
+                </>
+              )}
+            </p>
+
+            {/* Share buttons */}
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(
+                  `I've been using Dawn Phase for cycle tracking — it's privacy-first and actually built for irregular cycles. Try it free: ${referralStats.url}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 min-h-[36px] px-4 rounded-xl bg-green-50 text-green-700 border border-green-200 text-xs font-semibold hover:bg-green-100 transition-colors"
+              >
+                📱 Share via WhatsApp
+              </a>
+              <button
+                onClick={handleReferralCopy}
+                className="min-h-[36px] px-4 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-[#8C6B5A] hover:border-[#E8637A] hover:text-[#C94B6D] transition-colors"
+              >
+                {referralCopied ? "✓ Link copied" : "Copy link"}
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ── PARTNER SHARE ────────────────────────────────────────────────── */}

@@ -9,9 +9,10 @@ import { sendEmail, welcomeEmail, passwordResetEmail } from "../lib/email";
 const auth = new Hono<{ Bindings: Env }>();
 
 const signupSchema = z.object({
-  email: z.string().email(),
+  email:    z.string().email(),
   password: z.string().min(8),
-  name: z.string().min(1),
+  name:     z.string().min(1),
+  ref_code: z.string().optional(),
 });
 
 const loginSchema = z.object({
@@ -28,7 +29,7 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 auth.post("/signup", zValidator("json", signupSchema), async (c) => {
-  const { email, password, name } = c.req.valid("json");
+  const { email, password, name, ref_code } = c.req.valid("json");
 
   const existing = await dbFirst<{ id: string }>(
     c.env.DB,
@@ -58,6 +59,31 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
     { sub: id, email, status: "incomplete" },
     c.env.JWT_SECRET
   );
+
+  // Track referral conversion — fire-and-forget, never blocks the response
+  if (ref_code) {
+    (async () => {
+      try {
+        const row = await dbFirst<{ id: string }>(
+          c.env.DB,
+          "SELECT id FROM referrals WHERE referral_code = ? AND status = 'pending'",
+          [ref_code]
+        );
+        if (row) {
+          await dbRun(
+            c.env.DB,
+            `UPDATE referrals
+             SET referred_user_id = ?,
+                 referred_email   = ?,
+                 status           = 'converted',
+                 converted_at     = datetime('now')
+             WHERE id = ?`,
+            [id, email, row.id]
+          );
+        }
+      } catch {}
+    })();
+  }
 
   // Fire-and-forget welcome email
   sendEmail(c.env.RESEND_API_KEY, {

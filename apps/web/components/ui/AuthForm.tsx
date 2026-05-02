@@ -123,7 +123,14 @@ function SignupForm() {
     setLoading(true);
     try {
       // Step 1 — create account; JWT stored in localStorage by signup()
-      await signup(values.email, values.password, values.name);
+      const refCode =
+        typeof window !== "undefined"
+          ? (localStorage.getItem("dp_ref_code") ?? undefined)
+          : undefined;
+      await signup(values.email, values.password, values.name, refCode);
+      if (refCode && typeof window !== "undefined") {
+        localStorage.removeItem("dp_ref_code");
+      }
 
       // Step 2 — redirect to Stripe checkout (7-day trial)
       setStep("billing");

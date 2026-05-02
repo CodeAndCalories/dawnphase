@@ -17,6 +17,7 @@ import feedbackRoutes from "./routes/feedback";
 import adminRoutes from "./routes/admin";
 import statsRoutes from "./routes/stats";
 import shareRoutes from "./routes/share";
+import referralRoutes from "./routes/referral";
 
 type Variables = { userId: string };
 
@@ -91,6 +92,10 @@ app.route("/admin", adminRoutes);
 
 // GET /cron/reminders — spec-approved public (called by Cloudflare cron trigger)
 app.route("/cron", cronRoutes);
+
+// Referral: all routes require auth
+app.use("/referral/*", requireAuth);
+app.route("/referral", referralRoutes);
 
 // Share: create/revoke/status are auth-gated; GET /:token is public
 app.use("/share/create", requireAuth);

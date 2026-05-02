@@ -47,10 +47,15 @@ export async function login(email: string, password: string) {
   return res;
 }
 
-export async function signup(email: string, password: string, name: string) {
+export async function signup(
+  email: string,
+  password: string,
+  name: string,
+  refCode?: string
+) {
   const res = await api.post<{ token: string; user: Record<string, unknown> }>(
     "/auth/signup",
-    { email, password, name }
+    { email, password, name, ...(refCode ? { ref_code: refCode } : {}) }
   );
   if (typeof window !== "undefined") {
     localStorage.setItem("dp_token", res.token);

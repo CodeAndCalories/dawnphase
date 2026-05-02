@@ -1,9 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import AuthForm from "@/components/ui/AuthForm";
 import Header from "@/components/Header";
 
 export default function SignupPage() {
+  // Persist referral code from URL into localStorage so AuthForm can pick it up
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get("ref");
+    if (ref) localStorage.setItem("dp_ref_code", ref);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FFF9F6]">
       <Header />
