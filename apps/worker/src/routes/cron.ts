@@ -5,11 +5,19 @@ import {
   sendEmail,
   periodReminderEmail,
   monthlyReportEmail,
+  weeklyDigestEmail,
   type CyclePhase,
   type MonthlyReportOptions,
 } from "../lib/email";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+
+interface WeeklyDigestUserRow {
+  id: string;
+  email: string;
+  last_period_start: string | null;
+  avg_cycle_length: number | null;
+}
 
 interface ReminderRow {
   id: string;
@@ -53,6 +61,164 @@ function getPhase(cycleDay: number): CyclePhase {
 const MOOD_MAP: Record<string, number> = {
   "😢": 1, "😟": 2, "😐": 3, "🙂": 4, "😊": 5,
 };
+
+// ── Phase wellness tips (condensed for digest email) ──────────────────────────
+
+const PHASE_DIGEST_TIPS: Record<string, string[]> = {
+  Menstrual: [
+    "Iron-rich foods — spinach, lentils, and red meat support energy during blood loss",
+    "Gentle movement this week: walking, yin yoga, or restorative stretching",
+    "Prioritise warmth and sleep — progesterone has dropped and rest is productive",
+  ],
+  Follicular: [
+    "Energy is building — a good week for higher intensity workouts or new projects",
+    "Cruciferous vegetables (broccoli, cauliflower) support oestrogen metabolism as levels rise",
+    "Social energy tends to be higher this week — great time for important conversations",
+  ],
+  Ovulatory: [
+    "Peak performance week — try high intensity training or challenging activities",
+    "Antioxidant-rich foods — berries and leafy greens support ovulation",
+    "Communication and confidence often peak now — make the most of your clarity",
+  ],
+  Luteal: [
+    "Complex carbohydrates — oats and sweet potato support serotonin and steady energy",
+    "Moderate movement: walking, swimming, or yoga helps with bloating and mood",
+    "Simplify your schedule in the final days — magnesium-rich foods may ease PMS",
+  ],
+  Perimenopause: [
+    "Protein at every meal supports muscle mass as oestrogen shifts",
+    "Weight-bearing exercise is especially important for bone density this week",
+    "Track hot flashes, sleep, and mood daily — patterns support better doctor conversations",
+  ],
+};
+
+// ── Weekly cycle digest ────────────────────────────────────────────────────────
+
+export async function processWeeklyDigests(
+  env: Env
+): Promise<{ sent: number; skipped: number; errors: number }> {
+  const now = new Date();
+  now.setUTCHours(0, 0, 0, 0);
+  const msPerDay = 1000 * 60 * 60 * 24;
+
+  const todayStr     = now.toISOString().slice(0, 10);
+  const sevenAgo     = addDays(now, -7).toISOString().slice(0, 10);
+  const yesterdayStr = addDays(now, -1).toISOString().slice(0, 10);
+
+  // Users who have opted in (or have no preference row — treated as opted in)
+  const users = await dbAll<WeeklyDigestUserRow>(
+    env.DB,
+    `SELECT
+       u.id,
+       u.email,
+       (SELECT c.start_date FROM cycles c WHERE c.user_id = u.id
+        ORDER BY c.start_date DESC LIMIT 1) AS last_period_start,
+       (SELECT CAST(ROUND(AVG(c2.cycle_length)) AS INTEGER)
+        FROM cycles c2 WHERE c2.user_id = u.id
+        AND c2.cycle_length IS NOT NULL) AS avg_cycle_length
+     FROM users u
+     LEFT JOIN reminders r ON r.user_id = u.id
+     WHERE u.subscription_status IN ('active', 'trialing')
+       AND COALESCE(r.weekly_digest_enabled, 1) = 1`,
+    []
+  );
+
+  let sent = 0;
+  let skipped = 0;
+  let errors = 0;
+
+  for (const user of users) {
+    // Fetch up to 90 recent logs: full data for streak + top symptom
+    const logs = await dbAll<DailyLog>(
+      env.DB,
+      "SELECT * FROM daily_logs WHERE user_id = ? ORDER BY date DESC LIMIT 90",
+      [user.id]
+    );
+
+    // ── Cycle day, phase, next period ───────────────────────────────────
+    let cycleDay: number | null = null;
+    let currentPhase: string | null = null;
+    let daysUntilNextPeriod: number | null = null;
+
+    if (user.last_period_start) {
+      const lastPeriod = new Date(user.last_period_start + "T00:00:00Z");
+      const daysSince  = Math.max(1, Math.round((now.getTime() - lastPeriod.getTime()) / msPerDay) + 1);
+      const avgLen     = user.avg_cycle_length ?? 28;
+      const nextPeriod = addDays(lastPeriod, avgLen);
+      const daysLeft   = Math.round((nextPeriod.getTime() - now.getTime()) / msPerDay);
+
+      cycleDay             = Math.min(daysSince, 90);
+      currentPhase         = getPhase(Math.min(daysSince, 28));
+      daysUntilNextPeriod  = daysLeft > 0 ? daysLeft : null;
+    }
+
+    // ── Streak (from up to 90 logs) ─────────────────────────────────────
+    let streakDays = 0;
+    if (logs.length > 0) {
+      const mostRecent = logs[0].date;
+      if (mostRecent === todayStr || mostRecent === yesterdayStr) {
+        const dateSet = new Set(logs.map((l) => l.date));
+        const cursor  = new Date(mostRecent + "T00:00:00Z");
+        while (dateSet.has(cursor.toISOString().slice(0, 10))) {
+          streakDays++;
+          cursor.setUTCDate(cursor.getUTCDate() - 1);
+        }
+      }
+    }
+
+    // ── Top symptom from last 7 days ────────────────────────────────────
+    const recentLogs = logs.filter((l) => l.date >= sevenAgo);
+    const symptomCounts: Record<string, number> = {};
+
+    for (const log of recentLogs) {
+      if (log.cramps)       symptomCounts["Cramps"]       = (symptomCounts["Cramps"]       ?? 0) + 1;
+      if (log.bloating)     symptomCounts["Bloating"]     = (symptomCounts["Bloating"]     ?? 0) + 1;
+      if (log.headache)     symptomCounts["Headache"]     = (symptomCounts["Headache"]     ?? 0) + 1;
+      if (log.brain_fog)    symptomCounts["Brain fog"]    = (symptomCounts["Brain fog"]    ?? 0) + 1;
+      if (log.hot_flashes)  symptomCounts["Hot flashes"]  = (symptomCounts["Hot flashes"]  ?? 0) + 1;
+      if (log.night_sweats) symptomCounts["Night sweats"] = (symptomCounts["Night sweats"] ?? 0) + 1;
+      if (log.custom_symptoms) {
+        try {
+          for (const s of JSON.parse(log.custom_symptoms) as string[]) {
+            symptomCounts[s] = (symptomCounts[s] ?? 0) + 1;
+          }
+        } catch {}
+      }
+    }
+
+    const topSymptomThisWeek =
+      Object.entries(symptomCounts).sort(([, a], [, b]) => b - a)[0]?.[0] ?? null;
+
+    // ── Wellness tips for current phase ─────────────────────────────────
+    const tipsKey     = currentPhase ?? "Luteal";
+    const wellnessTips = (PHASE_DIGEST_TIPS[tipsKey] ?? PHASE_DIGEST_TIPS.Luteal).slice(0, 3);
+
+    // ── Send ─────────────────────────────────────────────────────────────
+    try {
+      await sendEmail(env.RESEND_API_KEY, {
+        to:      user.email,
+        subject: "🌅 Your Dawn Phase week ahead",
+        html:    weeklyDigestEmail({
+          email: user.email,
+          currentPhase,
+          cycleDay,
+          daysUntilNextPeriod,
+          wellnessTips,
+          streakDays,
+          topSymptomThisWeek,
+        }),
+      });
+      sent++;
+      console.log(`[cron/weekly] sent → ${user.email}`);
+    } catch (err) {
+      errors++;
+      console.error(`[cron/weekly] failed → ${user.email}:`, err);
+    }
+  }
+
+  console.log(`[cron/weekly] complete — sent:${sent} skipped:${skipped} errors:${errors}`);
+  return { sent, skipped, errors };
+}
 
 // ── Daily period reminders ─────────────────────────────────────────────────────
 
@@ -284,6 +450,11 @@ cron.get("/reminders", async (c) => {
 
 cron.get("/monthly", async (c) => {
   const result = await processMonthlyReports(c.env);
+  return c.json(result);
+});
+
+cron.get("/weekly", async (c) => {
+  const result = await processWeeklyDigests(c.env);
   return c.json(result);
 });
 

@@ -23,7 +23,10 @@ name = "dawnphase-worker-staging"
 ENVIRONMENT = "staging"
 
 [triggers]
-crons = ["0 9 * * *", "0 9 1 * *"]
+crons = ["0 9 * * *", "0 9 1 * *", "0 8 * * 1"]
+# "0 9 * * *"  — daily 09:00 UTC   → period reminders
+# "0 9 1 * *"  — 1st of month      → monthly cycle report
+# "0 8 * * 1"  — every Monday 08:00 UTC → weekly digest
 
 # Secrets set via: wrangler secret put SECRET_NAME
 # JWT_SECRET

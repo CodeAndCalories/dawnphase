@@ -9,9 +9,10 @@ interface Reminder {
   user_id: string;
   reminder_days_before: number;
   active: number;
+  weekly_digest_enabled: number;
 }
 
-const DEFAULTS = { reminder_days_before: 3, active: 1 };
+const DEFAULTS = { reminder_days_before: 3, active: 1, weekly_digest_enabled: 1 };
 
 const reminders = new Hono<{ Bindings: Env; Variables: { userId: string } }>();
 
@@ -28,11 +29,13 @@ reminders.get("/", async (c) => {
 const patchSchema = z.object({
   active: z.boolean(),
   reminder_days_before: z.number().int().min(1).max(14),
+  weekly_digest_enabled: z.boolean().optional(),
 });
 
 reminders.patch("/", zValidator("json", patchSchema), async (c) => {
   const userId = c.get("userId");
-  const { active, reminder_days_before } = c.req.valid("json");
+  const { active, reminder_days_before, weekly_digest_enabled } = c.req.valid("json");
+  const digestEnabled = weekly_digest_enabled !== false ? 1 : 0;
 
   const existing = await dbFirst<{ id: string }>(
     c.env.DB,
@@ -43,14 +46,14 @@ reminders.patch("/", zValidator("json", patchSchema), async (c) => {
   if (existing) {
     await dbRun(
       c.env.DB,
-      "UPDATE reminders SET active = ?, reminder_days_before = ? WHERE user_id = ?",
-      [active ? 1 : 0, reminder_days_before, userId]
+      "UPDATE reminders SET active = ?, reminder_days_before = ?, weekly_digest_enabled = ? WHERE user_id = ?",
+      [active ? 1 : 0, reminder_days_before, digestEnabled, userId]
     );
   } else {
     await dbRun(
       c.env.DB,
-      "INSERT INTO reminders (id, user_id, active, reminder_days_before) VALUES (?, ?, ?, ?)",
-      [newId(), userId, active ? 1 : 0, reminder_days_before]
+      "INSERT INTO reminders (id, user_id, active, reminder_days_before, weekly_digest_enabled) VALUES (?, ?, ?, ?, ?)",
+      [newId(), userId, active ? 1 : 0, reminder_days_before, digestEnabled]
     );
   }
 

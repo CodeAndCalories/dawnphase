@@ -291,6 +291,108 @@ export function streakMilestoneEmail(email: string, streakDays: number): string 
   `);
 }
 
+// ── Weekly cycle digest email ─────────────────────────────────────────────────
+
+export interface WeeklyDigestOptions {
+  email: string;
+  currentPhase: string | null;
+  cycleDay: number | null;
+  daysUntilNextPeriod: number | null;
+  wellnessTips: string[];
+  streakDays: number;
+  topSymptomThisWeek: string | null;
+}
+
+const PHASE_BADGE_COLORS: Record<string, string> = {
+  Menstrual:     "#E8637A",
+  Follicular:    "#A78BFA",
+  Ovulatory:     "#F5C842",
+  Luteal:        "#818CF8",
+  Perimenopause: "#9B59B6",
+};
+
+export function weeklyDigestEmail(opts: WeeklyDigestOptions): string {
+  const {
+    email, currentPhase, cycleDay, daysUntilNextPeriod,
+    wellnessTips, streakDays, topSymptomThisWeek,
+  } = opts;
+
+  const hour = new Date().getUTCHours();
+  const timeGreeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+  const badgeColor = currentPhase ? (PHASE_BADGE_COLORS[currentPhase] ?? "#E8637A") : "#E8637A";
+
+  const phaseBlock = currentPhase ? `
+    <div style="margin:0 0 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="display:inline-block;padding:5px 14px;background:${badgeColor}20;color:${badgeColor};border:1px solid ${badgeColor}40;border-radius:999px;font-size:13px;font-weight:700">
+        ${currentPhase} phase
+      </span>
+      ${cycleDay ? `<span style="font-size:14px;color:#8C6B5A">Day ${cycleDay} of your cycle</span>` : ""}
+    </div>` : "";
+
+  const nextPeriodBlock = daysUntilNextPeriod != null ? `
+    <div style="margin:0 0 24px;padding:14px 18px;background:#FDF6F0;border-radius:10px;border-left:3px solid #E8637A">
+      <p style="margin:0;font-size:14px;color:#2D1B1E;line-height:1.5">
+        📅 <strong>Days until next period:</strong> ${daysUntilNextPeriod} day${daysUntilNextPeriod === 1 ? "" : "s"}
+      </p>
+    </div>` : "";
+
+  const tipsBlock = wellnessTips.length > 0 ? `
+    <p style="margin:0 0 10px;font-size:13px;font-weight:700;color:#2D1B1E;text-transform:uppercase;letter-spacing:0.06em">
+      🌿 ${currentPhase ?? "Wellness"} tips for this week:
+    </p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 28px;width:100%">
+      ${wellnessTips.map((tip) => `
+      <tr>
+        <td style="padding:6px 0;vertical-align:top;width:18px;font-size:14px;color:#E8637A">·</td>
+        <td style="padding:6px 0;vertical-align:top;font-size:14px;color:#2D1B1E;line-height:1.5">${tip}</td>
+      </tr>`).join("")}
+    </table>` : "";
+
+  const streakBlock = streakDays > 0 ? `
+    <div style="margin:0 0 20px;padding:12px 16px;background:#FFF0F0;border-radius:10px;border-left:3px solid #E8637A">
+      <p style="margin:0;font-size:14px;color:#2D1B1E">
+        🔥 <strong>${streakDays}-day streak</strong> — keep it going!
+      </p>
+    </div>` : `
+    <div style="margin:0 0 20px;padding:12px 16px;background:#FDF6F0;border-radius:10px">
+      <p style="margin:0;font-size:14px;color:#8C6B5A">
+        Log today and start building your streak!
+      </p>
+    </div>`;
+
+  const topSymptomBlock = topSymptomThisWeek ? `
+    <p style="margin:0 0 28px;font-size:14px;color:#2D1B1E;line-height:1.5">
+      📋 <strong>Most logged this week:</strong> ${topSymptomThisWeek}
+    </p>` : "";
+
+  return emailWrapper(`
+    <h1 style="margin:0 0 6px;font-size:22px;font-weight:700;color:#C94B6D;line-height:1.2">
+      🌅 Your cycle week ahead
+    </h1>
+    <p style="margin:0 0 24px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      ${timeGreeting}, ${email} — here&apos;s your cycle week ahead.
+    </p>
+
+    ${phaseBlock}
+    ${nextPeriodBlock}
+    ${tipsBlock}
+    ${streakBlock}
+    ${topSymptomBlock}
+
+    <div style="margin:0 0 8px">
+      <a href="https://www.dawnphase.com/log"
+         style="display:inline-block;padding:14px 32px;background:#E8637A;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        Log today&apos;s symptoms →
+      </a>
+    </div>
+
+    <p style="margin:16px 0 0;font-size:12px;color:#8C6B5A;line-height:1.6">
+      <a href="https://www.dawnphase.com/settings" style="color:#8C6B5A">Manage email preferences in Settings</a>
+    </p>
+  `);
+}
+
 // ── Monthly cycle report email ────────────────────────────────────────────────
 
 export interface MonthlyReportOptions {

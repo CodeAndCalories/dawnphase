@@ -11,7 +11,7 @@ import insightsRoutes from "./routes/insights";
 import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
-import cronRoutes, { processReminders, processMonthlyReports } from "./routes/cron";
+import cronRoutes, { processReminders, processMonthlyReports, processWeeklyDigests } from "./routes/cron";
 import leadsRoutes from "./routes/leads";
 import feedbackRoutes from "./routes/feedback";
 import adminRoutes from "./routes/admin";
@@ -126,8 +126,11 @@ export default {
     if (event.cron === "0 9 1 * *") {
       // 1st of month at 09:00 UTC → monthly cycle report
       ctx.waitUntil(processMonthlyReports(env));
+    } else if (event.cron === "0 8 * * 1") {
+      // Every Monday at 08:00 UTC → weekly cycle digest
+      ctx.waitUntil(processWeeklyDigests(env));
     } else {
-      // Daily 09:00 UTC (or any other cron) → period reminders
+      // Daily 09:00 UTC → period reminders
       ctx.waitUntil(processReminders(env));
     }
   },

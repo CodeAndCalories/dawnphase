@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 interface Reminder {
   active: number;
   reminder_days_before: number;
+  weekly_digest_enabled: number;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -52,7 +53,7 @@ export default function SettingsPage() {
   // Local copy of user so handleModeChange can update it without re-running
   // the hook (which only fetches once on mount).
   const [user,        setUser]       = useState<User | null>(null);
-  const [reminder,    setReminder]   = useState<Reminder>({ active: 1, reminder_days_before: 3 });
+  const [reminder,    setReminder]   = useState<Reminder>({ active: 1, reminder_days_before: 3, weekly_digest_enabled: 1 });
   const [dataLoading, setDataLoading]= useState(true);
 
   // Mode save
@@ -78,6 +79,7 @@ export default function SettingsPage() {
   // Reminders (local form state, separate from remote)
   const [remEnabled,    setRemEnabled]    = useState(true);
   const [remDays,       setRemDays]       = useState(3);
+  const [weeklyDigest,  setWeeklyDigest]  = useState(true);
   const [remSaving,     setRemSaving]     = useState(false);
   const [remSaved,      setRemSaved]      = useState(false);
   const [remError,      setRemError]      = useState<string | null>(null);
@@ -109,6 +111,7 @@ export default function SettingsPage() {
         setReminder(remRes.reminder);
         setRemEnabled(remRes.reminder.active === 1);
         setRemDays(remRes.reminder.reminder_days_before);
+        setWeeklyDigest(remRes.reminder.weekly_digest_enabled !== 0);
       })
       .catch(() => {}) // no reminders yet — defaults are fine
       .finally(() => setDataLoading(false));
@@ -170,6 +173,7 @@ export default function SettingsPage() {
       const res = await api.patch<{ reminder: Reminder }>("/reminders", {
         active: remEnabled,
         reminder_days_before: remDays,
+        weekly_digest_enabled: weeklyDigest,
       });
       setReminder(res.reminder);
       setRemSaved(true);
@@ -522,6 +526,33 @@ export default function SettingsPage() {
             ))}
           </div>
         </div>
+
+        {/* Weekly digest toggle */}
+        <label className="flex items-center gap-3 cursor-pointer">
+          <button
+            type="button"
+            role="switch"
+            aria-checked={weeklyDigest}
+            onClick={() => setWeeklyDigest(v => !v)}
+            className={`relative w-11 h-6 rounded-full transition-colors ${
+              weeklyDigest ? "bg-[#E8637A]" : "bg-gray-200"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                weeklyDigest ? "translate-x-5" : "translate-x-0"
+              }`}
+            />
+          </button>
+          <div>
+            <span className="text-sm font-medium text-[#2D1B1E]">
+              Weekly cycle digest
+            </span>
+            <p className="text-xs text-[#8C6B5A] mt-0.5">
+              Monday morning: phase, wellness tips, streak & top symptoms
+            </p>
+          </div>
+        </label>
 
         {remError && <p className="text-sm text-red-600">{remError}</p>}
 
