@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
 import { getZodiacSign, getCosmicMessage, ZODIAC_SYMBOLS, type CyclePhase } from "@/lib/cosmic-messages";
+import WellnessGuide from "@/components/dashboard/WellnessGuide";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -788,6 +789,11 @@ export default function DashboardPage() {
           );
         })()}
       </div>
+
+      {/* ── Phase wellness guide ──────────────────────────────────────────── */}
+      {(phase !== null || user.mode === "perimenopause") && (
+        <WellnessGuide phase={phase?.name} mode={user.mode} />
+      )}
 
       {/* ── Cosmic view ───────────────────────────────────────────────────── */}
       {(() => {
