@@ -10,6 +10,13 @@ interface Reminder {
   weekly_digest_enabled: number;
 }
 
+interface ShareStatus {
+  token: string;
+  url: string;
+  view_count: number;
+  created_at: string;
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 const API_BASE =
@@ -84,6 +91,14 @@ export default function SettingsPage() {
   const [remSaved,      setRemSaved]      = useState(false);
   const [remError,      setRemError]      = useState<string | null>(null);
 
+  // Partner share
+  const [shareData,         setShareData]         = useState<ShareStatus | null>(null);
+  const [shareCreating,     setShareCreating]     = useState(false);
+  const [shareRevoking,     setShareRevoking]     = useState(false);
+  const [shareCopied,       setShareCopied]       = useState(false);
+  const [showRevokeConfirm, setShowRevokeConfirm] = useState(false);
+  const [shareError,        setShareError]        = useState<string | null>(null);
+
   // Export
   const [exporting,    setExporting]    = useState(false);
   const [exportError,  setExportError]  = useState<string | null>(null);
@@ -106,15 +121,19 @@ export default function SettingsPage() {
     ) {
       setShowCancelFeedback(true);
     }
-    api.get<{ reminder: Reminder }>("/reminders")
-      .then((remRes) => {
-        setReminder(remRes.reminder);
-        setRemEnabled(remRes.reminder.active === 1);
-        setRemDays(remRes.reminder.reminder_days_before);
-        setWeeklyDigest(remRes.reminder.weekly_digest_enabled !== 0);
-      })
-      .catch(() => {}) // no reminders yet — defaults are fine
-      .finally(() => setDataLoading(false));
+    Promise.all([
+      api.get<{ reminder: Reminder }>("/reminders")
+        .then((remRes) => {
+          setReminder(remRes.reminder);
+          setRemEnabled(remRes.reminder.active === 1);
+          setRemDays(remRes.reminder.reminder_days_before);
+          setWeeklyDigest(remRes.reminder.weekly_digest_enabled !== 0);
+        })
+        .catch(() => {}),
+      api.get<{ share: ShareStatus | null }>("/share/status")
+        .then((res) => setShareData(res.share))
+        .catch(() => {}),
+    ]).finally(() => setDataLoading(false));
   }, [authUser]);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
@@ -223,6 +242,44 @@ export default function SettingsPage() {
       if (typeof window !== "undefined") localStorage.setItem("dp_cancel_feedback_done", "1");
       setShowCancelFeedback(false);
       setCancelSubmitting(false);
+    }
+  }
+
+  async function handleShareCreate() {
+    setShareCreating(true);
+    setShareError(null);
+    try {
+      const res = await api.post<{ url: string; token: string; view_count: number }>("/share/create", {});
+      setShareData({ url: res.url, token: res.token, view_count: res.view_count, created_at: new Date().toISOString() });
+    } catch {
+      setShareError("Could not create share link. Try again.");
+    } finally {
+      setShareCreating(false);
+    }
+  }
+
+  async function handleShareRevoke() {
+    setShareRevoking(true);
+    setShareError(null);
+    try {
+      await api.delete("/share/revoke");
+      setShareData(null);
+      setShowRevokeConfirm(false);
+    } catch {
+      setShareError("Could not revoke link. Try again.");
+    } finally {
+      setShareRevoking(false);
+    }
+  }
+
+  async function handleShareCopy() {
+    if (!shareData) return;
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      // Fallback: select text manually
     }
   }
 
@@ -563,6 +620,80 @@ export default function SettingsPage() {
         >
           {remSaving ? "Saving…" : remSaved ? "✓ Saved" : "Save reminders"}
         </button>
+      </section>
+
+      {/* ── PARTNER SHARE ────────────────────────────────────────────────── */}
+      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <div>
+          <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
+            Share your cycle phase
+          </h2>
+          <p className="text-sm text-[#8C6B5A] leading-relaxed">
+            Share a link so your partner, friend, or family member can see what phase you&apos;re in this week. No symptoms or personal data are shared.
+          </p>
+        </div>
+
+        {shareError && <p className="text-sm text-red-600">{shareError}</p>}
+
+        {!shareData ? (
+          <button
+            onClick={handleShareCreate}
+            disabled={shareCreating}
+            className="min-h-[44px] px-5 py-2.5 bg-[#E8637A] hover:bg-[#C94B6D] text-white text-sm font-semibold rounded-xl transition-colors disabled:opacity-60"
+          >
+            {shareCreating ? "Creating…" : "Create share link"}
+          </button>
+        ) : (
+          <div className="space-y-3">
+            {/* URL display + copy */}
+            <div className="flex items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-2 flex-wrap">
+              <p className="text-xs text-[#2D1B1E] font-mono flex-1 break-all">
+                {shareData.url}
+              </p>
+              <button
+                onClick={handleShareCopy}
+                className="shrink-0 min-h-[36px] px-3 rounded-lg bg-[#E8637A]/10 text-[#C94B6D] text-xs font-semibold hover:bg-[#E8637A]/20 transition-colors"
+              >
+                {shareCopied ? "✓ Copied" : "Copy"}
+              </button>
+            </div>
+
+            <p className="text-xs text-[#8C6B5A]">
+              Views: <span className="font-semibold text-[#2D1B1E]">{shareData.view_count}</span>
+            </p>
+
+            {/* Revoke */}
+            {!showRevokeConfirm ? (
+              <button
+                onClick={() => setShowRevokeConfirm(true)}
+                className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
+              >
+                Revoke link
+              </button>
+            ) : (
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowRevokeConfirm(false)}
+                  disabled={shareRevoking}
+                  className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-gray-400 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleShareRevoke}
+                  disabled={shareRevoking}
+                  className="flex-1 min-h-[44px] rounded-xl bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors disabled:opacity-60"
+                >
+                  {shareRevoking ? "Revoking…" : "Yes, revoke"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        <p className="text-xs text-[#8C6B5A]/70 leading-snug">
+          🔒 Only your current phase and general tips are visible. Never symptoms or personal health details.
+        </p>
       </section>
 
       {/* ── DATA ─────────────────────────────────────────────────────────── */}
