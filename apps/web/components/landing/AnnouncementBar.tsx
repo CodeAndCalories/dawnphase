@@ -19,7 +19,13 @@ export default function AnnouncementBar() {
         background: "linear-gradient(90deg, #E8637A 0%, #C94B6D 100%)",
       }}
     >
-      🌅 Now with perimenopause mode — track every life stage in one place
+      🔒 Your cycle data is yours — we never sell it. Ever.{" "}
+      <a
+        href="/signup"
+        className="underline underline-offset-2 hover:no-underline font-bold ml-1"
+      >
+        Start free →
+      </a>
       <button
         onClick={() => {
           localStorage.setItem("dp_bar_dismissed", "true");

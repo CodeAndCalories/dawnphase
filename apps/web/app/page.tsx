@@ -110,24 +110,28 @@ function Hero() {
         <PillLabel>Privacy-first hormone tracking</PillLabel>
 
         <h1 className="font-display mt-6 font-bold text-dp-deeprose leading-[1.08] tracking-tight max-w-3xl mx-auto" style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}>
-          Know your cycle.{" "}
-          <span className="text-dawn-rose">Own your health.</span>
+          Stop guessing.{" "}
+          <span className="text-dawn-rose">Start understanding your cycle.</span>
         </h1>
 
         <p className="mt-6 text-lg md:text-xl text-dp-taupe leading-relaxed max-w-2xl mx-auto">
-          Dawn Phase tracks your period, predicts every phase, and logs symptoms
-          — so you finally understand what your body is telling you.{" "}
+          Dawn Phase tracks your period, predicts every phase, and shows you
+          patterns in your symptoms — privately.{" "}
           <span className="text-dp-deeprose font-medium">
             No data selling. Ever.
           </span>
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <CtaButton href="/signup">Start 7-day free trial</CtaButton>
+          <CtaButton href="/signup">Start tracking free — no card needed for 7 days</CtaButton>
           <CtaButton href="#how-it-works" variant="ghost">
             See how it works ↓
           </CtaButton>
         </div>
+
+        <p className="mt-3 text-sm text-dp-taupe/60">
+          7-day free trial · Then $14.99/month · Cancel anytime
+        </p>
 
         <HeroUrgency />
 
@@ -272,6 +276,56 @@ function Features() {
             <h3 className="font-display font-semibold text-dp-deeprose mb-2">Cosmic view</h3>
             <p className="text-sm text-dp-taupe leading-relaxed">See your cycle phase combined with your zodiac sign for a fun daily perspective. Just for entertainment.</p>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Why women switch ─────────────────────────────────────────────────────────
+
+const WHY_SWITCH = [
+  {
+    icon: "🔒",
+    headline: "Your period data belongs to you",
+    body: "Other apps have faced regulatory scrutiny for sharing health data with advertisers. Dawn Phase is subscription-only — your data funds the product, not ads.",
+  },
+  {
+    icon: "📊",
+    headline: "Built for real cycles, not just 28 days",
+    body: "Most trackers break with PCOS, perimenopause, or irregular cycles. Dawn Phase supports 21–90 day cycles and never tells you your data is wrong.",
+  },
+  {
+    icon: "📋",
+    headline: "Bring data to your next appointment",
+    body: "Generate a PDF report of your last 3 months in one tap. Doctors say it transforms the quality of the conversation.",
+  },
+];
+
+function WhySwitch() {
+  return (
+    <section className="py-24 px-6 bg-[#FFF9F6]">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="text-center mb-16">
+          <PillLabel>Why women switch</PillLabel>
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
+            Why women switch to Dawn Phase
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {WHY_SWITCH.map((card) => (
+            <div
+              key={card.headline}
+              className="bg-white rounded-2xl p-8 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+            >
+              <div className="text-3xl mb-5 leading-none">{card.icon}</div>
+              <h3 className="font-display text-lg font-semibold text-dp-deeprose mb-3 leading-snug">
+                {card.headline}
+              </h3>
+              <p className="text-sm text-dp-taupe leading-relaxed">{card.body}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -494,6 +548,50 @@ function FAQ() {
   );
 }
 
+// ─── Risk reversal ────────────────────────────────────────────────────────────
+
+function RiskReversal() {
+  return (
+    <section className="py-20 px-6 bg-dawn-warm">
+      <div className="max-w-[640px] mx-auto text-center">
+        <PillLabel>Completely risk-free</PillLabel>
+        <h2 className="font-display mt-4 text-3xl font-bold text-dp-deeprose tracking-tight mb-10">
+          Try it with nothing to lose
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+          {[
+            { icon: "🎁", text: "7-day free trial, no card required" },
+            { icon: "✕",  text: "Cancel anytime before trial ends, pay nothing" },
+            { icon: "📂", text: "Your data exported to you if you ever leave" },
+            { icon: "🔓", text: "No lock-in, no commitment" },
+          ].map(({ icon, text }) => (
+            <div
+              key={text}
+              className="flex items-start gap-3 bg-white rounded-2xl p-5 border border-[rgba(232,99,122,0.12)] shadow-sm"
+            >
+              <span className="text-xl shrink-0 leading-none mt-0.5">{icon}</span>
+              <span className="text-sm text-dp-taupe leading-relaxed">{text}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <a
+            href="/signup"
+            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-dawn-rose/30"
+          >
+            Start your free trial today
+          </a>
+        </div>
+        <p className="mt-4 text-sm text-dp-taupe/60">No card required for 7 days</p>
+      </div>
+    </section>
+  );
+}
+
+// ─── Final CTA ────────────────────────────────────────────────────────────────
+
 function FinalCta() {
   return (
     <section className="py-28 px-6" style={{ backgroundColor: "#2D1B1E" }}>
@@ -574,10 +672,12 @@ export default function LandingPage() {
       <LiveStatsBar />
       <HowItWorks />
       <Features />
+      <WhySwitch />
       <Testimonials />
       <ForWho />
       <Pricing />
       <FAQ />
+      <RiskReversal />
       <FinalCta />
       <Footer />
     </div>
