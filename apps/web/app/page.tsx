@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Check, Calendar, Moon, FileText, BarChart3, Leaf, ShieldCheck } from "lucide-react";
 import PricingSection from "@/components/landing/PricingSection";
 import AnnouncementBar from "@/components/landing/AnnouncementBar";
+import LiveStatsBar from "@/components/landing/LiveStatsBar";
+import HeroUrgency from "@/components/landing/HeroUrgency";
 import { FAQSchema } from "@/components/SchemaMarkup";
 
 // ─── shared primitives ────────────────────────────────────────────────────────
@@ -89,32 +91,6 @@ function Nav() {
   );
 }
 
-// ─── Stats bar ────────────────────────────────────────────────────────────────
-
-function StatsBar() {
-  return (
-    <section className="py-10 px-6 bg-[#FDF6F0] border-y border-[rgba(232,99,122,0.12)]">
-      <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-6">
-        <p className="text-sm font-semibold text-[#C94B6D] uppercase tracking-widest text-center">
-          Join women who finally understand their cycles
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16">
-          {[
-            { value: "7-day free trial",  label: "No charge until day 8" },
-            { value: "Privacy-first",     label: "Your data is never sold" },
-            { value: "Cancel anytime",    label: "No lock-in, no questions" },
-          ].map(({ value, label }) => (
-            <div key={value} className="text-center">
-              <p className="text-xl font-bold text-[#2D1B1E] leading-none">{value}</p>
-              <p className="text-xs text-[#8C6B5A] mt-1">{label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
 function Hero() {
@@ -152,6 +128,8 @@ function Hero() {
             See how it works ↓
           </CtaButton>
         </div>
+
+        <HeroUrgency />
 
         {/* Trust row */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
@@ -593,7 +571,7 @@ export default function LandingPage() {
       <AnnouncementBar />
       <Nav />
       <Hero />
-      <StatsBar />
+      <LiveStatsBar />
       <HowItWorks />
       <Features />
       <Testimonials />

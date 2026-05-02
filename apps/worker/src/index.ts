@@ -15,6 +15,7 @@ import cronRoutes, { processReminders, processMonthlyReports, processWeeklyDiges
 import leadsRoutes from "./routes/leads";
 import feedbackRoutes from "./routes/feedback";
 import adminRoutes from "./routes/admin";
+import statsRoutes from "./routes/stats";
 
 type Variables = { userId: string };
 
@@ -74,6 +75,9 @@ app.use("/auth/me", requireAuth);
 // POST /auth/signup, /auth/login, /auth/forgot-password, /auth/reset-password
 // GET  /auth/me, PATCH /auth/me, DELETE /auth/me  ← protected above
 app.route("/auth", authRoutes);
+
+// GET /stats — public, no auth (landing page social proof)
+app.route("/stats", statsRoutes);
 
 // POST /leads — public lead capture from free tools (no auth required)
 app.route("/leads", leadsRoutes);
