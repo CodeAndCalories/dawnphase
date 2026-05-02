@@ -67,6 +67,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/pcos-irregular-periods",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/pcos-and-pmdd",                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/best-app-pcos-2026",                lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // Landing pages (high-intent search)
+    { url: "https://www.dawnphase.com/lp/privacy-period-tracker", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
+    { url: "https://www.dawnphase.com/lp/pcos-period-tracker",    lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     // Contact + Legal
     { url: "https://www.dawnphase.com/contact",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.5 },
     { url: "https://www.dawnphase.com/privacy",                               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
