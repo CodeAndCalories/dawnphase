@@ -15,6 +15,7 @@ export interface Symptom {
   tracking: string;
   whenToSeeDoctor: string;
   related: string[];
+  patternNote?: string;
 }
 
 export const symptoms: Symptom[] = [
@@ -231,6 +232,8 @@ export const symptoms: Symptom[] = [
       "Check cervical mucus daily — at the same time, before urinating — and note its appearance and consistency. Categories: dry, sticky/creamy, watery, egg-white (peak fertility). Record on which cycle day you notice each type. Over two or three cycles, your fertile window (egg-white days) will become predictable.",
     whenToSeeDoctor:
       "See a doctor if you never observe egg-white cervical mucus and are trying to conceive (may indicate anovulation), if discharge has an unusual colour, odour, or is associated with itching or burning (may indicate infection), or if discharge is significantly heavier than expected.",
+    patternNote:
+      "The pattern tells you more than the symptom. Noticing discharge changes once is useful. Noticing it appears on the same cycle days, with the same consistency, every month — that's a window into your actual ovulation pattern. For women with PCOS or irregular cycles, tracking discharge alongside other symptoms helps you spot ovulation even when the calendar can't predict it.",
     related: ["ovulation-pain", "irregular-periods-pcos", "bloating-before-period"],
   },
 

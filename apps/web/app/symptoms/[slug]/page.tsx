@@ -147,6 +147,13 @@ export default async function SymptomPage({
             </p>
           </section>
 
+          {/* Pattern note — only present on select symptom entries */}
+          {symptom.patternNote && (
+            <section>
+              <p className="text-[#3d2855] leading-relaxed">{symptom.patternNote}</p>
+            </section>
+          )}
+
           {/* Related symptoms */}
           {relatedSymptoms.length > 0 && (
             <section>
