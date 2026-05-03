@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     (
       <div
         style={{
-          background: "#FDF6F0",
+          background: "#ede8f7",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
             style={{ borderRadius: "12px" }}
             alt="Dawn Phase"
           />
-          <span style={{ color: "#C94B6D", fontSize: "28px", fontWeight: "600" }}>
+          <span style={{ color: "#140c18", fontSize: "28px", fontWeight: "600" }}>
             Dawn Phase
           </span>
         </div>
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div
             style={{
-              color: "#C94B6D",
+              color: "#140c18",
               fontSize: "52px",
               fontWeight: "700",
               lineHeight: "1.2",
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
           >
             {title}
           </div>
-          <div style={{ color: "#8C6B5A", fontSize: "28px", maxWidth: "800px" }}>
+          <div style={{ color: "#3d2855", fontSize: "28px", maxWidth: "800px" }}>
             {subtitle}
           </div>
         </div>
@@ -61,16 +61,16 @@ export async function GET(request: Request) {
             alignItems: "center",
           }}
         >
-          <span style={{ color: "#8C6B5A", fontSize: "22px" }}>
+          <span style={{ color: "#3d2855", fontSize: "22px" }}>
             dawnphase.com
           </span>
           <div
             style={{
-              background: "#FBEAF0",
-              border: "1px solid #E8637A",
+              background: "#f4e6f0",
+              border: "1px solid #c94f68",
               borderRadius: "20px",
               padding: "8px 20px",
-              color: "#C94B6D",
+              color: "#140c18",
               fontSize: "20px",
             }}
           >

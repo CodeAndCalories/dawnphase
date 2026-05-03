@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Why Am I So Tired Before My Period? Causes and Tips"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Why Am I So Tired Before My Period? Causes and Tips
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             If you regularly feel exhausted in the week or two before your period, you are not imagining it — and you are not alone. Pre-period fatigue is one of the most commonly reported premenstrual symptoms, and the hormonal drivers are well understood. Here&apos;s what&apos;s happening and what you can do about it.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why fatigue happens in the luteal phase</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why fatigue happens in the luteal phase</h2>
           <p>
             After ovulation, the corpus luteum (the ruptured follicle) produces progesterone. Progesterone has sedating, calming properties — it binds to GABA receptors in the brain, similar to how some anti-anxiety medications work. This is why many people feel naturally more subdued, less motivated, and sleepier in the luteal phase.
           </p>
@@ -66,7 +66,7 @@ export default function Post() {
             Research also suggests that prostaglandins — inflammatory compounds released in the lead-up to menstruation — can contribute to systemic fatigue and flu-like symptoms in some people, particularly those who experience more intense periods.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to tell period fatigue from other tiredness</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to tell period fatigue from other tiredness</h2>
           <p>
             The key distinguishing feature of luteal phase fatigue is its timing and its resolution: it tends to appear reliably in the 5–14 days before menstruation and improves noticeably within 1–2 days of the period starting, as hormone levels drop. If your tiredness:
           </p>
@@ -80,11 +80,11 @@ export default function Post() {
           </p>
           <p>
             See our guide to{" "}
-            <Link href="/symptoms/fatigue-luteal-phase" className="text-[#E8637A] hover:underline font-medium">fatigue during the luteal phase</Link>{" "}
+            <Link href="/symptoms/fatigue-luteal-phase" className="text-[#c94f68] hover:underline font-medium">fatigue during the luteal phase</Link>{" "}
             for a detailed look at the symptom pattern.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Sleep changes before your period</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Sleep changes before your period</h2>
           <p>
             Sleep quality typically worsens in the late luteal phase. Progesterone has a sleep-promoting effect, but as it drops sharply in the days before menstruation, the loss of this sedating influence disrupts sleep. Research suggests that REM sleep may be reduced and sleep fragmentation increased in the late luteal phase for some people.
           </p>
@@ -92,7 +92,7 @@ export default function Post() {
             Body temperature also rises slightly in the luteal phase (driven by progesterone&apos;s thermogenic effect), which can make it harder to fall into deep sleep. Many people report waking earlier than usual in the days before their period, or feeling unrested despite adequate hours in bed.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Practical tips for managing pre-period fatigue</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Practical tips for managing pre-period fatigue</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               { title: "Protect sleep timing", desc: "Consistent sleep and wake times matter more in the luteal phase, when sleep architecture is more vulnerable to disruption." },
@@ -102,14 +102,14 @@ export default function Post() {
               { title: "Reduce alcohol", desc: "Alcohol disrupts sleep architecture and can worsen the progesterone withdrawal effect. Research suggests even small amounts in the late luteal phase can amplify fatigue the following day." },
               { title: "Recognise the pattern", desc: "Simply knowing that your tiredness is likely hormonal and temporary — that it will ease when your period starts — can reduce the distress it causes." },
             ].map(({ title, desc }) => (
-              <div key={title} className="bg-[#FDF6F0] rounded-xl p-4 border border-[rgba(232,99,122,0.08)]">
-                <p className="font-semibold text-[#C94B6D] text-sm">{title}</p>
-                <p className="text-xs text-[#8C6B5A] mt-1 leading-relaxed">{desc}</p>
+              <div key={title} className="bg-[#f4e6f0] rounded-xl p-4 border border-[rgba(130,80,170,0.08)]">
+                <p className="font-semibold text-[#5a3575] text-sm">{title}</p>
+                <p className="text-xs text-[#3d2855] mt-1 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When fatigue is worth discussing with a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When fatigue is worth discussing with a doctor</h2>
           <p>
             Pre-period fatigue in the luteal phase is common and usually not a sign of a medical problem. However, it is worth raising with a healthcare provider if:
           </p>
@@ -123,7 +123,7 @@ export default function Post() {
             Conditions including thyroid dysfunction, iron-deficiency anaemia, PMDD, and sleep disorders can all contribute to or amplify premenstrual fatigue. Many are straightforward to investigate and treat.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How tracking helps you spot the pattern</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How tracking helps you spot the pattern</h2>
           <p>
             Daily energy logging alongside cycle day is the most reliable way to confirm whether your fatigue is hormonally driven. Logging a simple 1–5 energy score each morning for two or three cycles — then comparing your follicular-phase averages with your luteal-phase averages — makes the pattern visible and quantifiable.
           </p>
@@ -132,13 +132,13 @@ export default function Post() {
           </p>
           <p>
             You can also use our free{" "}
-            <Link href="/luteal-phase-calculator" className="text-[#E8637A] hover:underline font-medium">luteal phase length calculator</Link>{" "}
+            <Link href="/luteal-phase-calculator" className="text-[#c94f68] hover:underline font-medium">luteal phase length calculator</Link>{" "}
             to estimate your luteal phase timing.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

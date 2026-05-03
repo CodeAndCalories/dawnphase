@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Why Tracking Your Cycle With PCOS Is Different"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Why Tracking Your Cycle With PCOS Is Different
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Most cycle tracking apps are designed for a 28-day cycle with a predictable ovulation window. For the roughly 1 in 10 women with PCOS, that model can be actively unhelpful — generating incorrect predictions that erode trust in tracking altogether. Here&apos;s what makes PCOS tracking different, and what to prioritise instead.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The core problem with standard apps and PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The core problem with standard apps and PCOS</h2>
           <p>
             Standard cycle tracking apps rely on two assumptions: that ovulation occurs at a predictable point (usually around day 14), and that the luteal phase is consistent (usually 12–16 days). With PCOS, neither holds. Many PCOS cycles are anovulatory — they do not include ovulation at all. Others involve ovulation but at unpredictable, often late points in the cycle.
           </p>
@@ -63,7 +63,7 @@ export default function Post() {
             When an app predicts your &ldquo;fertile window&rdquo; based on day 14 and your actual cycle is 60 days long (or absent), the prediction is not just useless — it can be misleading for people using cycle data to make health decisions.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What PCOS tracking actually needs</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What PCOS tracking actually needs</h2>
 
           <div className="space-y-4">
             {[
@@ -88,14 +88,14 @@ export default function Post() {
                 desc: "Energy crashes after meals, persistent fatigue, and weight distribution changes can reflect the insulin resistance that occurs alongside PCOS in many people. Logging these alongside cycle data helps you see whether dietary or lifestyle changes are having an effect.",
               },
             ].map(({ title, desc }) => (
-              <div key={title} className="bg-[#FDF6F0] rounded-xl p-4 border border-[rgba(232,99,122,0.08)]">
-                <p className="font-semibold text-[#C94B6D]">{title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1 leading-relaxed">{desc}</p>
+              <div key={title} className="bg-[#f4e6f0] rounded-xl p-4 border border-[rgba(130,80,170,0.08)]">
+                <p className="font-semibold text-[#5a3575]">{title}</p>
+                <p className="text-sm text-[#3d2855] mt-1 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What standard apps get wrong about PCOS predictions</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What standard apps get wrong about PCOS predictions</h2>
           <p>
             Apps that use an algorithm to predict your next period based on your last cycle length will perpetually miscalculate with irregular cycles. If your last cycle was 45 days and the one before was 28 days, a simple average produces a 36.5-day prediction that is unlikely to match your actual next cycle.
           </p>
@@ -103,7 +103,7 @@ export default function Post() {
             More problematically, apps that assign a &ldquo;fertile window&rdquo; based on cycle length — rather than actual ovulation signs — are particularly unreliable with PCOS. Positive OPK results in PCOS can persist for days without a corresponding ovulation, making app-based fertility predictions based on LH peaks unreliable without additional confirmation.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The value of pattern tracking over prediction</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The value of pattern tracking over prediction</h2>
           <p>
             For most people with PCOS, the goal of cycle tracking should shift from prediction to pattern recognition. Rather than asking &ldquo;when will my next period be?&rdquo;, the more useful questions are: What do my energy and mood patterns look like across 90 days? Are acne flares correlating with anything? Are my cycles becoming more or less regular over time? Is this treatment or lifestyle change having an observable effect?
           </p>
@@ -111,22 +111,22 @@ export default function Post() {
             These questions are answered by longitudinal data — months of daily logs — not by a prediction algorithm. An app that prioritises consistent daily symptom logging and long-term data access is more valuable for PCOS management than one optimised for fertile-window prediction.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase handles PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase handles PCOS</h2>
           <p>
             Dawn Phase calculates cycle day from your logged period start date and doesn&apos;t assume a 28-day model. It updates cycle-phase estimates as new period data comes in, and the symptom log runs independently of cycle predictions — so even in cycles where phase assignment is uncertain, your daily data continues to accumulate and build your pattern picture.
           </p>
           <p>
             The{" "}
-            <Link href="/cycle-calculator" className="text-[#E8637A] hover:underline font-medium">cycle length calculator</Link>{" "}
+            <Link href="/cycle-calculator" className="text-[#c94f68] hover:underline font-medium">cycle length calculator</Link>{" "}
             can help you track your average over time, and the insights view shows symptom patterns across your logged history rather than projecting from a fixed model. See also our{" "}
-            <Link href="/blog/pcos-cycle-tracking" className="text-[#E8637A] hover:underline font-medium">complete guide to tracking with PCOS</Link>{" "}
+            <Link href="/blog/pcos-cycle-tracking" className="text-[#c94f68] hover:underline font-medium">complete guide to tracking with PCOS</Link>{" "}
             and the{" "}
-            <Link href="/symptoms/irregular-periods-pcos" className="text-[#E8637A] hover:underline font-medium">irregular periods with PCOS symptom guide</Link>.
+            <Link href="/symptoms/irregular-periods-pcos" className="text-[#c94f68] hover:underline font-medium">irregular periods with PCOS symptom guide</Link>.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#E8637A",
+  themeColor: "#c94f68",
 };
 
 export const metadata: Metadata = {

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Your First Period After Stopping Birth Control"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Your First Period After Stopping Birth Control
         </h1>
 
@@ -49,17 +49,17 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             Stopping hormonal birth control after months or years of use is a significant hormonal transition. Your first few cycles can look and feel very different from what you&apos;re used to — and that&apos;s often entirely normal.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What is a &ldquo;withdrawal bleed&rdquo; vs a real period?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What is a &ldquo;withdrawal bleed&rdquo; vs a real period?</h2>
           <p>
             While on combined hormonal contraceptives (pill, patch, ring), the monthly bleed is a withdrawal bleed triggered by stopping the hormones — not a true menstrual period. True periods are preceded by ovulation; withdrawal bleeds are not. This distinction matters because it means your cycle hasn&apos;t been functioning in its usual hormonal rhythm while you&apos;ve been on hormonal contraception.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When will your first real period arrive?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When will your first real period arrive?</h2>
           <p>
             Most people have their first true period within four to eight weeks of stopping combined hormonal contraceptives, once the body resumes its natural cycle. Progestogen-only methods (mini-pill, hormonal IUD, injection) have different timelines:
           </p>
@@ -71,7 +71,7 @@ export default function Post() {
           </ul>
           <p>These are general patterns — individual timelines vary considerably.</p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why are cycles irregular at first?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why are cycles irregular at first?</h2>
           <p>
             Hormonal contraceptives work by suppressing the hormonal axis that drives ovulation (the hypothalamic-pituitary-ovarian axis). After stopping, the body needs to re-establish this rhythm. The hypothalamus and pituitary gland gradually resume sending the hormonal signals that prompt follicle development and ovulation. This recalibration takes time, and until the cycle stabilises, periods may be irregular in timing, flow, and duration.
           </p>
@@ -79,7 +79,7 @@ export default function Post() {
             Research suggests that for most people, cycles normalise within three to six months. For some, particularly those on longer-acting methods or those who had irregular cycles before starting contraception, it may take longer.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What your first cycles may be like</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What your first cycles may be like</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Heavier or more painful periods:</strong> Prostaglandin production — which drives uterine contractions and pain — was suppressed by hormonal contraception. Your first natural periods may involve more cramping and heavier flow than the withdrawal bleeds you were used to.</li>
             <li><strong>Longer or shorter cycles:</strong> It&apos;s common to see cycle lengths varying from 21 to 40+ days in the months after stopping, until the hormonal axis stabilises.</li>
@@ -87,7 +87,7 @@ export default function Post() {
             <li><strong>Skin changes:</strong> Acne that was being managed by the pill may return, sometimes more noticeably than before.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to track during the transition</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to track during the transition</h2>
           <p>
             Tracking your cycle from the day you stop is genuinely useful. Record:
           </p>
@@ -101,7 +101,7 @@ export default function Post() {
             After three to four months you&apos;ll have a baseline that shows whether your cycle is settling into a regular pattern, and you&apos;ll have data to share with your doctor if needed.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a doctor</h2>
           <p>See a healthcare provider if:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>You have had no period for around three months or longer after stopping a combined pill or progestogen-only pill (this is called post-pill amenorrhoea and warrants investigation)</li>
@@ -112,7 +112,7 @@ export default function Post() {
           </ul>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

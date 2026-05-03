@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Best Flo App Alternatives in 2026 — Private       <Header /> Accurate"
@@ -35,30 +35,30 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Best Flo App Alternatives in 2026 — Private &amp; Accurate
         </h1>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Flo is one of the most widely used period tracking apps. It has also faced regulatory scrutiny over data privacy practices. If you&apos;re looking for a better alternative, here&apos;s an honest comparison. For a deeper look at why data privacy in period apps matters, see:{" "}
-            <Link href="/blog/period-tracker-no-data-selling" className="text-[#E8637A] hover:underline font-medium">The best period tracker that doesn&apos;t sell your data</Link>.
+            <Link href="/blog/period-tracker-no-data-selling" className="text-[#c94f68] hover:underline font-medium">The best period tracker that doesn&apos;t sell your data</Link>.
           </p>
 
-          <p className="text-sm text-[#8C6B5A] bg-[#FFF0F0] border border-[rgba(232,99,122,0.2)] rounded-lg p-3 mb-6">
+          <p className="text-sm text-[#3d2855] bg-[#FFF0F0] border border-[rgba(130,80,170,0.2)] rounded-lg p-3 mb-6">
             Competitor information is based on publicly available sources and may change. Always verify current pricing and features directly with each provider.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why women are leaving Flo</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why women are leaving Flo</h2>
 
           <p>Three reasons come up again and again in app store reviews and Reddit threads:</p>
           <ul className="list-disc pl-6 space-y-2">
@@ -67,7 +67,7 @@ export default function Post() {
             <li><strong>Ads and notifications.</strong> The free tier is increasingly cluttered with fertility product ads, sponsored content, and push notifications designed to maximise engagement rather than help you understand your body.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to look for in a Flo alternative</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to look for in a Flo alternative</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>Genuine no-sell data policy (with FTC-style commitment, not marketing copy)</li>
             <li>Perimenopause mode or irregular cycle support</li>
@@ -76,17 +76,17 @@ export default function Post() {
             <li>Transparent pricing with no dark-pattern upsells</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Comparison: Dawn Phase vs Flo vs Clue vs Natural Cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Comparison: Dawn Phase vs Flo vs Clue vs Natural Cycles</h2>
 
-          <div className="overflow-x-auto rounded-2xl border border-[rgba(232,99,122,0.12)]">
+          <div className="overflow-x-auto rounded-2xl border border-[rgba(130,80,170,0.12)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#FDF6F0]">
-                  <th className="text-left px-4 py-3 font-semibold text-[#C94B6D]">Feature</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#C94B6D]">Dawn Phase</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#8C6B5A]">Flo</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#8C6B5A]">Clue</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#8C6B5A]">Natural Cycles</th>
+                <tr className="bg-[#f4e6f0]">
+                  <th className="text-left px-4 py-3 font-semibold text-[#5a3575]">Feature</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#5a3575]">Dawn Phase</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#3d2855]">Flo</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#3d2855]">Clue</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#3d2855]">Natural Cycles</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -100,18 +100,18 @@ export default function Post() {
                   ["Free tier with ads", "No (paid only)", "Check their site", "Check their site", "No"],
                 ].map(([feat, dp, flo, clue, nc]) => (
                   <tr key={feat} className="bg-white">
-                    <td className="px-4 py-3 text-[#2D1B1E] font-medium">{feat}</td>
-                    <td className="px-4 py-3 text-center font-semibold text-[#E8637A]">{dp}</td>
-                    <td className="px-4 py-3 text-center text-[#8C6B5A]">{flo}</td>
-                    <td className="px-4 py-3 text-center text-[#8C6B5A]">{clue}</td>
-                    <td className="px-4 py-3 text-center text-[#8C6B5A]">{nc}</td>
+                    <td className="px-4 py-3 text-[#140c18] font-medium">{feat}</td>
+                    <td className="px-4 py-3 text-center font-semibold text-[#c94f68]">{dp}</td>
+                    <td className="px-4 py-3 text-center text-[#3d2855]">{flo}</td>
+                    <td className="px-4 py-3 text-center text-[#3d2855]">{clue}</td>
+                    <td className="px-4 py-3 text-center text-[#3d2855]">{nc}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase: the Flo alternative built for privacy</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase: the Flo alternative built for privacy</h2>
           <p>
             Dawn Phase is a subscription-only period and perimenopause tracker. Dawn Phase does not use an advertising-based business model — there is no free tier with ads and no data broker partnerships. The business model is straightforward: you pay $14.99/month (with a 7-day free trial), and in return you get a tracker that works entirely in your interest.
           </p>

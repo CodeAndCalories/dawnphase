@@ -59,7 +59,7 @@ function LoginForm() {
           {...register("email")}
           type="email"
           placeholder="you@example.com"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/30 text-sm"
         />
         {formState.errors.email && (
           <p className="mt-1 text-xs text-red-500">
@@ -76,7 +76,7 @@ function LoginForm() {
           {...register("password")}
           type="password"
           placeholder="••••••••"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/30 text-sm"
         />
         {formState.errors.password && (
           <p className="mt-1 text-xs text-red-500">
@@ -94,13 +94,13 @@ function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60 text-sm"
+        className="w-full py-3 bg-gradient-to-r from-[#c94f68] to-[#e06e40] text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60 text-sm"
       >
         {loading ? "Please wait…" : "Log in"}
       </button>
 
       <p className="text-center text-xs text-gray-500">
-        <a href="/forgot-password" className="text-purple-600 hover:underline">
+        <a href="/forgot-password" className="text-[#5a3575] hover:underline">
           Forgot password?
         </a>
       </p>
@@ -157,13 +157,13 @@ function SignupForm() {
   // see the form again at this point.
   if (step === "billing" && loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-[rgba(232,99,122,0.15)] p-12 flex flex-col items-center gap-5 text-center">
-        <div className="w-10 h-10 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
+      <div className="bg-white rounded-2xl shadow-sm border border-[rgba(130,80,170,0.15)] p-12 flex flex-col items-center gap-5 text-center">
+        <div className="w-10 h-10 border-2 border-[#c94f68]/30 border-t-[#c94f68] rounded-full animate-spin" />
         <div>
-          <p className="font-semibold text-[#C94B6D] text-lg">
+          <p className="font-semibold text-[#5a3575] text-lg">
             Setting up your trial…
           </p>
-          <p className="text-sm text-[#8C6B5A] mt-1">
+          <p className="text-sm text-[#3d2855] mt-1">
             Taking you to secure checkout
           </p>
         </div>
@@ -174,17 +174,17 @@ function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl shadow-sm border border-[rgba(232,99,122,0.15)] p-8 space-y-5"
+      className="bg-white rounded-2xl shadow-sm border border-[rgba(130,80,170,0.15)] p-8 space-y-5"
     >
       <div>
-        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
+        <label className="block text-sm font-medium text-[#3d2855] mb-1.5">
           Your name
         </label>
         <input
           {...register("name")}
           type="text"
           placeholder="Luna"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/20 text-sm"
         />
         {formState.errors.name && (
           <p className="mt-1 text-xs text-red-500">
@@ -194,14 +194,14 @@ function SignupForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
+        <label className="block text-sm font-medium text-[#3d2855] mb-1.5">
           Email
         </label>
         <input
           {...register("email")}
           type="email"
           placeholder="you@example.com"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/20 text-sm"
         />
         {formState.errors.email && (
           <p className="mt-1 text-xs text-red-500">
@@ -211,14 +211,14 @@ function SignupForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-[#8C6B5A] mb-1.5">
+        <label className="block text-sm font-medium text-[#3d2855] mb-1.5">
           Password
         </label>
         <input
           {...register("password")}
           type="password"
           placeholder="••••••••"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/20 text-sm"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/20 text-sm"
         />
         {formState.errors.password && (
           <p className="mt-1 text-xs text-red-500">
@@ -236,12 +236,12 @@ function SignupForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 bg-[#E8637A] hover:bg-[#C94B6D] text-white font-semibold rounded-xl transition-colors disabled:opacity-60 text-sm"
+        className="w-full py-3 bg-[#c94f68] hover:bg-[#a83d72] text-white font-semibold rounded-xl transition-colors disabled:opacity-60 text-sm"
       >
         {loading ? "Creating account…" : "Start your free trial"}
       </button>
 
-      <p className="text-center text-xs text-[#8C6B5A]/70">
+      <p className="text-center text-xs text-[#3d2855]/70">
         No charge for 7 days. Card required to start trial.
       </p>
     </form>

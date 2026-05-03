@@ -41,8 +41,8 @@ export default function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {steps.map((step, i) => (
             <div key={step.number} className="flex gap-5">
-              <div className="flex-shrink-0 w-12 h-12 bg-white border-2 border-purple-200 rounded-full flex items-center justify-center">
-                <span className="text-sm font-bold text-purple-600">
+              <div className="flex-shrink-0 w-12 h-12 bg-white border-2 border-[rgba(130,80,170,0.3)] rounded-full flex items-center justify-center">
+                <span className="text-sm font-bold text-[#7a2daa]">
                   {i + 1}
                 </span>
               </div>

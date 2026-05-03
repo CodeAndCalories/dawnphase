@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Perimenopause vs Menopause — Key Differences"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Perimenopause vs Menopause — Key Differences
         </h1>
 
@@ -49,25 +49,25 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             The terms perimenopause and menopause are often used interchangeably in everyday conversation — but they describe distinct stages of the reproductive transition. Understanding the difference helps you make sense of what your body is doing and have more productive conversations with healthcare providers.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The definitions</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The definitions</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-5">
-              <p className="text-sm font-bold text-[#C94B6D] uppercase tracking-wide mb-2">Perimenopause</p>
-              <p className="text-sm text-[#8C6B5A] leading-relaxed">
-                The transitional period <strong className="text-[#2D1B1E]">before</strong> menopause, during which oestrogen levels fluctuate and decline. Periods become irregular. Symptoms can begin years before periods stop. Perimenopause ends when you have gone 12 consecutive months without a period.
+            <div className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-5">
+              <p className="text-sm font-bold text-[#5a3575] uppercase tracking-wide mb-2">Perimenopause</p>
+              <p className="text-sm text-[#3d2855] leading-relaxed">
+                The transitional period <strong className="text-[#140c18]">before</strong> menopause, during which oestrogen levels fluctuate and decline. Periods become irregular. Symptoms can begin years before periods stop. Perimenopause ends when you have gone 12 consecutive months without a period.
               </p>
             </div>
-            <div className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-5">
-              <p className="text-sm font-bold text-[#C94B6D] uppercase tracking-wide mb-2">Menopause</p>
-              <p className="text-sm text-[#8C6B5A] leading-relaxed">
-                A single point in time: the moment you have gone <strong className="text-[#2D1B1E]">12 consecutive months without a period</strong>. It is confirmed retrospectively — you only know you have reached menopause once a year has passed without menstruation.
+            <div className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-5">
+              <p className="text-sm font-bold text-[#5a3575] uppercase tracking-wide mb-2">Menopause</p>
+              <p className="text-sm text-[#3d2855] leading-relaxed">
+                A single point in time: the moment you have gone <strong className="text-[#140c18]">12 consecutive months without a period</strong>. It is confirmed retrospectively — you only know you have reached menopause once a year has passed without menstruation.
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function Post() {
             Postmenopause refers to all the years after the menopause point. Many people use &ldquo;menopause&rdquo; loosely to describe the whole transitional experience — but technically, the menopause itself is a single day.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How long does perimenopause last?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How long does perimenopause last?</h2>
           <p>
             The perimenopausal transition typically lasts between four and eight years, though it can be as short as one year or extend beyond ten. Most people enter perimenopause in their mid-to-late 40s, although research suggests symptoms can begin in the early 40s or occasionally the late 30s for some individuals.
           </p>
@@ -84,18 +84,18 @@ export default function Post() {
             The average age of menopause in many Western populations is around 51, though there is considerable variation and this figure reflects population averages rather than individual prediction.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Symptoms: perimenopause vs postmenopause</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Symptoms: perimenopause vs postmenopause</h2>
           <p>
             Many of the symptoms people associate with &ldquo;the menopause&rdquo; actually occur during perimenopause — the transitional years before periods stop. Hot flashes, night sweats, sleep disruption, mood changes, and brain fog are characteristic of the oestrogen fluctuations of perimenopause, and can begin years before the final period.
           </p>
 
-          <div className="overflow-x-auto rounded-2xl border border-[rgba(232,99,122,0.12)]">
+          <div className="overflow-x-auto rounded-2xl border border-[rgba(130,80,170,0.12)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#FDF6F0]">
-                  <th className="text-left px-4 py-3 font-semibold text-[#C94B6D]">Feature</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#8C6B5A]">Perimenopause</th>
-                  <th className="text-center px-4 py-3 font-semibold text-[#8C6B5A]">Postmenopause</th>
+                <tr className="bg-[#f4e6f0]">
+                  <th className="text-left px-4 py-3 font-semibold text-[#5a3575]">Feature</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#3d2855]">Perimenopause</th>
+                  <th className="text-center px-4 py-3 font-semibold text-[#3d2855]">Postmenopause</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -108,16 +108,16 @@ export default function Post() {
                   ["Confirmed by", "Symptoms + cycle changes", "12 months no period"],
                 ].map(([f, peri, post]) => (
                   <tr key={f} className="bg-white">
-                    <td className="px-4 py-3 font-medium text-[#2D1B1E]">{f}</td>
-                    <td className="px-4 py-3 text-center text-[#8C6B5A]">{peri}</td>
-                    <td className="px-4 py-3 text-center text-[#8C6B5A]">{post}</td>
+                    <td className="px-4 py-3 font-medium text-[#140c18]">{f}</td>
+                    <td className="px-4 py-3 text-center text-[#3d2855]">{peri}</td>
+                    <td className="px-4 py-3 text-center text-[#3d2855]">{post}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to tell which stage you&apos;re in</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to tell which stage you&apos;re in</h2>
           <p>
             During perimenopause, you will still be having periods — even if they are irregular, heavier, lighter, or spaced differently than before. The key markers of perimenopause are:
           </p>
@@ -133,7 +133,7 @@ export default function Post() {
             Blood tests (FSH, LH, oestradiol) can support clinical assessment but are often variable during perimenopause and may be inconclusive — a single test is rarely definitive.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why the distinction matters</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why the distinction matters</h2>
           <p>
             The perimenopause/menopause distinction has clinical significance. Contraception is still needed in perimenopause (fertility is reduced but not zero). HRT considerations differ depending on whether someone is perimenopausal or postmenopausal. Treatment options for symptoms may also vary by stage.
           </p>
@@ -141,20 +141,20 @@ export default function Post() {
             Practically: if you have had at least one period in the last 12 months, you are in perimenopause. If you have had no period for 12 months or more (without another cause such as medication, surgery, or pregnancy), you have reached menopause. Everything after that is postmenopause.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Tracking during the transition</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Tracking during the transition</h2>
           <p>
             Daily tracking is especially valuable during perimenopause because the pattern — not a single data point — is what reveals the transition. A record showing progressively more irregular cycles, increasing hot-flash frequency, and worsening sleep quality over 12–18 months provides far more meaningful clinical information than a single blood test or appointment.
           </p>
           <p>
             Dawn Phase&apos;s perimenopause mode tracks cycle dates, hot flashes, night sweats, brain fog, mood, and sleep alongside each other — building the longitudinal picture that makes both self-understanding and clinical conversations more productive. See also our{" "}
-            <Link href="/blog/perimenopause-age" className="text-[#E8637A] hover:underline font-medium">guide to perimenopause timing</Link>{" "}
+            <Link href="/blog/perimenopause-age" className="text-[#c94f68] hover:underline font-medium">guide to perimenopause timing</Link>{" "}
             and the{" "}
-            <Link href="/blog/perimenopause-symptoms-checklist" className="text-[#E8637A] hover:underline font-medium">35-symptom perimenopause checklist</Link>.
+            <Link href="/blog/perimenopause-symptoms-checklist" className="text-[#c94f68] hover:underline font-medium">35-symptom perimenopause checklist</Link>.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

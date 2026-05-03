@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Cycle Syncing — Does It Actually Work?"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Cycle Syncing — Does It Actually Work?
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Cycle syncing — adjusting your workouts, diet, work schedule, and social commitments to your menstrual cycle phases — has become a popular wellness concept. But how much of it is grounded in evidence, and how much is pattern-matching dressed up as optimisation?
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What cycle syncing is</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What cycle syncing is</h2>
           <p>
             Cycle syncing is the practice of aligning lifestyle choices with the four phases of the menstrual cycle: menstrual, follicular, ovulatory, and luteal. The premise is that hormonal fluctuations across the cycle influence energy, strength, cognitive performance, mood, and recovery — so working with those patterns rather than against them may improve wellbeing and performance.
           </p>
@@ -63,7 +63,7 @@ export default function Post() {
             The concept was popularised by functional nutritionist Alisa Vitti, who coined the term. It has since been taken up broadly in wellness culture, sometimes with more enthusiasm than the current evidence base strictly supports.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What the evidence actually says</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What the evidence actually says</h2>
           <p>
             The honest answer is: some of the underlying biology is real, but the specific prescriptions often outrun the research.
           </p>
@@ -80,7 +80,7 @@ export default function Post() {
             What is less established: specific dietary protocols tied to cycle phases, the claim that cycle syncing measurably improves fertility or hormonal balance, and the degree to which individual variation (which is enormous) undermines any universal prescription.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Cycle syncing for exercise</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Cycle syncing for exercise</h2>
           <p>
             This is where the evidence base is most developed. Research suggests that some people may benefit from:
           </p>
@@ -94,7 +94,7 @@ export default function Post() {
             Importantly: these are tendencies observed across populations, not rules. Your response may differ significantly. The way to know what works for you is to track your actual energy, performance, and recovery across several cycles.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Cycle syncing for diet</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Cycle syncing for diet</h2>
           <p>
             Specific dietary protocols tied to cycle phases have much weaker evidence behind them. What is less controversial:
           </p>
@@ -105,7 +105,7 @@ export default function Post() {
             <li>Reducing salt, alcohol, and caffeine in the late luteal phase can help manage bloating and sleep disruption for many people.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The practical value: tracking as the foundation</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The practical value: tracking as the foundation</h2>
           <p>
             The most defensible version of cycle syncing is not following a prescribed protocol — it&apos;s using tracking to discover your own personal patterns and then responding to them. Some people notice consistently lower energy at a specific cycle day; others notice strong cognitive performance at a particular phase. These patterns are individual and only become visible through consistent logging.
           </p>
@@ -113,14 +113,14 @@ export default function Post() {
             This is where cycle tracking apps earn their keep. Logging energy, sleep, mood, and exercise quality alongside cycle day over several months reveals your actual pattern — not a generic prescription. Dawn Phase&apos;s insights feature shows your average energy, mood, and sleep by phase, making it straightforward to see where your own highs and lows cluster.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Who cycle syncing is most relevant for</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Who cycle syncing is most relevant for</h2>
           <p>
             Cycle syncing is most applicable for people with relatively regular cycles who have the flexibility to adjust training intensity or workload. People with PCOS, very irregular cycles, or perimenopause-related cycle unpredictability may find phase-based recommendations harder to apply and should focus first on simply tracking their actual patterns.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

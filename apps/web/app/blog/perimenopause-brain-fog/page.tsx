@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Perimenopause Brain Fog — Why It Happens and How to Track It"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-27"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Perimenopause Brain Fog — Why It Happens and How to Track It
         </h1>
 
@@ -47,12 +47,12 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and is not medical advice. Cognitive symptoms during perimenopause can have multiple causes. If you are experiencing significant memory problems or cognitive decline, consult a healthcare provider to rule out other causes.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             Brain fog is one of the most commonly reported symptoms of perimenopause — and one of the most commonly dismissed. Many women are told their word-finding difficulties and concentration lapses are &quot;just stress,&quot; anxiety, or normal ageing. In reality, there is a well-established biological mechanism linking oestrogen fluctuation to cognitive function, and understanding it can make an enormous difference to how you manage this stage of life.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What perimenopause brain fog actually feels like</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What perimenopause brain fog actually feels like</h2>
 
           <p>
             The cognitive experience of perimenopause is distinct from normal ageing and worth naming precisely so you can recognise it in yourself.
@@ -68,7 +68,7 @@ export default function Post() {
             These experiences are qualitatively different from the gradual cognitive changes of normal ageing, which are slow and consistent. Perimenopausal brain fog often fluctuates — worse at some points in the cycle, better at others — which is a clue to its hormonal origin.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why oestrogen matters for the brain</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why oestrogen matters for the brain</h2>
 
           <p>
             Oestrogen receptors are distributed throughout the brain, including in regions central to memory and executive function: the hippocampus, prefrontal cortex, and cerebellum. Oestrogen is not a passive bystander in the brain — it actively regulates the production and sensitivity of several key neurotransmitter systems.
@@ -83,7 +83,7 @@ export default function Post() {
             Research from the Penn Ovarian Aging Study and other longitudinal cohorts has found measurable declines in verbal memory and processing speed during the perimenopause transition that are not explained by ageing alone — and that improve for many women after menopause, when oestrogen stabilises at a lower level.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Sleep disruption compounds it</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Sleep disruption compounds it</h2>
 
           <p>
             Perimenopause brain fog is rarely a standalone symptom. Night sweats and hot flushes disrupt sleep architecture — often waking women repeatedly during the night or preventing deep sleep. Sleep is the period during which the brain consolidates memories, clears metabolic waste (via the glymphatic system), and processes the day&apos;s learning. Even one night of partial sleep deprivation measurably impairs working memory, verbal fluency, and sustained attention.
@@ -95,7 +95,7 @@ export default function Post() {
             Tracking brain fog severity alongside sleep quality and night sweats often reveals this connection clearly — and makes the solution more obvious.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When does it typically start and how long does it last?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When does it typically start and how long does it last?</h2>
 
           <p>
             Cognitive symptoms often emerge in early perimenopause, sometimes before cycle changes become obvious, particularly in women who are sensitive to hormonal fluctuations. They tend to be most pronounced during periods of rapid oestrogen change — which can be unpredictable in the early perimenopause transition.
@@ -104,20 +104,20 @@ export default function Post() {
             The research picture on duration is broadly reassuring. Multiple longitudinal studies — including data from the Study of Women&apos;s Health Across the Nation (SWAN) — suggest that for most women, the cognitive effects of the perimenopause transition are largely transitional. Memory and processing speed improvements are commonly reported in the years after the final menstrual period, as oestrogen stabilises. This is meaningfully different from progressive cognitive decline, and worth knowing.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to track brain fog</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to track brain fog</h2>
 
           <p>
             Tracking cognitive symptoms serves two purposes: it helps you identify patterns and triggers, and it gives you objective evidence to bring to medical appointments where subjective reports of &quot;I feel foggy&quot; are too easily minimised.
           </p>
-          <div className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-            <p className="font-semibold text-[#C94B6D]">What to log daily</p>
-            <p className="text-sm text-[#8C6B5A] mt-1">Brain fog severity on a 0–3 scale (0 = clear, 1 = mild, 2 = moderate, 3 = significant). Sleep quality and duration. Night sweat occurrence and severity. Cycle phase or day (if still cycling). Any activities affected or avoided due to cognitive symptoms.</p>
+          <div className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+            <p className="font-semibold text-[#5a3575]">What to log daily</p>
+            <p className="text-sm text-[#3d2855] mt-1">Brain fog severity on a 0–3 scale (0 = clear, 1 = mild, 2 = moderate, 3 = significant). Sleep quality and duration. Night sweat occurrence and severity. Cycle phase or day (if still cycling). Any activities affected or avoided due to cognitive symptoms.</p>
           </div>
           <p>
             Over two to three months, this log will show you whether brain fog correlates with night sweats the previous night, with specific cycle phases (often worse in the late luteal phase or around the period), or with other identifiable factors. That pattern is clinically useful and will make your next medical appointment significantly more productive.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What may help</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What may help</h2>
 
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Sleep prioritisation:</strong> The single most evidence-backed intervention. Treating night sweats (whether through HRT, cooling strategies, or other means) to improve sleep will have downstream effects on cognition.</li>
@@ -127,7 +127,7 @@ export default function Post() {
             <li><strong>Stress management:</strong> Cortisol directly impairs hippocampal function and memory consolidation. Chronic high stress worsens the cognitive impact of oestrogen fluctuation.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a doctor</h2>
 
           <ul className="list-disc pl-6 space-y-2">
             <li>Cognitive symptoms that are rapidly worsening rather than fluctuating</li>
@@ -137,7 +137,7 @@ export default function Post() {
           </ul>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

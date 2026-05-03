@@ -10,11 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream:    "#FDF6F0",
-        rose:     "#E8637A",
-        peach:    "#F4956A",
-        deeprose: "#C94B6D",
-        taupe:    "#8C6B5A",
+        cream:    "#f4e6f0",
+        rose:     "#c94f68",
+        peach:    "#e06e40",
+        deeprose: "#140c18",
+        taupe:    "#3d2855",
       },
     },
   },

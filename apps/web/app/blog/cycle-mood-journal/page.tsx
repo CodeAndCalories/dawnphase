@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Why Keeping a Cycle Mood Journal Changes Everything"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-28"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Why Keeping a Cycle Mood Journal Changes Everything
         </h1>
 
@@ -47,12 +47,12 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and is not medical advice. If you experience severe mood symptoms that interfere with daily functioning, please consult a qualified healthcare provider.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             If you&apos;ve ever felt inexplicably irritable on a specific day every month, or noticed that your confidence peaks at a predictable point in your cycle, you&apos;ve already experienced what cycle mood journalling helps you map. These aren&apos;t random emotional states — they&apos;re hormonally driven, and once you can see them as a pattern, they stop feeling like they&apos;re happening to you.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The hormonal basis for cycle mood changes</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The hormonal basis for cycle mood changes</h2>
 
           <p>
             Mood across the menstrual cycle is shaped primarily by fluctuating levels of oestrogen and progesterone, both of which interact with neurotransmitter systems including serotonin, dopamine, and GABA. These aren&apos;t minor fluctuations — oestrogen levels vary by a factor of ten between the menstrual and ovulatory phases. The brain is exquisitely sensitive to these changes.
@@ -64,7 +64,7 @@ export default function Post() {
             Progesterone, which rises sharply after ovulation, has sedative properties through its conversion to allopregnanolone — a neurosteroid that acts on GABA receptors. For some people this produces a calm, grounded feeling. For others — particularly those sensitive to progesterone fluctuations — the rising and then falling progesterone of the luteal phase is experienced as anxiety, irritability, or low mood.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The mood signature of each phase</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The mood signature of each phase</h2>
 
           <p>
             While individual variation is substantial, the general mood landscape across a cycle tends to follow a recognisable arc:
@@ -76,7 +76,7 @@ export default function Post() {
             <li><strong>Luteal phase (days 15–28):</strong> The early luteal phase often feels stable. As progesterone peaks and then both hormones fall in the late luteal phase, symptoms like irritability, emotional sensitivity, difficulty concentrating, and low patience become more common.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to write in your cycle mood journal</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to write in your cycle mood journal</h2>
 
           <p>
             The most effective cycle mood journals are brief enough to sustain daily, but consistent enough to build a meaningful dataset. A single daily entry does not need to take more than two minutes. The key things to capture:
@@ -89,7 +89,7 @@ export default function Post() {
             <li><strong>A short free-text note:</strong> This is where pattern-revealing specifics tend to emerge — the thoughts that are recurring, the things that triggered a reaction, or an observation about how you&apos;re processing the day.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How patterns emerge over 2–3 cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How patterns emerge over 2–3 cycles</h2>
 
           <p>
             A single cycle of mood data is a story. Two or three cycles of data is a pattern. The distinction matters because any individual month contains confounding variables — a stressful work week, an illness, a difficult relationship moment — that can shift mood independently of hormones.
@@ -101,7 +101,7 @@ export default function Post() {
             Many people report that this recognition alone is profoundly useful. Understanding that a recurring low mood is cyclically predictable rather than a permanent state changes the experience of it. You can prepare for it, be gentler with yourself during it, and stop treating it as evidence of something fundamentally wrong.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Using your mood data at doctor appointments</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Using your mood data at doctor appointments</h2>
 
           <p>
             Mood changes across the cycle are relevant to several clinical conditions, including PMDD (premenstrual dysphoric disorder), depression with perimenstrual worsening, anxiety disorders, and conditions affected by hormonal fluctuations such as migraines and epilepsy. In all of these, cycle-phase timing of symptoms is clinically important — and it&apos;s information your doctor cannot access unless you provide it.
@@ -110,7 +110,7 @@ export default function Post() {
             A two-to-three month mood log, showing which cycle days correlate with symptom onset and offset, gives your clinician something concrete to work with. The diagnostic criteria for PMDD, for example, specifically require prospective daily mood ratings over at least two cycles. A paper diary, an app export, or a simple screenshot of your daily log is far more useful than a retrospective description of how you generally feel before your period.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Mood tracking in Dawn Phase</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Mood tracking in Dawn Phase</h2>
 
           <p>
             Dawn Phase&apos;s daily log includes a mood rating (using a five-point emoji scale), an energy level, sleep hours, and an optional free-text notes field — the cycle mood journal built into your daily check-in. Each log is anchored to your cycle day, so you can see mood alongside phase context rather than just as a date on a calendar.
@@ -120,7 +120,7 @@ export default function Post() {
           </p>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice. Dawn Phase is not a diagnostic tool.
         </p>
 

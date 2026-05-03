@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Cycle Syncing and Astrology — Fun Ways to Connect With Your Body"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-28"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>5 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Cycle Syncing and Astrology — Fun Ways to Connect With Your Body
         </h1>
 
@@ -47,12 +47,12 @@ export default function Post() {
           <p className="text-sm text-purple-700">Astrology features in this article and in Dawn Phase are for entertainment only and have no medical basis. Cycle tracking data and health features are separate and evidence-based. Have fun with the cosmic stuff — just don&apos;t use it to make health decisions.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             Something interesting has been happening in wellness spaces over the last few years: cycle awareness and astrology have started showing up in the same conversation. On the surface, the combination might seem unusual — one is rooted in biology, the other in mythology and symbolism. But they share something that explains their growing overlap: both offer a framework for paying attention to yourself.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Two ways of mapping inner experience</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Two ways of mapping inner experience</h2>
 
           <p>
             Cycle syncing — the practice of aligning your activities, energy output, and self-care to the natural rhythm of your menstrual cycle — is grounded in the hormonal fluctuations that genuinely do affect energy, mood, focus, and social motivation across the four phases. The science behind it is real, even if some of the more specific claims (eat these exact foods during the follicular phase, have this type of workout on day 14) outpace the evidence.
@@ -64,7 +64,7 @@ export default function Post() {
             What they share is the invitation to notice. Both cycle syncing and astrology encourage you to pay attention to patterns — in your energy, your emotions, your strengths and your struggles — rather than moving through life on autopilot. That attentiveness itself has real value, regardless of the framework you use to structure it.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The phases and their cosmic parallels</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The phases and their cosmic parallels</h2>
 
           <p>
             People who work with both frameworks often draw parallels between the cycle phases and astrological archetypes — not as literal correspondences, but as resonant metaphors:
@@ -79,7 +79,7 @@ export default function Post() {
             These aren&apos;t correspondences you need to take literally. They&apos;re imaginative prompts — a way of adding texture to what you&apos;re already noticing about yourself. If the Scorpio-menstrual parallel resonates, great. If it doesn&apos;t, leave it.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The growing trend of combining both</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The growing trend of combining both</h2>
 
           <p>
             The combination of cycle awareness and astrology has found a natural home in communities that centre embodied self-knowledge — particularly among people who are drawn to cyclical living as a broader philosophy. The appeal makes sense: the menstrual cycle is literally cyclical, and so is the astrological calendar. Both invite you to stop thinking of yourself as a static entity and start thinking of your inner life as having seasons.
@@ -88,7 +88,7 @@ export default function Post() {
             Neither framework requires you to believe the other works for you to find value in it. Plenty of people track their cycle meticulously and have zero interest in astrology. Plenty of astrology enthusiasts have never thought much about their cycle phases. And some people find that holding both — lightly, playfully — gives them a richer vocabulary for paying attention to themselves.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase combines both — just for fun</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase combines both — just for fun</h2>
 
           <p>
             Dawn Phase is, at its core, a cycle and symptom tracker grounded in evidence. The mood logging, symptom tracking, and phase predictions are based on your actual cycle data. None of that changes.
@@ -101,7 +101,7 @@ export default function Post() {
           </p>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           Astrology content is for entertainment only and has no medical basis. Cycle tracking data in Dawn Phase is separate and evidence-based.
         </p>
 

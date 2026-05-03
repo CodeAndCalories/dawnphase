@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="The Best Period Tracker That Doesn't Sell Your Data (2026)"
@@ -36,26 +36,26 @@ export default function Post() {
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Back link */}
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
         {/* Meta */}
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           The Best Period Tracker That Doesn&apos;t Sell Your Data (2026)
         </h1>
 
-        <div className="prose prose-slate max-w-none text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="prose prose-slate max-w-none text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Your cycle data is among the most sensitive information you generate. Yet millions of women hand it over to apps that treat it as a commodity. Here&apos;s what&apos;s really happening — and how to stop it.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why period app data privacy matters</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why period app data privacy matters</h2>
 
           <p>
             In 2021, the Norwegian Consumer Council found that Flo Health was sharing intimate user data — including period dates, pregnancy intentions, and mood logs — with Facebook, AppsFlyer, and Fabric. In 2023, Flo settled with the FTC over allegations of sharing that data without meaningful consent.
@@ -76,7 +76,7 @@ export default function Post() {
             <li>Device identifiers linked to ad networks</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What apps actually do with your data</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What apps actually do with your data</h2>
 
           <p>
             Most period apps operate on a freemium model: the core tracking is free, but the real product is you. Your anonymised (and sometimes not-so-anonymised) health data is sold to data brokers, insurance companies, pharmaceutical advertisers, and fertility clinics.
@@ -88,7 +88,7 @@ export default function Post() {
             Subscription apps are not automatically safer. Paying for an app does not prevent the company from monetising your data — it just means they&apos;re double-dipping. Read the privacy policy, not the marketing copy.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to look for in a private period tracker</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to look for in a private period tracker</h2>
 
           <p>When evaluating a period tracker for privacy, look for these specifics:</p>
           <ul className="list-disc pl-6 space-y-2">
@@ -100,7 +100,7 @@ export default function Post() {
             <li><strong>Transparent infrastructure</strong> — knowing where data is stored and who has access matters.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase: built privacy-first from day one</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase: built privacy-first from day one</h2>
 
           <p>
             Dawn Phase was built with a single founding principle: your body data is yours. That means:
@@ -116,20 +116,20 @@ export default function Post() {
             We don&apos;t use your cycle data to train AI models, sell to insurers, or target you with fertility ads. We just use it to show you your own patterns.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">FAQ: period app privacy</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">FAQ: period app privacy</h2>
 
-          <div className="space-y-5 bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6">
+          <div className="space-y-5 bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] p-6">
             <div>
-              <p className="font-semibold text-[#2D1B1E]">Can period tracking apps be subpoenaed?</p>
-              <p className="text-[#8C6B5A] mt-1 text-sm">Yes. In the US, if a company holds your data, law enforcement can subpoena it. The safest protection is choosing an app that stores minimal data and offers end-to-end encryption or on-device storage.</p>
+              <p className="font-semibold text-[#140c18]">Can period tracking apps be subpoenaed?</p>
+              <p className="text-[#3d2855] mt-1 text-sm">Yes. In the US, if a company holds your data, law enforcement can subpoena it. The safest protection is choosing an app that stores minimal data and offers end-to-end encryption or on-device storage.</p>
             </div>
             <div>
-              <p className="font-semibold text-[#2D1B1E]">Is Flo period tracker safe to use?</p>
-              <p className="text-[#8C6B5A] mt-1 text-sm">Flo settled with the FTC in 2023 over sharing data with third parties. They have since introduced &ldquo;Anonymous Mode&rdquo; — but this requires manually opting in and still stores data on their servers.</p>
+              <p className="font-semibold text-[#140c18]">Is Flo period tracker safe to use?</p>
+              <p className="text-[#3d2855] mt-1 text-sm">Flo settled with the FTC in 2023 over sharing data with third parties. They have since introduced &ldquo;Anonymous Mode&rdquo; — but this requires manually opting in and still stores data on their servers.</p>
             </div>
             <div>
-              <p className="font-semibold text-[#2D1B1E]">What is the most private period tracker?</p>
-              <p className="text-[#8C6B5A] mt-1 text-sm">Apps built without an advertising model and with explicit no-sell commitments in their privacy policy are safest. Dawn Phase, Drip (on-device), and Euki are frequently cited by privacy advocates.</p>
+              <p className="font-semibold text-[#140c18]">What is the most private period tracker?</p>
+              <p className="text-[#3d2855] mt-1 text-sm">Apps built without an advertising model and with explicit no-sell commitments in their privacy policy are safest. Dawn Phase, Drip (on-device), and Euki are frequently cited by privacy advocates.</p>
             </div>
           </div>
 

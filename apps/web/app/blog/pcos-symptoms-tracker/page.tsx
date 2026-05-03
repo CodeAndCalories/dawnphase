@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="PCOS Symptoms Tracker — What to Log Every Day"
@@ -35,15 +35,15 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>May 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           PCOS Symptoms Tracker — What to Log Every Day
         </h1>
 
@@ -52,13 +52,13 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and does not constitute medical advice. Symptom tracking does not diagnose PCOS or any other condition. Dawn Phase is not a medical device. Consult a qualified healthcare professional for diagnosis and treatment.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             PCOS is one of the most common hormonal conditions affecting people with ovaries — and one of the least understood, even by those who have it. Because symptoms vary widely between individuals and fluctuate over time, a daily symptom log is one of the most practical tools for understanding your own pattern and getting more from medical appointments.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The 4 types of PCOS and why symptoms differ</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The 4 types of PCOS and why symptoms differ</h2>
 
           <p>
             PCOS is not a single uniform condition. Research suggests there are at least four common phenotypes, each with a different hormonal profile and symptom cluster. Understanding which type you have — or suspect — helps you know what to prioritise in your log.
@@ -83,19 +83,19 @@ export default function Post() {
                 desc: "Temporary PCOS-like symptoms after stopping hormonal contraception, as LH and androgens temporarily surge. May resolve within 3–6 months but can persist in those with underlying susceptibility.",
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{item.title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{item.desc}</p>
+              <div key={item.title} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{item.title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <p>
             Most people with PCOS present with overlapping features from multiple types. Your log will help identify which symptom clusters are most prominent for you — and how they shift over time. Learn more on our{" "}
-            <Link href="/conditions/pcos" className="text-[#E8637A] hover:underline font-medium">PCOS condition guide</Link>.
+            <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">PCOS condition guide</Link>.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Daily symptoms worth tracking</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Daily symptoms worth tracking</h2>
 
           <p>
             The goal of a daily PCOS symptom log is to capture both consistent symptoms and fluctuations — especially those that correlate with cycle phase or external factors. These are the categories worth logging every day:
@@ -120,12 +120,12 @@ export default function Post() {
                 items: ["Bloating (1–3 scale)", "Appetite and cravings (carbs, sugar)", "Bowel regularity", "Any pelvic discomfort or pressure"],
               },
             ].map((block) => (
-              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D] mb-2">{block.cat}</p>
+              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575] mb-2">{block.cat}</p>
                 <ul className="space-y-1">
                   {block.items.map((item) => (
-                    <li key={item} className="text-sm text-[#8C6B5A] flex items-start gap-1.5">
-                      <span className="text-[#E8637A] shrink-0">·</span>{item}
+                    <li key={item} className="text-sm text-[#3d2855] flex items-start gap-1.5">
+                      <span className="text-[#c94f68] shrink-0">·</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -135,11 +135,11 @@ export default function Post() {
 
           <p>
             Also log cycle-specific data daily: period start and end dates, flow intensity, and any spotting between periods. For irregular cycles, logging every day — even when you&apos;re &ldquo;between&rdquo; periods — is especially important. See our guide on{" "}
-            <Link href="/symptoms/irregular-periods-pcos" className="text-[#E8637A] hover:underline font-medium">irregular periods with PCOS</Link>{" "}
+            <Link href="/symptoms/irregular-periods-pcos" className="text-[#c94f68] hover:underline font-medium">irregular periods with PCOS</Link>{" "}
             for what the bleeding patterns typically look like.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Monthly patterns to look for</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Monthly patterns to look for</h2>
 
           <p>
             After 2–3 months of consistent daily logging, review your data for these patterns:
@@ -151,7 +151,7 @@ export default function Post() {
             <li><strong>Sleep and skin correlation.</strong> Poor sleep raises cortisol, which raises androgens, which worsens acne. This pattern often shows a 24–48 hour lag: bad sleep on Tuesday → worse skin on Thursday.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Using your log at endocrinologist appointments</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Using your log at endocrinologist appointments</h2>
 
           <p>
             A daily PCOS symptom log transforms what you can communicate at a specialist appointment. Instead of describing how you generally feel, you can answer specific clinical questions with data:
@@ -166,7 +166,7 @@ export default function Post() {
             This data is also directly useful for assessing treatment response. If you start metformin, spironolactone, or a dietary intervention, your log becomes an objective measure of whether it&apos;s working — something your doctor can review alongside bloodwork at follow-up appointments.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase for PCOS symptom tracking</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase for PCOS symptom tracking</h2>
 
           <p>
             Dawn Phase is designed for the irregular cycle reality of PCOS. It tracks current cycle day from your logged period dates without assuming a regular interval, lets you log custom symptoms daily alongside standard cycle data, and builds a multi-cycle history that&apos;s exportable as a PDF.
@@ -177,7 +177,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice. Dawn Phase does not diagnose PCOS or any other condition.
         </p>
 

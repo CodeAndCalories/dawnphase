@@ -44,8 +44,8 @@ export default function PricingSection() {
               onClick={() => setPlan("monthly")}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                 plan === "monthly"
-                  ? "bg-[#E8637A] text-white shadow-sm"
-                  : "text-[#8C6B5A] hover:text-[#C94B6D]"
+                  ? "bg-[#c94f68] text-white shadow-sm"
+                  : "text-[#3d2855] hover:text-[#5a3575]"
               }`}
             >
               Monthly
@@ -54,8 +54,8 @@ export default function PricingSection() {
               onClick={() => setPlan("annual")}
               className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                 plan === "annual"
-                  ? "bg-[#E8637A] text-white shadow-sm"
-                  : "text-[#8C6B5A] hover:text-[#C94B6D]"
+                  ? "bg-[#c94f68] text-white shadow-sm"
+                  : "text-[#3d2855] hover:text-[#5a3575]"
               }`}
             >
               Annual
@@ -64,17 +64,17 @@ export default function PricingSection() {
               </span>
             </button>
           </div>
-          <p className="text-xs text-[#8C6B5A]">
+          <p className="text-xs text-[#3d2855]">
             Monthly: $14.99/mo &nbsp;·&nbsp;{" "}
-            <strong className="text-[#C94B6D]">Annual: $9.92/mo — save $60 a year</strong>
+            <strong className="text-[#140c18]">Annual: $9.92/mo — save $60 a year</strong>
           </p>
         </div>
 
         <div className="max-w-sm mx-auto">
           <div className={`bg-dp-cream-lt rounded-2xl border shadow-xl p-8 transition-all duration-200 ${
             plan === "annual"
-              ? "border-[#E8637A] ring-2 ring-[#E8637A]/20"
-              : "border-[rgba(232,99,122,0.15)]"
+              ? "border-[#c94f68] ring-2 ring-[#c94f68]/20"
+              : "border-[rgba(130,80,170,0.15)]"
           }`}>
             {/* Badges row */}
             <div className="flex items-center gap-2 mb-6 flex-wrap">
@@ -82,7 +82,7 @@ export default function PricingSection() {
                 7-day free trial
               </div>
               {plan === "annual" && (
-                <div className="inline-block bg-[#E8637A] text-white text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1">
+                <div className="inline-block bg-[#c94f68] text-white text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1">
                   ⭐ Most popular
                 </div>
               )}

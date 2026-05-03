@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="How to Track Ovulation With PCOS — A Practical Guide"
@@ -35,15 +35,15 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>May 2026</span><span>·</span><span>7 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           How to Track Ovulation With PCOS — A Practical Guide
         </h1>
 
@@ -52,13 +52,13 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and is not medical advice. Dawn Phase is not a medical device and is not intended for use as a contraceptive. Do not use ovulation tracking as birth control, particularly with PCOS. Always consult a qualified healthcare professional for fertility concerns.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             If you have PCOS and have tried ovulation tracking, you&apos;ve probably noticed the apps don&apos;t work the way they&apos;re supposed to. Predictions are wrong, OPK lines are confusing, and the fertile window estimate seems meaningless. That&apos;s not a user error — it&apos;s a fundamental mismatch between how most tracking tools are designed and how PCOS actually works.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why standard ovulation tracking fails with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why standard ovulation tracking fails with PCOS</h2>
 
           <p>
             Most ovulation prediction tools — apps, OPK kits, even some wearables — are built around a predictable 28-to-32-day cycle with a midcycle LH surge and ovulation occurring reliably around day 12–16. They calculate your &ldquo;fertile window&rdquo; by subtracting 14 days from your predicted next period and flagging the five days before that.
@@ -71,10 +71,10 @@ export default function Post() {
           </p>
           <p>
             For a broader overview of cycle tracking with irregular periods, see our guide on{" "}
-            <Link href="/blog/pcos-cycle-tracking" className="text-[#E8637A] hover:underline font-medium">how to track your cycle with PCOS</Link>.
+            <Link href="/blog/pcos-cycle-tracking" className="text-[#c94f68] hover:underline font-medium">how to track your cycle with PCOS</Link>.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">BBT tracking with PCOS — limitations and how to do it</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">BBT tracking with PCOS — limitations and how to do it</h2>
 
           <p>
             Basal body temperature (BBT) charting involves taking your temperature first thing every morning before getting out of bed or drinking anything. After ovulation, progesterone causes a sustained temperature rise of approximately 0.2°C (0.4°F) that persists until your next period. This rise confirms that ovulation has occurred — it doesn&apos;t predict it, but it is the most reliable way to detect it after the fact.
@@ -90,14 +90,14 @@ export default function Post() {
               { title: "Mark disruptions", desc: "Alcohol, illness, poor sleep, or taking your temperature at a different time can all shift your reading. Mark these on your chart so you don't misinterpret the data." },
               { title: "Look for the shift pattern, not a single reading", desc: "A true post-ovulatory rise is sustained for at least three consecutive days above your pre-ovulatory baseline. Single high readings are usually noise." },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{item.title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{item.desc}</p>
+              <div key={item.title} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{item.title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">OPK testing with PCOS — why multiple peaks happen</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">OPK testing with PCOS — why multiple peaks happen</h2>
 
           <p>
             Ovulation predictor kits detect LH (luteinising hormone) in urine. In a typical cycle, LH surges sharply 24–36 hours before ovulation. OPKs are designed to catch that surge and flag the 1–2 days before ovulation as your peak fertile time.
@@ -110,11 +110,11 @@ export default function Post() {
           </p>
           <p>
             Use our free{" "}
-            <Link href="/tools/ovulation-calculator" className="text-[#E8637A] hover:underline font-medium">ovulation calculator</Link>{" "}
+            <Link href="/tools/ovulation-calculator" className="text-[#c94f68] hover:underline font-medium">ovulation calculator</Link>{" "}
             to estimate your fertile window — treating it as a starting point, not a precise prediction.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Cervical mucus with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Cervical mucus with PCOS</h2>
 
           <p>
             Cervical mucus (CM) changes throughout the cycle in response to oestrogen. As oestrogen rises approaching ovulation, CM becomes clearer, more stretchy, and more abundant — often described as resembling raw egg whites. This &ldquo;egg white cervical mucus&rdquo; (EWCM) is the most fertile type and typically appears in the two to three days before ovulation.
@@ -126,7 +126,7 @@ export default function Post() {
             The most useful approach is to log CM daily alongside BBT. If you see egg-white mucus followed a day or two later by a sustained temperature rise, ovulation likely occurred during that mucus window. Mucus observations without a subsequent BBT shift suggest a failed ovulation attempt.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Tracking patterns over time instead of predicting</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Tracking patterns over time instead of predicting</h2>
 
           <p>
             The most important mindset shift for PCOS ovulation tracking: the goal is pattern recognition over multiple cycles, not prediction of the next fertile window.
@@ -141,7 +141,7 @@ export default function Post() {
             <li><strong>Don&apos;t abandon tracking during long cycles.</strong> It can feel pointless to log day 45 of a cycle with no sign of ovulation — but this is exactly the data that builds your pattern over time.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase helps track ovulation signs with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase helps track ovulation signs with PCOS</h2>
 
           <p>
             Dawn Phase is built for irregular cycles. It doesn&apos;t assume a 28-day cycle or assign a predicted ovulation day based on average cycle length. Instead, it tracks your current cycle day from your logged period start date and lets you log BBT, cervical mucus observations, and symptoms every day — without disrupting when your cycle is long.
@@ -151,11 +151,11 @@ export default function Post() {
           </p>
           <p>
             Learn more about{" "}
-            <Link href="/conditions/pcos" className="text-[#E8637A] hover:underline font-medium">how PCOS affects the cycle</Link>{" "}
+            <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">how PCOS affects the cycle</Link>{" "}
             and what tracking data helps most.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a fertility specialist</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a fertility specialist</h2>
 
           <p>
             Tracking ovulation signs with PCOS is valuable — but there are clear signals that it&apos;s time to involve a specialist:
@@ -172,7 +172,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice. Dawn Phase is not intended for use as a contraceptive.
         </p>
 

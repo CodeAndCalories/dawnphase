@@ -187,7 +187,7 @@ export default function PCOSConditionPage() {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       {/* Structured data */}
       <MedicalWebPageSchema
         name="Polycystic Ovary Syndrome"
@@ -208,35 +208,35 @@ export default function PCOSConditionPage() {
       <main className="max-w-3xl mx-auto px-6 py-12">
 
         {/* Breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-[#8C6B5A]">
-          <Link href="/" className="hover:text-[#C94B6D] transition-colors">Home</Link>
+        <nav className="mb-8 flex items-center gap-2 text-sm text-[#3d2855]">
+          <Link href="/" className="hover:text-[#5a3575] transition-colors">Home</Link>
           <span>›</span>
-          <Link href="/conditions" className="hover:text-[#C94B6D] transition-colors">Conditions</Link>
+          <Link href="/conditions" className="hover:text-[#5a3575] transition-colors">Conditions</Link>
           <span>›</span>
-          <span className="text-[#C94B6D] font-medium">PCOS</span>
+          <span className="text-[#5a3575] font-medium">PCOS</span>
         </nav>
 
         {/* Hero */}
         <div className="mb-12">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#C94B6D] border border-[#C94B6D]/30 bg-[#C94B6D]/5 rounded-full px-4 py-1.5 mb-5">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#5a3575] border border-[#5a3575]/30 bg-[#5a3575]/5 rounded-full px-4 py-1.5 mb-5">
             PCOS
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-5">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-5">
             Cycle tracking built for PCOS
           </h1>
-          <p className="text-lg text-[#8C6B5A] leading-relaxed">
+          <p className="text-lg text-[#3d2855] leading-relaxed">
             PCOS makes standard cycle tracking almost useless. Dawn Phase is designed for irregular cycles, longer phases, and the specific symptoms that come with polycystic ovary syndrome — from anovulatory cycles to androgen-driven skin and hair changes.
           </p>
         </div>
 
         {/* Features */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-6">How Dawn Phase helps with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mb-6">How Dawn Phase helps with PCOS</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {FEATURES.map((f) => (
-              <div key={f.title} className="bg-white rounded-2xl p-5 border border-[rgba(232,99,122,0.15)] shadow-sm">
-                <h3 className="font-semibold text-[#C94B6D] mb-2 text-sm">{f.title}</h3>
-                <p className="text-sm text-[#8C6B5A] leading-relaxed">{f.body}</p>
+              <div key={f.title} className="bg-white rounded-2xl p-5 border border-[rgba(130,80,170,0.15)] shadow-sm">
+                <h3 className="font-semibold text-[#5a3575] mb-2 text-sm">{f.title}</h3>
+                <p className="text-sm text-[#3d2855] leading-relaxed">{f.body}</p>
               </div>
             ))}
           </div>
@@ -252,8 +252,8 @@ export default function PCOSConditionPage() {
 
         {/* ── PCOS Blog Posts ─────────────────────────────────────────────── */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-2">PCOS tracking guides</h2>
-          <p className="text-sm text-[#8C6B5A] mb-6">
+          <h2 className="text-2xl font-bold text-[#140c18] mb-2">PCOS tracking guides</h2>
+          <p className="text-sm text-[#3d2855] mb-6">
             Everything you need to understand and track your cycle with PCOS.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -261,13 +261,13 @@ export default function PCOSConditionPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group block bg-white rounded-2xl p-5 border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 transition-all duration-150"
+                className="group block bg-white rounded-2xl p-5 border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 transition-all duration-150"
               >
-                <span className="text-[10px] font-semibold text-[#E8637A] uppercase tracking-widest mb-2 inline-block">{post.readTime} read</span>
-                <h3 className="text-sm font-semibold text-[#2D1B1E] group-hover:text-[#C94B6D] leading-snug mb-2 transition-colors">
+                <span className="text-[10px] font-semibold text-[#c94f68] uppercase tracking-widest mb-2 inline-block">{post.readTime} read</span>
+                <h3 className="text-sm font-semibold text-[#140c18] group-hover:text-[#5a3575] leading-snug mb-2 transition-colors">
                   {post.title}
                 </h3>
-                <p className="text-xs text-[#8C6B5A] leading-relaxed line-clamp-3">{post.excerpt}</p>
+                <p className="text-xs text-[#3d2855] leading-relaxed line-clamp-3">{post.excerpt}</p>
               </Link>
             ))}
           </div>
@@ -276,14 +276,14 @@ export default function PCOSConditionPage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 transition-all duration-150 group"
+                className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 transition-all duration-150 group"
               >
                 <div className="flex-1 min-w-0">
-                  <span className="text-sm font-medium text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors leading-snug">
+                  <span className="text-sm font-medium text-[#140c18] group-hover:text-[#5a3575] transition-colors leading-snug">
                     {post.title}
                   </span>
                 </div>
-                <span className="text-[#E8637A] text-sm shrink-0 ml-3">→</span>
+                <span className="text-[#c94f68] text-sm shrink-0 ml-3">→</span>
               </Link>
             ))}
           </div>
@@ -291,28 +291,28 @@ export default function PCOSConditionPage() {
 
         {/* Related symptoms */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-5">Common PCOS symptoms to track</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mb-5">Common PCOS symptoms to track</h2>
           <div className="space-y-3">
             {RELATED_SYMPTOMS.map((sym) => (
               <Link
                 key={sym.slug}
                 href={`/symptoms/${sym.slug}`}
-                className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 transition-all duration-150 group"
+                className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 transition-all duration-150 group"
               >
-                <span className="text-sm font-medium text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors">
+                <span className="text-sm font-medium text-[#140c18] group-hover:text-[#5a3575] transition-colors">
                   {sym.name}
                 </span>
-                <span className="text-[#E8637A] text-sm">→</span>
+                <span className="text-[#c94f68] text-sm">→</span>
               </Link>
             ))}
           </div>
-          <p className="text-xs text-[#8C6B5A] mt-3">
+          <p className="text-xs text-[#3d2855] mt-3">
             Also useful:{" "}
-            <Link href="/tools/ovulation-calculator" className="text-[#E8637A] hover:underline font-medium">Ovulation calculator</Link>
+            <Link href="/tools/ovulation-calculator" className="text-[#c94f68] hover:underline font-medium">Ovulation calculator</Link>
             {" · "}
-            <Link href="/luteal-phase-calculator" className="text-[#E8637A] hover:underline font-medium">Luteal phase calculator</Link>
+            <Link href="/luteal-phase-calculator" className="text-[#c94f68] hover:underline font-medium">Luteal phase calculator</Link>
             {" · "}
-            <Link href="/tools/pms-tracker" className="text-[#E8637A] hover:underline font-medium">PMS symptom checker</Link>
+            <Link href="/tools/pms-tracker" className="text-[#c94f68] hover:underline font-medium">PMS symptom checker</Link>
           </p>
         </section>
 
@@ -320,17 +320,17 @@ export default function PCOSConditionPage() {
         <section className="mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-[#2D1B1E]">PCOS cycle tracking checklist</h2>
-              <p className="text-sm text-[#8C6B5A] mt-1">
+              <h2 className="text-2xl font-bold text-[#140c18]">PCOS cycle tracking checklist</h2>
+              <p className="text-sm text-[#3d2855] mt-1">
                 A reference card for daily logging. Takes ~2 minutes a day.
               </p>
             </div>
             <PCOSPrintButton />
           </div>
 
-          <div className="bg-white rounded-2xl border border-[rgba(232,99,122,0.2)] shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-[rgba(130,80,170,0.2)] shadow-sm overflow-hidden">
             {/* Checklist header */}
-            <div className="px-6 py-4 bg-gradient-to-r from-[#E8637A] to-[#F4956A]">
+            <div className="px-6 py-4 bg-gradient-to-r from-[#c94f68] to-[#e06e40]">
               <p className="text-white font-bold text-sm tracking-wide uppercase">Daily log — PCOS edition</p>
               <p className="text-white/70 text-xs mt-0.5">Complete this every day, even between periods</p>
             </div>
@@ -338,13 +338,13 @@ export default function PCOSConditionPage() {
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
               {CHECKLIST_SECTIONS.map((section) => (
                 <div key={section.heading}>
-                  <p className="text-xs font-bold text-[#C94B6D] uppercase tracking-widest mb-3">
+                  <p className="text-xs font-bold text-[#5a3575] uppercase tracking-widest mb-3">
                     {section.heading}
                   </p>
                   <ul className="space-y-2">
                     {section.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm text-[#2D1B1E]">
-                        <span className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 border-[rgba(232,99,122,0.4)] inline-block" aria-hidden />
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-[#140c18]">
+                        <span className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 border-[rgba(130,80,170,0.4)] inline-block" aria-hidden />
                         <span className="leading-snug">{item}</span>
                       </li>
                     ))}
@@ -355,14 +355,14 @@ export default function PCOSConditionPage() {
 
             {/* Monthly review */}
             <div className="px-6 pb-6">
-              <div className="border-t border-[rgba(232,99,122,0.12)] pt-5">
-                <p className="text-xs font-bold text-[#C94B6D] uppercase tracking-widest mb-3">
+              <div className="border-t border-[rgba(130,80,170,0.12)] pt-5">
+                <p className="text-xs font-bold text-[#5a3575] uppercase tracking-widest mb-3">
                   Monthly review — at end of each cycle
                 </p>
                 <ul className="space-y-2">
                   {MONTHLY_CHECKLIST.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-[#2D1B1E]">
-                      <span className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 border-[rgba(232,99,122,0.4)] inline-block" aria-hidden />
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-[#140c18]">
+                      <span className="shrink-0 mt-0.5 w-4 h-4 rounded border-2 border-[rgba(130,80,170,0.4)] inline-block" aria-hidden />
                       <span className="leading-snug">{item}</span>
                     </li>
                   ))}
@@ -370,8 +370,8 @@ export default function PCOSConditionPage() {
               </div>
             </div>
 
-            <div className="px-6 py-3 bg-[#FDF6F0] border-t border-[rgba(232,99,122,0.12)]">
-              <p className="text-xs text-[#8C6B5A]">
+            <div className="px-6 py-3 bg-[#f4e6f0] border-t border-[rgba(130,80,170,0.12)]">
+              <p className="text-xs text-[#3d2855]">
                 Track 3–6 months to see meaningful PCOS patterns. Log daily even when nothing seems to be happening.
               </p>
             </div>
@@ -379,7 +379,7 @@ export default function PCOSConditionPage() {
         </section>
 
         {/* ── Email capture ─────────────────────────────────────────────── */}
-        <section className="mb-12 rounded-2xl overflow-hidden" style={{ background: "linear-gradient(135deg, #C94B6D, #E8637A)" }}>
+        <section className="mb-12 rounded-2xl overflow-hidden" style={{ background: "linear-gradient(135deg, #5a3575, #c94f68)" }}>
           <div className="p-8">
             <div className="flex flex-col sm:flex-row sm:items-start sm:gap-8 gap-5">
               <div className="flex-1">
@@ -409,25 +409,25 @@ export default function PCOSConditionPage() {
 
         {/* ── FAQ ───────────────────────────────────────────────────────── */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-2">Frequently asked questions</h2>
-          <p className="text-sm text-[#8C6B5A] mb-6">Common questions from the PCOS community about cycle tracking.</p>
+          <h2 className="text-2xl font-bold text-[#140c18] mb-2">Frequently asked questions</h2>
+          <p className="text-sm text-[#3d2855] mb-6">Common questions from the PCOS community about cycle tracking.</p>
           <div className="space-y-3">
             {FAQS.map((faq) => (
               <details
                 key={faq.q}
-                className="group rounded-2xl border border-[rgba(232,99,122,0.15)] bg-white overflow-hidden"
+                className="group rounded-2xl border border-[rgba(130,80,170,0.15)] bg-white overflow-hidden"
               >
                 <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none">
-                  <span className="font-semibold text-[#C94B6D] text-sm leading-snug">{faq.q}</span>
+                  <span className="font-semibold text-[#5a3575] text-sm leading-snug">{faq.q}</span>
                   <span
-                    className="shrink-0 w-6 h-6 rounded-full bg-[#E8637A]/10 text-[#E8637A] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
+                    className="shrink-0 w-6 h-6 rounded-full bg-[#c94f68]/10 text-[#c94f68] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
                     aria-hidden
                   >
                     +
                   </span>
                 </summary>
                 <div className="px-6 pb-5 pt-1">
-                  <p className="text-sm text-[#8C6B5A] leading-relaxed">{faq.a}</p>
+                  <p className="text-sm text-[#3d2855] leading-relaxed">{faq.a}</p>
                 </div>
               </details>
             ))}
@@ -437,7 +437,7 @@ export default function PCOSConditionPage() {
         {/* CTA */}
         <div
           className="rounded-2xl p-8 text-center text-white mb-8"
-          style={{ background: "linear-gradient(135deg, #E8637A, #A855C8)" }}
+          style={{ background: "linear-gradient(135deg, #c94f68, #7a2daa)" }}
         >
           <h3 className="text-2xl font-bold mb-2">Start tracking PCOS symptoms free</h3>
           <p className="mb-6 opacity-90 text-sm leading-relaxed">
@@ -445,13 +445,13 @@ export default function PCOSConditionPage() {
           </p>
           <a
             href="/signup"
-            className="inline-block bg-white text-[#E8637A] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
+            className="inline-block bg-white text-[#c94f68] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
           >
             Start your free trial →
           </a>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center">
+        <p className="text-xs text-[#3d2855] text-center">
           This content is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment.
         </p>
       </main>

@@ -2,15 +2,17 @@
 
 @theme {
   /* ── Primary palette ───────────────────────────────────────────── */
-  --color-dawn-rose:     #E8637A;   /* coral pink  — buttons, accents  */
-  --color-dawn-purple:   #F4956A;   /* peach       — gradient partner  */
-  --color-dawn-warm:     #FDF6F0;   /* cream       — alt section bg    */
+  --color-dawn-rose:     #c94f68;   /* coral pink  — buttons, accents  */
+  --color-dawn-purple:   #e06e40;   /* warm peach  — gradient partner  */
+  --color-dawn-warm:     #f4e6f0;   /* lavender-pink — alt section bg  */
   --color-dawn-charcoal: #2D1B1E;   /* dark        — footer/dark bg    */
 
   /* ── Extended palette ─────────────────────────────────────────── */
-  --color-dp-deeprose:   #C94B6D;   /* deep rose   — all headlines     */
-  --color-dp-taupe:      #8C6B5A;   /* warm taupe  — body / subtext    */
-  --color-dp-cream-lt:   #FFF9F6;   /* light cream — "white" sections  */
+  --color-dp-deeprose:   #140c18;   /* near-black plum — all headlines */
+  --color-dp-taupe:      #3d2855;   /* dark plum   — body / subtext    */
+  --color-dp-cream-lt:   #ede8f7;   /* soft lavender — "white" sections*/
+  --color-dp-muted:      #7a5a8a;   /* muted plum  — microcopy/subtle  */
+  --color-dp-pill:       #5a3575;   /* medium plum — trust pill text   */
 
   /* ── Font families ────────────────────────────────────────────── */
   --font-family-display: var(--font-sora, "Sora", system-ui, sans-serif);

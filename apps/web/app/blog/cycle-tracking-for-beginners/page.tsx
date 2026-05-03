@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="How to Start Tracking Your Cycle — A Beginner's Guide"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-27"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           How to Start Tracking Your Cycle — A Beginner&apos;s Guide
         </h1>
 
@@ -47,12 +47,12 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only. Cycle tracking is not a reliable method of contraception. If you have concerns about your cycle, consult a healthcare provider.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             Cycle tracking sounds more complicated than it is. You don&apos;t need a science background, a specific app, or a &quot;perfect&quot; 28-day cycle to start. You just need to know what to log — and the habit of logging it. This guide covers everything you need from day one.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What is a menstrual cycle?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What is a menstrual cycle?</h2>
 
           <p>
             Your menstrual cycle is measured from day 1 of one period to day 1 of the next. Day 1 is always the first day of full flow — not spotting. The average cycle length is somewhere between 21 and 35 days, but individual variation is wide and completely normal. A &quot;28-day cycle&quot; is a statistical average, not a rule. Many people have cycles of 32 days, or 26 days, or cycles that vary by a few days from month to month — all of which can be perfectly healthy.
@@ -61,7 +61,7 @@ export default function Post() {
             Understanding your own cycle length — rather than comparing it to an average — is the whole point of tracking. After three to four cycles of logging, you&apos;ll have a real baseline that&apos;s specific to your body, not a textbook.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">The four phases — a quick overview</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">The four phases — a quick overview</h2>
 
           <p>
             Your cycle has four distinct hormonal phases. Each one has a different hormonal profile, which means your energy, mood, and physical experience shift predictably across the month — even if you&apos;ve never noticed it before.
@@ -86,12 +86,12 @@ export default function Post() {
                 items: ["Progesterone rises after ovulation", "Mood and energy may dip in the second half", "PMS symptoms typically appear here", "Ends when the period begins"],
               },
             ].map((block) => (
-              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D] mb-2">{block.cat}</p>
+              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575] mb-2">{block.cat}</p>
                 <ul className="space-y-1">
                   {block.items.map((item) => (
-                    <li key={item} className="text-sm text-[#8C6B5A] flex items-start gap-1.5">
-                      <span className="text-[#E8637A] shrink-0">·</span>{item}
+                    <li key={item} className="text-sm text-[#3d2855] flex items-start gap-1.5">
+                      <span className="text-[#c94f68] shrink-0">·</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -103,7 +103,7 @@ export default function Post() {
             You don&apos;t need to memorise these phases on day one. After a couple of cycles of logging, you&apos;ll start to see your own version of this pattern emerge from your data.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to track from day one</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to track from day one</h2>
 
           <p>
             Start simple. The single most important data point is your period start date — everything else is calculated from that. From there, build up gradually:
@@ -119,7 +119,7 @@ export default function Post() {
             You do not need to log all of these perfectly from day one. Period dates plus one or two symptoms is enough to start building a useful picture.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to actually start</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to actually start</h2>
 
           <p>
             The most common beginner mistake is waiting for the &quot;right moment&quot; — the start of a new cycle, the first of the month, or until a new app is set up perfectly. Don&apos;t wait.
@@ -131,7 +131,7 @@ export default function Post() {
             Consistency beats perfection. A daily log with occasional gaps is more useful than no log at all. Even logging three data points a day — period status, mood, energy — builds a meaningful pattern over time.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What patterns emerge after 3 cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What patterns emerge after 3 cycles</h2>
 
           <p>
             Three cycles of consistent logging typically reveals the following:
@@ -148,7 +148,7 @@ export default function Post() {
             This data is also genuinely useful at GP or gynaecology appointments. Rather than saying &quot;my periods are sometimes irregular,&quot; you&apos;ll be able to say &quot;my cycles range from 27 to 34 days, my period lasts 5 days with heavy flow on days 2–3, and I experience significant fatigue in the week before my period.&quot; That level of specificity makes a clinical difference.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Common beginner mistakes</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Common beginner mistakes</h2>
 
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Only tracking during your period.</strong> The most revealing data often comes from between periods — the ovulatory and luteal phases. Log every day, even if the entry is &quot;nothing notable.&quot;</li>
@@ -159,7 +159,7 @@ export default function Post() {
           </ul>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

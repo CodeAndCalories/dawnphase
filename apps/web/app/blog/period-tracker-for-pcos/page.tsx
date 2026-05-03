@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Best Period Tracker App for PCOS in 2026"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Best Period Tracker App for PCOS in 2026
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             If you have PCOS, you have probably tried a period tracking app and found it unhelpful — or actively misleading. That&apos;s not a you problem. Most tracking apps are built around a regular 28-day cycle, and PCOS doesn&apos;t work that way. Here&apos;s what to look for instead.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why standard period trackers fail with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why standard period trackers fail with PCOS</h2>
           <p>
             Most period tracking apps use a simple algorithm: take your average cycle length and add it to your last period date to predict the next one. If your cycles are 28 days, that works reasonably well. If your cycles are 45 days, 60 days, or unpredictably absent, the prediction is not just inaccurate — it actively undermines trust in tracking.
           </p>
@@ -63,7 +63,7 @@ export default function Post() {
             PCOS involves hormonal patterns that standard apps aren&apos;t designed to handle. Many PCOS cycles are anovulatory (no ovulation occurs), which means there is no progesterone surge, no predictable luteal phase, and the bleed that eventually arrives may not follow any expected timeline. An app that keeps flashing alerts about a &ldquo;late period&rdquo; for 40 days is not useful.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What PCOS tracking actually needs</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What PCOS tracking actually needs</h2>
           <div className="space-y-4">
             {[
               { title: "Flexible cycle length handling", desc: "The app should record what happens without assuming a 28-day model. Cycles of 35, 60, or 90+ days should be logged accurately, not flagged as errors." },
@@ -72,14 +72,14 @@ export default function Post() {
               { title: "Androgen-related symptom tracking", desc: "Acne, scalp hair thinning, and unwanted hair growth are common PCOS symptoms that most basic period trackers don't capture. These patterns matter for monitoring and for clinical conversations." },
               { title: "Long-term data export", desc: "PCOS management often involves monitoring over months or years. Being able to export your symptom history as a CSV or shareable report is practically important." },
             ].map(({ title, desc }) => (
-              <div key={title} className="bg-[#FDF6F0] rounded-xl p-4 border border-[rgba(232,99,122,0.08)]">
-                <p className="font-semibold text-[#C94B6D]">{title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{desc}</p>
+              <div key={title} className="bg-[#f4e6f0] rounded-xl p-4 border border-[rgba(130,80,170,0.08)]">
+                <p className="font-semibold text-[#5a3575]">{title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase handles irregular cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase handles irregular cycles</h2>
           <p>
             Dawn Phase calculates your cycle day from your logged period start date and does not assume a 28-day model. Predictions update as new data comes in, and the symptom log works independently of cycle phase assignment — so your daily logging continues to build useful data even in months where phase tracking is uncertain.
           </p>
@@ -87,10 +87,10 @@ export default function Post() {
             The app doesn&apos;t break when you skip a month, have a 60-day cycle, or log two periods close together. It simply records what you log and refines its understanding of your individual pattern over time. You can export your full history as a CSV at any time, and generate a doctor-ready report from Settings.
           </p>
           <p>
-            Use our free <Link href="/cycle-calculator" className="text-[#E8637A] hover:underline font-medium">cycle length calculator</Link> to get a starting estimate of your average cycle.
+            Use our free <Link href="/cycle-calculator" className="text-[#c94f68] hover:underline font-medium">cycle length calculator</Link> to get a starting estimate of your average cycle.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Tips for tracking with unpredictable cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Tips for tracking with unpredictable cycles</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Log every day, not just around your period.</strong> With PCOS, patterns appear in symptom clusters and energy data, not just cycle timing.</li>
             <li><strong>Note cycle characteristics alongside dates.</strong> Is this a lighter bleed than usual? Did you have any mid-cycle mucus changes? These details add clinical value.</li>
@@ -98,7 +98,7 @@ export default function Post() {
             <li><strong>Log stress, sleep, and dietary changes.</strong> These factors particularly affect PCOS cycle timing. Noting them alongside period data reveals connections over time.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When tracking data helps at doctor appointments</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When tracking data helps at doctor appointments</h2>
           <p>
             A longitudinal symptom log is one of the most useful things you can bring to a GP, gynaecologist, or endocrinologist when managing PCOS. Being able to show six months of cycle dates, symptom patterns, and how they have or haven&apos;t changed in response to treatment provides clinical context that memory alone cannot.
           </p>
@@ -108,7 +108,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

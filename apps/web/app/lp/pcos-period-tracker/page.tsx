@@ -52,7 +52,7 @@ const FAQS = [
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <ArticleSchema
         title={TITLE}
         description={DESCRIPTION}
@@ -63,10 +63,10 @@ export default function Page() {
       <FAQSchema questions={FAQS.map((f) => ({ question: f.q, answer: f.a }))} />
 
       {/* ── Logo bar ─────────────────────────────────────────────────────── */}
-      <header className="px-6 py-5 flex justify-center border-b border-[rgba(232,99,122,0.1)]">
+      <header className="px-6 py-5 flex justify-center border-b border-[rgba(130,80,170,0.1)]">
         <a href="/" className="flex items-center gap-2.5">
           <Image src="/logo.png" alt="Dawn Phase" width={32} height={32} className="rounded-lg" />
-          <span className="font-bold text-base text-[#2D1B1E] tracking-tight">Dawn Phase</span>
+          <span className="font-bold text-base text-[#140c18] tracking-tight">Dawn Phase</span>
         </a>
       </header>
 
@@ -74,30 +74,30 @@ export default function Page() {
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <div className="text-center mb-12">
-          <span className="inline-block text-xs font-bold tracking-widest uppercase text-[#E8637A] border border-[#E8637A]/30 bg-[#E8637A]/5 rounded-full px-4 py-1.5 mb-6">
+          <span className="inline-block text-xs font-bold tracking-widest uppercase text-[#c94f68] border border-[#c94f68]/30 bg-[#c94f68]/5 rounded-full px-4 py-1.5 mb-6">
             Built for PCOS
           </span>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#2D1B1E] leading-tight tracking-tight mb-5">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight tracking-tight mb-5">
             Finally, a Period Tracker Built for PCOS
           </h1>
 
-          <p className="text-lg text-[#8C6B5A] leading-relaxed">
+          <p className="text-lg text-[#3d2855] leading-relaxed">
             Irregular cycles, unpredictable periods, and symptoms that standard
             apps ignore. Dawn Phase was built for this.
           </p>
         </div>
 
         {/* ── PCOS features ────────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-[rgba(232,99,122,0.15)] p-7 mb-8 shadow-sm">
-          <p className="text-xs font-bold text-[#8C6B5A] uppercase tracking-widest mb-5">
+        <div className="bg-white rounded-2xl border border-[rgba(130,80,170,0.15)] p-7 mb-8 shadow-sm">
+          <p className="text-xs font-bold text-[#3d2855] uppercase tracking-widest mb-5">
             What Dawn Phase does differently for PCOS
           </p>
           <ul className="space-y-4">
             {FEATURES.map((feat) => (
               <li key={feat} className="flex items-start gap-3">
-                <span className="text-[#E8637A] font-bold text-lg shrink-0 leading-snug">✓</span>
-                <span className="text-[#2D1B1E] leading-snug">{feat}</span>
+                <span className="text-[#c94f68] font-bold text-lg shrink-0 leading-snug">✓</span>
+                <span className="text-[#140c18] leading-snug">{feat}</span>
               </li>
             ))}
           </ul>
@@ -106,44 +106,44 @@ export default function Page() {
         {/* ── Social proof callout ─────────────────────────────────────────── */}
         <div
           className="rounded-2xl p-6 mb-8 text-center"
-          style={{ background: "linear-gradient(135deg, #FFF0F0, #FDF6F0)" }}
+          style={{ background: "linear-gradient(135deg, #FFF0F0, #f4e6f0)" }}
         >
-          <p className="text-sm font-semibold text-[#C94B6D] leading-relaxed">
+          <p className="text-sm font-semibold text-[#5a3575] leading-relaxed">
             "Built specifically for women with irregular cycles and PCOS"
           </p>
-          <p className="text-xs text-[#8C6B5A] mt-2">
+          <p className="text-xs text-[#3d2855] mt-2">
             Supports cycles of any length · No assumptions · No broken predictions
           </p>
         </div>
 
         {/* ── Pricing + CTA ────────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-[rgba(232,99,122,0.2)] bg-white p-8 mb-12 shadow-md text-center">
-          <p className="text-sm font-semibold text-[#8C6B5A] uppercase tracking-widest mb-2">
+        <div className="rounded-2xl border border-[rgba(130,80,170,0.2)] bg-white p-8 mb-12 shadow-md text-center">
+          <p className="text-sm font-semibold text-[#3d2855] uppercase tracking-widest mb-2">
             Simple pricing
           </p>
-          <p className="text-3xl font-bold text-[#2D1B1E] mb-1">
-            $14.99<span className="text-base font-normal text-[#8C6B5A]">/month</span>
+          <p className="text-3xl font-bold text-[#140c18] mb-1">
+            $14.99<span className="text-base font-normal text-[#3d2855]">/month</span>
           </p>
-          <p className="text-sm text-[#8C6B5A] mb-7">
-            7-day free trial — <strong className="text-[#2D1B1E]">no card required</strong> to start
+          <p className="text-sm text-[#3d2855] mb-7">
+            7-day free trial — <strong className="text-[#140c18]">no card required</strong> to start
           </p>
 
           <a
             href="/signup"
-            className="block w-full rounded-full py-4 text-base font-bold text-white text-center transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-[#E8637A]/30"
-            style={{ background: "linear-gradient(135deg, #E8637A, #C94B6D)" }}
+            className="block w-full rounded-full py-4 text-base font-bold text-white text-center transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-[#c94f68]/30"
+            style={{ background: "linear-gradient(135deg, #c94f68, #5a3575)" }}
           >
             Start tracking my PCOS cycle free →
           </a>
 
-          <p className="mt-4 text-xs text-[#8C6B5A]">
+          <p className="mt-4 text-xs text-[#3d2855]">
             No credit card until day 8 · Cancel anytime · Your data stays yours
           </p>
         </div>
 
         {/* ── How it handles PCOS ──────────────────────────────────────────── */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-[#C94B6D] mb-5">
+          <h2 className="text-xl font-bold text-[#140c18] mb-5">
             How Dawn Phase handles PCOS differently
           </h2>
           <div className="space-y-4">
@@ -163,10 +163,10 @@ export default function Page() {
             ].map(({ title, body }) => (
               <div
                 key={title}
-                className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-5"
+                className="bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] p-5"
               >
-                <p className="font-semibold text-[#C94B6D] mb-1.5">{title}</p>
-                <p className="text-sm text-[#8C6B5A] leading-relaxed">{body}</p>
+                <p className="font-semibold text-[#5a3575] mb-1.5">{title}</p>
+                <p className="text-sm text-[#3d2855] leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -174,24 +174,24 @@ export default function Page() {
 
         {/* ── FAQ ──────────────────────────────────────────────────────────── */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold text-[#C94B6D] mb-5">Common questions</h2>
+          <h2 className="text-xl font-bold text-[#140c18] mb-5">Common questions</h2>
           <div className="space-y-3">
             {FAQS.map(({ q, a }) => (
               <details
                 key={q}
-                className="group rounded-2xl border border-[rgba(232,99,122,0.15)] bg-white overflow-hidden"
+                className="group rounded-2xl border border-[rgba(130,80,170,0.15)] bg-white overflow-hidden"
               >
                 <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none">
-                  <span className="font-semibold text-[#C94B6D] text-sm leading-snug">{q}</span>
+                  <span className="font-semibold text-[#5a3575] text-sm leading-snug">{q}</span>
                   <span
-                    className="shrink-0 w-6 h-6 rounded-full bg-[#E8637A]/10 text-[#E8637A] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
+                    className="shrink-0 w-6 h-6 rounded-full bg-[#c94f68]/10 text-[#c94f68] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
                     aria-hidden
                   >
                     +
                   </span>
                 </summary>
                 <div className="px-6 pb-5 pt-1">
-                  <p className="text-[#8C6B5A] text-sm leading-relaxed">{a}</p>
+                  <p className="text-[#3d2855] text-sm leading-relaxed">{a}</p>
                 </div>
               </details>
             ))}
@@ -202,20 +202,20 @@ export default function Page() {
         <div className="text-center">
           <a
             href="/signup"
-            className="inline-block rounded-full px-10 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-[#E8637A]/30"
-            style={{ background: "linear-gradient(135deg, #E8637A, #C94B6D)" }}
+            className="inline-block rounded-full px-10 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-[#c94f68]/30"
+            style={{ background: "linear-gradient(135deg, #c94f68, #5a3575)" }}
           >
             Start tracking my PCOS cycle free →
           </a>
-          <p className="mt-3 text-xs text-[#8C6B5A]">7 days free · No card required</p>
+          <p className="mt-3 text-xs text-[#3d2855]">7 days free · No card required</p>
         </div>
       </main>
 
-      <div className="py-6 text-center text-xs text-[#8C6B5A] border-t border-[rgba(232,99,122,0.1)]">
+      <div className="py-6 text-center text-xs text-[#3d2855] border-t border-[rgba(130,80,170,0.1)]">
         © 2026 Dawn Phase ·{" "}
-        <a href="/privacy" className="hover:text-[#C94B6D] transition-colors">Privacy Policy</a>
+        <a href="/privacy" className="hover:text-[#5a3575] transition-colors">Privacy Policy</a>
         {" "}·{" "}
-        <a href="/terms" className="hover:text-[#C94B6D] transition-colors">Terms</a>
+        <a href="/terms" className="hover:text-[#5a3575] transition-colors">Terms</a>
       </div>
     </div>
   );

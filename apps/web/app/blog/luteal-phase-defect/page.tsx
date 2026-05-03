@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Luteal Phase Defect — Signs, Causes and How to Track It"
@@ -35,15 +35,15 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>May 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Luteal Phase Defect — Signs, Causes and How to Track It
         </h1>
 
@@ -52,13 +52,13 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and does not constitute medical advice. Only a doctor can diagnose luteal phase defect. Research in this area is ongoing — where evidence is limited, this article uses &ldquo;research suggests&rdquo; framing to reflect that uncertainty. Dawn Phase is not a medical device. Always consult a qualified healthcare professional for fertility concerns.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             If your cycles are on the short side, you spot before your period, or you&apos;ve had difficulty conceiving despite regular ovulation, luteal phase defect may be worth understanding. It&apos;s a condition that cycle tracking can help identify — though diagnosis and treatment always require clinical assessment.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What luteal phase defect is</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What luteal phase defect is</h2>
 
           <p>
             The luteal phase is the second half of the menstrual cycle — the period between ovulation and the start of your next period. During this phase, the corpus luteum (the remnant of the follicle that released the egg) produces progesterone. Progesterone prepares the uterine lining for potential implantation and, if pregnancy doesn&apos;t occur, its withdrawal triggers menstruation.
@@ -70,7 +70,7 @@ export default function Post() {
             Research suggests that a persistently short luteal phase may impair the uterine environment enough to make implantation more difficult, though the relationship between LPD and infertility is more complex than early studies indicated. A short luteal phase across multiple cycles is worth investigating; a single short cycle is not necessarily meaningful.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Common signs and symptoms</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Common signs and symptoms</h2>
 
           <p>
             Luteal phase defect often presents with a recognisable cluster of symptoms. These can overlap with other conditions, which is why clinical testing is necessary for diagnosis — but they are useful flags to watch for in your tracking data:
@@ -95,19 +95,19 @@ export default function Post() {
                 desc: "If PMS symptoms — bloating, mood changes, breast tenderness — begin more than two weeks before your period, this may reflect an extended transition from the mid-luteal progesterone peak to the pre-menstrual drop.",
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{item.title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{item.desc}</p>
+              <div key={item.title} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{item.title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <p>
             For more on what luteal phase symptoms look and feel like, see our guide on{" "}
-            <Link href="/symptoms/fatigue-luteal-phase" className="text-[#E8637A] hover:underline font-medium">fatigue in the luteal phase</Link>.
+            <Link href="/symptoms/fatigue-luteal-phase" className="text-[#c94f68] hover:underline font-medium">fatigue in the luteal phase</Link>.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Hormonal causes</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Hormonal causes</h2>
 
           <p>
             Luteal phase defect is fundamentally a progesterone problem — but the cause of that progesterone insufficiency can originate at several points in the hormonal cascade:
@@ -120,7 +120,7 @@ export default function Post() {
             <li><strong>High prolactin.</strong> Elevated prolactin (hyperprolactinaemia) — from a pituitary adenoma, thyroid disorder, or certain medications — suppresses LH and can directly impair corpus luteum function.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How tracking cycle length and symptoms helps</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How tracking cycle length and symptoms helps</h2>
 
           <p>
             Identifying a short luteal phase requires knowing when ovulation occurred — which means cycle tracking is the essential first step. Without a confirmed ovulation date, you can&apos;t calculate luteal phase length, and without luteal phase length data across multiple cycles, neither you nor a clinician can assess whether LPD is likely.
@@ -138,7 +138,7 @@ export default function Post() {
             Alongside BBT, log premenstrual symptoms daily. If you can consistently document that spotting begins 2 days before your period, or that your temperature drops and period starts within 10 days of your ovulation temperature rise, that log gives your doctor something concrete to work with.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase for luteal phase tracking</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase for luteal phase tracking</h2>
 
           <p>
             Dawn Phase tracks your luteal phase length automatically once you log your period dates and BBT readings. It calculates the current cycle day in real time, and when your temperature rise is logged, can display your estimated post-ovulatory day count.
@@ -148,11 +148,11 @@ export default function Post() {
           </p>
           <p>
             Use our free{" "}
-            <Link href="/luteal-phase-calculator" className="text-[#E8637A] hover:underline font-medium">luteal phase calculator</Link>{" "}
+            <Link href="/luteal-phase-calculator" className="text-[#c94f68] hover:underline font-medium">luteal phase calculator</Link>{" "}
             to estimate your luteal phase length from your last cycle.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a doctor</h2>
 
           <p>
             Only a doctor can diagnose luteal phase defect. If your tracking data suggests a consistently short luteal phase (under 10 days across three or more cycles), see your GP or gynaecologist. Clinical assessment typically includes:
@@ -169,7 +169,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice. Only a doctor can diagnose luteal phase defect.
         </p>
 

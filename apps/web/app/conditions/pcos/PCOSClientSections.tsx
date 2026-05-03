@@ -13,7 +13,7 @@ export function PCOSPrintButton() {
     <button
       type="button"
       onClick={() => window.print()}
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-[#E8637A] text-[#E8637A] text-sm font-semibold hover:bg-[#E8637A] hover:text-white transition-all"
+      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border-2 border-[#c94f68] text-[#c94f68] text-sm font-semibold hover:bg-[#c94f68] hover:text-white transition-all"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <polyline points="6 9 6 2 18 2 18 9"/>
@@ -65,13 +65,13 @@ export function PCOSEmailCapture() {
     return (
       <div className="text-center py-4 space-y-2">
         <p className="text-2xl">📬</p>
-        <p className="text-base font-semibold text-[#2D1B1E]">Guide sent! Check your inbox.</p>
-        <p className="text-sm text-[#8C6B5A]">
+        <p className="text-base font-semibold text-[#140c18]">Guide sent! Check your inbox.</p>
+        <p className="text-sm text-[#3d2855]">
           Can&apos;t find it? Check your spam folder, or{" "}
           <button
             type="button"
             onClick={() => { setSubmitted(false); setEmail(""); }}
-            className="text-[#E8637A] underline"
+            className="text-[#c94f68] underline"
           >
             try a different address
           </button>.
@@ -94,7 +94,7 @@ export function PCOSEmailCapture() {
         <button
           type="submit"
           disabled={submitting || !email}
-          className="min-h-[48px] px-6 py-3 rounded-xl bg-white text-[#E8637A] font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50 shrink-0"
+          className="min-h-[48px] px-6 py-3 rounded-xl bg-white text-[#c94f68] font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50 shrink-0"
         >
           {submitting ? "Sending…" : "Send me the guide →"}
         </button>

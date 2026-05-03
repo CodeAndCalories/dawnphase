@@ -38,18 +38,18 @@ export default function LiveStatsBar() {
     : LOADING_ITEMS;
 
   return (
-    <section className="py-10 px-6 bg-[#FDF6F0] border-y border-[rgba(232,99,122,0.12)]">
+    <section className="py-10 px-6 bg-[#f4e6f0] border-y border-[rgba(130,80,170,0.12)]">
       <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-6">
-        <p className="text-sm font-semibold text-[#C94B6D] uppercase tracking-widest text-center">
+        <p className="text-sm font-semibold text-[#5a3575] uppercase tracking-widest text-center">
           Join women who finally understand their cycles
         </p>
         <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16">
           {items.map((item, i) => (
             <div key={i} className="text-center">
-              <p className="text-xl font-bold text-[#2D1B1E] leading-none">
+              <p className="text-xl font-bold text-[#140c18] leading-none">
                 {item.value}
               </p>
-              <p className="text-xs text-[#8C6B5A] mt-1">{item.label}</p>
+              <p className="text-xs text-[#3d2855] mt-1">{item.label}</p>
             </div>
           ))}
         </div>

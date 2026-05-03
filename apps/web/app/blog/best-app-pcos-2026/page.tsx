@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Best Apps for PCOS Management in 2026"
@@ -35,32 +35,32 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>May 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Best Apps for PCOS Management in 2026
         </h1>
 
-        <div className="bg-[#FFF0F0] border border-[rgba(232,99,122,0.2)] rounded-lg p-4 mb-8">
-          <p className="text-sm text-[#C94B6D] font-medium mb-1">Editorial note</p>
-          <p className="text-sm text-[#8C6B5A]">
+        <div className="bg-[#FFF0F0] border border-[rgba(130,80,170,0.2)] rounded-lg p-4 mb-8">
+          <p className="text-sm text-[#5a3575] font-medium mb-1">Editorial note</p>
+          <p className="text-sm text-[#3d2855]">
             This guide discusses app categories useful for PCOS management. It does not make specific claims about third-party apps and does not rank or compare competitors. App features and pricing change — always verify directly with each provider. Dawn Phase is the publisher of this article.
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Managing PCOS is not a single-app problem. The condition involves irregular cycles, hormonal fluctuation, metabolic factors, mood, sleep, and often nutrition — no one app covers all of it well. The most practical approach is to understand what each category of app actually does, choose the best in class for your specific needs, and use them together. Here&apos;s how to think through the options.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What PCOS management apps need to do</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What PCOS management apps need to do</h2>
 
           <p>
             PCOS management is fundamentally about pattern recognition over time. Unlike many health conditions managed with a single intervention, PCOS responds differently in different people — symptoms, triggers, and what helps vary significantly. Apps are useful when they help you build a data record that reveals your personal patterns and supports more productive medical appointments.
@@ -72,7 +72,7 @@ export default function Post() {
             Any app used for PCOS management should handle this reality rather than fighting it.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">App categories for PCOS management</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">App categories for PCOS management</h2>
 
           <div className="space-y-5 my-4">
             {[
@@ -102,15 +102,15 @@ export default function Post() {
                 key: "What to look for: moderated communities, evidence-based content, focus on lived experience rather than unsupported health claims.",
               },
             ].map((item) => (
-              <div key={item.cat} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-5">
-                <p className="font-semibold text-[#C94B6D] mb-2">{item.cat}</p>
-                <p className="text-sm text-[#8C6B5A] leading-relaxed mb-3">{item.desc}</p>
-                <p className="text-xs font-medium text-[#2D1B1E] bg-[#FDF6F0] rounded-lg px-3 py-2">{item.key}</p>
+              <div key={item.cat} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-5">
+                <p className="font-semibold text-[#5a3575] mb-2">{item.cat}</p>
+                <p className="text-sm text-[#3d2855] leading-relaxed mb-3">{item.desc}</p>
+                <p className="text-xs font-medium text-[#140c18] bg-[#f4e6f0] rounded-lg px-3 py-2">{item.key}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to look for specifically in a PCOS cycle tracker</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to look for specifically in a PCOS cycle tracker</h2>
 
           <p>
             Since cycle tracking is the core tool for understanding PCOS patterns, it&apos;s worth going into more detail on what separates a useful PCOS tracker from a generic period app.
@@ -134,14 +134,14 @@ export default function Post() {
             </li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase for PCOS cycle and symptom tracking</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase for PCOS cycle and symptom tracking</h2>
 
           <p>
             Dawn Phase was built specifically for people with cycles that don&apos;t follow the standard model. It supports cycles from 21 to 90+ days, doesn&apos;t produce misleading predictions when cycles are long or absent, and allows daily logging of 40+ symptoms mapped to your actual cycle day.
           </p>
           <p>
             The{" "}
-            <Link href="/conditions/pcos" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">
               PCOS tracking mode
             </Link>{" "}
             surfaces the symptom categories most relevant to PCOS — acne, bloating, energy, mood, weight, hair changes — alongside standard cycle tracking. The insights view shows patterns across multiple cycles and exports as a CSV for medical appointments.
@@ -151,17 +151,17 @@ export default function Post() {
           </p>
           <p>
             For a deeper look at how to use cycle tracking for PCOS specifically, read our guide on{" "}
-            <Link href="/blog/pcos-cycle-tracking" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/blog/pcos-cycle-tracking" className="text-[#c94f68] hover:underline font-medium">
               how to track your cycle with PCOS
             </Link>
             {" "}or our{" "}
-            <Link href="/blog/pcos-symptoms-tracker" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/blog/pcos-symptoms-tracker" className="text-[#c94f68] hover:underline font-medium">
               PCOS symptoms tracker guide
             </Link>
             .
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to use multiple apps together</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to use multiple apps together</h2>
 
           <p>
             No single app will address all aspects of PCOS management, and trying to find one that does often leads to compromise on the things that matter most. A more practical approach is to use two or three specialised tools that each do one thing well.
@@ -173,16 +173,16 @@ export default function Post() {
             The most important thing is consistency. An app you use every day for three months produces far more useful data than a more sophisticated app used sporadically. Start simple, log every day, and review your data before medical appointments. That habit is more valuable than any specific app feature.
           </p>
 
-          <div className="bg-[#FDF6F0] rounded-xl p-5 mt-4 border border-[rgba(232,99,122,0.12)]">
-            <p className="text-sm font-semibold text-[#C94B6D] mb-2">A note on medical advice</p>
-            <p className="text-sm text-[#8C6B5A] leading-relaxed">
+          <div className="bg-[#f4e6f0] rounded-xl p-5 mt-4 border border-[rgba(130,80,170,0.12)]">
+            <p className="text-sm font-semibold text-[#5a3575] mb-2">A note on medical advice</p>
+            <p className="text-sm text-[#3d2855] leading-relaxed">
               No app is a substitute for medical care. PCOS is a complex condition that often requires blood tests, imaging, and ongoing clinical monitoring. Apps can support your self-understanding and help you have more productive appointments — but always discuss your symptoms, tracking data, and any planned lifestyle changes with a qualified healthcare professional.
             </p>
           </div>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

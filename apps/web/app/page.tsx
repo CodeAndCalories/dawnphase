@@ -42,7 +42,7 @@ function CtaButton({
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-30 border-b border-black/5" style={{ background: "rgba(253,246,240,0.9)", backdropFilter: "blur(8px)" }}>
+    <header className="sticky top-0 z-30 border-b border-black/5" style={{ background: "rgba(237,232,247,0.9)", backdropFilter: "blur(8px)" }}>
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0">
@@ -99,10 +99,10 @@ function Hero() {
       className="relative overflow-hidden pt-28 pb-32 px-6"
       style={{
         background: `
-          radial-gradient(ellipse 80% 60% at 10% -10%, #E8637A70 0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 90% 5%,  #F4956A50 0%, transparent 55%),
-          radial-gradient(ellipse 70% 60% at 50% 110%,#E8637A30 0%, transparent 60%),
-          #FDF6F0
+          radial-gradient(ellipse 80% 60% at 10% -10%, #c94f6870 0%, transparent 60%),
+          radial-gradient(ellipse 60% 50% at 90% 5%,  #e06e4050 0%, transparent 55%),
+          radial-gradient(ellipse 70% 60% at 50% 110%,#c94f6830 0%, transparent 60%),
+          #ede8f7
         `,
       }}
     >
@@ -260,7 +260,7 @@ function Features() {
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(130,80,170,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
             >
               <div className="w-11 h-11 rounded-xl bg-dawn-warm flex items-center justify-center mb-4">
                 <f.icon className="w-5 h-5 text-dawn-purple" strokeWidth={1.8} />
@@ -269,7 +269,7 @@ function Features() {
               <p className="text-sm text-dp-taupe leading-relaxed">{f.body}</p>
             </div>
           ))}
-          <div className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+          <div className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(130,80,170,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
             <div className="w-11 h-11 rounded-xl bg-dawn-warm flex items-center justify-center mb-4 text-xl leading-none">
               ✨
             </div>
@@ -304,7 +304,7 @@ const WHY_SWITCH = [
 
 function WhySwitch() {
   return (
-    <section className="py-24 px-6 bg-[#FFF9F6]">
+    <section className="py-24 px-6 bg-[#ede8f7]">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Why women switch</PillLabel>
@@ -317,7 +317,7 @@ function WhySwitch() {
           {WHY_SWITCH.map((card) => (
             <div
               key={card.headline}
-              className="bg-white rounded-2xl p-8 border border-[rgba(232,99,122,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              className="bg-white rounded-2xl p-8 border border-[rgba(130,80,170,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
             >
               <div className="text-3xl mb-5 leading-none">{card.icon}</div>
               <h3 className="font-display text-lg font-semibold text-dp-deeprose mb-3 leading-snug">
@@ -357,7 +357,7 @@ const testimonials = [
 
 function Testimonials() {
   return (
-    <section className="py-24 px-6 bg-[#FDF6F0]">
+    <section className="py-24 px-6 bg-[#f4e6f0]">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Stories</PillLabel>
@@ -370,7 +370,7 @@ function Testimonials() {
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="bg-[#FFF9F6] rounded-2xl p-8 border border-[rgba(232,99,122,0.15)] shadow-md flex flex-col"
+              className="bg-[#ede8f7] rounded-2xl p-8 border border-[rgba(130,80,170,0.15)] shadow-md flex flex-col"
             >
               {/* Stars */}
               <div className="flex gap-0.5 mb-4">
@@ -397,7 +397,7 @@ function Testimonials() {
           ))}
         </div>
 
-        <p className="text-center text-[11px] text-[#8C6B5A]/50 mt-6">
+        <p className="text-center text-[11px] text-[#7a5a8a]/50 mt-6">
           Testimonials are illustrative.
         </p>
       </div>
@@ -420,7 +420,7 @@ function ForWho() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Card 1 */}
-          <div className="rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-md overflow-hidden">
+          <div className="rounded-2xl border border-[rgba(130,80,170,0.15)] shadow-md overflow-hidden">
             <div className="h-2 bg-dawn-rose" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-rose bg-dawn-rose/10 rounded-full px-3 py-1 mb-4">
@@ -447,7 +447,7 @@ function ForWho() {
           </div>
 
           {/* Card 2 */}
-          <div className="rounded-2xl border border-[rgba(232,99,122,0.15)] shadow-md overflow-hidden">
+          <div className="rounded-2xl border border-[rgba(130,80,170,0.15)] shadow-md overflow-hidden">
             <div className="h-2 bg-dawn-purple" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-purple bg-dawn-purple/10 rounded-full px-3 py-1 mb-4">
@@ -513,32 +513,32 @@ const FAQS = [
 
 function FAQ() {
   return (
-    <section className="py-20 px-6 bg-[#FFF9F6]">
+    <section className="py-20 px-6 bg-[#ede8f7]">
       <div className="max-w-[720px] mx-auto">
-        <h2 className="font-display text-3xl font-bold text-[#2D1B1E] text-center mb-10">
+        <h2 className="font-display text-3xl font-bold text-[#140c18] text-center mb-10">
           Common questions
         </h2>
         <div className="space-y-3">
           {FAQS.map(({ q, a }) => (
             <details
               key={q}
-              className="group rounded-2xl border border-[rgba(232,99,122,0.15)] bg-white overflow-hidden"
+              className="group rounded-2xl border border-[rgba(130,80,170,0.15)] bg-white overflow-hidden"
             >
               <summary
                 className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none"
                 // removes default marker in Firefox
               >
-                <span className="font-semibold text-[#C94B6D] text-base leading-snug">{q}</span>
+                <span className="font-semibold text-[#5a3575] text-base leading-snug">{q}</span>
                 {/* Chevron rotates on open via CSS sibling trick isn't available, use pseudo via group */}
                 <span
-                  className="shrink-0 w-6 h-6 rounded-full bg-[#E8637A]/10 text-[#E8637A] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
+                  className="shrink-0 w-6 h-6 rounded-full bg-[#c94f68]/10 text-[#c94f68] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
                   aria-hidden
                 >
                   +
                 </span>
               </summary>
               <div className="px-6 pb-5 pt-1">
-                <p className="text-[#8C6B5A] text-sm leading-relaxed">{a}</p>
+                <p className="text-[#3d2855] text-sm leading-relaxed">{a}</p>
               </div>
             </details>
           ))}
@@ -568,7 +568,7 @@ function RiskReversal() {
           ].map(({ icon, text }) => (
             <div
               key={text}
-              className="flex items-start gap-3 bg-white rounded-2xl p-5 border border-[rgba(232,99,122,0.12)] shadow-sm"
+              className="flex items-start gap-3 bg-white rounded-2xl p-5 border border-[rgba(130,80,170,0.12)] shadow-sm"
             >
               <span className="text-xl shrink-0 leading-none mt-0.5">{icon}</span>
               <span className="text-sm text-dp-taupe leading-relaxed">{text}</span>

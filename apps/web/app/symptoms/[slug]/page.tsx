@@ -55,7 +55,7 @@ export default async function SymptomPage({
   );
 
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <MedicalWebPageSchema
         name={symptom.name}
         description={symptom.description}
@@ -67,7 +67,7 @@ export default async function SymptomPage({
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link
           href="/symptoms"
-          className="text-sm text-[#E8637A] hover:underline mb-8 inline-block"
+          className="text-sm text-[#c94f68] hover:underline mb-8 inline-block"
         >
           ← All symptoms
         </Link>
@@ -81,11 +81,11 @@ export default async function SymptomPage({
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-4">
           {symptom.name}
         </h1>
 
-        <p className="text-lg text-[#8C6B5A] mb-10 leading-relaxed">
+        <p className="text-lg text-[#3d2855] mb-10 leading-relaxed">
           {symptom.description}
         </p>
 
@@ -105,26 +105,26 @@ export default async function SymptomPage({
         <div className="space-y-8">
           {/* Causes */}
           <section>
-            <h2 className="text-2xl font-bold text-[#C94B6D] mb-3">
+            <h2 className="text-2xl font-bold text-[#140c18] mb-3">
               What causes it
             </h2>
-            <p className="text-[#2D1B1E] leading-relaxed">{symptom.causes}</p>
+            <p className="text-[#140c18] leading-relaxed">{symptom.causes}</p>
           </section>
 
           {/* Tracking */}
-          <section className="bg-[#FDF6F0] rounded-2xl p-6">
-            <h2 className="text-xl font-bold text-[#C94B6D] mb-3">
+          <section className="bg-[#f4e6f0] rounded-2xl p-6">
+            <h2 className="text-xl font-bold text-[#140c18] mb-3">
               How to track it
             </h2>
-            <p className="text-[#2D1B1E] leading-relaxed">{symptom.tracking}</p>
+            <p className="text-[#140c18] leading-relaxed">{symptom.tracking}</p>
           </section>
 
           {/* When to see a doctor */}
           <section>
-            <h2 className="text-2xl font-bold text-[#C94B6D] mb-3">
+            <h2 className="text-2xl font-bold text-[#140c18] mb-3">
               When to see a doctor
             </h2>
-            <p className="text-[#2D1B1E] leading-relaxed">
+            <p className="text-[#140c18] leading-relaxed">
               {symptom.whenToSeeDoctor}
             </p>
           </section>
@@ -132,7 +132,7 @@ export default async function SymptomPage({
           {/* Related symptoms */}
           {relatedSymptoms.length > 0 && (
             <section>
-              <h2 className="text-xl font-bold text-[#C94B6D] mb-4">
+              <h2 className="text-xl font-bold text-[#140c18] mb-4">
                 Related symptoms
               </h2>
               <div className="flex flex-wrap gap-3">
@@ -156,7 +156,7 @@ export default async function SymptomPage({
         {/* CTA */}
         <div
           className="mt-12 rounded-2xl p-8 text-center text-white"
-          style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}
+          style={{ background: "linear-gradient(135deg, #c94f68, #e06e40)" }}
         >
           <h3 className="text-2xl font-bold mb-2">
             Track this symptom with Dawn Phase
@@ -166,13 +166,13 @@ export default async function SymptomPage({
           </p>
           <a
             href="/signup"
-            className="inline-block bg-white text-[#E8637A] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm"
+            className="inline-block bg-white text-[#c94f68] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm"
           >
             Start your 7-day free trial →
           </a>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-6">
+        <p className="text-xs text-[#3d2855] text-center mt-6">
           This content is for informational purposes only and is not a
           substitute for professional medical advice.
         </p>

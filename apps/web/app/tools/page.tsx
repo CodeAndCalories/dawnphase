@@ -47,17 +47,17 @@ const TOOLS = [
 
 export default function ToolsIndexPage() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-10 text-center">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#C94B6D] border border-[#C94B6D]/30 bg-[#C94B6D]/5 rounded-full px-4 py-1.5 mb-5">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#5a3575] border border-[#5a3575]/30 bg-[#5a3575]/5 rounded-full px-4 py-1.5 mb-5">
             Free tools
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-4">
             Cycle calculators &amp; trackers
           </h1>
-          <p className="text-[#8C6B5A] text-lg leading-relaxed">
+          <p className="text-[#3d2855] text-lg leading-relaxed">
             Five free tools to understand your cycle, predict your period, and
             check your PMS symptoms. No account required.
           </p>
@@ -68,27 +68,27 @@ export default function ToolsIndexPage() {
             <a
               key={tool.href}
               href={tool.href}
-              className="group bg-white rounded-2xl p-6 border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-150"
+              className="group bg-white rounded-2xl p-6 border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-150"
             >
               <div className="flex items-start justify-between gap-2 mb-3">
-                <h2 className="font-semibold text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors leading-snug">
+                <h2 className="font-semibold text-[#140c18] group-hover:text-[#5a3575] transition-colors leading-snug">
                   {tool.title}
                 </h2>
                 {tool.badge && (
-                  <span className="shrink-0 text-[10px] font-bold tracking-wider uppercase text-[#C94B6D] bg-[#C94B6D]/10 rounded-full px-2.5 py-0.5">
+                  <span className="shrink-0 text-[10px] font-bold tracking-wider uppercase text-[#5a3575] bg-[#5a3575]/10 rounded-full px-2.5 py-0.5">
                     {tool.badge}
                   </span>
                 )}
               </div>
-              <p className="text-sm text-[#8C6B5A] leading-relaxed">{tool.description}</p>
-              <p className="mt-4 text-sm font-semibold text-[#E8637A] group-hover:underline">
+              <p className="text-sm text-[#3d2855] leading-relaxed">{tool.description}</p>
+              <p className="mt-4 text-sm font-semibold text-[#c94f68] group-hover:underline">
                 Open tool →
               </p>
             </a>
           ))}
         </div>
 
-        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #E8637A, #A855C8)" }}>
+        <div className="mt-12 rounded-2xl p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #c94f68, #7a2daa)" }}>
           <h3 className="text-xl font-bold mb-2">
             Track across multiple cycles
           </h3>
@@ -98,7 +98,7 @@ export default function ToolsIndexPage() {
           </p>
           <a
             href="/signup"
-            className="inline-block bg-white text-[#E8637A] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
+            className="inline-block bg-white text-[#c94f68] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
           >
             Start free 7-day trial →
           </a>

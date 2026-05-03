@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="PCOS and Irregular Periods — What's Normal and What to Track"
@@ -35,15 +35,15 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>May 2026</span><span>·</span><span>7 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           PCOS and Irregular Periods — What&apos;s Normal and What to Track
         </h1>
 
@@ -54,13 +54,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             For most people with PCOS, the question isn&apos;t &ldquo;when will my next period arrive?&rdquo; — it&apos;s &ldquo;will it arrive at all?&rdquo; Irregular periods are one of the defining features of polycystic ovary syndrome, yet most cycle tracking advice is written for people with predictable 28-day cycles. This guide explains what irregular really means with PCOS, when to be concerned, and how to track usefully when your cycle refuses to follow a schedule.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What causes irregular periods with PCOS?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What causes irregular periods with PCOS?</h2>
 
           <p>
             PCOS disrupts the hormonal signalling that drives ovulation. In a typical cycle, the brain releases follicle-stimulating hormone (FSH) to develop follicles, one of which reaches maturity and releases an egg at ovulation. A surge in luteinising hormone (LH) triggers that release.
@@ -72,7 +72,7 @@ export default function Post() {
             Insulin resistance, which affects around 70% of people with PCOS, compounds the problem by stimulating the ovaries to produce excess androgens (male hormones such as testosterone). Elevated androgens further suppress ovulation and contribute to other hallmark symptoms including acne, excess facial or body hair, and scalp hair thinning.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What counts as irregular with PCOS?</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What counts as irregular with PCOS?</h2>
 
           <p>
             Clinically, oligomenorrhoea — infrequent periods — is defined as fewer than eight menstrual cycles per year, or cycles consistently longer than 35 days. Amenorrhoea — absent periods — means no period for 90 days or more.
@@ -84,7 +84,7 @@ export default function Post() {
             What&apos;s worth noting: having irregular periods is not the same as having no hormonal activity. Follicles are still developing, oestrogen is still being produced, and the uterine lining is still building. The difference is that the final step — ovulation — is not reliably happening.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Anovulatory cycles explained</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Anovulatory cycles explained</h2>
 
           <p>
             An anovulatory cycle is a menstrual cycle in which ovulation does not occur. In people without PCOS, anovulation is occasional — stress, illness, or significant weight changes can cause it. In PCOS, anovulatory cycles are the norm rather than the exception.
@@ -96,8 +96,8 @@ export default function Post() {
             This distinction matters clinically. Prolonged anovulation means the uterine lining is exposed to oestrogen without the opposing effect of progesterone — a situation associated with increased risk of endometrial hyperplasia over time. It is one of the reasons regular gynaecological review is important for people with PCOS who are not regularly ovulating.
           </p>
 
-          <div className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-5 my-4">
-            <p className="font-semibold text-[#C94B6D] mb-3">Signs a bleed may be anovulatory:</p>
+          <div className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-5 my-4">
+            <p className="font-semibold text-[#5a3575] mb-3">Signs a bleed may be anovulatory:</p>
             <ul className="space-y-2">
               {[
                 "No basal body temperature rise before or during the bleed",
@@ -106,14 +106,14 @@ export default function Post() {
                 "Lighter or heavier than a typical period with no clear build-up",
                 "No typical pre-period symptoms (breast tenderness, mood shifts) beforehand",
               ].map((s) => (
-                <li key={s} className="flex items-start gap-2 text-sm text-[#2D1B1E]">
-                  <span className="text-[#E8637A] mt-0.5 shrink-0">·</span>{s}
+                <li key={s} className="flex items-start gap-2 text-sm text-[#140c18]">
+                  <span className="text-[#c94f68] mt-0.5 shrink-0">·</span>{s}
                 </li>
               ))}
             </ul>
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to track when periods are unpredictable</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to track when periods are unpredictable</h2>
 
           <p>
             Standard cycle tracking advice — log your period start and end, track ovulation around day 14 — is built for predictable cycles. With PCOS, this approach produces inaccurate predictions and can feel discouraging when those predictions are consistently wrong.
@@ -145,14 +145,14 @@ export default function Post() {
                 desc: "Elevated LH in PCOS means OPK results can be persistently positive without ovulation following. Use them as one data point alongside temperature and symptoms, not as confirmation of ovulation.",
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{item.title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{item.desc}</p>
+              <div key={item.title} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{item.title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a doctor</h2>
 
           <p>
             You should seek medical review if any of the following apply:
@@ -168,7 +168,7 @@ export default function Post() {
             If you already have a PCOS diagnosis, it is worth having an annual review with your GP or gynaecologist — particularly if you are not regularly ovulating, as endometrial health monitoring may be appropriate.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase handles cycles with no fixed pattern</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase handles cycles with no fixed pattern</h2>
 
           <p>
             Most period tracking apps assume a consistent cycle length. They take your last period date, add your average cycle length, and predict the next period. When that average doesn&apos;t hold — because many PCOS cycles don&apos;t — the predictions become meaningless and the app becomes frustrating to use.
@@ -178,15 +178,15 @@ export default function Post() {
           </p>
           <p>
             For PCOS specifically, the focus is on symptom logging across the full cycle rather than tracking relative to a predicted ovulation window. You can read more about how{" "}
-            <Link href="/blog/how-to-track-ovulation-pcos" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/blog/how-to-track-ovulation-pcos" className="text-[#c94f68] hover:underline font-medium">
               ovulation tracking with PCOS
             </Link>{" "}
             works in practice, or explore the{" "}
-            <Link href="/conditions/pcos" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">
               PCOS condition page
             </Link>{" "}
             for a full overview of what Dawn Phase tracks. You can also see our guide on{" "}
-            <Link href="/symptoms/irregular-periods-pcos" className="text-[#E8637A] hover:underline font-medium">
+            <Link href="/symptoms/irregular-periods-pcos" className="text-[#c94f68] hover:underline font-medium">
               tracking irregular periods with PCOS
             </Link>
             .
@@ -197,7 +197,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

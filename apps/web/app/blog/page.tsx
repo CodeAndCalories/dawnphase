@@ -235,13 +235,13 @@ const POSTS = [
 
 export default function BlogIndexPage() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-[#C94B6D]">Blog</h1>
-          <p className="text-[#8C6B5A] mt-2 text-lg">
+          <h1 className="text-4xl font-bold text-[#140c18]">Blog</h1>
+          <p className="text-[#3d2855] mt-2 text-lg">
             Guides on cycle tracking, hormonal health, and privacy.
           </p>
         </div>
@@ -250,22 +250,22 @@ export default function BlogIndexPage() {
           {POSTS.map((post) => (
             <article
               key={post.slug}
-              className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] shadow-sm p-6 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-3">
+              <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-3">
                 <span>April 2026</span>
                 <span>·</span>
                 <span>{post.readTime}</span>
               </div>
-              <h2 className="text-xl font-bold text-[#2D1B1E] mb-2 leading-snug">
+              <h2 className="text-xl font-bold text-[#140c18] mb-2 leading-snug">
                 {post.title}
               </h2>
-              <p className="text-[#8C6B5A] text-sm leading-relaxed mb-4">
+              <p className="text-[#3d2855] text-sm leading-relaxed mb-4">
                 {post.excerpt}
               </p>
               <Link
                 href={`/blog/${post.slug}`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#E8637A] hover:underline"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#c94f68] hover:underline"
               >
                 Read more →
               </Link>
@@ -275,11 +275,11 @@ export default function BlogIndexPage() {
       </main>
 
       <footer className="border-t border-gray-100 py-8 px-6 mt-4">
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#8C6B5A]">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#3d2855]">
           <span>© 2026 Dawn Phase · Your data stays yours.</span>
           <nav className="flex gap-5">
-            <Link href="/privacy" className="hover:text-[#C94B6D] transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#C94B6D] transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-[#5a3575] transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-[#5a3575] transition-colors">Terms</Link>
           </nav>
         </div>
       </footer>

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Natural Cycles Alternatives — Privacy-First Options in 2026"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Natural Cycles Alternatives — Privacy-First Options in 2026
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Natural Cycles was the first app to receive FDA clearance as a digital contraceptive in the US. Not everyone needs or wants that specific function, though — and the fertility awareness method (FAM) it relies on is not the only reason people use cycle tracking apps. Here&apos;s what to look for if you&apos;re exploring alternatives.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What Natural Cycles does</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What Natural Cycles does</h2>
           <p>
             Natural Cycles uses basal body temperature (BBT) charting combined with an algorithm to identify fertile and non-fertile days. It is FDA-cleared as a digital contraceptive (CE-marked in Europe) and requires consistent daily temperature measurement before getting out of bed. Its primary use case is fertility awareness — either to avoid pregnancy or to help plan it.
           </p>
@@ -63,7 +63,7 @@ export default function Post() {
             For many users, though, the appeal is not contraception — it&apos;s the cycle insight that comes from systematic daily tracking. This is where a broader category of cycle tracking apps becomes relevant.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why people look for alternatives</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why people look for alternatives</h2>
           <ul className="list-disc pl-6 space-y-3">
             <li>
               <strong>Not using it for contraception.</strong> If you&apos;re tracking for health insight, hormone awareness, or perimenopause monitoring rather than fertility management, you don&apos;t need a regulated contraceptive app — and the subscription cost may not be justified.
@@ -79,7 +79,7 @@ export default function Post() {
             </li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to look for in a cycle tracking alternative</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to look for in a cycle tracking alternative</h2>
 
           <div className="space-y-4">
             {[
@@ -104,14 +104,14 @@ export default function Post() {
                 desc: "Apps funded by advertising or data licensing have a structural incentive to collect more data. Subscription-only apps have their interests better aligned with yours.",
               },
             ].map(({ title, desc }) => (
-              <div key={title} className="bg-[#FDF6F0] rounded-xl p-4 border border-[rgba(232,99,122,0.08)]">
-                <p className="font-semibold text-[#C94B6D]">{title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{desc}</p>
+              <div key={title} className="bg-[#f4e6f0] rounded-xl p-4 border border-[rgba(130,80,170,0.08)]">
+                <p className="font-semibold text-[#5a3575]">{title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase as a cycle tracking alternative</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase as a cycle tracking alternative</h2>
           <p>
             Dawn Phase is a subscription-only cycle and perimenopause tracker built around health insight rather than fertility prediction. It is not a contraceptive app and makes no fertility clearance claims — that distinction is important.
           </p>
@@ -122,7 +122,7 @@ export default function Post() {
             If what you want from cycle tracking is understanding your hormonal patterns, managing perimenopause symptoms, and building a longitudinal health record you control — Dawn Phase addresses those goals directly.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">BBT tracking without a contraceptive app</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">BBT tracking without a contraceptive app</h2>
           <p>
             If you want to continue BBT charting for health awareness — to confirm ovulation, identify cycle phases, or monitor hormonal patterns — you can do this within a general cycle tracking app by logging your temperature as a daily custom symptom. This gives you the data without being tied to a single algorithm&apos;s fertility interpretation.
           </p>
@@ -132,7 +132,7 @@ export default function Post() {
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

@@ -64,7 +64,7 @@ export default async function ConditionPage({
     .filter(Boolean) as (typeof symptoms)[number][];
 
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       {/* Structured data */}
       <MedicalWebPageSchema
         name={condition.fullName}
@@ -87,46 +87,46 @@ export default async function ConditionPage({
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-[#8C6B5A]">
-          <Link href="/" className="hover:text-[#C94B6D] transition-colors">
+        <nav className="mb-8 flex items-center gap-2 text-sm text-[#3d2855]">
+          <Link href="/" className="hover:text-[#5a3575] transition-colors">
             Home
           </Link>
           <span>›</span>
-          <Link href="/conditions" className="hover:text-[#C94B6D] transition-colors">
+          <Link href="/conditions" className="hover:text-[#5a3575] transition-colors">
             Conditions
           </Link>
           <span>›</span>
-          <span className="text-[#C94B6D] font-medium">{condition.name}</span>
+          <span className="text-[#5a3575] font-medium">{condition.name}</span>
         </nav>
 
         {/* Hero */}
         <div className="mb-12">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#C94B6D] border border-[#C94B6D]/30 bg-[#C94B6D]/5 rounded-full px-4 py-1.5 mb-5">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#5a3575] border border-[#5a3575]/30 bg-[#5a3575]/5 rounded-full px-4 py-1.5 mb-5">
             {condition.name}
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-5">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-5">
             {condition.tagline}
           </h1>
-          <p className="text-lg text-[#8C6B5A] leading-relaxed">
+          <p className="text-lg text-[#3d2855] leading-relaxed">
             {condition.description}
           </p>
         </div>
 
         {/* Key features */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-6">
+          <h2 className="text-2xl font-bold text-[#140c18] mb-6">
             How Dawn Phase helps with {condition.name}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {condition.features.map((feature) => (
               <div
                 key={feature.title}
-                className="bg-white rounded-2xl p-5 border border-[rgba(232,99,122,0.15)] shadow-sm"
+                className="bg-white rounded-2xl p-5 border border-[rgba(130,80,170,0.15)] shadow-sm"
               >
-                <h3 className="font-semibold text-[#C94B6D] mb-2 text-sm">
+                <h3 className="font-semibold text-[#5a3575] mb-2 text-sm">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-[#8C6B5A] leading-relaxed">
+                <p className="text-sm text-[#3d2855] leading-relaxed">
                   {feature.body}
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default async function ConditionPage({
         {/* Related symptoms */}
         {relatedSymptoms.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#2D1B1E] mb-5">
+            <h2 className="text-2xl font-bold text-[#140c18] mb-5">
               Common {condition.name} symptoms to track
             </h2>
             <div className="space-y-3">
@@ -158,12 +158,12 @@ export default async function ConditionPage({
                 <Link
                   key={sym.slug}
                   href={`/symptoms/${sym.slug}`}
-                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 transition-all duration-150 group"
+                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 transition-all duration-150 group"
                 >
-                  <span className="text-sm font-medium text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors">
+                  <span className="text-sm font-medium text-[#140c18] group-hover:text-[#5a3575] transition-colors">
                     {sym.name}
                   </span>
-                  <span className="text-[#E8637A] text-sm">→</span>
+                  <span className="text-[#c94f68] text-sm">→</span>
                 </Link>
               ))}
             </div>
@@ -172,28 +172,28 @@ export default async function ConditionPage({
 
         {/* FAQ */}
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-[#2D1B1E] mb-6">
+          <h2 className="text-2xl font-bold text-[#140c18] mb-6">
             Frequently asked questions
           </h2>
           <div className="space-y-3">
             {condition.faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="group rounded-2xl border border-[rgba(232,99,122,0.15)] bg-white overflow-hidden"
+                className="group rounded-2xl border border-[rgba(130,80,170,0.15)] bg-white overflow-hidden"
               >
                 <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none">
-                  <span className="font-semibold text-[#C94B6D] text-sm leading-snug">
+                  <span className="font-semibold text-[#5a3575] text-sm leading-snug">
                     {faq.q}
                   </span>
                   <span
-                    className="shrink-0 w-6 h-6 rounded-full bg-[#E8637A]/10 text-[#E8637A] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
+                    className="shrink-0 w-6 h-6 rounded-full bg-[#c94f68]/10 text-[#c94f68] flex items-center justify-center text-sm font-bold transition-transform group-open:rotate-45"
                     aria-hidden
                   >
                     +
                   </span>
                 </summary>
                 <div className="px-6 pb-5 pt-1">
-                  <p className="text-sm text-[#8C6B5A] leading-relaxed">{faq.a}</p>
+                  <p className="text-sm text-[#3d2855] leading-relaxed">{faq.a}</p>
                 </div>
               </details>
             ))}
@@ -203,7 +203,7 @@ export default async function ConditionPage({
         {/* Related blog posts */}
         {condition.relatedBlogs.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-[#2D1B1E] mb-5">
+            <h2 className="text-2xl font-bold text-[#140c18] mb-5">
               Further reading
             </h2>
             <div className="space-y-3">
@@ -211,12 +211,12 @@ export default async function ConditionPage({
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(232,99,122,0.15)] shadow-sm hover:border-[#E8637A]/40 hover:-translate-y-0.5 transition-all duration-150 group"
+                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-[rgba(130,80,170,0.15)] shadow-sm hover:border-[#c94f68]/40 hover:-translate-y-0.5 transition-all duration-150 group"
                 >
-                  <span className="text-sm font-medium text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors">
+                  <span className="text-sm font-medium text-[#140c18] group-hover:text-[#5a3575] transition-colors">
                     {post.title}
                   </span>
-                  <span className="text-[#E8637A] text-sm shrink-0 ml-3">→</span>
+                  <span className="text-[#c94f68] text-sm shrink-0 ml-3">→</span>
                 </Link>
               ))}
             </div>
@@ -226,7 +226,7 @@ export default async function ConditionPage({
         {/* CTA */}
         <div
           className="rounded-2xl p-8 text-center text-white mb-8"
-          style={{ background: "linear-gradient(135deg, #E8637A, #A855C8)" }}
+          style={{ background: "linear-gradient(135deg, #c94f68, #7a2daa)" }}
         >
           <h3 className="text-2xl font-bold mb-2">
             Start tracking {condition.name} symptoms free
@@ -236,13 +236,13 @@ export default async function ConditionPage({
           </p>
           <a
             href="/signup"
-            className="inline-block bg-white text-[#E8637A] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
+            className="inline-block bg-white text-[#c94f68] font-bold px-8 py-3 rounded-full hover:opacity-90 transition-opacity text-sm shadow-md"
           >
             Start your free trial →
           </a>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center">
+        <p className="text-xs text-[#3d2855] text-center">
           This content is for informational purposes only and is not a substitute
           for professional medical advice, diagnosis, or treatment.
         </p>

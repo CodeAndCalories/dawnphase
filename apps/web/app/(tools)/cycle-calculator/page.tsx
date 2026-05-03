@@ -13,7 +13,7 @@ export default function CycleCalculatorPage() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
           <a href="/" className="inline-block mb-8">
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-[#c94f68] to-[#e06e40] bg-clip-text text-transparent">
               Dawn Phase
             </span>
           </a>

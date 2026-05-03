@@ -39,13 +39,13 @@ const CONTACTS = [
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
 
       <main className="max-w-2xl mx-auto px-6 py-12">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-[#C94B6D]">Get in touch</h1>
-          <p className="text-[#8C6B5A] mt-2 text-lg">
+          <h1 className="text-4xl font-bold text-[#140c18]">Get in touch</h1>
+          <p className="text-[#3d2855] mt-2 text-lg">
             We&apos;d love to hear from you. Usually respond within 24 hours.
           </p>
         </div>
@@ -57,15 +57,15 @@ export default function ContactPage() {
               href={href}
               target={href.startsWith("http") ? "_blank" : undefined}
               rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="flex items-start gap-5 bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-6 hover:shadow-md hover:border-[#E8637A]/30 transition-all group"
+              className="flex items-start gap-5 bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] shadow-sm p-6 hover:shadow-md hover:border-[#c94f68]/30 transition-all group"
             >
               <span className="text-3xl shrink-0 mt-0.5">{emoji}</span>
               <div className="min-w-0">
-                <p className="font-semibold text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors">
+                <p className="font-semibold text-[#140c18] group-hover:text-[#5a3575] transition-colors">
                   {title}
                 </p>
-                <p className="text-sm text-[#8C6B5A] mt-0.5">{body}</p>
-                <p className="text-sm font-medium text-[#E8637A] mt-2 truncate">
+                <p className="text-sm text-[#3d2855] mt-0.5">{body}</p>
+                <p className="text-sm font-medium text-[#c94f68] mt-2 truncate">
                   {label} →
                 </p>
               </div>
@@ -73,9 +73,9 @@ export default function ContactPage() {
           ))}
         </div>
 
-        <p className="text-center text-sm text-[#8C6B5A] mt-10">
+        <p className="text-center text-sm text-[#3d2855] mt-10">
           You can also manage your account from the{" "}
-          <Link href="/settings" className="text-[#E8637A] hover:underline font-medium">
+          <Link href="/settings" className="text-[#c94f68] hover:underline font-medium">
             Settings page
           </Link>{" "}
           once logged in.
@@ -83,11 +83,11 @@ export default function ContactPage() {
       </main>
 
       <footer className="border-t border-gray-100 py-8 px-6 mt-4">
-        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#8C6B5A]">
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#3d2855]">
           <span>© 2026 Dawn Phase · Your data stays yours.</span>
           <nav className="flex gap-5">
-            <Link href="/privacy" className="hover:text-[#C94B6D] transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#C94B6D] transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-[#5a3575] transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-[#5a3575] transition-colors">Terms</Link>
           </nav>
         </div>
       </footer>

@@ -42,19 +42,19 @@ export default function SymptomsIndexPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
 
       <main className="max-w-4xl mx-auto px-6 py-12">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-[#C94B6D]">
+          <h1 className="text-4xl font-bold text-[#140c18]">
             Cycle Symptoms Library
           </h1>
-          <p className="text-[#8C6B5A] mt-2 text-lg">
+          <p className="text-[#3d2855] mt-2 text-lg">
             Causes, tracking guides, and when to see a doctor — organised by
             phase.
           </p>
-          <p className="text-xs text-[#8C6B5A] mt-2">
+          <p className="text-xs text-[#3d2855] mt-2">
             All content is for informational purposes only and is not a
             substitute for professional medical advice.
           </p>
@@ -73,7 +73,7 @@ export default function SymptomsIndexPage() {
                   >
                     {PHASE_LABELS[phase]}
                   </span>
-                  <span className="text-sm text-[#8C6B5A]">
+                  <span className="text-sm text-[#3d2855]">
                     {phaseSymptoms.length} symptom{phaseSymptoms.length !== 1 ? "s" : ""}
                   </span>
                 </div>
@@ -83,15 +83,15 @@ export default function SymptomsIndexPage() {
                     <Link
                       key={symptom.slug}
                       href={`/symptoms/${symptom.slug}`}
-                      className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-5 hover:shadow-md transition-shadow group"
+                      className="bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] shadow-sm p-5 hover:shadow-md transition-shadow group"
                     >
-                      <h2 className="text-base font-semibold text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors leading-snug mb-2">
+                      <h2 className="text-base font-semibold text-[#140c18] group-hover:text-[#5a3575] transition-colors leading-snug mb-2">
                         {symptom.name}
                       </h2>
-                      <p className="text-xs text-[#8C6B5A] leading-relaxed line-clamp-2">
+                      <p className="text-xs text-[#3d2855] leading-relaxed line-clamp-2">
                         {symptom.description.split(".")[0]}.
                       </p>
-                      <span className="inline-block mt-3 text-xs font-semibold text-[#E8637A]">
+                      <span className="inline-block mt-3 text-xs font-semibold text-[#c94f68]">
                         Learn more →
                       </span>
                     </Link>
@@ -104,12 +104,12 @@ export default function SymptomsIndexPage() {
       </main>
 
       <footer className="border-t border-gray-100 py-8 px-6 mt-4">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#8C6B5A]">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-[#3d2855]">
           <span>© 2026 Dawn Phase · Your data stays yours.</span>
           <nav className="flex gap-5">
-            <Link href="/blog" className="hover:text-[#C94B6D] transition-colors">Blog</Link>
-            <Link href="/privacy" className="hover:text-[#C94B6D] transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#C94B6D] transition-colors">Terms</Link>
+            <Link href="/blog" className="hover:text-[#5a3575] transition-colors">Blog</Link>
+            <Link href="/privacy" className="hover:text-[#5a3575] transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-[#5a3575] transition-colors">Terms</Link>
           </nav>
         </div>
       </footer>

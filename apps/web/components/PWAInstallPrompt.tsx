@@ -97,7 +97,7 @@ export default function PWAInstallPrompt() {
 
   return (
     <div
-      className="fixed left-0 right-0 z-40 bg-[#FDF6F0] border-t-2 border-[#E8637A]/30 px-4 py-3 flex items-center gap-3 shadow-lg md:hidden"
+      className="fixed left-0 right-0 z-40 bg-[#f4e6f0] border-t-2 border-[#c94f68]/30 px-4 py-3 flex items-center gap-3 shadow-lg md:hidden"
       style={{ bottom: 64 }} // sits above the 64px tab bar
     >
       <Image
@@ -109,15 +109,15 @@ export default function PWAInstallPrompt() {
       />
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-[#2D1B1E] leading-tight">
+        <p className="text-sm font-semibold text-[#140c18] leading-tight">
           Add to your home screen
         </p>
         {state === "ios" ? (
-          <p className="text-xs text-[#8C6B5A] mt-0.5">
+          <p className="text-xs text-[#3d2855] mt-0.5">
             Tap <strong>Share</strong> → <strong>Add to Home Screen</strong>
           </p>
         ) : (
-          <p className="text-xs text-[#8C6B5A] mt-0.5">
+          <p className="text-xs text-[#3d2855] mt-0.5">
             Track your cycle anywhere
           </p>
         )}
@@ -126,7 +126,7 @@ export default function PWAInstallPrompt() {
       {state === "android" && (
         <button
           onClick={install}
-          className="shrink-0 px-4 py-2 bg-[#E8637A] text-white text-sm font-semibold rounded-full hover:bg-[#C94B6D] transition-colors"
+          className="shrink-0 px-4 py-2 bg-[#c94f68] text-white text-sm font-semibold rounded-full hover:bg-[#a83d72] transition-colors"
         >
           Add
         </button>
@@ -134,7 +134,7 @@ export default function PWAInstallPrompt() {
 
       <button
         onClick={dismiss}
-        className="shrink-0 w-8 h-8 flex items-center justify-center text-[#8C6B5A] hover:text-[#2D1B1E] text-xl leading-none transition-colors"
+        className="shrink-0 w-8 h-8 flex items-center justify-center text-[#3d2855] hover:text-[#140c18] text-xl leading-none transition-colors"
         aria-label="Dismiss install prompt"
       >
         ×

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Does Your Period Tracker Share Data With Facebook?"
@@ -34,25 +34,25 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>5 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Does Your Period Tracker Share Data With Facebook?
         </h1>
 
-        <p className="text-sm text-[#8C6B5A] bg-[#FFF0F0] border border-[rgba(232,99,122,0.2)] rounded-lg p-3 mb-8">
+        <p className="text-sm text-[#3d2855] bg-[#FFF0F0] border border-[rgba(130,80,170,0.2)] rounded-lg p-3 mb-8">
           The information in this article is based on publicly available reporting and regulatory disclosures. Data sharing practices change over time — always check an app&apos;s current privacy policy directly.
         </p>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             The short answer: some have. A number of period tracking apps have previously faced regulatory scrutiny and public criticism over sharing menstrual health data with advertising platforms and analytics services. Whether your current app shares data — and with whom — depends on its business model and privacy policy.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How period apps have historically shared data</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How period apps have historically shared data</h2>
           <p>
             Many free or freemium period apps are built on an advertising model. In this model, the app is free because the data you generate — including health data — has commercial value. Some apps have used third-party analytics SDKs, advertising frameworks, and data broker integrations that caused sensitive health information to be transmitted to external platforms.
           </p>
@@ -63,7 +63,7 @@ export default function Post() {
             It is worth noting that companies&apos; practices change over time and in response to regulatory action. The current state of any particular app&apos;s data practices may differ significantly from what was reported in past cases. This article focuses on the general landscape and what to look for, rather than making current claims about specific products.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What data period apps typically collect</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What data period apps typically collect</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li>Period start and end dates, cycle length, and flow details</li>
             <li>Mood, energy, and symptom logs</li>
@@ -76,7 +76,7 @@ export default function Post() {
             This data is particularly sensitive because it can reveal reproductive health status, sexual behaviour, and family planning decisions — information that users may not wish to share with advertisers, insurers, or data brokers.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to check what your current app shares</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to check what your current app shares</h2>
           <div className="space-y-3">
             {[
               { step: "Read the privacy policy", desc: "Look specifically for sections on 'third-party sharing', 'advertising partners', 'analytics services', and 'data brokers'. If these sections are vague or absent, that is itself informative." },
@@ -84,14 +84,14 @@ export default function Post() {
               { step: "Review app store privacy labels", desc: "Both Apple App Store and Google Play now require apps to disclose what data they collect and with whom it is shared. These labels are not always complete, but they are a starting point." },
               { step: "Look at the business model", desc: "If an app is free and supported by advertising, ask yourself what the ad revenue model requires. An app with no advertising model has less structural incentive to share your data." },
             ].map(({ step, desc }) => (
-              <div key={step} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{step}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{desc}</p>
+              <div key={step} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{step}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to look for in a privacy-first tracker</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to look for in a privacy-first tracker</h2>
           <p>A genuinely privacy-first period app should:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Have an explicit, verifiable commitment to not selling data — stated clearly in its privacy policy, not just in marketing copy</li>
@@ -101,7 +101,7 @@ export default function Post() {
             <li>Store data in named infrastructure with clear data residency information</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase is different</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase is different</h2>
           <p>
             Dawn Phase is subscription-only — there is no free tier, no advertising, and no revenue from data. The business model is: you pay a subscription, and in exchange you get a tracker that works exclusively in your interest. There are no third-party advertising SDKs, no data broker relationships, and no ad platform integrations.
           </p>
@@ -110,12 +110,12 @@ export default function Post() {
           </p>
           <p>
             For a deeper look at the broader privacy landscape for period apps, see our guide:{" "}
-            <Link href="/blog/period-tracker-no-data-selling" className="text-[#E8637A] hover:underline font-medium">The best period tracker that doesn&apos;t sell your data</Link>.
+            <Link href="/blog/period-tracker-no-data-selling" className="text-[#c94f68] hover:underline font-medium">The best period tracker that doesn&apos;t sell your data</Link>.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only. Data practices change — always verify directly with any app you use.
         </p>
 

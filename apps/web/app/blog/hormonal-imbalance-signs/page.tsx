@@ -77,7 +77,7 @@ const SIGNS = [
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="10 Signs of Hormonal Imbalance in Women"
@@ -87,11 +87,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           10 Signs of Hormonal Imbalance in Women
         </h1>
 
@@ -102,45 +102,45 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Hormones regulate almost every system in the body — from metabolism and sleep to mood and reproductive health. When they fall out of balance, the effects can be wide-ranging and, because they overlap with many other conditions, easily missed. Here are ten commonly reported signs, and what they might point to.
           </p>
 
-          <p className="text-sm text-[#8C6B5A] bg-[#FDF6F0] rounded-lg p-3 border border-[rgba(232,99,122,0.15)]">
+          <p className="text-sm text-[#3d2855] bg-[#f4e6f0] rounded-lg p-3 border border-[rgba(130,80,170,0.15)]">
             These signs are indicators that warrant investigation — not diagnoses. Many have multiple possible causes. If you recognise several of these patterns, a conversation with your GP is a useful starting point.
           </p>
 
           <div className="space-y-5 mt-4">
             {SIGNS.map(({ n, title, body }) => (
-              <div key={n} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-5">
+              <div key={n} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-5">
                 <div className="flex items-start gap-3">
-                  <span className="shrink-0 w-7 h-7 rounded-full bg-[#E8637A] text-white text-sm font-bold flex items-center justify-center mt-0.5">
+                  <span className="shrink-0 w-7 h-7 rounded-full bg-[#c94f68] text-white text-sm font-bold flex items-center justify-center mt-0.5">
                     {n}
                   </span>
                   <div>
-                    <p className="font-semibold text-[#C94B6D]">{title}</p>
-                    <p className="text-sm text-[#8C6B5A] mt-1 leading-relaxed">{body}</p>
+                    <p className="font-semibold text-[#5a3575]">{title}</p>
+                    <p className="text-sm text-[#3d2855] mt-1 leading-relaxed">{body}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a doctor</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a doctor</h2>
           <p>
             Any of these signs is worth mentioning at a routine appointment, particularly if it is new, persistent, or affecting your quality of life. If you notice several of these signs together, or if symptoms are significantly impacting your daily function, proactively requesting a hormonal panel is reasonable. Useful starting tests include TSH (thyroid), FSH, LH, oestradiol, testosterone, prolactin, and fasting glucose or insulin — though your doctor will determine which are most relevant to your specific presentation.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why tracking helps</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why tracking helps</h2>
           <p>
             Many hormonal symptoms are cyclical — they follow the menstrual cycle or appear in consistent patterns over time. Tracking daily symptoms, energy, mood, and sleep alongside your cycle day helps distinguish a hormonal pattern from a non-cyclical condition. It also gives you concrete data to bring to a clinical appointment, turning vague descriptions into a pattern a doctor can investigate.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

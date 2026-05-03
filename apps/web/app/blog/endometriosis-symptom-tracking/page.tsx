@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="Tracking Endometriosis Symptoms — What to Log and Why It Matters"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-27"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           Tracking Endometriosis Symptoms — What to Log and Why It Matters
         </h1>
 
@@ -47,12 +47,12 @@ export default function Post() {
           <p className="text-sm text-amber-700">This article is for educational purposes only and is not medical advice. Endometriosis diagnosis requires clinical assessment including imaging and/or laparoscopy. Dawn Phase is not a medical device. Always consult a qualified healthcare professional.</p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
-          <p className="text-lg text-[#8C6B5A]">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
+          <p className="text-lg text-[#3d2855]">
             Women with endometriosis wait an average of 7–10 years from first symptoms to confirmed diagnosis. That delay isn&apos;t inevitable — but closing the gap requires building a record that clinicians can act on. Detailed, consistent symptom tracking across multiple cycles is one of the most powerful tools available to you before you ever set foot in a specialist&apos;s office.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What makes endometriosis hard to diagnose</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What makes endometriosis hard to diagnose</h2>
 
           <p>
             Endometriosis occurs when tissue similar to the uterine lining grows outside the uterus — on the ovaries, fallopian tubes, bowel, bladder, or peritoneum. Despite affecting approximately 1 in 10 people with a uterus, it remains chronically underdiagnosed for several reasons.
@@ -67,7 +67,7 @@ export default function Post() {
             Third, standard imaging (ultrasound, MRI) frequently appears normal in endometriosis, particularly in early-stage or superficial disease. Laparoscopy remains the gold standard for diagnosis — but it is invasive, and most clinicians will not refer for it without substantial clinical evidence. Your symptom record is that evidence.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why symptom tracking changes the conversation</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why symptom tracking changes the conversation</h2>
 
           <p>
             Prospective symptom tracking — logging every day as it happens, rather than recalling it later — creates objective evidence. Memory systematically underestimates pain and symptom severity over time, especially for cyclical conditions where a good week can make the previous bad week feel less significant in retrospect.
@@ -79,7 +79,7 @@ export default function Post() {
             What your doctor needs is not a list of complaints — it is a pattern. When did the pain start in this cycle? What was the severity? What helped and what didn&apos;t? Where was it located? Did it affect your ability to work, exercise, or have sex? A log answers all of these questions with dates attached.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to log every day</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to log every day</h2>
 
           <p>
             You don&apos;t need to track everything — but the following data points build the most clinically useful picture:
@@ -104,12 +104,12 @@ export default function Post() {
                 items: ["Medication taken (name, dose, time)", "Efficacy: did it work, partially, or not at all?", "Fatigue severity: 0–3 scale", "Activities affected or missed"],
               },
             ].map((block) => (
-              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D] mb-2">{block.cat}</p>
+              <div key={block.cat} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575] mb-2">{block.cat}</p>
                 <ul className="space-y-1">
                   {block.items.map((item) => (
-                    <li key={item} className="text-sm text-[#8C6B5A] flex items-start gap-1.5">
-                      <span className="text-[#E8637A] shrink-0">·</span>{item}
+                    <li key={item} className="text-sm text-[#3d2855] flex items-start gap-1.5">
+                      <span className="text-[#c94f68] shrink-0">·</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -117,7 +117,7 @@ export default function Post() {
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to track: the full cycle, not just your period</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to track: the full cycle, not just your period</h2>
 
           <p>
             One of the most clinically significant — and frequently missed — features of endometriosis is that pain is not confined to menstruation. Tracking only during your period will miss important diagnostic data.
@@ -129,7 +129,7 @@ export default function Post() {
             Logging daily, even on pain-free days (noting zero), gives clinicians the full picture: which days hurt, which don&apos;t, and whether the pattern maps predictably onto cycle phases. That full-cycle picture is what distinguishes endometriosis from dysmenorrhoea (painful periods only) in a clinical review.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to use your log at appointments</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to use your log at appointments</h2>
 
           <p>
             Come prepared with data, not just a description. Before your appointment, review your last two to three cycles and note the following:
@@ -145,7 +145,7 @@ export default function Post() {
             Presenting this as a summary — &quot;Over the last three cycles, my average pain on days 1–3 was 7/10, I had mid-cycle pain on day 13–14, and I missed work twice&quot; — is far more actionable than &quot;I get really bad cramps.&quot; It also signals to the clinician that you are a reliable historian, which increases the clinical weight given to your report.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">When to see a specialist</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">When to see a specialist</h2>
 
           <p>
             You should seek a referral to a gynaecologist or endometriosis specialist if any of the following apply:
@@ -163,7 +163,7 @@ export default function Post() {
           </p>
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 

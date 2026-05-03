@@ -165,15 +165,15 @@ export default function RelatedArticles({ slugs, currentSlug }: Props) {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="bg-[#FDF6F0] rounded-2xl p-4 hover:shadow-sm transition-shadow border border-[rgba(232,99,122,0.1)] group"
+            className="bg-[#f4e6f0] rounded-2xl p-4 hover:shadow-sm transition-shadow border border-[rgba(130,80,170,0.1)] group"
           >
-            <p className="text-sm font-semibold text-[#2D1B1E] group-hover:text-[#C94B6D] transition-colors leading-snug mb-1">
+            <p className="text-sm font-semibold text-[#140c18] group-hover:text-[#5a3575] transition-colors leading-snug mb-1">
               {post.title}
             </p>
-            <p className="text-xs text-[#8C6B5A] leading-relaxed line-clamp-2">
+            <p className="text-xs text-[#3d2855] leading-relaxed line-clamp-2">
               {post.excerpt}
             </p>
-            <p className="text-xs font-medium text-[#E8637A] mt-2">{post.readTime}</p>
+            <p className="text-xs font-medium text-[#c94f68] mt-2">{post.readTime}</p>
           </Link>
         ))}
       </div>

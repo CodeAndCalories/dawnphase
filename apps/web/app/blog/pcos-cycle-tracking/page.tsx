@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="How to Track Your Cycle With PCOS — A Complete Guide"
@@ -35,25 +35,25 @@ export default function Post() {
       />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">
           ← Back to blog
         </Link>
 
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>6 min read</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           How to Track Your Cycle With PCOS — A Complete Guide
         </h1>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             PCOS affects an estimated 1 in 10 women of reproductive age. The hallmark symptom — irregular or absent periods — makes standard cycle tracking apps nearly useless. Here&apos;s how to track effectively despite the unpredictability.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why PCOS makes cycle tracking harder</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why PCOS makes cycle tracking harder</h2>
 
           <p>
             Most period trackers are built around a 28-day model. They predict your next period by adding your average cycle length to your last period date. With PCOS, where cycles can range from 35 to 90+ days — or be absent for months — this prediction is meaningless and often misleading.
@@ -65,7 +65,7 @@ export default function Post() {
             Standard apps that can&apos;t handle this create a frustrating feedback loop: wrong predictions → low trust → abandoning tracking altogether. But tracking is exactly what can help you understand your body and communicate effectively with your doctor.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to track with PCOS (not just period dates)</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to track with PCOS (not just period dates)</h2>
 
           <p>With PCOS, period dates alone tell you very little. A more useful tracking approach includes:</p>
 
@@ -92,14 +92,14 @@ export default function Post() {
                 desc: "Women with PCOS have significantly higher rates of anxiety and depression, often linked to hormonal fluctuations. Daily mood tracking can reveal cyclical patterns even when periods are irregular.",
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-[rgba(232,99,122,0.12)] p-4">
-                <p className="font-semibold text-[#C94B6D]">{item.title}</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">{item.desc}</p>
+              <div key={item.title} className="bg-white rounded-xl border border-[rgba(130,80,170,0.12)] p-4">
+                <p className="font-semibold text-[#5a3575]">{item.title}</p>
+                <p className="text-sm text-[#3d2855] mt-1">{item.desc}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">BBT and OPK tracking with PCOS</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">BBT and OPK tracking with PCOS</h2>
 
           <p>
             Basal body temperature (BBT) charting and ovulation predictor kits (OPKs) are commonly recommended for PCOS, but both have limitations worth understanding.
@@ -111,20 +111,20 @@ export default function Post() {
             <strong>OPKs:</strong> LH (the hormone OPKs detect) is elevated in PCOS even without imminent ovulation. Many women with PCOS get persistent positive OPK results that don&apos;t lead to ovulation. OPKs can still be useful — but treat repeated positives with scepticism rather than as confirmed ovulation.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How Dawn Phase supports irregular cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How Dawn Phase supports irregular cycles</h2>
 
           <p>
             Dawn Phase doesn&apos;t assume a 28-day cycle. It calculates your current cycle day from your logged period start date, shows your phase based on the most likely progression given your cycle history, and updates predictions as your pattern becomes clearer.
           </p>
           <p>
             Critically, Dawn Phase doesn&apos;t break when you skip a month or have a 60-day cycle. It simply waits for your next period log and recalibrates. See our detailed guide on{" "}
-            <Link href="/symptoms/irregular-periods-pcos" className="text-[#E8637A] hover:underline font-medium">tracking irregular periods with PCOS</Link>.
+            <Link href="/symptoms/irregular-periods-pcos" className="text-[#c94f68] hover:underline font-medium">tracking irregular periods with PCOS</Link>.
             You can also use our free{" "}
-            <Link href="/cycle-calculator" className="text-[#E8637A] hover:underline font-medium">cycle length calculator</Link>{" "}
+            <Link href="/cycle-calculator" className="text-[#c94f68] hover:underline font-medium">cycle length calculator</Link>{" "}
             to get an initial estimate of your average cycle length.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Tips for spotting patterns with unpredictable cycles</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Tips for spotting patterns with unpredictable cycles</h2>
 
           <ul className="list-disc pl-6 space-y-3">
             <li><strong>Log every day, not just around your period.</strong> Patterns in PCOS often appear in symptom clusters rather than in cycle timing.</li>

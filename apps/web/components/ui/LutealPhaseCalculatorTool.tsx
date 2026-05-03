@@ -79,7 +79,7 @@ export default function LutealPhaseCalculatorTool() {
             type="date"
             value={ovulationDate}
             onChange={(e) => setOvulationDate(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/30 text-sm"
           />
         </div>
 
@@ -91,14 +91,14 @@ export default function LutealPhaseCalculatorTool() {
             type="date"
             value={nextPeriodDate}
             onChange={(e) => setNextPeriodDate(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#c94f68]/30 text-sm"
           />
         </div>
 
         <button
           onClick={calculate}
           disabled={!ovulationDate || !nextPeriodDate}
-          className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm"
+          className="w-full py-3 bg-gradient-to-r from-[#c94f68] to-[#e06e40] text-white font-semibold rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50 text-sm"
         >
           Calculate luteal phase
         </button>
@@ -109,9 +109,9 @@ export default function LutealPhaseCalculatorTool() {
           <div className="border-t border-gray-100 pt-6 space-y-4">
             <h3 className="font-semibold text-gray-900">Your luteal phase</h3>
             <div className="space-y-3">
-              <div className="flex justify-between items-center px-4 py-3 rounded-xl bg-purple-50 border border-purple-100">
-                <span className="text-sm font-medium text-purple-700">Luteal phase length</span>
-                <span className="text-sm font-bold text-purple-700">{result.length} days</span>
+              <div className="flex justify-between items-center px-4 py-3 rounded-xl bg-[#ede8f7] border border-[rgba(130,80,170,0.2)]">
+                <span className="text-sm font-medium text-[#5a3575]">Luteal phase length</span>
+                <span className="text-sm font-bold text-[#5a3575]">{result.length} days</span>
               </div>
               <div className="flex justify-between items-center px-4 py-3 rounded-xl bg-gray-50 border border-gray-100">
                 <span className="text-sm font-medium text-gray-700">Starts</span>
@@ -128,21 +128,21 @@ export default function LutealPhaseCalculatorTool() {
           </div>
 
           {/* Email capture */}
-          <div className="mt-6 p-5 rounded-xl bg-[#FFF9F6] border border-[rgba(232,99,122,0.3)]">
+          <div className="mt-6 p-5 rounded-xl bg-[#ede8f7] border border-[rgba(130,80,170,0.3)]">
             {leadStatus === "success" ? (
-              <p className="text-sm font-semibold text-[#C94B6D]">✓ Check your inbox!</p>
+              <p className="text-sm font-semibold text-[#5a3575]">✓ Check your inbox!</p>
             ) : leadStatus === "exists" ? (
-              <p className="text-sm text-[#8C6B5A]">
+              <p className="text-sm text-[#3d2855]">
                 You already have an account —{" "}
-                <a href="/login" className="text-[#C94B6D] font-semibold hover:underline">
+                <a href="/login" className="text-[#5a3575] font-semibold hover:underline">
                   log in to track your cycle →
                 </a>
               </p>
             ) : (
               <form onSubmit={handleEmailSubmit} className="space-y-3">
                 <div>
-                  <p className="font-semibold text-[#2D1B1E] text-sm mb-1">Save your results</p>
-                  <p className="text-xs text-[#8C6B5A]">
+                  <p className="font-semibold text-[#140c18] text-sm mb-1">Save your results</p>
+                  <p className="text-xs text-[#3d2855]">
                     Get cycle insights and track changes over time. Free for 7 days.
                   </p>
                 </div>
@@ -152,16 +152,16 @@ export default function LutealPhaseCalculatorTool() {
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[rgba(232,99,122,0.3)] focus:outline-none focus:ring-2 focus:ring-[#E8637A]/30 text-sm bg-white"
+                  className="w-full px-4 py-3 rounded-xl border border-[rgba(130,80,170,0.3)] focus:outline-none focus:ring-2 focus:ring-[#c94f68]/30 text-sm bg-white"
                 />
                 <button
                   type="submit"
                   disabled={leadStatus === "loading"}
-                  className="w-full py-3 rounded-xl bg-gradient-to-br from-[#E8637A] to-[#A855C8] text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
+                  className="w-full py-3 rounded-xl bg-gradient-to-br from-[#c94f68] to-[#7a2daa] text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
                 >
                   {leadStatus === "loading" ? "Sending…" : "Send me my results"}
                 </button>
-                <p className="text-xs text-[#8C6B5A] text-center">No spam. Unsubscribe anytime.</p>
+                <p className="text-xs text-[#3d2855] text-center">No spam. Unsubscribe anytime.</p>
               </form>
             )}
           </div>

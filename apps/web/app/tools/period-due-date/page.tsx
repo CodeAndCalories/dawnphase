@@ -24,7 +24,7 @@ export default function PeriodDueDatePage() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
           <a href="/" className="inline-block mb-8">
-            <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-[#c94f68] to-[#e06e40] bg-clip-text text-transparent">
               Dawn Phase
             </span>
           </a>
@@ -70,19 +70,19 @@ export default function PeriodDueDatePage() {
         <div className="mt-10 text-center">
           <p className="text-sm text-gray-500 mb-4">More free tools:</p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/cycle-calculator" className="text-sm text-[#E8637A] hover:underline font-medium">
+            <a href="/cycle-calculator" className="text-sm text-[#c94f68] hover:underline font-medium">
               Cycle Calculator
             </a>
             <span className="text-gray-300">·</span>
-            <a href="/luteal-phase-calculator" className="text-sm text-[#E8637A] hover:underline font-medium">
+            <a href="/luteal-phase-calculator" className="text-sm text-[#c94f68] hover:underline font-medium">
               Luteal Phase Calculator
             </a>
             <span className="text-gray-300">·</span>
-            <a href="/tools/ovulation-calculator" className="text-sm text-[#E8637A] hover:underline font-medium">
+            <a href="/tools/ovulation-calculator" className="text-sm text-[#c94f68] hover:underline font-medium">
               Ovulation Calculator
             </a>
             <span className="text-gray-300">·</span>
-            <a href="/tools/pms-tracker" className="text-sm text-[#E8637A] hover:underline font-medium">
+            <a href="/tools/pms-tracker" className="text-sm text-[#c94f68] hover:underline font-medium">
               PMS Tracker
             </a>
           </div>

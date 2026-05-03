@@ -32,20 +32,20 @@ export default function StickyMobileCTA() {
   if (!visible || dismissed) return null;
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t-2 border-[#E8637A] bg-[#FFF9F6] px-4 py-3 flex items-center gap-3 shadow-lg">
-      <p className="flex-1 text-sm font-medium text-[#2D1B1E]">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t-2 border-[#c94f68] bg-[#ede8f7] px-4 py-3 flex items-center gap-3 shadow-lg">
+      <p className="flex-1 text-sm font-medium text-[#140c18]">
         Track your cycle free →
       </p>
       <a
         href="/signup"
         className="shrink-0 rounded-full px-4 py-2 text-sm font-semibold text-white whitespace-nowrap"
-        style={{ background: "linear-gradient(135deg, #E8637A, #F4956A)" }}
+        style={{ background: "linear-gradient(135deg, #c94f68, #e06e40)" }}
       >
         Start 7-day trial
       </a>
       <button
         onClick={dismiss}
-        className="shrink-0 text-xl leading-none text-[#8C6B5A] hover:text-[#2D1B1E] transition-colors"
+        className="shrink-0 text-xl leading-none text-[#3d2855] hover:text-[#140c18] transition-colors"
         aria-label="Dismiss"
       >
         ×

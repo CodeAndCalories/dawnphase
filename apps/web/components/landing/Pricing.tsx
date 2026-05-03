@@ -56,13 +56,13 @@ export default function Pricing() {
               key={tier.name}
               className={`rounded-3xl p-8 border-2 ${
                 tier.highlight
-                  ? "border-purple-500 shadow-xl shadow-purple-100 relative"
+                  ? "border-[#c94f68] shadow-xl shadow-[rgba(201,79,104,0.15)] relative"
                   : "border-gray-100"
               }`}
             >
               {tier.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-purple-600 to-pink-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">
+                  <span className="bg-gradient-to-r from-[#c94f68] to-[#e06e40] text-white text-xs font-bold px-4 py-1.5 rounded-full">
                     Most popular
                   </span>
                 </div>
@@ -82,7 +82,7 @@ export default function Pricing() {
               <ul className="space-y-3 mb-8">
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5" />
+                    <Check className="w-5 h-5 text-[#7a2daa] flex-shrink-0 mt-0.5" />
                     <span className="text-sm text-gray-700">{f}</span>
                   </li>
                 ))}
@@ -92,7 +92,7 @@ export default function Pricing() {
                 href={tier.href}
                 className={`block w-full text-center py-3 rounded-full font-semibold text-sm transition-opacity ${
                   tier.highlight
-                    ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white hover:opacity-90 shadow-md shadow-purple-200"
+                    ? "bg-gradient-to-r from-[#c94f68] to-[#e06e40] text-white hover:opacity-90 shadow-md shadow-[rgba(201,79,104,0.25)]"
                     : "bg-gray-50 text-gray-900 border border-gray-200 hover:bg-gray-100"
                 }`}
               >

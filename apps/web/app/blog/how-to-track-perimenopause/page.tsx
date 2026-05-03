@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Post() {
   return (
-    <div className="min-h-screen bg-[#FFF9F6]">
+    <div className="min-h-screen bg-[#ede8f7]">
       <Header />
       <ArticleSchema
         title="How to Track Perimenopause Symptoms — A Practical Guide"
@@ -34,11 +34,11 @@ export default function Post() {
         dateModified="2026-04-26"
       />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <Link href="/blog" className="text-sm text-[#E8637A] hover:underline mb-8 inline-block">← Back to blog</Link>
-        <div className="flex items-center gap-2 text-xs text-[#8C6B5A] mb-4">
+        <Link href="/blog" className="text-sm text-[#c94f68] hover:underline mb-8 inline-block">← Back to blog</Link>
+        <div className="flex items-center gap-2 text-xs text-[#3d2855] mb-4">
           <span>April 2026</span><span>·</span><span>7 min read</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[#C94B6D] leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-[#140c18] leading-tight mb-6">
           How to Track Perimenopause Symptoms — A Practical Guide
         </h1>
 
@@ -49,13 +49,13 @@ export default function Post() {
           </p>
         </div>
 
-        <div className="text-[#2D1B1E] space-y-6 leading-relaxed">
+        <div className="text-[#140c18] space-y-6 leading-relaxed">
 
-          <p className="text-lg text-[#8C6B5A]">
+          <p className="text-lg text-[#3d2855]">
             Perimenopause is a transition that unfolds over months or years. No single blood test or appointment captures it fully — which is why systematic tracking is one of the most powerful tools available to people navigating this stage. Here&apos;s how to do it effectively.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Why tracking perimenopause matters</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why tracking perimenopause matters</h2>
           <p>
             Perimenopause symptoms are highly individual, gradual in onset, and easy to attribute to other causes — stress, poor sleep, life circumstances. Without a structured record, it is difficult to see the pattern. Tracking makes the pattern visible.
           </p>
@@ -68,7 +68,7 @@ export default function Post() {
             <li><strong>Personal understanding.</strong> Seeing which symptoms cluster together, which correlate with sleep, stress, or alcohol, and how they change over your cycle (even an irregular one) helps you make sense of what your body is doing.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What to track</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What to track</h2>
 
           <div className="space-y-4">
             {[
@@ -103,21 +103,21 @@ export default function Post() {
                 note: "Not everyone experiences all physical symptoms. Track what is relevant to you — even two or three of these consistently recorded adds value.",
               },
             ].map(({ category, items, note }) => (
-              <div key={category} className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-5">
-                <h3 className="font-bold text-[#C94B6D] mb-3">{category}</h3>
+              <div key={category} className="bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] p-5">
+                <h3 className="font-bold text-[#140c18] mb-3">{category}</h3>
                 <ul className="space-y-1 mb-3">
                   {items.map(item => (
-                    <li key={item} className="text-sm text-[#2D1B1E] flex items-start gap-2">
-                      <span className="text-[#E8637A] shrink-0 mt-0.5">·</span>{item}
+                    <li key={item} className="text-sm text-[#140c18] flex items-start gap-2">
+                      <span className="text-[#c94f68] shrink-0 mt-0.5">·</span>{item}
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs text-[#8C6B5A] italic">{note}</p>
+                <p className="text-xs text-[#3d2855] italic">{note}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How often to log</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How often to log</h2>
           <p>
             Daily logging is the gold standard. Perimenopause symptoms are variable and often worse at specific times of day or points in the cycle — daily recording captures this nuance in a way that weekly or event-driven logging misses.
           </p>
@@ -125,7 +125,7 @@ export default function Post() {
             That said, even logging four or five days per week consistently over several months is far more useful than perfect daily logging for two weeks followed by gaps. The goal is building a longitudinal pattern, which requires consistency over time more than completeness on any given day.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">What patterns to look for</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">What patterns to look for</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Symptom clustering.</strong> Are hot flashes more common on specific days? Do brain fog episodes correlate with poor sleep nights? Patterns across symptoms reveal relationships.</li>
             <li><strong>Cycle phase correlation.</strong> Even in irregular cycles, some symptoms may still cluster around the late luteal phase. Tracking cycle dates alongside symptoms makes this visible.</li>
@@ -133,7 +133,7 @@ export default function Post() {
             <li><strong>Trend over time.</strong> Is hot flash frequency increasing month on month? Is sleep quality declining? A trend line is far more informative than individual data points.</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">How to use tracking data at doctor appointments</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">How to use tracking data at doctor appointments</h2>
           <p>
             The most useful thing you can bring to a GP or gynaecologist appointment about perimenopause is a structured symptom log — ideally covering at least three months. Specifically:
           </p>
@@ -147,23 +147,23 @@ export default function Post() {
             This transforms a vague &ldquo;I think I might be in perimenopause&rdquo; into an evidence-based clinical conversation. It also makes it significantly harder for symptoms to be dismissed.
           </p>
 
-          <h2 className="text-2xl font-bold text-[#C94B6D] mt-8">Dawn Phase perimenopause mode</h2>
+          <h2 className="text-2xl font-bold text-[#140c18] mt-8">Dawn Phase perimenopause mode</h2>
           <p>
             Dawn Phase includes a dedicated perimenopause tracking mode that surfaces the symptoms most relevant to this transition — including{" "}
-            <Link href="/symptoms/hot-flashes-causes" className="text-[#E8637A] hover:underline font-medium">hot flashes</Link>,{" "}
-            <Link href="/symptoms/brain-fog-perimenopause" className="text-[#E8637A] hover:underline font-medium">brain fog</Link>, night sweats, sleep, and mood — alongside cycle dates and daily energy logging.
+            <Link href="/symptoms/hot-flashes-causes" className="text-[#c94f68] hover:underline font-medium">hot flashes</Link>,{" "}
+            <Link href="/symptoms/brain-fog-perimenopause" className="text-[#c94f68] hover:underline font-medium">brain fog</Link>, night sweats, sleep, and mood — alongside cycle dates and daily energy logging.
           </p>
           <p>
             The insights view shows symptom frequency trends over time, and the doctor PDF export generates a structured report that summarises your cycle history, top symptoms, and phase averages — designed to be useful in clinical appointments without requiring you to manually compile your data.
           </p>
           <p>
             For a comprehensive list of perimenopause symptoms to track, see our{" "}
-            <Link href="/blog/perimenopause-symptoms-checklist" className="text-[#E8637A] hover:underline font-medium">perimenopause symptoms checklist</Link>.
+            <Link href="/blog/perimenopause-symptoms-checklist" className="text-[#c94f68] hover:underline font-medium">perimenopause symptoms checklist</Link>.
           </p>
 
         </div>
 
-        <p className="text-xs text-[#8C6B5A] text-center mt-8">
+        <p className="text-xs text-[#3d2855] text-center mt-8">
           This content is for informational purposes only and is not a substitute for professional medical advice.
         </p>
 
