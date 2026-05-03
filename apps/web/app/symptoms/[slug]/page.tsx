@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 import ExitIntent from "@/components/ExitIntent";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 import { symptoms, PHASE_COLORS } from "@/data/symptoms";
 import { MedicalWebPageSchema } from "@/components/SchemaMarkup";
 
@@ -63,6 +64,7 @@ export default async function SymptomPage({
       />
       <Header />
       <ExitIntent />
+      <StickyMobileCTA />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <Link
@@ -110,6 +112,22 @@ export default async function SymptomPage({
             </h2>
             <p className="text-[#140c18] leading-relaxed">{symptom.causes}</p>
           </section>
+
+          {/* Mid-page conversion CTA */}
+          <div className="rounded-2xl bg-[#F3ECFA] border border-[#E6D7F3] p-7 text-center">
+            <h3 className="text-xl font-bold text-[#1E0F30] mb-2">
+              Track this symptom across your cycle
+            </h3>
+            <p className="text-sm text-[#3d2855] leading-relaxed mb-5">
+              Dawn Phase logs <strong className="text-[#1E0F30]">{symptom.name}</strong> patterns and shows you correlations — privately. No data selling.
+            </p>
+            <a
+              href="/signup"
+              className="inline-block bg-gradient-to-br from-[#c94f68] to-[#e06e40] text-white font-semibold px-7 py-3 rounded-full text-sm shadow-lg shadow-[rgba(201,79,104,0.35)] hover:scale-[1.02] transition-all duration-200"
+            >
+              Start free — no card needed
+            </a>
+          </div>
 
           {/* Tracking */}
           <section className="bg-[#f4e6f0] rounded-2xl p-6">
