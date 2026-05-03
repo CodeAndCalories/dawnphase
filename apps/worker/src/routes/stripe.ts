@@ -183,6 +183,17 @@ stripe.post("/webhook", async (c) => {
       return c.json({ received: true });
     }
 
+    // LOG: show exactly what Stripe sent before we write 'trialing'.
+    // With a 100% coupon Stripe may set subscription status to 'active'
+    // immediately, but this handler overwrites it with the hardcoded 'trialing'.
+    console.log(
+      `[webhook] checkout.session.completed` +
+      ` | payment_status=${session.payment_status}` +
+      ` | subscription=${session.subscription}` +
+      ` | amount_total=${session.amount_total}` +
+      ` | userId=${userId} | customerId=${customerId}`
+    );
+
     const result = await dbRun(
       c.env.DB,
       `UPDATE users
@@ -202,6 +213,15 @@ stripe.post("/webhook", async (c) => {
     const customerId = sub.customer as string;
     const status = sub.status as string;
     const valid = ["trialing", "active", "past_due", "canceled", "incomplete"];
+    // LOG: show full status context on every subscription state change.
+    console.log(
+      `[webhook] customer.subscription.updated` +
+      ` | customerId=${customerId}` +
+      ` | status=${status}` +
+      ` | trial_end=${sub.trial_end ?? "none"}` +
+      ` | cancel_at_period_end=${sub.cancel_at_period_end}` +
+      ` | discount=${JSON.stringify((sub.discount as Record<string,unknown> | null)?.coupon ?? null)}`
+    );
     if (valid.includes(status)) {
       await dbRun(
         c.env.DB,
