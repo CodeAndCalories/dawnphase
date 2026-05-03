@@ -46,8 +46,8 @@ function Nav() {
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0">
-          <Image src="/logo.png" alt="Dawn Phase" width={36} height={36} className="rounded-lg" />
-          <span className="font-display text-lg font-bold text-dawn-charcoal tracking-tight">
+          <Image src="/logo.png" alt="Dawn Phase" width={40} height={40} className="rounded-lg" />
+          <span className="font-display text-xl font-bold text-[#1E0F30] tracking-tight">
             Dawn Phase
           </span>
         </a>

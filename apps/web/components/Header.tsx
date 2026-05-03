@@ -9,11 +9,11 @@ export default function Header() {
           <Image
             src="/logo.png"
             alt="Dawn Phase"
-            width={36}
-            height={36}
+            width={40}
+            height={40}
             className="rounded-xl"
           />
-          <span className="font-semibold text-[#140c18] text-lg tracking-tight leading-none">
+          <span className="font-bold text-[#1E0F30] text-xl tracking-tight leading-none">
             Dawn Phase
           </span>
         </a>

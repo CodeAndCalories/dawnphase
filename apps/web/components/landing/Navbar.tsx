@@ -12,8 +12,8 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="Dawn Phase" width={36} height={36} className="rounded-lg" />
-            <span className="text-xl font-bold bg-gradient-to-r from-[#c94f68] to-[#e06e40] bg-clip-text text-transparent">
+            <Image src="/logo.png" alt="Dawn Phase" width={40} height={40} className="rounded-lg" />
+            <span className="text-xl font-bold text-[#1E0F30] tracking-tight">
               Dawn Phase
             </span>
           </a>
