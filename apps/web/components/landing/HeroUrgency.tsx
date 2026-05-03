@@ -18,13 +18,19 @@ export default function HeroUrgency() {
       .catch(() => {});
   }, []);
 
-  if (!userCount) return null;
+  const count = parseInt(userCount ?? "0", 10);
 
   return (
     <p className="mt-4 text-sm text-dp-taupe/70">
-      Join{" "}
-      <span className="font-semibold text-dp-taupe/90">{userCount}</span>{" "}
-      women who finally understand their cycle
+      {count > 0 ? (
+        <>
+          Join{" "}
+          <span className="font-semibold text-dp-taupe/90">{userCount}</span>{" "}
+          women who finally understand their cycle
+        </>
+      ) : (
+        "Join early members who finally understand their cycle"
+      )}
     </p>
   );
 }
