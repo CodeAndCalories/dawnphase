@@ -183,24 +183,23 @@ stripe.post("/webhook", async (c) => {
       return c.json({ received: true });
     }
 
-    // LOG: show exactly what Stripe sent before we write 'trialing'.
-    // With a 100% coupon Stripe may set subscription status to 'active'
-    // immediately, but this handler overwrites it with the hardcoded 'trialing'.
-    console.log(
-      `[webhook] checkout.session.completed` +
-      ` | payment_status=${session.payment_status}` +
-      ` | subscription=${session.subscription}` +
-      ` | amount_total=${session.amount_total}` +
-      ` | userId=${userId} | customerId=${customerId}`
-    );
+    const isImmediatelyActive =
+      session.payment_status === 'paid' ||
+      session.amount_total === 0;
+
+    const statusToWrite = isImmediatelyActive ? 'active' : 'trialing';
+
+    console.log('[webhook] status written:', statusToWrite,
+      '| payment_status:', session.payment_status,
+      '| amount_total:', session.amount_total);
 
     const result = await dbRun(
       c.env.DB,
       `UPDATE users
-       SET subscription_status = 'trialing',
+       SET subscription_status = ?,
            stripe_customer_id  = ?
        WHERE id = ?`,
-      [customerId, userId]
+      [statusToWrite, customerId, userId]
     );
     console.log(
       `User ${userId} → trialing (customer ${customerId}) changes=${result.meta.changes}`
