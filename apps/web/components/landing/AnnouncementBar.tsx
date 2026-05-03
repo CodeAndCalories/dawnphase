@@ -16,7 +16,7 @@ export default function AnnouncementBar() {
     <div
       className="relative w-full py-2 px-10 text-center text-white text-sm font-medium"
       style={{
-        background: "linear-gradient(90deg, #7a3aaa, #a83d72)",
+        background: "linear-gradient(90deg, #1E0F30, #4A1A6A, #7a2060)",
       }}
     >
       🔒 Your cycle data is yours — we never sell it. Ever.{" "}

@@ -38,7 +38,7 @@ export default function LiveStatsBar() {
     : LOADING_ITEMS;
 
   return (
-    <section className="py-10 px-6 bg-[#f4e6f0] border-y border-[rgba(130,80,170,0.12)]">
+    <section className="py-10 px-6 bg-[#FFFBF8] border-y border-[#E6D7F3]">
       <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-6">
         <p className="text-sm font-semibold text-[#5a3575] uppercase tracking-widest text-center">
           Join women who finally understand their cycles
@@ -46,7 +46,7 @@ export default function LiveStatsBar() {
         <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16">
           {items.map((item, i) => (
             <div key={i} className="text-center">
-              <p className="text-xl font-bold text-[#140c18] leading-none">
+              <p className="text-2xl font-bold text-[#1E0F30] leading-none">
                 {item.value}
               </p>
               <p className="text-xs text-[#3d2855] mt-1">{item.label}</p>

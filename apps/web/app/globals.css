@@ -13,6 +13,11 @@
   --color-dp-cream-lt:   #ede8f7;   /* soft lavender — "white" sections*/
   --color-dp-muted:      #7a5a8a;   /* muted plum  — microcopy/subtle  */
   --color-dp-pill:       #5a3575;   /* medium plum — trust pill text   */
+  --color-dp-plum-dark:  #1E0F30;   /* deep plum   — dark sections/footer */
+  --color-dp-lavender:   #F3ECFA;   /* pale lavender — section bg      */
+  --color-dp-blush:      #FFF2F3;   /* pale blush  — alternate section bg */
+  --color-dp-near-white: #FFFBF8;   /* near white  — clean section bg  */
+  --color-dp-border:     #E6D7F3;   /* soft lavender — card borders    */
 
   /* ── Font families ────────────────────────────────────────────── */
   --font-family-display: var(--font-sora, "Sora", system-ui, sans-serif);

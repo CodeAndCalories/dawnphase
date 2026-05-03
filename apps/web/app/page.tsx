@@ -29,8 +29,8 @@ function CtaButton({
     "inline-block rounded-full px-8 py-3.5 text-sm font-semibold transition-all duration-200";
   const styles =
     variant === "primary"
-      ? "bg-gradient-to-br from-dawn-rose to-dawn-purple text-white shadow-lg shadow-dawn-rose/30 hover:scale-[1.02] hover:shadow-xl hover:shadow-dawn-rose/40"
-      : "text-dp-taupe underline underline-offset-4 decoration-dawn-rose/50 hover:decoration-dawn-rose";
+      ? "bg-gradient-to-br from-dawn-rose to-dawn-purple text-white shadow-xl shadow-[rgba(201,79,104,0.45)] hover:scale-[1.02] hover:shadow-2xl hover:shadow-[rgba(201,79,104,0.55)]"
+      : "text-dp-taupe/80 underline underline-offset-4 decoration-dawn-rose/40 hover:decoration-dawn-rose hover:text-dp-taupe";
   return (
     <a href={href} className={`${base} ${styles}`}>
       {children}
@@ -42,7 +42,7 @@ function CtaButton({
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-30 border-b border-black/5" style={{ background: "rgba(237,232,247,0.9)", backdropFilter: "blur(8px)" }}>
+    <header className="sticky top-0 z-30 border-b border-[#E6D7F3]" style={{ background: "rgba(255,251,248,0.96)", backdropFilter: "blur(12px)" }}>
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0">
@@ -81,7 +81,7 @@ function Nav() {
           </a>
           <a
             href="/signup"
-            className="bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-5 py-2 text-sm font-semibold hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/20"
+            className="bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-5 py-2 text-sm font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-[rgba(201,79,104,0.4)]"
           >
             Start free trial
           </a>
@@ -99,10 +99,10 @@ function Hero() {
       className="relative overflow-hidden pt-28 pb-32 px-6"
       style={{
         background: `
-          radial-gradient(ellipse 80% 60% at 10% -10%, #c94f6870 0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 90% 5%,  #e06e4050 0%, transparent 55%),
-          radial-gradient(ellipse 70% 60% at 50% 110%,#c94f6830 0%, transparent 60%),
-          #ede8f7
+          radial-gradient(ellipse 55% 45% at 50% 38%, rgba(255,255,255,0.55) 0%, transparent 70%),
+          radial-gradient(ellipse 70% 55% at 15% 0%, rgba(201,79,104,0.10) 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 85% 5%, rgba(122,45,170,0.08) 0%, transparent 55%),
+          linear-gradient(180deg, #F3ECFA 0%, #ede8f7 100%)
         `,
       }}
     >
@@ -176,7 +176,7 @@ const steps = [
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-6 bg-dp-cream-lt">
+    <section id="how-it-works" className="py-24 px-6 bg-dp-lavender">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Simple by design</PillLabel>
@@ -192,7 +192,7 @@ function HowItWorks() {
               <div className="hidden md:block absolute top-8 left-[calc(50%+3rem)] w-[calc(100%-6rem-1px)] h-px bg-dawn-rose/20" />
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-dawn-warm border border-dawn-rose/20 flex items-center justify-center mb-5 shadow-sm">
+                <div className="w-16 h-16 rounded-2xl bg-white border border-[#E6D7F3] flex items-center justify-center mb-5 shadow-md">
                   <span className="font-display text-xl font-bold text-dawn-rose">{s.num}</span>
                 </div>
                 <h3 className="font-display text-xl font-semibold text-dp-deeprose mb-3">
@@ -245,7 +245,7 @@ const features = [
 
 function Features() {
   return (
-    <section id="features" className="py-24 px-6 bg-dawn-warm">
+    <section id="features" className="py-24 px-6 bg-dp-near-white">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Everything you need</PillLabel>
@@ -260,9 +260,9 @@ function Features() {
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-dp-cream-lt rounded-2xl p-6 border border-[rgba(130,80,170,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              className="bg-white rounded-2xl p-6 border border-[#E6D7F3] shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
             >
-              <div className="w-11 h-11 rounded-xl bg-dawn-warm flex items-center justify-center mb-4">
+              <div className="w-11 h-11 rounded-xl bg-dp-lavender flex items-center justify-center mb-4">
                 <f.icon className="w-5 h-5 text-dawn-purple" strokeWidth={1.8} />
               </div>
               <h3 className="font-display font-semibold text-dp-deeprose mb-2">{f.title}</h3>
@@ -304,11 +304,13 @@ const WHY_SWITCH = [
 
 function WhySwitch() {
   return (
-    <section className="py-24 px-6 bg-[#ede8f7]">
+    <section className="py-24 px-6" style={{ background: "linear-gradient(135deg, #1E0F30, #2D1548)" }}>
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
-          <PillLabel>Why women switch</PillLabel>
-          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-dp-deeprose tracking-tight">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#D94F70] border border-[#D94F70]/30 bg-[#D94F70]/10 rounded-full px-4 py-1.5">
+            Why women switch
+          </span>
+          <h2 className="font-display mt-4 text-4xl md:text-5xl font-bold text-white tracking-tight">
             Why women switch to Dawn Phase
           </h2>
         </div>
@@ -317,13 +319,13 @@ function WhySwitch() {
           {WHY_SWITCH.map((card) => (
             <div
               key={card.headline}
-              className="bg-white rounded-2xl p-8 border border-[rgba(130,80,170,0.15)] shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+              className="bg-white rounded-2xl p-8 border border-[#E6D7F3] shadow-2xl hover:-translate-y-1 hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] transition-all duration-200"
             >
               <div className="text-3xl mb-5 leading-none">{card.icon}</div>
-              <h3 className="font-display text-lg font-semibold text-dp-deeprose mb-3 leading-snug">
+              <h3 className="font-display text-lg font-semibold text-[#1E0F30] mb-3 leading-snug">
                 {card.headline}
               </h3>
-              <p className="text-sm text-dp-taupe leading-relaxed">{card.body}</p>
+              <p className="text-sm text-[#3d2855] leading-relaxed">{card.body}</p>
             </div>
           ))}
         </div>
@@ -357,7 +359,7 @@ const testimonials = [
 
 function Testimonials() {
   return (
-    <section className="py-24 px-6 bg-[#f4e6f0]">
+    <section className="py-24 px-6 bg-dp-blush">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Stories</PillLabel>
@@ -370,7 +372,7 @@ function Testimonials() {
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="bg-[#ede8f7] rounded-2xl p-8 border border-[rgba(130,80,170,0.15)] shadow-md flex flex-col"
+              className="bg-white rounded-2xl p-8 border border-[#E6D7F3] shadow-lg hover:shadow-xl transition-shadow duration-200 flex flex-col"
             >
               {/* Stars */}
               <div className="flex gap-0.5 mb-4">
@@ -409,7 +411,7 @@ function Testimonials() {
 
 function ForWho() {
   return (
-    <section className="py-24 px-6 bg-dawn-warm">
+    <section className="py-24 px-6 bg-dp-lavender">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-16">
           <PillLabel>Made for you</PillLabel>
@@ -420,7 +422,7 @@ function ForWho() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Card 1 */}
-          <div className="rounded-2xl border border-[rgba(130,80,170,0.15)] shadow-md overflow-hidden">
+          <div className="bg-white rounded-2xl border border-[#E6D7F3] shadow-lg overflow-hidden">
             <div className="h-2 bg-dawn-rose" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-rose bg-dawn-rose/10 rounded-full px-3 py-1 mb-4">
@@ -447,7 +449,7 @@ function ForWho() {
           </div>
 
           {/* Card 2 */}
-          <div className="rounded-2xl border border-[rgba(130,80,170,0.15)] shadow-md overflow-hidden">
+          <div className="bg-white rounded-2xl border border-[#E6D7F3] shadow-lg overflow-hidden">
             <div className="h-2 bg-dawn-purple" />
             <div className="p-8">
               <div className="inline-block text-xs font-semibold tracking-widest uppercase text-dawn-purple bg-dawn-purple/10 rounded-full px-3 py-1 mb-4">
@@ -513,7 +515,7 @@ const FAQS = [
 
 function FAQ() {
   return (
-    <section className="py-20 px-6 bg-[#ede8f7]">
+    <section className="py-20 px-6 bg-dp-lavender">
       <div className="max-w-[720px] mx-auto">
         <h2 className="font-display text-3xl font-bold text-[#140c18] text-center mb-10">
           Common questions
@@ -522,7 +524,7 @@ function FAQ() {
           {FAQS.map(({ q, a }) => (
             <details
               key={q}
-              className="group rounded-2xl border border-[rgba(130,80,170,0.15)] bg-white overflow-hidden"
+              className="group rounded-2xl border border-[#E6D7F3] bg-white shadow-sm overflow-hidden"
             >
               <summary
                 className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none select-none"
@@ -552,7 +554,7 @@ function FAQ() {
 
 function RiskReversal() {
   return (
-    <section className="py-20 px-6 bg-dawn-warm">
+    <section className="py-20 px-6 bg-dp-blush">
       <div className="max-w-[640px] mx-auto text-center">
         <PillLabel>Completely risk-free</PillLabel>
         <h2 className="font-display mt-4 text-3xl font-bold text-dp-deeprose tracking-tight mb-10">
@@ -568,7 +570,7 @@ function RiskReversal() {
           ].map(({ icon, text }) => (
             <div
               key={text}
-              className="flex items-start gap-3 bg-white rounded-2xl p-5 border border-[rgba(130,80,170,0.12)] shadow-sm"
+              className="flex items-start gap-3 bg-white rounded-2xl p-5 border border-[#E6D7F3] shadow-md"
             >
               <span className="text-xl shrink-0 leading-none mt-0.5">{icon}</span>
               <span className="text-sm text-dp-taupe leading-relaxed">{text}</span>
@@ -579,7 +581,7 @@ function RiskReversal() {
         <div className="mt-10">
           <a
             href="/signup"
-            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-dawn-rose/30"
+            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-12 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-2xl shadow-[rgba(201,79,104,0.5)]"
           >
             Start your free trial today
           </a>
@@ -594,26 +596,26 @@ function RiskReversal() {
 
 function FinalCta() {
   return (
-    <section className="py-28 px-6" style={{ backgroundColor: "#2D1B1E" }}>
+    <section className="py-28 px-6" style={{ background: "linear-gradient(135deg, #1E0F30, #2D1548)" }}>
       <div className="max-w-[1200px] mx-auto text-center">
         <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight max-w-2xl mx-auto">
           Your body has been talking.
           <br />
-          <span className="text-dawn-rose">It&apos;s time to listen.</span>
+          <span className="text-[#F26F6C]">It&apos;s time to listen.</span>
         </h2>
-        <p className="mt-5 text-dp-taupe/70 text-lg max-w-lg mx-auto">
+        <p className="mt-5 text-white/60 text-lg max-w-lg mx-auto">
           Join thousands of women who finally understand their cycle — and use
           that knowledge every single day.
         </p>
         <div className="mt-10">
           <a
             href="/signup"
-            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-dawn-rose/30"
+            className="inline-block bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full px-10 py-4 text-base font-semibold hover:scale-[1.02] transition-all duration-200 shadow-2xl shadow-[rgba(201,79,104,0.5)]"
           >
             Start your free trial today
           </a>
         </div>
-        <p className="mt-5 text-sm text-gray-600">
+        <p className="mt-5 text-sm text-white/40">
           7 days free · No credit card required · Cancel anytime
         </p>
       </div>
@@ -625,7 +627,7 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/5 py-12 px-6" style={{ backgroundColor: "#2D1B1E" }}>
+    <footer className="border-t border-white/10 py-12 px-6" style={{ backgroundColor: "#1E0F30" }}>
       <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <span className="font-display text-lg font-bold text-white tracking-tight">
           Dawn Phase
@@ -643,14 +645,14 @@ function Footer() {
             <a
               key={label}
               href={href}
-              className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+              className="text-sm text-[#7B5E8E] hover:text-white transition-colors"
             >
               {label}
             </a>
           ))}
         </nav>
 
-        <p className="text-sm text-gray-600 shrink-0">
+        <p className="text-sm text-[#7B5E8E] shrink-0">
           © 2026 Dawn Phase · Your data stays yours.
         </p>
       </div>

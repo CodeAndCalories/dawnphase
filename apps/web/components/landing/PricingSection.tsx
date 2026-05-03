@@ -25,7 +25,7 @@ export default function PricingSection() {
   }
 
   return (
-    <section id="pricing" className="py-24 px-6 bg-dawn-warm">
+    <section id="pricing" className="py-24 px-6 bg-dp-near-white">
       <div className="max-w-[1200px] mx-auto">
         <div className="text-center mb-10">
           {/* PillLabel inline */}
@@ -71,10 +71,10 @@ export default function PricingSection() {
         </div>
 
         <div className="max-w-sm mx-auto">
-          <div className={`bg-dp-cream-lt rounded-2xl border shadow-xl p-8 transition-all duration-200 ${
+          <div className={`bg-white rounded-2xl border shadow-2xl p-8 transition-all duration-200 ${
             plan === "annual"
-              ? "border-[#c94f68] ring-2 ring-[#c94f68]/20"
-              : "border-[rgba(130,80,170,0.15)]"
+              ? "border-[#c94f68] ring-2 ring-[#c94f68]/25 shadow-[0_20px_60px_rgba(201,79,104,0.18)]"
+              : "border-[#E6D7F3]"
           }`}>
             {/* Badges row */}
             <div className="flex items-center gap-2 mb-6 flex-wrap">
@@ -126,7 +126,7 @@ export default function PricingSection() {
 
             <button
               onClick={handleCta}
-              className="block w-full text-center bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full py-3.5 font-semibold text-sm hover:scale-[1.02] transition-all duration-200 shadow-md shadow-dawn-rose/30"
+              className="block w-full text-center bg-gradient-to-br from-dawn-rose to-dawn-purple text-white rounded-full py-4 font-semibold text-sm hover:scale-[1.02] transition-all duration-200 shadow-xl shadow-[rgba(201,79,104,0.4)]"
             >
               Start free trial
             </button>
