@@ -69,6 +69,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/best-app-pcos-2026",                lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/insomnia-before-period",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/mittelschmerz-ovulation-pain",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/ovulation-mucus",                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/low-energy-during-period",          lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/flo-app-alternative",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     // Landing pages (high-intent search)
     { url: "https://www.dawnphase.com/lp/privacy-period-tracker", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     { url: "https://www.dawnphase.com/lp/pcos-period-tracker",    lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
