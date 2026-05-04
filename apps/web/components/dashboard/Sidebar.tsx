@@ -23,11 +23,11 @@ const NAV = [
 // "incomplete" means checkout completed but webhook hasn't updated the
 // DB yet — treat it identically to "trialing" from the user's perspective.
 function getSubBadge(status: string): { label: string; cls: string } {
-  if (status === "active")   return { label: "Active",   cls: "bg-green-100 text-green-800" };
-  if (status === "past_due") return { label: "Past due", cls: "bg-amber-100 text-amber-800" };
-  if (status === "canceled") return { label: "Canceled", cls: "bg-red-100   text-red-700"   };
+  if (status === "active")   return { label: "Active",   cls: "bg-[#c94f68] text-white"          };
+  if (status === "past_due") return { label: "Past due", cls: "bg-amber-100 text-amber-800"       };
+  if (status === "canceled") return { label: "Canceled", cls: "bg-red-100   text-red-700"         };
   // trialing, incomplete, or anything else → show Trial
-  return { label: "Trial", cls: "bg-blue-100 text-blue-800" };
+  return { label: "Trial", cls: "bg-[#c94f68]/20 text-white/80 border border-[#c94f68]/40" };
 }
 
 function getJWTPayload(): { email: string; status: string } | null {
@@ -135,7 +135,7 @@ export default function Sidebar() {
           {/* Logout */}
           <button
             onClick={logout}
-            className="flex items-center gap-2 text-xs text-white/60 hover:text-white transition-colors w-full"
+            className="flex items-center gap-2 text-xs text-white/90 hover:text-white transition-colors w-full pt-3 border-t border-[rgba(255,255,255,0.1)]"
           >
             <LogOut size={14} />
             Log out
