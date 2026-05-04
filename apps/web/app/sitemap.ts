@@ -72,6 +72,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/ovulation-mucus",                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/low-energy-during-period",          lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/flo-app-alternative",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: "https://www.dawnphase.com/blog/clue-app-alternative",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: "https://www.dawnphase.com/blog/best-period-tracker-perimenopause", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/period-late-not-pregnant",          lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/pcos-no-period",                    lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/ovulation-pain-every-month",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Landing pages (high-intent search)
     { url: "https://www.dawnphase.com/lp/privacy-period-tracker", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     { url: "https://www.dawnphase.com/lp/pcos-period-tracker",    lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
