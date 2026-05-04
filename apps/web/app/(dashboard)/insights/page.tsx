@@ -203,12 +203,12 @@ function StatCard({
   label, value, sub,
 }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="bg-[#FDF6F0] rounded-2xl p-5">
+    <div className="bg-white border border-[#E6D7F3] rounded-2xl p-5">
       <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
         {label}
       </p>
-      <p className="text-3xl font-bold text-[#2D1B1E] leading-none">{value}</p>
-      {sub && <p className="text-xs text-[#8C6B5A] mt-1">{sub}</p>}
+      <p className="text-3xl font-bold text-[#1E0F30] leading-none">{value}</p>
+      {sub && <p className="text-xs text-[#3d2855] mt-1">{sub}</p>}
     </div>
   );
 }
@@ -217,7 +217,7 @@ function SectionCard({
   title, children,
 }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+    <div className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
       <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
         {title}
       </h2>
@@ -258,7 +258,7 @@ export default function InsightsPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
         {redirecting && (
-          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+          <p className="text-sm text-[#3d2855]">Setting up your account…</p>
         )}
       </div>
     );
@@ -274,7 +274,7 @@ export default function InsightsPage() {
           <h2 className="text-xl font-semibold text-[#C94B6D]">
             Log for 2+ cycles to see your patterns
           </h2>
-          <p className="text-sm text-[#8C6B5A] mt-1">
+          <p className="text-sm text-[#3d2855] mt-1">
             Dawn Phase needs at least two period starts to calculate averages
             and phase trends.
           </p>
@@ -282,7 +282,7 @@ export default function InsightsPage() {
 
         {/* Progress */}
         <div className="w-full space-y-2">
-          <div className="flex justify-between text-xs text-[#8C6B5A]">
+          <div className="flex justify-between text-xs text-[#3d2855]">
             <span>{cycles.length} / 2 period starts logged</span>
             <span>{total} day{total !== 1 ? "s" : ""} logged</span>
           </div>
@@ -329,7 +329,7 @@ export default function InsightsPage() {
     <div className="max-w-3xl space-y-5 pb-12">
       <div>
         <h1 className="text-2xl font-bold text-[#C94B6D]">Insights</h1>
-        <p className="text-sm text-[#8C6B5A] mt-1">
+        <p className="text-sm text-[#3d2855] mt-1">
           Patterns from your last {cycles.length} cycle{cycles.length !== 1 ? "s" : ""}
         </p>
       </div>
@@ -357,31 +357,31 @@ export default function InsightsPage() {
       <SectionCard title="Your consistency">
         <div className="grid grid-cols-3 gap-4">
           <div className="text-center space-y-1.5">
-            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">
+            <p className="text-3xl font-bold text-[#1E0F30] leading-none">
               {streak > 0 ? streak : "—"}
             </p>
             <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
               Current streak
             </p>
-            <p className="text-xs text-[#8C6B5A]">
+            <p className="text-xs text-[#3d2855]">
               {streak > 0 ? "🔥 days in a row" : "log today to start"}
             </p>
           </div>
           <div className="text-center space-y-1.5">
-            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">
+            <p className="text-3xl font-bold text-[#1E0F30] leading-none">
               {longest > 0 ? longest : "—"}
             </p>
             <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
               Longest streak
             </p>
-            <p className="text-xs text-[#8C6B5A]">days</p>
+            <p className="text-xs text-[#3d2855]">days</p>
           </div>
           <div className="text-center space-y-1.5">
-            <p className="text-3xl font-bold text-[#2D1B1E] leading-none">{total}</p>
+            <p className="text-3xl font-bold text-[#1E0F30] leading-none">{total}</p>
             <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
               Total logged
             </p>
-            <p className="text-xs text-[#8C6B5A]">days overall</p>
+            <p className="text-xs text-[#3d2855]">days overall</p>
           </div>
         </div>
       </SectionCard>
@@ -404,10 +404,10 @@ export default function InsightsPage() {
           :                                          "Your recent trend";
 
         return (
-          <div className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-6 space-y-5">
+          <div className="bg-white rounded-2xl border border-[#E6D7F3] shadow-sm p-6 space-y-5">
             {/* Section header */}
             <div className="flex items-center gap-3">
-              <h2 className="text-base font-bold text-[#2D1B1E]">
+              <h2 className="text-base font-bold text-[#1E0F30]">
                 {conf === "established" ? "Pattern spotlight"
                   : conf === "developing" ? "Possible patterns"
                   : "Building your picture"}
@@ -427,16 +427,16 @@ export default function InsightsPage() {
             {/* ── Early state ────────────────────────────────────────────── */}
             {(conf === "early" || !conf) && (
               <div className="space-y-4">
-                <p className="text-sm text-[#8C6B5A]">
+                <p className="text-sm text-[#3d2855]">
                   Log for{" "}
-                  <strong className="text-[#2D1B1E]">
+                  <strong className="text-[#1E0F30]">
                     {Math.max(0, 2 - cycles.length)} more cycle{cycles.length < 1 ? "s" : ""}
                   </strong>{" "}
                   to start seeing patterns.
                 </p>
                 {/* Progress bar */}
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs text-[#8C6B5A]">
+                  <div className="flex justify-between text-xs text-[#3d2855]">
                     <span>{cycles.length} / 2 cycles</span>
                     <span>{logsN} days logged</span>
                   </div>
@@ -447,7 +447,7 @@ export default function InsightsPage() {
                     />
                   </div>
                 </div>
-                <p className="text-xs text-[#8C6B5A]">
+                <p className="text-xs text-[#3d2855]">
                   Every day you log adds to your personal health picture.
                 </p>
               </div>
@@ -457,29 +457,29 @@ export default function InsightsPage() {
             {conf && conf !== "early" && (
               <>
                 {conf === "developing" && (
-                  <p className="text-xs text-[#8C6B5A] bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
+                  <p className="text-xs text-[#3d2855] bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
                     These are early trends based on limited data. Keep logging for clearer patterns.
                   </p>
                 )}
 
                 {isPeri && periNote && (
-                  <p className="text-xs text-[#8C6B5A] italic">{periNote}</p>
+                  <p className="text-xs text-[#3d2855] italic">{periNote}</p>
                 )}
 
                 {correlations.length === 0 ? (
-                  <p className="text-sm text-[#8C6B5A]">Keep logging to build your first patterns.</p>
+                  <p className="text-sm text-[#3d2855]">Keep logging to build your first patterns.</p>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {correlations.map((item, i) => (
                       <div
                         key={i}
-                        className="bg-[#FDF6F0] rounded-xl p-4 space-y-1.5 border border-[rgba(232,99,122,0.08)]"
+                        className="bg-white rounded-xl p-4 space-y-1.5 border border-[#E6D7F3]"
                       >
                         <p className="text-[10px] font-bold text-[#E8637A] uppercase tracking-wide">
                           {warmLabel}
                         </p>
-                        <p className="text-sm text-[#2D1B1E] leading-snug">{item.label}</p>
-                        <p className="text-[10px] text-[#8C6B5A]">
+                        <p className="text-sm text-[#1E0F30] leading-snug">{item.label}</p>
+                        <p className="text-[10px] text-[#3d2855]">
                           Based on your last {logsN} log{logsN !== 1 ? "s" : ""}
                         </p>
                       </div>
@@ -497,10 +497,10 @@ export default function InsightsPage() {
                       {comparison.map((row) => {
                         const diff  = row.this_cycle - row.last_cycle;
                         const trend = diff > 0 ? "up" : diff < 0 ? "down" : "same";
-                        const trendColor = trend === "up" ? "text-rose-500" : trend === "down" ? "text-green-600" : "text-[#8C6B5A]";
+                        const trendColor = trend === "up" ? "text-rose-500" : trend === "down" ? "text-green-600" : "text-[#3d2855]";
                         return (
                           <div key={row.symptom} className="flex items-center justify-between text-sm">
-                            <span className="text-[#2D1B1E]">{row.symptom}</span>
+                            <span className="text-[#1E0F30]">{row.symptom}</span>
                             <span className={`font-medium ${trendColor}`}>
                               {row.this_cycle} {trend !== "same" && `(${trend === "up" ? "+" : ""}${diff} from last)`}
                             </span>
@@ -512,7 +512,7 @@ export default function InsightsPage() {
                 )}
 
                 {/* Disclaimer */}
-                <p className="text-[10px] text-[#8C6B5A]/80 pt-1 border-t border-gray-50">
+                <p className="text-[10px] text-[#3d2855]/80 pt-1 border-t border-gray-50">
                   Insights are based on your logged data only and are for informational purposes.
                   They are not medical advice or a diagnosis.
                 </p>
@@ -547,7 +547,7 @@ export default function InsightsPage() {
             })}
           </div>
           {/* Phase band labels */}
-          <div className="flex text-[10px] text-[#8C6B5A]">
+          <div className="flex text-[10px] text-[#3d2855]">
             {/* Menstrual 5/28, Follicular 8/28, Ovulatory 1/28, Luteal 14/28 */}
             {(
               [
@@ -567,7 +567,7 @@ export default function InsightsPage() {
             ))}
           </div>
         </div>
-        <p className="text-xs text-[#8C6B5A]">
+        <p className="text-xs text-[#3d2855]">
           Average energy (1–5) per cycle day across all your logs. Hover bars for detail.
         </p>
       </SectionCard>
@@ -589,10 +589,10 @@ export default function InsightsPage() {
                     style={{ backgroundColor: meta.color }}
                     aria-hidden
                   />
-                  <span className="text-xs font-semibold text-[#2D1B1E]">
+                  <span className="text-xs font-semibold text-[#1E0F30]">
                     {phase}
                   </span>
-                  <span className="text-[10px] text-[#8C6B5A] ml-auto">
+                  <span className="text-[10px] text-[#3d2855] ml-auto">
                     {meta.days}
                   </span>
                 </div>
@@ -603,15 +603,15 @@ export default function InsightsPage() {
                         key={symptom}
                         className="flex items-center justify-between text-sm"
                       >
-                        <span className="text-[#2D1B1E]">{symptom}</span>
-                        <span className="text-xs text-[#8C6B5A] font-medium">
+                        <span className="text-[#1E0F30]">{symptom}</span>
+                        <span className="text-xs text-[#3d2855] font-medium">
                           ×{count}
                         </span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-xs text-[#8C6B5A] italic">
+                  <p className="text-xs text-[#3d2855] italic">
                     No symptoms logged
                   </p>
                 )}
@@ -638,7 +638,7 @@ export default function InsightsPage() {
             return (
               <div key={phase} className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-[#2D1B1E] font-medium w-24">{phase}</span>
+                  <span className="text-[#1E0F30] font-medium w-24">{phase}</span>
                   <div className="flex-1 mx-3">
                     <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                       <div
@@ -650,7 +650,7 @@ export default function InsightsPage() {
                       />
                     </div>
                   </div>
-                  <span className="text-[#8C6B5A] w-16 text-right">
+                  <span className="text-[#3d2855] w-16 text-right">
                     {val != null ? `${val.toFixed(1)} / 5` : "no data"}{" "}
                     <span>{emoji}</span>
                   </span>
@@ -670,13 +670,13 @@ export default function InsightsPage() {
               return (
                 <div key={symptom} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#2D1B1E]">
-                      <span className="text-[#8C6B5A] w-4 inline-block">
+                    <span className="text-[#1E0F30]">
+                      <span className="text-[#3d2855] w-4 inline-block">
                         {i + 1}.
                       </span>{" "}
                       {symptom}
                     </span>
-                    <span className="text-[#8C6B5A] font-medium">
+                    <span className="text-[#3d2855] font-medium">
                       {count}×
                     </span>
                   </div>

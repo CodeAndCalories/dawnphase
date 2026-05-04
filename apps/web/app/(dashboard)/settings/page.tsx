@@ -347,7 +347,7 @@ export default function SettingsPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
         {redirecting && (
-          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+          <p className="text-sm text-[#3d2855]">Setting up your account…</p>
         )}
       </div>
     );
@@ -361,10 +361,10 @@ export default function SettingsPage() {
       {showDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-4">
-            <h2 className="text-base font-semibold text-[#2D1B1E]">
+            <h2 className="text-base font-semibold text-[#1E0F30]">
               Delete account?
             </h2>
-            <p className="text-sm text-[#8C6B5A] leading-relaxed">
+            <p className="text-sm text-[#3d2855] leading-relaxed">
               This permanently deletes all your cycle data, logs, and account
               info. This cannot be undone.
             </p>
@@ -375,7 +375,7 @@ export default function SettingsPage() {
               <button
                 onClick={() => { setShowDelete(false); setDeleteError(null); }}
                 disabled={deleting}
-                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-gray-400 transition-colors"
+                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#3d2855] hover:border-gray-400 transition-colors"
               >
                 Cancel
               </button>
@@ -397,8 +397,8 @@ export default function SettingsPage() {
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
             <div className="text-center space-y-1">
               <p className="text-2xl">💙</p>
-              <h2 className="text-base font-bold text-[#2D1B1E]">We&apos;re sorry to see you go</h2>
-              <p className="text-sm text-[#8C6B5A]">What could we have done better?</p>
+              <h2 className="text-base font-bold text-[#1E0F30]">We&apos;re sorry to see you go</h2>
+              <p className="text-sm text-[#3d2855]">What could we have done better?</p>
             </div>
             <div className="space-y-2">
               {[
@@ -415,7 +415,7 @@ export default function SettingsPage() {
                   className={`w-full min-h-[44px] px-4 py-3 text-sm text-left rounded-xl border-2 transition-all ${
                     cancelValue === option
                       ? "border-[#E8637A] bg-[#FFF0F3] text-[#C94B6D] font-medium"
-                      : "border-gray-200 bg-white text-[#2D1B1E] hover:border-[#E8637A]"
+                      : "border-gray-200 bg-white text-[#1E0F30] hover:border-[#E8637A]"
                   }`}
                 >
                   {option}
@@ -423,7 +423,7 @@ export default function SettingsPage() {
               ))}
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+              <p className="text-xs font-medium text-[#3d2855] uppercase tracking-wide">
                 Tell us more <span className="font-normal normal-case">(optional)</span>
               </p>
               <textarea
@@ -432,7 +432,7 @@ export default function SettingsPage() {
                 rows={3}
                 maxLength={2000}
                 placeholder="Any details help us improve…"
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] resize-none focus:outline-none focus:border-[#E8637A] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#1E0F30] resize-none focus:outline-none focus:border-[#E8637A] transition-colors"
               />
             </div>
             <div className="flex gap-3">
@@ -442,7 +442,7 @@ export default function SettingsPage() {
                   if (typeof window !== "undefined") localStorage.setItem("dp_cancel_feedback_done", "1");
                   setShowCancelFeedback(false);
                 }}
-                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-gray-400 transition-colors"
+                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#3d2855] hover:border-gray-400 transition-colors"
               >
                 Skip
               </button>
@@ -462,30 +462,30 @@ export default function SettingsPage() {
       {/* ── Page header ──────────────────────────────────────────────────── */}
       <div>
         <h1 className="text-2xl font-bold text-[#C94B6D]">Settings</h1>
-        <p className="text-sm text-[#8C6B5A] mt-1">
+        <p className="text-sm text-[#3d2855] mt-1">
           Manage your account and preferences
         </p>
       </div>
 
       {/* ── ACCOUNT ──────────────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-5">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-5">
         <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
           Account
         </h2>
 
         {/* Email */}
         <div className="space-y-1">
-          <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+          <p className="text-xs font-medium text-[#3d2855] uppercase tracking-wide">
             Email
           </p>
-          <p className="text-sm text-[#2D1B1E] bg-white px-4 py-2.5 rounded-xl border border-gray-200">
+          <p className="text-sm text-[#1E0F30] bg-white px-4 py-2.5 rounded-xl border border-gray-200">
             {user.email}
           </p>
         </div>
 
         {/* Mode toggle */}
         <div className="space-y-2">
-          <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+          <p className="text-xs font-medium text-[#3d2855] uppercase tracking-wide">
             Tracking mode
           </p>
           <div className="flex gap-3">
@@ -497,7 +497,7 @@ export default function SettingsPage() {
                 className={`flex-1 min-h-[44px] rounded-full text-sm font-medium border-2 transition-all disabled:opacity-60 ${
                   user.mode === m
                     ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                 }`}
               >
                 {m === "cycle" ? "Cycle tracking" : "Perimenopause mode"}
@@ -505,7 +505,7 @@ export default function SettingsPage() {
             ))}
           </div>
           {modeSaving && (
-            <p className="text-xs text-[#8C6B5A]">Saving…</p>
+            <p className="text-xs text-[#3d2855]">Saving…</p>
           )}
           {modeSaved && (
             <p className="text-xs text-green-700">✓ Mode updated</p>
@@ -514,9 +514,9 @@ export default function SettingsPage() {
 
         {/* Birth date — optional, powers Cosmic view */}
         <div className="space-y-2">
-          <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+          <p className="text-xs font-medium text-[#3d2855] uppercase tracking-wide">
             Date of birth{" "}
-            <span className="font-normal normal-case text-[#8C6B5A]/70">
+            <span className="font-normal normal-case text-[#3d2855]/70">
               (optional — unlocks ✨ Cosmic view)
             </span>
           </p>
@@ -526,7 +526,7 @@ export default function SettingsPage() {
               value={birthDate}
               onChange={e => setBirthDate(e.target.value)}
               max={new Date().toISOString().split("T")[0]}
-              className="min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
+              className="min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#1E0F30] focus:outline-none focus:border-[#E8637A] transition-colors"
             />
             <button
               onClick={handleBirthSave}
@@ -541,16 +541,16 @@ export default function SettingsPage() {
       </section>
 
       {/* ── SUBSCRIPTION ─────────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-5">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-5">
         <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
           Subscription
         </h2>
 
         <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 px-4 py-3">
           <div>
-            <p className="text-sm font-semibold text-[#2D1B1E]">Dawn Phase Pro</p>
+            <p className="text-sm font-semibold text-[#1E0F30]">Dawn Phase Pro</p>
             {user.subscription_status === "trialing" && user.trial_ends_at && (
-              <p className="text-xs text-[#8C6B5A] mt-0.5">
+              <p className="text-xs text-[#3d2855] mt-0.5">
                 Trial ends{" "}
                 {new Date(user.trial_ends_at).toLocaleDateString("en-US", {
                   month: "short", day: "numeric", year: "numeric",
@@ -577,7 +577,7 @@ export default function SettingsPage() {
       </section>
 
       {/* ── REMINDERS ────────────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-5">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-5">
         <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
           Reminders
         </h2>
@@ -599,7 +599,7 @@ export default function SettingsPage() {
               }`}
             />
           </button>
-          <span className="text-sm font-medium text-[#2D1B1E]">
+          <span className="text-sm font-medium text-[#1E0F30]">
             Email me before my period
           </span>
         </label>
@@ -608,7 +608,7 @@ export default function SettingsPage() {
         <div
           className={`space-y-2 transition-opacity ${remEnabled ? "opacity-100" : "opacity-40 pointer-events-none"}`}
         >
-          <p className="text-xs font-medium text-[#8C6B5A] uppercase tracking-wide">
+          <p className="text-xs font-medium text-[#3d2855] uppercase tracking-wide">
             How many days before?
           </p>
           <div className="flex gap-3">
@@ -619,7 +619,7 @@ export default function SettingsPage() {
                 className={`min-h-[44px] w-16 rounded-full text-sm font-semibold border-2 transition-all ${
                   remDays === d
                     ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                 }`}
               >
                 {d}d
@@ -646,10 +646,10 @@ export default function SettingsPage() {
             />
           </button>
           <div>
-            <span className="text-sm font-medium text-[#2D1B1E]">
+            <span className="text-sm font-medium text-[#1E0F30]">
               Weekly cycle digest
             </span>
-            <p className="text-xs text-[#8C6B5A] mt-0.5">
+            <p className="text-xs text-[#3d2855] mt-0.5">
               Monday morning: phase, wellness tips, streak & top symptoms
             </p>
           </div>
@@ -667,16 +667,16 @@ export default function SettingsPage() {
       </section>
 
       {/* ── REFER A FRIEND ───────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
         <div>
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
             Refer a friend
           </h2>
-          <p className="text-sm font-semibold text-[#2D1B1E]">Give a month, get a month</p>
-          <p className="text-sm text-[#8C6B5A] leading-relaxed mt-1">
+          <p className="text-sm font-semibold text-[#1E0F30]">Give a month, get a month</p>
+          <p className="text-sm text-[#3d2855] leading-relaxed mt-1">
             Share your referral link. When a friend starts a paid subscription, you both get a free month added to your account.
           </p>
-          <p className="text-xs text-[#8C6B5A]/70 mt-1 italic">
+          <p className="text-xs text-[#3d2855]/70 mt-1 italic">
             Rewards applied manually while we build automation — we&apos;ll email you!
           </p>
         </div>
@@ -693,7 +693,7 @@ export default function SettingsPage() {
           <div className="space-y-3">
             {/* URL + copy */}
             <div className="flex items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-2 flex-wrap">
-              <p className="text-xs text-[#2D1B1E] font-mono flex-1 break-all">
+              <p className="text-xs text-[#1E0F30] font-mono flex-1 break-all">
                 {referralStats.url}
               </p>
               <button
@@ -705,12 +705,12 @@ export default function SettingsPage() {
             </div>
 
             {/* Stats */}
-            <p className="text-xs text-[#8C6B5A]">
-              <span className="font-semibold text-[#2D1B1E]">{referralStats.total_referrals}</span>{" "}
+            <p className="text-xs text-[#3d2855]">
+              <span className="font-semibold text-[#1E0F30]">{referralStats.total_referrals}</span>{" "}
               friend{referralStats.total_referrals !== 1 ? "s" : ""} referred
               {referralStats.converted > 0 && (
                 <> ·{" "}
-                  <span className="font-semibold text-[#2D1B1E]">{referralStats.converted}</span>{" "}
+                  <span className="font-semibold text-[#1E0F30]">{referralStats.converted}</span>{" "}
                   converted
                 </>
               )}
@@ -730,7 +730,7 @@ export default function SettingsPage() {
               </a>
               <button
                 onClick={handleReferralCopy}
-                className="min-h-[36px] px-4 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-[#8C6B5A] hover:border-[#E8637A] hover:text-[#C94B6D] transition-colors"
+                className="min-h-[36px] px-4 rounded-xl border border-gray-200 bg-white text-xs font-semibold text-[#3d2855] hover:border-[#E8637A] hover:text-[#C94B6D] transition-colors"
               >
                 {referralCopied ? "✓ Link copied" : "Copy link"}
               </button>
@@ -740,12 +740,12 @@ export default function SettingsPage() {
       </section>
 
       {/* ── PARTNER SHARE ────────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
         <div>
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest mb-1">
             Share your cycle phase
           </h2>
-          <p className="text-sm text-[#8C6B5A] leading-relaxed">
+          <p className="text-sm text-[#3d2855] leading-relaxed">
             Share a link so your partner, friend, or family member can see what phase you&apos;re in this week. No symptoms or personal data are shared.
           </p>
         </div>
@@ -764,7 +764,7 @@ export default function SettingsPage() {
           <div className="space-y-3">
             {/* URL display + copy */}
             <div className="flex items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-2 flex-wrap">
-              <p className="text-xs text-[#2D1B1E] font-mono flex-1 break-all">
+              <p className="text-xs text-[#1E0F30] font-mono flex-1 break-all">
                 {shareData.url}
               </p>
               <button
@@ -775,8 +775,8 @@ export default function SettingsPage() {
               </button>
             </div>
 
-            <p className="text-xs text-[#8C6B5A]">
-              Views: <span className="font-semibold text-[#2D1B1E]">{shareData.view_count}</span>
+            <p className="text-xs text-[#3d2855]">
+              Views: <span className="font-semibold text-[#1E0F30]">{shareData.view_count}</span>
             </p>
 
             {/* Revoke */}
@@ -792,7 +792,7 @@ export default function SettingsPage() {
                 <button
                   onClick={() => setShowRevokeConfirm(false)}
                   disabled={shareRevoking}
-                  className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-gray-400 transition-colors"
+                  className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#3d2855] hover:border-gray-400 transition-colors"
                 >
                   Cancel
                 </button>
@@ -808,13 +808,13 @@ export default function SettingsPage() {
           </div>
         )}
 
-        <p className="text-xs text-[#8C6B5A]/70 leading-snug">
+        <p className="text-xs text-[#3d2855]/70 leading-snug">
           🔒 Only your current phase and general tips are visible. Never symptoms or personal health details.
         </p>
       </section>
 
       {/* ── DATA ─────────────────────────────────────────────────────────── */}
-      <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+      <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
         <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
           Data
         </h2>
@@ -849,7 +849,7 @@ export default function SettingsPage() {
           >
             Delete my account
           </button>
-          <p className="text-xs text-[#8C6B5A] mt-1">
+          <p className="text-xs text-[#3d2855] mt-1">
             Permanently removes all your data. This cannot be undone.
           </p>
         </div>

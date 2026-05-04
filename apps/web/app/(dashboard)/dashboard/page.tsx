@@ -213,11 +213,11 @@ const PHASE_SUGGESTIONS: Record<string, string[]> = {
 };
 
 const PHASE_BADGE_STYLE: Record<string, string> = {
-  Menstrual:     "bg-rose-50   text-rose-700   border border-rose-200",
-  Follicular:    "bg-violet-50 text-violet-700 border border-violet-200",
-  Ovulatory:     "bg-amber-50  text-amber-700  border border-amber-200",
-  Luteal:        "bg-indigo-50 text-indigo-700 border border-indigo-200",
-  Perimenopause: "bg-purple-50 text-purple-700 border border-purple-200",
+  Menstrual:     "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Follicular:    "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Ovulatory:     "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Luteal:        "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Perimenopause: "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
 };
 
 function parseMood(raw: string | null): string | null {
@@ -256,7 +256,7 @@ function Card({
 }) {
   return (
     <div
-      className={`bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] ${padding} ${
+      className={`bg-white rounded-2xl border border-[#E6D7F3] ${padding} ${
         hero
           ? "shadow-md"
           : "shadow-sm md:hover:shadow-md md:hover:-translate-y-0.5 transition-all duration-200"
@@ -334,7 +334,7 @@ export default function DashboardPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
-        {statusMessage && <p className="text-sm text-[#8C6B5A]">{statusMessage}</p>}
+        {statusMessage && <p className="text-sm text-[#3d2855]">{statusMessage}</p>}
       </div>
     );
   }
@@ -375,8 +375,8 @@ export default function DashboardPage() {
 
   // Phase-aware hero background
   const heroBackground = phase
-    ? `radial-gradient(ellipse at top right, ${phase.bgRgba} 0%, transparent 70%), linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)`
-    : "linear-gradient(135deg, #FFF0F0 0%, #FDF6F0 100%)";
+    ? `radial-gradient(ellipse at top right, ${phase.bgRgba} 0%, transparent 70%), linear-gradient(135deg, #EDE8F7 0%, #F3ECFA 100%)`
+    : "linear-gradient(135deg, #EDE8F7 0%, #F3ECFA 100%)";
 
   // Arc total days: use actual avg if we have completed cycles, else 28
   const arcTotalDays = completedLens.length > 0 ? avgLen : 28;
@@ -423,8 +423,8 @@ export default function DashboardPage() {
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
             <div className="text-center space-y-1">
               <p className="text-3xl">🌸</p>
-              <h2 className="text-lg font-bold text-[#2D1B1E]">Welcome to Dawn Phase!</h2>
-              <p className="text-sm text-[#8C6B5A]">Let&apos;s set up your experience in 30 seconds.</p>
+              <h2 className="text-lg font-bold text-[#1E0F30]">Welcome to Dawn Phase!</h2>
+              <p className="text-sm text-[#3d2855]">Let&apos;s set up your experience in 30 seconds.</p>
             </div>
 
             {/* Mode */}
@@ -441,7 +441,7 @@ export default function DashboardPage() {
                     className={`flex-1 min-h-[44px] rounded-full text-sm font-medium border-2 transition-all ${
                       onboardMode === m
                         ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                        : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                        : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                     }`}
                   >
                     {m === "cycle" ? "Cycle tracking" : "Perimenopause"}
@@ -454,7 +454,7 @@ export default function DashboardPage() {
             <div className="space-y-2">
               <p className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
                 Date of birth{" "}
-                <span className="font-normal normal-case text-[#8C6B5A]">
+                <span className="font-normal normal-case text-[#3d2855]">
                   (optional — unlocks ✨ Cosmic view)
                 </span>
               </p>
@@ -463,7 +463,7 @@ export default function DashboardPage() {
                 value={onboardBirthDate}
                 onChange={e => setOnboardBirthDate(e.target.value)}
                 max={new Date().toISOString().split("T")[0]}
-                className="w-full min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
+                className="w-full min-h-[44px] px-4 py-2 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#1E0F30] focus:outline-none focus:border-[#E8637A] transition-colors"
               />
             </div>
 
@@ -484,8 +484,8 @@ export default function DashboardPage() {
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-5">
             <div className="text-center space-y-1">
               <p className="text-2xl">💬</p>
-              <h2 className="text-base font-bold text-[#2D1B1E]">Quick question</h2>
-              <p className="text-sm text-[#8C6B5A]">What brought you here today?</p>
+              <h2 className="text-base font-bold text-[#1E0F30]">Quick question</h2>
+              <p className="text-sm text-[#3d2855]">What brought you here today?</p>
             </div>
             <div className="space-y-2">
               {[
@@ -499,7 +499,7 @@ export default function DashboardPage() {
                   type="button"
                   disabled={feedbackSending}
                   onClick={() => handleFeedbackSelect(option)}
-                  className="w-full min-h-[44px] px-4 py-3 text-sm text-left rounded-xl border-2 border-gray-200 bg-white text-[#2D1B1E] hover:border-[#E8637A] hover:bg-[#FFF0F3] transition-all disabled:opacity-60"
+                  className="w-full min-h-[44px] px-4 py-3 text-sm text-left rounded-xl border-2 border-gray-200 bg-white text-[#1E0F30] hover:border-[#E8637A] hover:bg-[#FFF0F3] transition-all disabled:opacity-60"
                 >
                   {option}
                 </button>
@@ -511,7 +511,7 @@ export default function DashboardPage() {
                 if (typeof window !== "undefined") localStorage.setItem("dp_feedback_done", "1");
                 setShowFeedback(false);
               }}
-              className="w-full text-xs text-[#8C6B5A] hover:text-[#C94B6D] transition-colors pt-1"
+              className="w-full text-xs text-[#3d2855] hover:text-[#C94B6D] transition-colors pt-1"
             >
               Skip
             </button>
@@ -532,7 +532,7 @@ export default function DashboardPage() {
       {/* Welcome header — time-of-day greeting */}
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-[#C94B6D]">{greeting}</h1>
-        <p className="text-[#8C6B5A] text-sm mt-1">Here&apos;s your cycle at a glance.</p>
+        <p className="text-[#3d2855] text-sm mt-1">Here&apos;s your cycle at a glance.</p>
       </div>
 
       {/* ── ROW 1: Hero + right cards ──────────────────────────────────── */}
@@ -558,11 +558,11 @@ export default function DashboardPage() {
                   <h2 className={`text-4xl font-bold tracking-tight ${phase.accent}`}>
                     {phase.name}
                   </h2>
-                  <p className="text-[#8C6B5A] mt-1 text-sm font-medium">
+                  <p className="text-[#3d2855] mt-1 text-sm font-medium">
                     Cycle day {cycleDay}
                     {nextPeriodDate && (
                       <> · Next period around{" "}
-                        <span className="text-[#2D1B1E] font-semibold">
+                        <span className="text-[#1E0F30] font-semibold">
                           {nextPeriodDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
                         </span>
                       </>
@@ -570,7 +570,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
 
-                <p className="text-sm text-[#8C6B5A] leading-relaxed border-l-2 border-[#E8637A]/30 pl-3">
+                <p className="text-sm text-[#3d2855] leading-relaxed border-l-2 border-[#E8637A]/30 pl-3">
                   {phase.tip}
                 </p>
 
@@ -604,8 +604,8 @@ export default function DashboardPage() {
             <div className="flex flex-col items-center justify-center py-8 text-center gap-4">
               <span className="text-5xl" aria-hidden>🌸</span>
               <div>
-                <p className="font-semibold text-[#2D1B1E] text-lg">Start your cycle tracking</p>
-                <p className="text-sm text-[#8C6B5A] mt-1">
+                <p className="font-semibold text-[#1E0F30] text-lg">Start your cycle tracking</p>
+                <p className="text-sm text-[#3d2855] mt-1">
                   Log your last period to unlock phase predictions, cycle day tracking, and personalised insights.
                 </p>
               </div>
@@ -630,21 +630,21 @@ export default function DashboardPage() {
                   <span className="text-4xl font-bold text-[#E8637A] leading-none">{daysToNextPeriod}</span>
                   <span className="text-base font-semibold text-[#E8637A]">days</span>
                 </div>
-                <p className="text-sm text-[#8C6B5A] mt-1">until your next period</p>
-                <p className="text-xs text-[#8C6B5A] mt-1 font-medium">
+                <p className="text-sm text-[#3d2855] mt-1">until your next period</p>
+                <p className="text-xs text-[#3d2855] mt-1 font-medium">
                   {nextPeriodDate.toLocaleDateString("en-US", { month: "long", day: "numeric" })}
                 </p>
                 {nextPhase && nextPhase.label !== "Next period" && (
                   <div className="mt-3 pt-3 border-t border-gray-100">
-                    <p className="text-xs text-[#8C6B5A]">
-                      <span className="font-medium text-[#2D1B1E]">{nextPhase.label}</span> phase in{" "}
-                      <span className="font-medium text-[#2D1B1E]">{nextPhase.days}d</span>
+                    <p className="text-xs text-[#3d2855]">
+                      <span className="font-medium text-[#1E0F30]">{nextPhase.label}</span> phase in{" "}
+                      <span className="font-medium text-[#1E0F30]">{nextPhase.days}d</span>
                     </p>
                   </div>
                 )}
               </div>
             ) : (
-              <p className="text-sm text-[#8C6B5A]">Log a period to see predictions.</p>
+              <p className="text-sm text-[#3d2855]">Log a period to see predictions.</p>
             )}
           </Card>
 
@@ -652,9 +652,9 @@ export default function DashboardPage() {
           <Card className="flex-1">
             <CardHeading>Quick insight</CardHeading>
             {quickInsight ? (
-              <p className="text-sm text-[#2D1B1E] font-medium leading-relaxed">{quickInsight}</p>
+              <p className="text-sm text-[#1E0F30] font-medium leading-relaxed">{quickInsight}</p>
             ) : (
-              <p className="text-sm text-[#8C6B5A]">Log your first period to start building insights.</p>
+              <p className="text-sm text-[#3d2855]">Log your first period to start building insights.</p>
             )}
             {completedLens.length >= 2 && (
               <a href="/insights" className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline">
@@ -673,7 +673,7 @@ export default function DashboardPage() {
           <CardHeading>Recent check-ins</CardHeading>
           {recentLogs.length === 0 ? (
             <div className="text-center py-4 space-y-2">
-              <p className="text-sm text-[#8C6B5A]">No logs yet.</p>
+              <p className="text-sm text-[#3d2855]">No logs yet.</p>
               <a href="/log" className="inline-block text-sm text-[#E8637A] font-semibold hover:underline">
                 Start logging today →
               </a>
@@ -685,8 +685,8 @@ export default function DashboardPage() {
                 return (
                   <li key={log.date} className="py-3 first:pt-0 last:pb-0 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#2D1B1E]">{formatShortDate(log.date)}</span>
-                      <div className="flex items-center gap-3 text-xs text-[#8C6B5A]">
+                      <span className="text-sm font-medium text-[#1E0F30]">{formatShortDate(log.date)}</span>
+                      <div className="flex items-center gap-3 text-xs text-[#3d2855]">
                         {moodEmoji && <span className="text-base leading-none" title="Mood">{moodEmoji}</span>}
                         {log.energy != null && (
                           <span className="flex items-center gap-0.5">
@@ -698,7 +698,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     {log.notes && (
-                      <p className="text-xs italic text-[#8C6B5A] leading-relaxed line-clamp-2">
+                      <p className="text-xs italic text-[#3d2855] leading-relaxed line-clamp-2">
                         &ldquo;{log.notes}&rdquo;
                       </p>
                     )}
@@ -718,13 +718,13 @@ export default function DashboardPage() {
         <Card className="md:col-span-1">
           <CardHeading>This cycle</CardHeading>
           {!latestCycle ? (
-            <p className="text-sm text-[#8C6B5A]">No cycle logged yet.</p>
+            <p className="text-sm text-[#3d2855]">No cycle logged yet.</p>
           ) : (
             <>
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center space-y-1">
                   <p className="text-3xl font-bold text-[#C94B6D]">{logs.length}</p>
-                  <p className="text-xs text-[#8C6B5A] leading-tight">
+                  <p className="text-xs text-[#3d2855] leading-tight">
                     days logged<br /><span className="text-[10px] opacity-70">(last 7)</span>
                   </p>
                 </div>
@@ -732,13 +732,13 @@ export default function DashboardPage() {
                   <p className="text-3xl font-bold text-[#C94B6D]">
                     {cycleMoodAvg != null ? MOOD_EMOJI[Math.round(cycleMoodAvg)] : "—"}
                   </p>
-                  <p className="text-xs text-[#8C6B5A] leading-tight">avg mood</p>
+                  <p className="text-xs text-[#3d2855] leading-tight">avg mood</p>
                 </div>
                 <div className="text-center space-y-1">
                   <p className="text-3xl font-bold text-[#C94B6D]">
                     {cycleEnergyAvg != null ? cycleEnergyAvg.toFixed(1) : "—"}
                   </p>
-                  <p className="text-xs text-[#8C6B5A] leading-tight">
+                  <p className="text-xs text-[#3d2855] leading-tight">
                     avg energy<br /><span className="text-[10px] opacity-70">out of 5</span>
                   </p>
                 </div>
@@ -763,7 +763,7 @@ export default function DashboardPage() {
                     )}
                   </>
                 ) : (
-                  <span className="text-sm text-[#8C6B5A]">Start your streak today</span>
+                  <span className="text-sm text-[#3d2855]">Start your streak today</span>
                 )}
               </div>
             </>
@@ -792,7 +792,7 @@ export default function DashboardPage() {
               {suggestions ? (
                 <ul className="space-y-3 flex-1">
                   {suggestions.map((tip) => (
-                    <li key={tip} className="flex items-start gap-2.5 text-sm text-[#2D1B1E]">
+                    <li key={tip} className="flex items-start gap-2.5 text-sm text-[#1E0F30]">
                       <span
                         className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
                         style={{ backgroundColor: "#E8637A" }}
@@ -803,12 +803,12 @@ export default function DashboardPage() {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-[#8C6B5A] flex-1">
+                <p className="text-sm text-[#3d2855] flex-1">
                   Log your period to unlock personalised suggestions.
                 </p>
               )}
 
-              <p className="mt-4 pt-3 border-t border-gray-100 text-[10px] text-[#8C6B5A]/70 leading-snug">
+              <p className="mt-4 pt-3 border-t border-gray-100 text-[10px] text-[#3d2855]/70 leading-snug">
                 Suggestions are educational only and not medical advice.
               </p>
             </Card>

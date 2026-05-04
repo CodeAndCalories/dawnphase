@@ -185,16 +185,16 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
-              <p className="font-semibold text-[#2D1B1E]">{formatLong(selected.date)}</p>
+              <p className="font-semibold text-[#1E0F30]">{formatLong(selected.date)}</p>
               <button
                 onClick={() => setSelected(null)}
-                className="text-xl leading-none text-[#8C6B5A] hover:text-[#2D1B1E]"
+                className="text-xl leading-none text-[#3d2855] hover:text-[#1E0F30]"
                 aria-label="Close"
               >×</button>
             </div>
 
             {selected.isFuture ? (
-              <p className="text-sm text-[#8C6B5A]">Future date.</p>
+              <p className="text-sm text-[#3d2855]">Future date.</p>
             ) : selected.hasLog ? (
               <div className="space-y-2">
                 {getSymptomNames(selected.log!).length > 0 ? (
@@ -202,18 +202,18 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
                     {getSymptomNames(selected.log!).map((s) => (
                       <span
                         key={s}
-                        className="text-xs px-2.5 py-1 rounded-full bg-[#FFF0F3] text-[#C94B6D] font-medium"
+                        className="text-xs px-2.5 py-1 rounded-full bg-[#E6D7F3] text-[#1E0F30] font-medium"
                       >
                         {s}
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-[#8C6B5A]">Logged — no symptoms recorded.</p>
+                  <p className="text-sm text-[#3d2855]">Logged — no symptoms recorded.</p>
                 )}
-                <div className="flex gap-4 text-xs text-[#8C6B5A]">
+                <div className="flex gap-4 text-xs text-[#3d2855]">
                   {selected.log?.energy != null && (
-                    <span>Energy: <strong className="text-[#2D1B1E]">{selected.log.energy}/5</strong></span>
+                    <span>Energy: <strong className="text-[#1E0F30]">{selected.log.energy}/5</strong></span>
                   )}
                   {selected.log?.mood && getMoodEmoji(selected.log.mood) && (
                     <span>Mood: {getMoodEmoji(selected.log.mood)}</span>
@@ -222,7 +222,7 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
               </div>
             ) : (
               <div className="space-y-2">
-                <p className="text-sm text-[#8C6B5A]">No entry for this day.</p>
+                <p className="text-sm text-[#3d2855]">No entry for this day.</p>
                 <a
                   href="/log"
                   className="inline-block text-sm font-semibold text-[#E8637A] hover:underline"
@@ -232,7 +232,7 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
               </div>
             )}
 
-            <p className="text-xs text-[#8C6B5A]/60 pt-1 border-t border-gray-100">
+            <p className="text-xs text-[#3d2855]/60 pt-1 border-t border-gray-100">
               {selected.count} symptom{selected.count !== 1 ? "s" : ""} logged
             </p>
           </div>
@@ -240,14 +240,14 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
       )}
 
       {/* ── Main card ────────────────────────────────────────────────────── */}
-      <div className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+      <div className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div>
             <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
               Your logging history
             </h2>
-            <p className="text-xs text-[#8C6B5A] mt-1">
+            <p className="text-xs text-[#3d2855] mt-1">
               12 weeks of symptom tracking at a glance
             </p>
           </div>
@@ -270,7 +270,7 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
               {DAY_LABELS_SHORT.map((d, i) => (
                 <div
                   key={i}
-                  className="flex-1 text-center text-[10px] font-medium text-[#8C6B5A]"
+                  className="flex-1 text-center text-[10px] font-medium text-[#3d2855]"
                 >
                   {d}
                 </div>
@@ -283,7 +283,7 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
                 <div key={wi} className="flex items-center gap-0.5">
                   {/* Week label — shown every 2 weeks */}
                   <div
-                    className="shrink-0 text-right pr-2 text-[10px] text-[#8C6B5A] leading-none"
+                    className="shrink-0 text-right pr-2 text-[10px] text-[#3d2855] leading-none"
                     style={{ width: 40 }}
                   >
                     {wi % 2 === 0 ? formatShort(week[0].date) : ""}
@@ -324,7 +324,7 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
 
         {/* Legend */}
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-[10px] text-[#8C6B5A]">Less</span>
+          <span className="text-[10px] text-[#3d2855]">Less</span>
           <div className="flex items-center gap-1">
             {INTENSITY_COLORS.map((color, i) => (
               <div
@@ -340,8 +340,8 @@ export default function SymptomHeatmap({ logs }: { logs: DailyLog[] }) {
               />
             ))}
           </div>
-          <span className="text-[10px] text-[#8C6B5A]">More</span>
-          <span className="text-[10px] text-[#8C6B5A]/60 ml-1">· Tap any day to see details</span>
+          <span className="text-[10px] text-[#3d2855]">More</span>
+          <span className="text-[10px] text-[#3d2855]/60 ml-1">· Tap any day to see details</span>
         </div>
       </div>
     </>

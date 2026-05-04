@@ -176,7 +176,7 @@ export default function LogPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
         {redirecting && (
-          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+          <p className="text-sm text-[#3d2855]">Setting up your account…</p>
         )}
       </div>
     );
@@ -190,7 +190,7 @@ export default function LogPage() {
           <div className="text-center space-y-2">
             <div className="text-6xl">✓</div>
             <p className="text-xl font-semibold text-[#E8637A]">Logged!</p>
-            <p className="text-sm text-[#8C6B5A]">Taking you back to your dashboard…</p>
+            <p className="text-sm text-[#3d2855]">Taking you back to your dashboard…</p>
           </div>
         </div>
       )}
@@ -198,7 +198,7 @@ export default function LogPage() {
       {/* Page header */}
       <div>
         <h1 className="text-2xl font-bold text-[#C94B6D]">Daily log</h1>
-        <p className="text-[#8C6B5A] text-sm mt-1">{displayDate(today)}</p>
+        <p className="text-[#3d2855] text-sm mt-1">{displayDate(today)}</p>
       </div>
 
       {/* "Already logged" banner */}
@@ -211,7 +211,7 @@ export default function LogPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* ── Flow ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Flow intensity
           </h2>
@@ -224,7 +224,7 @@ export default function LogPage() {
                 className={`min-h-[44px] px-6 py-2 rounded-full font-medium text-sm border-2 transition-all ${
                   flow === opt.value
                     ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                 }`}
               >
                 {opt.label}
@@ -234,7 +234,7 @@ export default function LogPage() {
         </section>
 
         {/* ── Mood ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Mood
           </h2>
@@ -258,7 +258,7 @@ export default function LogPage() {
         </section>
 
         {/* ── Energy ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Energy
           </h2>
@@ -271,20 +271,20 @@ export default function LogPage() {
                 className={`min-h-[44px] min-w-[44px] rounded-full font-semibold text-sm border-2 transition-all ${
                   energy === n
                     ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                 }`}
               >
                 {n}
               </button>
             ))}
-            <span className="text-sm text-[#8C6B5A] ml-1">
+            <span className="text-sm text-[#3d2855] ml-1">
               {ENERGY_LABELS[energy - 1]}
             </span>
           </div>
         </section>
 
         {/* ── Sleep ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Sleep hours
           </h2>
@@ -292,17 +292,17 @@ export default function LogPage() {
             <button
               type="button"
               onClick={() => setSleep(s => Math.max(4, parseFloat((s - 0.5).toFixed(1))))}
-              className="min-h-[44px] min-w-[44px] rounded-full border-2 border-gray-200 bg-white text-xl font-bold text-[#8C6B5A] hover:border-[#E8637A] transition-colors flex items-center justify-center"
+              className="min-h-[44px] min-w-[44px] rounded-full border-2 border-gray-200 bg-white text-xl font-bold text-[#3d2855] hover:border-[#E8637A] transition-colors flex items-center justify-center"
             >
               −
             </button>
-            <span className="text-3xl font-semibold text-[#2D1B1E] min-w-[72px] text-center tabular-nums">
+            <span className="text-3xl font-semibold text-[#1E0F30] min-w-[72px] text-center tabular-nums">
               {sleep % 1 === 0 ? sleep : sleep.toFixed(1)}h
             </span>
             <button
               type="button"
               onClick={() => setSleep(s => Math.min(12, parseFloat((s + 0.5).toFixed(1))))}
-              className="min-h-[44px] min-w-[44px] rounded-full border-2 border-gray-200 bg-white text-xl font-bold text-[#8C6B5A] hover:border-[#E8637A] transition-colors flex items-center justify-center"
+              className="min-h-[44px] min-w-[44px] rounded-full border-2 border-gray-200 bg-white text-xl font-bold text-[#3d2855] hover:border-[#E8637A] transition-colors flex items-center justify-center"
             >
               +
             </button>
@@ -310,7 +310,7 @@ export default function LogPage() {
         </section>
 
         {/* ── Symptoms ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Symptoms
           </h2>
@@ -323,7 +323,7 @@ export default function LogPage() {
                 className={`min-h-[44px] px-4 py-2 rounded-full text-sm border-2 transition-all ${
                   symptoms.has(s.key)
                     ? "bg-[#E8637A] border-[#E8637A] text-white font-semibold shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] font-medium hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] font-medium hover:border-[#E8637A]"
                 } ${s.periPriority && userMode === "perimenopause" ? "ring-1 ring-offset-1 ring-[#E8637A]/30" : ""}`}
               >
                 {s.label}
@@ -333,11 +333,11 @@ export default function LogPage() {
         </section>
 
         {/* ── Today's notes ── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-3">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-3">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Today&apos;s notes
           </h2>
-          <label className="block text-sm text-[#8C6B5A]">
+          <label className="block text-sm text-[#3d2855]">
             How are you feeling today? (optional)
           </label>
           <textarea
@@ -346,9 +346,9 @@ export default function LogPage() {
             rows={4}
             maxLength={500}
             placeholder="Any thoughts, feelings, or patterns you noticed today..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm text-[#2D1B1E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/40 resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm text-[#1E0F30] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E8637A]/40 resize-none"
           />
-          <p className={`text-xs text-right ${notes.length >= 500 ? "text-red-500" : "text-[#8C6B5A]"}`}>
+          <p className={`text-xs text-right ${notes.length >= 500 ? "text-red-500" : "text-[#3d2855]"}`}>
             {notes.length}/500
           </p>
         </section>

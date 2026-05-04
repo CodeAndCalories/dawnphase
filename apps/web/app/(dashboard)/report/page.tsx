@@ -75,7 +75,7 @@ export default function ReportPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
-        <p className="text-sm text-[#8C6B5A]">{statusMessage ?? "Loading your report…"}</p>
+        <p className="text-sm text-[#3d2855]">{statusMessage ?? "Loading your report…"}</p>
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function ReportPage() {
     return (
       <div className="max-w-2xl mx-auto py-12 text-center space-y-3">
         <p className="text-[#C94B6D] font-semibold">Could not load report</p>
-        <p className="text-sm text-[#8C6B5A]">{error ?? "Unknown error"}</p>
+        <p className="text-sm text-[#3d2855]">{error ?? "Unknown error"}</p>
       </div>
     );
   }
@@ -106,11 +106,11 @@ export default function ReportPage() {
         }
       `}</style>
 
-      <div className="max-w-3xl mx-auto py-8 space-y-8 text-[#2D1B1E]">
+      <div className="max-w-3xl mx-auto py-8 space-y-8 text-[#1E0F30]">
 
         {/* Print button */}
         <div className="no-print flex items-center justify-between mb-2">
-          <p className="text-sm text-[#8C6B5A]">
+          <p className="text-sm text-[#3d2855]">
             Use your browser&apos;s print dialog to save as PDF.
           </p>
           <button
@@ -122,35 +122,35 @@ export default function ReportPage() {
         </div>
 
         {/* ── HEADER ──────────────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-[rgba(232,99,122,0.15)] p-8 shadow-sm"
+        <div className="bg-white rounded-2xl border border-[#E6D7F3] p-8 shadow-sm"
              style={{ borderLeft: "4px solid #E8637A" }}>
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <h1 className="text-2xl font-bold text-[#C94B6D]">Dawn Phase</h1>
-              <p className="text-lg font-semibold text-[#2D1B1E] mt-0.5">
+              <p className="text-lg font-semibold text-[#1E0F30] mt-0.5">
                 Cycle &amp; Symptom Report
               </p>
             </div>
-            <div className="text-right text-sm text-[#8C6B5A] space-y-0.5">
-              <p><span className="font-medium text-[#2D1B1E]">Patient:</span> {report.user.email}</p>
+            <div className="text-right text-sm text-[#3d2855] space-y-0.5">
+              <p><span className="font-medium text-[#1E0F30]">Patient:</span> {report.user.email}</p>
               <p>
-                <span className="font-medium text-[#2D1B1E]">Mode:</span>{" "}
+                <span className="font-medium text-[#1E0F30]">Mode:</span>{" "}
                 {report.user.mode === "perimenopause" ? "Perimenopause tracking" : "Cycle tracking"}
               </p>
-              <p><span className="font-medium text-[#2D1B1E]">Period:</span> {fmtDate(report.period.from)} – {fmtDate(report.period.to)}</p>
-              <p><span className="font-medium text-[#2D1B1E]">Generated:</span> {generatedDate}</p>
+              <p><span className="font-medium text-[#1E0F30]">Period:</span> {fmtDate(report.period.from)} – {fmtDate(report.period.to)}</p>
+              <p><span className="font-medium text-[#1E0F30]">Generated:</span> {generatedDate}</p>
             </div>
           </div>
         </div>
 
         {/* ── SECTION 1: Cycle Summary ──────────────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 shadow-sm space-y-4">
+        <section className="bg-white rounded-2xl border border-[#E6D7F3] p-6 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-[#C94B6D] border-b border-gray-100 pb-2">
             1. Cycle Summary
           </h2>
 
           {cycles.total === 0 ? (
-            <p className="text-sm text-[#8C6B5A]">No cycles logged in the last 90 days.</p>
+            <p className="text-sm text-[#3d2855]">No cycles logged in the last 90 days.</p>
           ) : (
             <>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -161,8 +161,8 @@ export default function ReportPage() {
                   { label: "Range", value: (cycles.shortestLength && cycles.longestLength)
                     ? `${cycles.shortestLength}–${cycles.longestLength} days` : "—" },
                 ].map(({ label, value }) => (
-                  <div key={label} className="bg-[#FDF6F0] rounded-xl p-3 text-center">
-                    <p className="text-xs text-[#8C6B5A]">{label}</p>
+                  <div key={label} className="bg-[#F3ECFA] rounded-xl p-3 text-center">
+                    <p className="text-xs text-[#3d2855]">{label}</p>
                     <p className="text-xl font-bold text-[#C94B6D] mt-1">{value}</p>
                   </div>
                 ))}
@@ -190,17 +190,17 @@ export default function ReportPage() {
         </section>
 
         {/* ── SECTION 2: Symptom Patterns ──────────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 shadow-sm space-y-4">
+        <section className="bg-white rounded-2xl border border-[#E6D7F3] p-6 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-[#C94B6D] border-b border-gray-100 pb-2">
             2. Symptom Patterns
           </h2>
 
           {topSymptoms.length === 0 ? (
-            <p className="text-sm text-[#8C6B5A]">No symptoms logged in the last 90 days.</p>
+            <p className="text-sm text-[#3d2855]">No symptoms logged in the last 90 days.</p>
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#FDF6F0]">
+                <tr className="bg-[#F3ECFA]">
                   <th className="text-left px-3 py-2 text-xs font-semibold text-[#C94B6D] rounded-tl-lg">Symptom</th>
                   <th className="text-center px-3 py-2 text-xs font-semibold text-[#C94B6D]">Days logged</th>
                   <th className="text-center px-3 py-2 text-xs font-semibold text-[#C94B6D] rounded-tr-lg">Most common phase</th>
@@ -210,13 +210,13 @@ export default function ReportPage() {
                 {topSymptoms.map(({ symptom, count, dominantPhase }) => (
                   <tr key={symptom} className="bg-white">
                     <td className="px-3 py-2.5 font-medium">{symptom}</td>
-                    <td className="px-3 py-2.5 text-center text-[#8C6B5A]">{count}</td>
+                    <td className="px-3 py-2.5 text-center text-[#3d2855]">{count}</td>
                     <td className="px-3 py-2.5 text-center">
                       {dominantPhase ? (
-                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#FDF6F0] text-[#C94B6D]">
+                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#E6D7F3] text-[#1E0F30]">
                           {dominantPhase}
                         </span>
-                      ) : <span className="text-[#8C6B5A]">—</span>}
+                      ) : <span className="text-[#3d2855]">—</span>}
                     </td>
                   </tr>
                 ))}
@@ -226,17 +226,17 @@ export default function ReportPage() {
         </section>
 
         {/* ── SECTION 3: Daily Averages by Phase ───────────────────────── */}
-        <section className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 shadow-sm space-y-4">
+        <section className="bg-white rounded-2xl border border-[#E6D7F3] p-6 shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-[#C94B6D] border-b border-gray-100 pb-2">
             3. Daily Averages by Phase
           </h2>
-          <p className="text-xs text-[#8C6B5A]">
+          <p className="text-xs text-[#3d2855]">
             Based on {report.logCount} daily log{report.logCount !== 1 ? "s" : ""} over the 90-day period.
           </p>
 
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-[#FDF6F0]">
+              <tr className="bg-[#F3ECFA]">
                 <th className="text-left px-3 py-2 text-xs font-semibold text-[#C94B6D]">Phase</th>
                 <th className="text-center px-3 py-2 text-xs font-semibold text-[#C94B6D]">Avg mood</th>
                 <th className="text-center px-3 py-2 text-xs font-semibold text-[#C94B6D]">Avg energy (1–5)</th>
@@ -247,13 +247,13 @@ export default function ReportPage() {
               {phaseAverages.map(({ phase, avgMood, avgEnergy, avgSleep }) => (
                 <tr key={phase} className="bg-white">
                   <td className="px-3 py-2.5 font-medium">{phase}</td>
-                  <td className="px-3 py-2.5 text-center text-[#8C6B5A]">
+                  <td className="px-3 py-2.5 text-center text-[#3d2855]">
                     {avgMood != null ? moodLabel(avgMood) : "—"}
                   </td>
-                  <td className="px-3 py-2.5 text-center text-[#8C6B5A]">
+                  <td className="px-3 py-2.5 text-center text-[#3d2855]">
                     {avgEnergy != null ? avgEnergy : "—"}
                   </td>
-                  <td className="px-3 py-2.5 text-center text-[#8C6B5A]">
+                  <td className="px-3 py-2.5 text-center text-[#3d2855]">
                     {avgSleep != null ? `${avgSleep}h` : "—"}
                   </td>
                 </tr>
@@ -263,7 +263,7 @@ export default function ReportPage() {
         </section>
 
         {/* ── SECTION 4: Notes for your doctor ─────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] p-6 shadow-sm space-y-3">
+        <section className="bg-white rounded-2xl border border-[#E6D7F3] p-6 shadow-sm space-y-3">
           <h2 className="text-lg font-bold text-[#C94B6D] border-b border-gray-100 pb-2">
             4. Notes for your doctor
           </h2>
@@ -301,18 +301,18 @@ export default function ReportPage() {
             )}
 
             {topSymptoms.length === 0 && cycles.total === 0 && (
-              <li className="text-[#8C6B5A]">Not enough data logged in the last 90 days to generate notes.</li>
+              <li className="text-[#3d2855]">Not enough data logged in the last 90 days to generate notes.</li>
             )}
           </ul>
 
-          <p className="text-xs text-[#8C6B5A] pt-2 border-t border-gray-100">
+          <p className="text-xs text-[#3d2855] pt-2 border-t border-gray-100">
             Data from Dawn Phase — dawnphase.com
           </p>
         </section>
 
         {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-        <footer className="text-xs text-[#8C6B5A] text-center leading-relaxed border-t border-gray-100 pt-6">
-          <p className="font-medium text-[#2D1B1E] mb-1">Medical disclaimer</p>
+        <footer className="text-xs text-[#3d2855] text-center leading-relaxed border-t border-gray-100 pt-6">
+          <p className="font-medium text-[#1E0F30] mb-1">Medical disclaimer</p>
           <p>
             This report summarizes self-reported tracking data and is not a medical diagnosis.
             It is intended as a support tool for conversations with a qualified healthcare provider

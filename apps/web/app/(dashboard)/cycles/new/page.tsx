@@ -95,7 +95,7 @@ export default function NewCyclePage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
         <div className="w-8 h-8 border-2 border-[#E8637A]/30 border-t-[#E8637A] rounded-full animate-spin" />
         {redirecting && (
-          <p className="text-sm text-[#8C6B5A]">Setting up your account…</p>
+          <p className="text-sm text-[#3d2855]">Setting up your account…</p>
         )}
       </div>
     );
@@ -107,17 +107,17 @@ export default function NewCyclePage() {
       {showWarning && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm space-y-4">
-            <h2 className="text-base font-semibold text-[#2D1B1E]">
+            <h2 className="text-base font-semibold text-[#1E0F30]">
               Already logged recently
             </h2>
-            <p className="text-sm text-[#8C6B5A] leading-relaxed">
+            <p className="text-sm text-[#3d2855] leading-relaxed">
               You already logged a period within the last 14 days. Are you sure
               you want to add another?
             </p>
             <div className="flex gap-3 pt-1">
               <button
                 onClick={() => { setShowWarning(false); setSubmitting(false); }}
-                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#8C6B5A] hover:border-[#E8637A] transition-colors"
+                className="flex-1 min-h-[44px] rounded-xl border-2 border-gray-200 text-sm font-medium text-[#3d2855] hover:border-[#E8637A] transition-colors"
               >
                 Cancel
               </button>
@@ -138,14 +138,14 @@ export default function NewCyclePage() {
         <h1 className="text-2xl font-bold text-[#C94B6D]">
           When did your period start?
         </h1>
-        <p className="text-sm text-[#8C6B5A] mt-1">
+        <p className="text-sm text-[#3d2855] mt-1">
           This helps Dawn Phase estimate your cycle day and phase.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* ── Date ─────────────────────────────────────────────────────── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-3">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-3">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Start date
           </h2>
@@ -156,15 +156,15 @@ export default function NewCyclePage() {
             max={today}
             onChange={e => setStartDate(e.target.value)}
             required
-            className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#2D1B1E] focus:outline-none focus:border-[#E8637A] transition-colors"
+            className="w-full min-h-[44px] px-4 py-2.5 rounded-xl border-2 border-gray-200 bg-white text-sm text-[#1E0F30] focus:outline-none focus:border-[#E8637A] transition-colors"
           />
-          <p className="text-xs text-[#8C6B5A]">
+          <p className="text-xs text-[#3d2855]">
             Select any date from the last 12 months.
           </p>
         </section>
 
         {/* ── Flow intensity ────────────────────────────────────────────── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-6 space-y-4">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-6 space-y-4">
           <h2 className="text-xs font-semibold text-[#C94B6D] uppercase tracking-widest">
             Flow intensity
           </h2>
@@ -177,7 +177,7 @@ export default function NewCyclePage() {
                 className={`flex-1 min-h-[44px] rounded-full font-medium text-sm border-2 transition-all ${
                   flow === opt.value
                     ? "bg-[#E8637A] border-[#E8637A] text-white shadow-sm"
-                    : "border-gray-200 bg-white text-[#8C6B5A] hover:border-[#E8637A]"
+                    : "border-gray-200 bg-white text-[#3d2855] hover:border-[#E8637A]"
                 }`}
               >
                 {opt.label}
@@ -187,7 +187,7 @@ export default function NewCyclePage() {
         </section>
 
         {/* ── Irregular toggle ──────────────────────────────────────────── */}
-        <section className="bg-[#FDF6F0] rounded-2xl p-5">
+        <section className="bg-white border border-[#E6D7F3] rounded-2xl p-5">
           <label className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -195,7 +195,7 @@ export default function NewCyclePage() {
               onChange={e => setIrregular(e.target.checked)}
               className="w-5 h-5 rounded border-gray-300 accent-[#E8637A] cursor-pointer"
             />
-            <span className="text-sm text-[#2D1B1E] font-medium">
+            <span className="text-sm text-[#1E0F30] font-medium">
               My cycle is irregular
             </span>
           </label>

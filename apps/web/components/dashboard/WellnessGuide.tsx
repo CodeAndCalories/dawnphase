@@ -13,11 +13,11 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 const PHASE_BADGE: Record<string, string> = {
-  Menstrual:     "bg-rose-50   text-rose-700   border border-rose-200",
-  Follicular:    "bg-violet-50 text-violet-700 border border-violet-200",
-  Ovulatory:     "bg-amber-50  text-amber-700  border border-amber-200",
-  Luteal:        "bg-indigo-50 text-indigo-700 border border-indigo-200",
-  Perimenopause: "bg-purple-50 text-purple-700 border border-purple-200",
+  Menstrual:     "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Follicular:    "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Ovulatory:     "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Luteal:        "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
+  Perimenopause: "bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8]",
 };
 
 export default function WellnessGuide({
@@ -40,7 +40,7 @@ export default function WellnessGuide({
 
   return (
     <div
-      className="bg-white rounded-2xl border border-[rgba(232,99,122,0.12)] shadow-sm p-6"
+      className="bg-white rounded-2xl border border-[#E6D7F3] shadow-sm p-6"
       style={{ borderLeft: "4px solid #E8637A" }}
     >
       {/* Header */}
@@ -55,7 +55,7 @@ export default function WellnessGuide({
             </span>
           )}
         </div>
-        <span className="shrink-0 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#FFF0F3] text-[#C94B6D] border border-[rgba(232,99,122,0.2)] whitespace-nowrap">
+        <span className="shrink-0 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#E6D7F3] text-[#1E0F30] border border-[#d4c5e8] whitespace-nowrap">
           For subscribers
         </span>
       </div>
