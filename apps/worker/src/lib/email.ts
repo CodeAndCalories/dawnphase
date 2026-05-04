@@ -393,6 +393,57 @@ export function weeklyDigestEmail(opts: WeeklyDigestOptions): string {
   `);
 }
 
+// ── Pre-period check-in email ─────────────────────────────────────────────────
+
+export function prePeriodCheckInEmail(email: string, daysUntil: number): string {
+  const daysLabel = `~${daysUntil} day${daysUntil === 1 ? "" : "s"}`;
+
+  return emailWrapper(`
+    <h1 style="margin:0 0 20px;font-size:24px;font-weight:700;color:#C94B6D;line-height:1.2">
+      Pre-period check-in 🌸
+    </h1>
+    <p style="margin:0 0 8px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      Hi ${email},
+    </p>
+    <p style="margin:0 0 28px;font-size:15px;color:#2D1B1E;line-height:1.6">
+      Your period is predicted in <strong>${daysLabel}</strong>.
+      Some women feel it coming. Others get surprised. Either way, logging
+      how you feel now helps build your pattern.
+    </p>
+
+    <!-- Common pre-period symptoms -->
+    <p style="margin:0 0 10px;font-size:13px;font-weight:700;color:#2D1B1E;text-transform:uppercase;letter-spacing:0.06em">
+      Common pre-period symptoms to watch for:
+    </p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 32px;width:100%">
+      ${[
+        "Breast tenderness",
+        "Cramps",
+        "Fatigue",
+        "Bloating",
+        "Mood shifts",
+      ].map((s) => `
+      <tr>
+        <td style="padding:6px 0;vertical-align:top;width:20px;font-size:14px;color:#E8637A">·</td>
+        <td style="padding:6px 0;vertical-align:top;font-size:14px;color:#2D1B1E;line-height:1.5">${s}</td>
+      </tr>`).join("")}
+    </table>
+
+    <!-- CTA button -->
+    <div style="margin:0 0 24px">
+      <a href="https://www.dawnphase.com/log"
+         style="display:inline-block;padding:14px 32px;background:#E8637A;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:0.01em">
+        Log today&apos;s symptoms &rarr;
+      </a>
+    </div>
+
+    <!-- Soft note -->
+    <p style="margin:0;padding:16px;background:#FDF6F0;border-radius:10px;font-size:13px;color:#8C6B5A;line-height:1.6;border-left:3px solid #E8637A">
+      Tracking this builds your pre-period pattern over time so you can predict it better each cycle.
+    </p>
+  `);
+}
+
 // ── Monthly cycle report email ────────────────────────────────────────────────
 
 export interface MonthlyReportOptions {

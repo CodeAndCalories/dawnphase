@@ -6,6 +6,7 @@ import {
   periodReminderEmail,
   monthlyReportEmail,
   weeklyDigestEmail,
+  prePeriodCheckInEmail,
   type CyclePhase,
   type MonthlyReportOptions,
 } from "../lib/email";
@@ -25,6 +26,13 @@ interface ReminderRow {
   reminder_days_before: number;
   avg_cycle_length: number | null;
   last_period_start: string | null;
+}
+
+interface PrePeriodUserRow {
+  id: string;
+  email: string;
+  last_period_start: string | null;
+  avg_cycle_length: number | null;
 }
 
 interface MonthlyUserRow {
@@ -453,6 +461,84 @@ export async function processMonthlyReports(
   return { sent, skipped, errors };
 }
 
+// ── Pre-period check-in (daily cron, 0 9 * * *) ──────────────────────────────
+// Sends a symptom-logging prompt to users whose predicted next period is
+// exactly 2 or 3 days away. Requires reminders.active = 1.
+
+export async function processPrePeriodCheckIns(
+  env: Env
+): Promise<{ sent: number; skipped: number; errors: number }> {
+  const now = new Date();
+  now.setUTCHours(0, 0, 0, 0);
+  const msPerDay = 1000 * 60 * 60 * 24;
+
+  // Only users with an active reminder row — GROUP BY guards against duplicate rows.
+  const users = await dbAll<PrePeriodUserRow>(
+    env.DB,
+    `SELECT
+       u.id,
+       u.email,
+       (SELECT c.start_date FROM cycles c WHERE c.user_id = u.id
+        ORDER BY c.start_date DESC LIMIT 1) AS last_period_start,
+       (SELECT CAST(ROUND(AVG(c2.cycle_length)) AS INTEGER)
+        FROM cycles c2 WHERE c2.user_id = u.id
+        AND c2.cycle_length IS NOT NULL) AS avg_cycle_length
+     FROM users u
+     JOIN reminders r ON r.user_id = u.id
+     WHERE u.subscription_status IN ('active', 'trialing')
+       AND r.active = 1
+     GROUP BY u.id`,
+    []
+  );
+
+  console.log(`[PRE-PERIOD] fetched ${users.length} users with active reminders`);
+
+  let sent = 0;
+  let skipped = 0;
+  let errors = 0;
+
+  const seenEmails = new Set<string>();
+
+  for (const user of users) {
+    if (seenEmails.has(user.email)) {
+      skipped++;
+      continue;
+    }
+    seenEmails.add(user.email);
+
+    if (!user.last_period_start) {
+      skipped++;
+      continue;
+    }
+
+    const avgLen       = user.avg_cycle_length ?? 28;
+    const lastPeriod   = new Date(user.last_period_start + "T00:00:00Z");
+    const predictedNext = addDays(lastPeriod, avgLen);
+    const daysUntil    = Math.round((predictedNext.getTime() - now.getTime()) / msPerDay);
+
+    if (daysUntil !== 2 && daysUntil !== 3) {
+      skipped++;
+      continue;
+    }
+
+    try {
+      console.log('[PRE-PERIOD] sending to:', user.email, '| days until period:', daysUntil);
+      await sendEmail(env.RESEND_API_KEY, {
+        to:      user.email,
+        subject: `Your period is coming in ~${daysUntil} days — how are you feeling?`,
+        html:    prePeriodCheckInEmail(user.email, daysUntil),
+      });
+      sent++;
+    } catch (err) {
+      errors++;
+      console.error(`[PRE-PERIOD] failed → ${user.email}:`, err);
+    }
+  }
+
+  console.log(`[PRE-PERIOD] complete — sent:${sent} skipped:${skipped} errors:${errors}`);
+  return { sent, skipped, errors };
+}
+
 // ── HTTP routes ────────────────────────────────────────────────────────────────
 
 const cron = new Hono<{ Bindings: Env }>();
@@ -469,6 +555,11 @@ cron.get("/monthly", async (c) => {
 
 cron.get("/weekly", async (c) => {
   const result = await processWeeklyDigests(c.env);
+  return c.json(result);
+});
+
+cron.get("/pre-period", async (c) => {
+  const result = await processPrePeriodCheckIns(c.env);
   return c.json(result);
 });
 
