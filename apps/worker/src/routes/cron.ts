@@ -105,7 +105,8 @@ export async function processWeeklyDigests(
   const sevenAgo     = addDays(now, -7).toISOString().slice(0, 10);
   const yesterdayStr = addDays(now, -1).toISOString().slice(0, 10);
 
-  // Users who have opted in (or have no preference row — treated as opted in)
+  // Users who have opted in (or have no preference row — treated as opted in).
+  // GROUP BY u.id prevents duplicate rows when a user has multiple reminders rows.
   const users = await dbAll<WeeklyDigestUserRow>(
     env.DB,
     `SELECT
@@ -119,15 +120,27 @@ export async function processWeeklyDigests(
      FROM users u
      LEFT JOIN reminders r ON r.user_id = u.id
      WHERE u.subscription_status IN ('active', 'trialing')
-       AND COALESCE(r.weekly_digest_enabled, 1) = 1`,
+       AND COALESCE(r.weekly_digest_enabled, 1) = 1
+     GROUP BY u.id`,
     []
   );
+
+  console.log(`[WEEKLY] fetched ${users.length} users for digest`);
 
   let sent = 0;
   let skipped = 0;
   let errors = 0;
 
+  // Safety-net dedup in case the same email appears more than once in results
+  const seenEmails = new Set<string>();
+
   for (const user of users) {
+    if (seenEmails.has(user.email)) {
+      console.warn(`[WEEKLY] duplicate skipped: ${user.email}`);
+      skipped++;
+      continue;
+    }
+    seenEmails.add(user.email);
     // Fetch up to 90 recent logs: full data for streak + top symptom
     const logs = await dbAll<DailyLog>(
       env.DB,
@@ -195,6 +208,7 @@ export async function processWeeklyDigests(
 
     // ── Send ─────────────────────────────────────────────────────────────
     try {
+      console.log('[WEEKLY] sending to:', user.email);
       await sendEmail(env.RESEND_API_KEY, {
         to:      user.email,
         subject: "🌅 Your Dawn Phase week ahead",
