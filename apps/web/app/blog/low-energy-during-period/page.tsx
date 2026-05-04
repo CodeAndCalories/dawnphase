@@ -59,7 +59,7 @@ export default function Post() {
             Three things happen simultaneously at the start of your period that directly affect energy:
           </p>
           <p>
-            <strong>Oestrogen and progesterone both drop.</strong> These hormones have been declining through your late luteal phase — now they bottom out. Oestrogen in particular influences serotonin and dopamine levels, so its crash affects mood and motivation, not just physical energy.
+            <strong>Oestrogen and <Link href="/blog/hormonal-imbalance-signs" className="text-[#c94f68] hover:underline font-medium">progesterone</Link> both drop.</strong> These hormones have been declining through your late <Link href="/blog/luteal-phase-symptoms" className="text-[#c94f68] hover:underline font-medium">luteal phase</Link> — now they bottom out. Oestrogen in particular influences serotonin and dopamine levels, so its crash affects mood and motivation, not just physical energy.
           </p>
           <p>
             <strong>Prostaglandins spike.</strong> These are the compounds that trigger uterine contractions to shed the lining. They also cause inflammation and can produce systemic symptoms — fatigue, nausea, headaches, loose stools — in women who produce higher levels of them.
@@ -101,10 +101,10 @@ export default function Post() {
             Period fatigue can be more pronounced in both cases, and for different reasons.
           </p>
           <p>
-            With PCOS, longer cycles mean a more dramatic hormonal shift when the period finally arrives. Heavier or more prolonged bleeding — common with PCOS — accelerates iron loss. And if cycles are anovulatory (no ovulation occurred), the progesterone drop at the start of bleeding can be more abrupt.
+            With <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">PCOS</Link>, longer cycles mean a more dramatic hormonal shift when the period finally arrives. Heavier or more prolonged bleeding — common with PCOS — accelerates iron loss. And if cycles are anovulatory (no ovulation occurred), the progesterone drop at the start of bleeding can be more abrupt.
           </p>
           <p>
-            In perimenopause, declining oestrogen baseline means the drop at period onset lands lower than it used to. Cycles may also become heavier before they become lighter and more irregular — which compounds the iron loss effect. Women often notice their period fatigue gets worse in their 40s even when their cycle hasn&apos;t changed much on the surface.
+            In <Link href="/conditions/perimenopause" className="text-[#c94f68] hover:underline font-medium">perimenopause</Link>, declining oestrogen baseline means the drop at period onset lands lower than it used to. Cycles may also become heavier before they become lighter and more irregular — which compounds the iron loss effect. Women often notice their period fatigue gets worse in their 40s even when their cycle hasn&apos;t changed much on the surface.
           </p>
           <p>
             In both cases, it&apos;s worth tracking menstrual energy separately from general fatigue — because the pattern is specific to your cycle, and seeing it clearly is the first step to managing it.

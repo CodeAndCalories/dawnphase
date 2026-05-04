@@ -56,7 +56,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">What happens during the luteal phase</h2>
 
           <p>
-            After ovulation, the ruptured follicle transforms into the corpus luteum and begins producing progesterone. Progesterone&apos;s primary job is to prepare the uterine lining for a potential pregnancy. If fertilisation doesn&apos;t occur, the corpus luteum degenerates, progesterone drops, and menstruation begins.
+            After ovulation, the ruptured follicle transforms into the corpus luteum and begins producing <Link href="/blog/hormonal-imbalance-signs" className="text-[#c94f68] hover:underline font-medium">progesterone</Link>. Progesterone&apos;s primary job is to prepare the uterine lining for a potential pregnancy. If fertilisation doesn&apos;t occur, the corpus luteum degenerates, progesterone drops, and menstruation begins.
           </p>
           <p>
             This progesterone surge — and the subsequent drop — is responsible for most luteal phase symptoms. Progesterone has a sedating, calming effect early in the phase, but as it falls in the days before your period, many women experience a sharp shift in mood, energy, and physical comfort.
@@ -109,7 +109,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">PMDD vs PMS — when to see a doctor</h2>
 
           <p>
-            PMDD (premenstrual dysphoric disorder) is a severe form of PMS that affects approximately 3–8% of women. The distinguishing feature is not the type of symptoms but their severity and their impact on daily functioning.
+            <Link href="/conditions/pmdd" className="text-[#c94f68] hover:underline font-medium">PMDD</Link> (premenstrual dysphoric disorder) is a severe form of PMS that affects approximately 3–8% of women. The distinguishing feature is not the type of symptoms but their severity and their impact on daily functioning.
           </p>
 
           <div className="bg-white rounded-2xl border border-[rgba(130,80,170,0.12)] p-5 space-y-4">

@@ -60,7 +60,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">Why it happens in the luteal phase</h2>
 
           <p>
-            In the days before your period, progesterone drops sharply. This drop affects your body temperature regulation and your production of melatonin — both of which directly impact sleep quality.
+            In the days before your period, <Link href="/blog/hormonal-imbalance-signs" className="text-[#c94f68] hover:underline font-medium">progesterone</Link> drops sharply. This drop affects your body temperature regulation and your production of melatonin — both of which directly impact sleep quality.
           </p>
           <p>
             The result: lighter sleep, more wake-ups, and that frustrating 3–4am window where your brain won&apos;t shut off.
@@ -72,7 +72,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">The real signal isn&apos;t the insomnia — it&apos;s when it happens</h2>
 
           <p>
-            If your sleep disruption shows up consistently in the last 5–7 days before your period, that&apos;s late luteal phase insomnia. That pattern tells you something about how your body handles the progesterone drop.
+            If your sleep disruption shows up consistently in the last 5–7 days before your period, that&apos;s late <Link href="/blog/luteal-phase-symptoms" className="text-[#c94f68] hover:underline font-medium">luteal phase</Link> insomnia. That pattern tells you something about how your body handles the progesterone drop.
           </p>
           <p>
             Some women notice it gets worse under stress. Others find it correlates with heavier periods. Others see it tied to mood shifts the same week.

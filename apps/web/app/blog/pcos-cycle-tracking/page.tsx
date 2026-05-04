@@ -59,7 +59,7 @@ export default function Post() {
             Most period trackers are built around a 28-day model. They predict your next period by adding your average cycle length to your last period date. With PCOS, where cycles can range from 35 to 90+ days — or be absent for months — this prediction is meaningless and often misleading.
           </p>
           <p>
-            The core issue is anovulation: many PCOS cycles don&apos;t include ovulation at all. Without ovulation, there&apos;s no progesterone surge, no typical luteal phase, and the &ldquo;period&rdquo; that eventually arrives may actually be anovulatory bleeding, not a true menstrual period.
+            The core issue is anovulation: many PCOS cycles don&apos;t include <Link href="/blog/how-to-track-ovulation-pcos" className="text-[#c94f68] hover:underline font-medium">ovulation</Link> at all. Without ovulation, there&apos;s no progesterone surge, no typical luteal phase, and the &ldquo;period&rdquo; that eventually arrives may actually be anovulatory bleeding, not a true menstrual period.
           </p>
           <p>
             Standard apps that can&apos;t handle this create a frustrating feedback loop: wrong predictions → low trust → abandoning tracking altogether. But tracking is exactly what can help you understand your body and communicate effectively with your doctor.

@@ -60,7 +60,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">What&apos;s actually happening</h2>
 
           <p>
-            Mittelschmerz is ovulation pain. It occurs when a follicle on one of your ovaries ruptures to release an egg. The sensation can range from a brief twinge to a dull ache that lasts a few hours — occasionally up to a day or two.
+            Mittelschmerz is <Link href="/blog/ovulation-symptoms" className="text-[#c94f68] hover:underline font-medium">ovulation</Link> pain. It occurs when a follicle on one of your ovaries ruptures to release an egg. The sensation can range from a brief twinge to a dull ache that lasts a few hours — occasionally up to a day or two.
           </p>
           <p>
             It typically happens 13–15 days before your next period, though this varies based on your cycle length.
@@ -72,7 +72,7 @@ export default function Post() {
             Your ovaries alternate ovulation — not on a strict schedule, but over time you&apos;ll often notice the pain alternates left and right. Some cycles it&apos;s one side, some it&apos;s the other, occasionally both.
           </p>
           <p>
-            If you&apos;re tracking which side and when, you start to build a picture of your ovulation pattern over time. This is particularly useful if you have one ovary, PCOS, or irregular cycles.
+            If you&apos;re tracking which side and when, you start to build a picture of your ovulation pattern over time. This is particularly useful if you have one ovary, <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">PCOS</Link>, or <Link href="/blog/pcos-irregular-periods" className="text-[#c94f68] hover:underline font-medium">irregular cycles</Link>.
           </p>
 
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">When the pattern matters more than the pain</h2>

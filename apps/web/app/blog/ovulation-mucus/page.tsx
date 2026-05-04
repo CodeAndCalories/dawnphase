@@ -56,7 +56,7 @@ export default function Post() {
           <h2 className="text-2xl font-bold text-[#140c18] mt-8">What it is and why it appears</h2>
 
           <p>
-            In the days leading up to ovulation, oestrogen rises significantly. One of its jobs is to stimulate your cervical glands to produce mucus — clear, slippery, and stretchy, often compared to raw egg white.
+            In the days leading up to <Link href="/blog/ovulation-symptoms" className="text-[#c94f68] hover:underline font-medium">ovulation</Link>, oestrogen rises significantly. One of its jobs is to stimulate your cervical glands to produce mucus — clear, slippery, and stretchy, often compared to raw egg white.
           </p>
           <p>
             This consistency isn&apos;t a coincidence. Egg-white cervical mucus (EWCM) creates a sperm-friendly environment, helping sperm survive and travel toward the egg. The moment you notice it is a reliable signal that ovulation is approaching or happening.
@@ -71,10 +71,10 @@ export default function Post() {
             A single day of egg-white mucus is useful. Seeing it appear consistently on cycle days 12–14 across three months tells you something much more valuable: when your body actually ovulates, not when an app guesses it does.
           </p>
           <p>
-            For women with PCOS, this distinction is important. LH can surge multiple times before ovulation actually occurs — which means egg-white mucus can appear, disappear, and reappear before the real fertile window opens. Tracking this pattern across cycles helps you identify which appearance is the real one.
+            For women with <Link href="/conditions/pcos" className="text-[#c94f68] hover:underline font-medium">PCOS</Link>, this distinction is important. LH can surge multiple times before ovulation actually occurs — which means egg-white mucus can appear, disappear, and reappear before the real fertile window opens. Tracking this pattern across cycles helps you identify which appearance is the real one.
           </p>
           <p>
-            With irregular cycles, the calendar is nearly useless for predicting ovulation. But cervical mucus changes follow hormonal logic, not calendar logic — which makes them one of the most reliable signs available to you.
+            With <Link href="/blog/irregular-periods-causes" className="text-[#c94f68] hover:underline font-medium">irregular cycles</Link>, the calendar is nearly useless for predicting ovulation. But cervical mucus changes follow hormonal logic, not calendar logic — which makes them one of the most reliable signs available to you.
           </p>
 
           <div className="rounded-2xl bg-[#F3ECFA] border border-[#E6D7F3] p-7 text-center my-4">
