@@ -832,45 +832,58 @@ export default function DashboardPage() {
 
       {/* ── Cosmic view callout — only when birth_date not set ───────────── */}
       {!user.birth_date && !cosmicDismissed && (
-        <div className="relative text-center py-8 px-4">
+        <div
+          className="relative text-center"
+          style={{
+            background: "linear-gradient(135deg, rgba(155,114,196,0.08), rgba(201,79,104,0.05))",
+            borderRadius: "16px",
+            padding: "32px 24px",
+          }}
+        >
           {/* Dismiss */}
           <button
             onClick={() => {
               localStorage.setItem("dp_cosmic_dismissed", "1");
               setCosmicDismissed(true);
             }}
-            className="absolute top-2 right-2 text-[#3d2855]/30 hover:text-[#3d2855]/70 text-xl leading-none transition-colors"
+            className="absolute top-3 right-3 text-[#3d2855]/30 hover:text-[#3d2855]/70 text-xl leading-none transition-colors"
             aria-label="Dismiss"
           >
             ×
           </button>
 
           {/* Zodiac wheel SVG */}
-          <div className="flex justify-center mb-5">
+          <div className="flex justify-center mb-6">
             <svg
-              width="120"
-              height="120"
-              viewBox="0 0 120 120"
+              width="180"
+              height="180"
+              viewBox="0 0 180 180"
               role="img"
               aria-label="Zodiac wheel"
-              className="w-[120px] h-[120px] sm:w-[120px] sm:h-[120px]"
+              className="w-[180px] h-[180px]"
             >
               <defs>
                 <radialGradient id="cosmicGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%"   stopColor="#c084fc" stopOpacity="0.15" />
-                  <stop offset="70%"  stopColor="#9b72c4" stopOpacity="0.06" />
+                  <stop offset="0%"   stopColor="#9b72c4" stopOpacity="0.15" />
                   <stop offset="100%" stopColor="#9b72c4" stopOpacity="0"    />
                 </radialGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
               </defs>
 
-              {/* Glow fill */}
-              <circle cx="60" cy="60" r="58" fill="url(#cosmicGlow)" />
+              {/* Gradient background */}
+              <circle cx="90" cy="90" r="88" fill="url(#cosmicGlow)" />
 
-              {/* Outer ring */}
-              <circle cx="60" cy="60" r="54" fill="none" stroke="#9b72c4" strokeWidth="0.8" opacity="0.6" />
+              {/* Outer ring — glowing */}
+              <circle cx="90" cy="90" r="82" fill="none" stroke="#9b72c4" strokeWidth="2" filter="url(#glow)" />
 
               {/* Inner ring */}
-              <circle cx="60" cy="60" r="38" fill="none" stroke="#9b72c4" strokeWidth="0.5" opacity="0.35" />
+              <circle cx="90" cy="90" r="58" fill="none" stroke="#c94f68" strokeWidth="1.5" opacity="0.7" />
 
               {/* 12 dividing spokes */}
               {Array.from({ length: 12 }).map((_, i) => {
@@ -878,31 +891,31 @@ export default function DashboardPage() {
                 return (
                   <line
                     key={i}
-                    x1={60 + 38 * Math.cos(angle)}
-                    y1={60 + 38 * Math.sin(angle)}
-                    x2={60 + 54 * Math.cos(angle)}
-                    y2={60 + 54 * Math.sin(angle)}
+                    x1={90 + 58 * Math.cos(angle)}
+                    y1={90 + 58 * Math.sin(angle)}
+                    x2={90 + 82 * Math.cos(angle)}
+                    y2={90 + 82 * Math.sin(angle)}
                     stroke="#9b72c4"
-                    strokeWidth="0.6"
-                    opacity="0.45"
+                    strokeWidth="0.8"
+                    opacity="0.6"
                   />
                 );
               })}
 
-              {/* Zodiac symbols — placed at midpoint of each segment */}
+              {/* Zodiac symbols — midpoint of each segment */}
               {(["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"] as const).map((symbol, i) => {
                 const angle = (i * 30 - 75) * (Math.PI / 180);
-                const r = 46;
+                const r = 70;
                 return (
                   <text
                     key={symbol}
-                    x={60 + r * Math.cos(angle)}
-                    y={60 + r * Math.sin(angle)}
+                    x={90 + r * Math.cos(angle)}
+                    y={90 + r * Math.sin(angle)}
                     textAnchor="middle"
                     dominantBaseline="central"
-                    fontSize="9"
-                    fill="#E6D7F3"
-                    opacity="0.85"
+                    fontSize="11"
+                    fontWeight="bold"
+                    fill="#7a3aaa"
                   >
                     {symbol}
                   </text>
@@ -910,20 +923,28 @@ export default function DashboardPage() {
               })}
 
               {/* Centre dot */}
-              <circle cx="60" cy="60" r="2.5" fill="#9b72c4" opacity="0.5" />
+              <circle cx="90" cy="90" r="4" fill="#c94f68" />
             </svg>
           </div>
 
           {/* Text content */}
-          <h3 className="text-base font-semibold text-[#1E0F30] mb-2">
+          <h3 className="text-xl font-bold text-[#1E0F30] mb-2">
             Unlock your Cosmic View
           </h3>
-          <p className="text-sm text-[#7a5a8a] leading-relaxed max-w-xs mx-auto mb-3">
+          <p className="text-sm text-[#7a5a8a] leading-relaxed max-w-xs mx-auto mb-5">
             Add your birth date to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
           </p>
           <a
             href="/settings"
-            className="text-sm font-semibold text-[#c94f68] hover:text-[#E8637A] transition-colors"
+            style={{
+              background: "linear-gradient(135deg, #9b72c4, #c94f68)",
+              color: "white",
+              padding: "8px 20px",
+              borderRadius: "100px",
+              fontSize: "14px",
+              fontWeight: "500",
+              display: "inline-block",
+            }}
           >
             Add birth date →
           </a>
