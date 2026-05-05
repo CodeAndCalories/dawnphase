@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#c94f68",
+  themeColor: "#1E0F30",
 };
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Dawn Phase",
   },
   icons: {
@@ -66,10 +66,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sora.variable} ${dmSans.variable}`}>
-      <head>
-        <link rel="apple-touch-icon" href="/favicon-180.png" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-      </head>
       <body className="font-sans antialiased">
         <WebsiteSchema />
         {children}
