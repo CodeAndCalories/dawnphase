@@ -832,32 +832,101 @@ export default function DashboardPage() {
 
       {/* ── Cosmic view callout — only when birth_date not set ───────────── */}
       {!user.birth_date && !cosmicDismissed && (
-        <div className="rounded-2xl bg-[#F3ECFA] border border-[#E6D7F3] p-5 flex items-start justify-between gap-4">
-          <div className="flex items-start gap-3 flex-1">
-            <span className="text-2xl leading-none mt-0.5" aria-hidden>🌙</span>
-            <div>
-              <p className="text-sm font-semibold text-[#1E0F30] mb-1">Unlock your Cosmic View</p>
-              <p className="text-sm text-[#3d2855] leading-relaxed">
-                Add your birth date in Settings to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
-              </p>
-              <a
-                href="/settings"
-                className="inline-block mt-2 text-sm font-semibold text-[#C94B6D] hover:text-[#E8637A] transition-colors"
-              >
-                Add birth date →
-              </a>
-            </div>
-          </div>
+        <div className="relative text-center py-8 px-4">
+          {/* Dismiss */}
           <button
             onClick={() => {
               localStorage.setItem("dp_cosmic_dismissed", "1");
               setCosmicDismissed(true);
             }}
-            className="shrink-0 text-[#3d2855]/40 hover:text-[#3d2855] text-xl leading-none mt-0.5 transition-colors"
+            className="absolute top-2 right-2 text-[#3d2855]/30 hover:text-[#3d2855]/70 text-xl leading-none transition-colors"
             aria-label="Dismiss"
           >
             ×
           </button>
+
+          {/* Zodiac wheel SVG */}
+          <div className="flex justify-center mb-5">
+            <svg
+              width="120"
+              height="120"
+              viewBox="0 0 120 120"
+              role="img"
+              aria-label="Zodiac wheel"
+              className="w-[120px] h-[120px] sm:w-[120px] sm:h-[120px]"
+            >
+              <defs>
+                <radialGradient id="cosmicGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stopColor="#c084fc" stopOpacity="0.15" />
+                  <stop offset="70%"  stopColor="#9b72c4" stopOpacity="0.06" />
+                  <stop offset="100%" stopColor="#9b72c4" stopOpacity="0"    />
+                </radialGradient>
+              </defs>
+
+              {/* Glow fill */}
+              <circle cx="60" cy="60" r="58" fill="url(#cosmicGlow)" />
+
+              {/* Outer ring */}
+              <circle cx="60" cy="60" r="54" fill="none" stroke="#9b72c4" strokeWidth="0.8" opacity="0.6" />
+
+              {/* Inner ring */}
+              <circle cx="60" cy="60" r="38" fill="none" stroke="#9b72c4" strokeWidth="0.5" opacity="0.35" />
+
+              {/* 12 dividing spokes */}
+              {Array.from({ length: 12 }).map((_, i) => {
+                const angle = (i * 30 - 90) * (Math.PI / 180);
+                return (
+                  <line
+                    key={i}
+                    x1={60 + 38 * Math.cos(angle)}
+                    y1={60 + 38 * Math.sin(angle)}
+                    x2={60 + 54 * Math.cos(angle)}
+                    y2={60 + 54 * Math.sin(angle)}
+                    stroke="#9b72c4"
+                    strokeWidth="0.6"
+                    opacity="0.45"
+                  />
+                );
+              })}
+
+              {/* Zodiac symbols — placed at midpoint of each segment */}
+              {(["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"] as const).map((symbol, i) => {
+                const angle = (i * 30 - 75) * (Math.PI / 180);
+                const r = 46;
+                return (
+                  <text
+                    key={symbol}
+                    x={60 + r * Math.cos(angle)}
+                    y={60 + r * Math.sin(angle)}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    fontSize="9"
+                    fill="#E6D7F3"
+                    opacity="0.85"
+                  >
+                    {symbol}
+                  </text>
+                );
+              })}
+
+              {/* Centre dot */}
+              <circle cx="60" cy="60" r="2.5" fill="#9b72c4" opacity="0.5" />
+            </svg>
+          </div>
+
+          {/* Text content */}
+          <h3 className="text-base font-semibold text-[#1E0F30] mb-2">
+            Unlock your Cosmic View
+          </h3>
+          <p className="text-sm text-[#7a5a8a] leading-relaxed max-w-xs mx-auto mb-3">
+            Add your birth date to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
+          </p>
+          <a
+            href="/settings"
+            className="text-sm font-semibold text-[#c94f68] hover:text-[#E8637A] transition-colors"
+          >
+            Add birth date →
+          </a>
         </div>
       )}
 
