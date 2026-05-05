@@ -5,6 +5,7 @@ import { useRequireSubscription } from "@/lib/auth";
 import { api } from "@/lib/api";
 import { getZodiacSign, getCosmicMessage, ZODIAC_SYMBOLS, type CyclePhase } from "@/lib/cosmic-messages";
 import WellnessGuide from "@/components/dashboard/WellnessGuide";
+import { CalendarDays } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -288,13 +289,6 @@ export default function DashboardPage() {
   const [dataLoading, setDataLoading] = useState(true);
   const [greeting,    setGreeting]    = useState("Welcome back");
 
-  // Capture checkout=success synchronously at mount, before the auth hook
-  // strips it from the URL in its useEffect.
-  const [isCheckoutReturn] = useState(() =>
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("checkout") === "success"
-  );
-
   // Onboarding modal state
   const [showOnboarding,   setShowOnboarding]   = useState(false);
   const [onboardMode,      setOnboardMode]      = useState<"cycle" | "perimenopause">("cycle");
@@ -323,15 +317,14 @@ export default function DashboardPage() {
       .finally(() => setDataLoading(false));
   }, [user]);
 
-  // Show onboarding modal once after a successful checkout
+  // Show onboarding modal on first visit (no dp_onboarded in localStorage)
   useEffect(() => {
     if (!user) return;
-    if (!isCheckoutReturn) return;
     if (typeof window !== "undefined" && localStorage.getItem("dp_onboarded")) return;
     setOnboardMode(user.mode);
     setOnboardBirthDate(user.birth_date ?? "");
     setShowOnboarding(true);
-  }, [user, isCheckoutReturn]);
+  }, [user]);
 
   const loading = authLoading || dataLoading;
 
@@ -649,7 +642,7 @@ export default function DashboardPage() {
                 )}
               </div>
             ) : (
-              <p className="text-sm text-[#3d2855]">Log a period to see predictions.</p>
+              <p className="text-sm text-[#3d2855]">Your predictions appear after your first log 🌸</p>
             )}
           </Card>
 
@@ -659,7 +652,7 @@ export default function DashboardPage() {
             {quickInsight ? (
               <p className="text-sm text-[#1E0F30] font-medium leading-relaxed">{quickInsight}</p>
             ) : (
-              <p className="text-sm text-[#3d2855]">Log your first period to start building insights.</p>
+              <p className="text-sm text-[#3d2855]">Insights unlock after 2 cycles — start logging to begin</p>
             )}
             {completedLens.length >= 2 && (
               <a href="/insights" className="inline-block mt-3 text-xs text-[#E8637A] font-semibold hover:underline">
@@ -669,6 +662,17 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
+
+      {/* ── Setup progress hint — zero-data users only ─────────────────── */}
+      {!latestCycle && (
+        <div className="flex items-center gap-2 text-xs text-[#7a5a8a] px-1">
+          <span className="font-semibold text-[#E8637A]">Log period</span>
+          <span className="text-[#c4b5d4]">→</span>
+          <span>Log daily</span>
+          <span className="text-[#c4b5d4]">→</span>
+          <span>View insights</span>
+        </div>
+      )}
 
       {/* ── ROW 2: Recent check-ins + This cycle + Suggestions ─────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -727,7 +731,12 @@ export default function DashboardPage() {
         <Card className="md:col-span-1">
           <CardHeading>This cycle</CardHeading>
           {!latestCycle ? (
-            <p className="text-sm text-[#3d2855]">No cycle logged yet.</p>
+            <div className="flex flex-col items-center justify-center py-4 gap-2 text-center">
+              <CalendarDays className="w-7 h-7 text-[#c4b5d4]" strokeWidth={1.5} />
+              <p className="text-sm text-[#7a5a8a] leading-snug">
+                Your cycle stats will appear here after your first period log
+              </p>
+            </div>
           ) : (
             <>
               <div className="grid grid-cols-3 gap-4">
@@ -813,7 +822,7 @@ export default function DashboardPage() {
                 </ul>
               ) : (
                 <p className="text-sm text-[#3d2855] flex-1">
-                  Log your period to unlock personalised suggestions.
+                  Phase tips unlock once your cycle is tracked
                 </p>
               )}
 
