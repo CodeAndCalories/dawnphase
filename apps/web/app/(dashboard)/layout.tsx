@@ -1,5 +1,6 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import FeedbackWidget from "@/components/FeedbackWidget";
 
 export default function DashboardLayout({
   children,
@@ -14,6 +15,7 @@ export default function DashboardLayout({
       <main className="md:pl-60 pb-20 md:pb-0 min-h-screen">
         <div className="px-4 md:px-8 py-6">{children}</div>
       </main>
+      <FeedbackWidget />
     </div>
   );
 }
