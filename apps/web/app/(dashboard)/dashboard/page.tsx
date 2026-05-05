@@ -678,10 +678,14 @@ export default function DashboardPage() {
           <CardHeading>Recent check-ins</CardHeading>
           {recentLogs.length === 0 ? (
             <div className="text-center py-4 space-y-2">
-              <p className="text-sm text-[#3d2855]">No logs yet.</p>
+              <p className="text-sm font-semibold text-[#1E0F30]">Your cycle story starts with today</p>
+              <p className="text-sm text-[#3d2855] leading-relaxed">
+                Logging a quick daily check-in is how you begin noticing your unique rhythms — energy, mood, and all the little things that make your cycle yours.
+              </p>
               <a href="/log" className="inline-block text-sm text-[#E8637A] font-semibold hover:underline">
                 Start logging today →
               </a>
+              <p className="text-xs text-[#3d2855]/60">Takes less than 60 seconds</p>
             </div>
           ) : (
             <ul className="divide-y divide-gray-50">

@@ -268,20 +268,64 @@ export default function InsightsPage() {
   if (cycles.length < 2) {
     const { total } = logStreak(logs);
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center gap-6 max-w-sm mx-auto">
-        <span className="text-5xl" aria-hidden>📊</span>
-        <div>
-          <h2 className="text-xl font-semibold text-[#C94B6D]">
-            Log for 2+ cycles to see your patterns
+      <div className="max-w-2xl mx-auto space-y-8 py-6">
+
+        {/* Heading */}
+        <div className="text-center space-y-3 max-w-lg mx-auto">
+          <h2 className="text-2xl font-bold text-[#1E0F30]">
+            Your patterns are about to unfold
           </h2>
-          <p className="text-sm text-[#3d2855] mt-1">
-            Dawn Phase needs at least two period starts to calculate averages
-            and phase trends.
+          <p className="text-sm text-[#3d2855] leading-relaxed">
+            It only takes two full cycles for Dawn Phase to start revealing your unique story — when your energy peaks, how your mood shifts, and what your body loves in each phase.
           </p>
         </div>
 
-        {/* Progress */}
-        <div className="w-full space-y-2">
+        {/* Locked preview cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {([
+            {
+              title: "Your Cycle Length Pattern",
+              body:  "Your cycle is starting to form a pattern. Based on early data, your average length may fall between 27–30 days. With more logs, we'll confirm your rhythm and predict upcoming phases more accurately.",
+              lock:  "🔒 Unlock after 2 full cycles",
+            },
+            {
+              title: "Mood Shifts Across Your Cycle",
+              body:  "Your mood doesn't stay the same throughout your cycle. We're beginning to map when you feel your highest clarity and when dips tend to happen. Log a few more days to reveal your personal emotional rhythm.",
+              lock:  "🔒 Keep logging to reveal your mood patterns",
+            },
+            {
+              title: "Your Energy Peaks & Lows",
+              body:  "Your energy appears to rise and fall in a predictable way. Early signals suggest stronger energy in your follicular phase and slower periods later on. We'll pinpoint your exact peaks with more data.",
+              lock:  "🔒 Unlock precise energy timing with more entries",
+            },
+            {
+              title: "Recurring Symptom Patterns",
+              body:  "We're detecting patterns in how your body responds each cycle. Certain symptoms may consistently appear around the same phase each month. Log consistently to uncover your personal triggers and timing.",
+              lock:  "🔒 Reveal your symptom timeline after more logs",
+            },
+          ] as { title: string; body: string; lock: string }[]).map(card => (
+            <div key={card.title} className="relative bg-white border border-[#E6D7F3] rounded-2xl p-5 space-y-3 overflow-hidden">
+              <span className="absolute top-3 right-3 text-base opacity-30" aria-hidden>🔒</span>
+              <p className="text-sm font-semibold text-[#1E0F30] pr-7">{card.title}</p>
+              <p
+                className="text-sm text-[#3d2855] leading-relaxed"
+                style={{ filter: "blur(4px)", opacity: 0.5, userSelect: "none" }}
+                aria-hidden
+              >
+                {card.body}
+              </p>
+              <p className="text-xs text-[#c94f68] italic">{card.lock}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer nudge */}
+        <p className="text-center text-xs text-[#7a5a8a]">
+          You&apos;re building a clearer picture with every log. Just one more cycle unlocks your full insights.
+        </p>
+
+        {/* Progress — existing, unchanged */}
+        <div className="w-full max-w-sm mx-auto space-y-2">
           <div className="flex justify-between text-xs text-[#3d2855]">
             <span>{cycles.length} / 2 period starts logged</span>
             <span>{total} day{total !== 1 ? "s" : ""} logged</span>
@@ -294,7 +338,8 @@ export default function InsightsPage() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 w-full">
+        {/* CTA buttons — existing, unchanged */}
+        <div className="flex flex-col gap-3 w-full max-w-sm mx-auto">
           <a
             href="/cycles/new"
             className="w-full min-h-[44px] flex items-center justify-center bg-[#E8637A] text-white font-semibold text-sm rounded-2xl hover:bg-[#C94B6D] transition-colors"
@@ -305,9 +350,10 @@ export default function InsightsPage() {
             href="/log"
             className="w-full min-h-[44px] flex items-center justify-center border-2 border-[#E8637A] text-[#E8637A] font-semibold text-sm rounded-2xl hover:bg-[#E8637A] hover:text-white transition-all"
           >
-            Log today's symptoms
+            Log today&apos;s symptoms
           </a>
         </div>
+
       </div>
     );
   }

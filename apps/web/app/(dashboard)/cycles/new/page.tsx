@@ -139,7 +139,7 @@ export default function NewCyclePage() {
           When did your period start?
         </h1>
         <p className="text-sm text-[#3d2855] mt-1">
-          This helps Dawn Phase estimate your cycle day and phase.
+          This updates your cycle day, phase predictions, and upcoming phase timeline. Every period logged makes your insights more accurate.
         </p>
       </div>
 
@@ -210,7 +210,7 @@ export default function NewCyclePage() {
           disabled={submitting}
           className="w-full min-h-[52px] bg-[#E8637A] hover:bg-[#C94B6D] text-white font-semibold text-base rounded-2xl transition-colors disabled:opacity-60 shadow-sm"
         >
-          {submitting ? "Saving…" : "Log period start"}
+          {submitting ? "Saving…" : "Save & update my cycle"}
         </button>
       </form>
     </div>

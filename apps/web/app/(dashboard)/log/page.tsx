@@ -199,6 +199,9 @@ export default function LogPage() {
       <div>
         <h1 className="text-2xl font-bold text-[#C94B6D]">Daily log</h1>
         <p className="text-[#3d2855] text-sm mt-1">{displayDate(today)}</p>
+        <p className="text-sm text-[#7a5a8a] italic mt-3">
+          A gentle moment for you and your cycle. The more you track, the more patterns emerge — and the better Dawn Phase understands you.
+        </p>
       </div>
 
       {/* "Already logged" banner */}
