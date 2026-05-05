@@ -833,7 +833,7 @@ export default function DashboardPage() {
       {/* ── Cosmic view callout — only when birth_date not set ───────────── */}
       {!user.birth_date && !cosmicDismissed && (
         <div
-          className="relative text-center"
+          className="relative"
           style={{
             background: "linear-gradient(135deg, rgba(155,114,196,0.08), rgba(201,79,104,0.05))",
             borderRadius: "16px",
@@ -852,8 +852,9 @@ export default function DashboardPage() {
             ×
           </button>
 
+          <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
           {/* Zodiac wheel SVG */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center md:justify-start shrink-0">
             <svg
               width="180"
               height="180"
@@ -928,26 +929,29 @@ export default function DashboardPage() {
           </div>
 
           {/* Text content */}
-          <h3 className="text-xl font-bold text-[#1E0F30] mb-2">
-            Unlock your Cosmic View
-          </h3>
-          <p className="text-sm text-[#7a5a8a] leading-relaxed max-w-xs mx-auto mb-5">
-            Add your birth date to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
-          </p>
-          <a
-            href="/settings"
-            style={{
-              background: "linear-gradient(135deg, #9b72c4, #c94f68)",
-              color: "white",
-              padding: "8px 20px",
-              borderRadius: "100px",
-              fontSize: "14px",
-              fontWeight: "500",
-              display: "inline-block",
-            }}
-          >
-            Add birth date →
-          </a>
+          <div className="text-center md:text-left">
+            <h3 className="text-xl font-bold text-[#1E0F30] mb-2">
+              Unlock your Cosmic View
+            </h3>
+            <p className="text-sm text-[#7a5a8a] leading-relaxed max-w-xs mx-auto md:mx-0 mb-5">
+              Add your birth date to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
+            </p>
+            <a
+              href="/settings"
+              style={{
+                background: "linear-gradient(135deg, #9b72c4, #c94f68)",
+                color: "white",
+                padding: "8px 20px",
+                borderRadius: "100px",
+                fontSize: "14px",
+                fontWeight: "500",
+                display: "inline-block",
+              }}
+            >
+              Add birth date →
+            </a>
+          </div>
+          </div>
         </div>
       )}
 
