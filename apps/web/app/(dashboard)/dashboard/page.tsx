@@ -305,6 +305,11 @@ export default function DashboardPage() {
   const [showFeedback,    setShowFeedback]    = useState(false);
   const [feedbackSending, setFeedbackSending] = useState(false);
 
+  // Cosmic view callout dismissal
+  const [cosmicDismissed, setCosmicDismissed] = useState(() =>
+    typeof window !== "undefined" && localStorage.getItem("dp_cosmic_dismissed") === "1"
+  );
+
   // Set time-of-day greeting on mount (client-only)
   useEffect(() => { setGreeting(getGreeting()); }, []);
 
@@ -819,6 +824,37 @@ export default function DashboardPage() {
       {/* ── Phase wellness guide ──────────────────────────────────────────── */}
       {(phase !== null || user.mode === "perimenopause") && (
         <WellnessGuide phase={phase?.name} mode={user.mode} />
+      )}
+
+      {/* ── Cosmic view callout — only when birth_date not set ───────────── */}
+      {!user.birth_date && !cosmicDismissed && (
+        <div className="rounded-2xl bg-[#F3ECFA] border border-[#E6D7F3] p-5 flex items-start justify-between gap-4">
+          <div className="flex items-start gap-3 flex-1">
+            <span className="text-2xl leading-none mt-0.5" aria-hidden>🌙</span>
+            <div>
+              <p className="text-sm font-semibold text-[#1E0F30] mb-1">Unlock your Cosmic View</p>
+              <p className="text-sm text-[#3d2855] leading-relaxed">
+                Add your birth date in Settings to unlock your personalised phase + zodiac combination — 48 unique cosmic profiles.
+              </p>
+              <a
+                href="/settings"
+                className="inline-block mt-2 text-sm font-semibold text-[#C94B6D] hover:text-[#E8637A] transition-colors"
+              >
+                Add birth date →
+              </a>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              localStorage.setItem("dp_cosmic_dismissed", "1");
+              setCosmicDismissed(true);
+            }}
+            className="shrink-0 text-[#3d2855]/40 hover:text-[#3d2855] text-xl leading-none mt-0.5 transition-colors"
+            aria-label="Dismiss"
+          >
+            ×
+          </button>
+        </div>
       )}
 
       {/* ── Cosmic view ───────────────────────────────────────────────────── */}
