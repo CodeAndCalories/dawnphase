@@ -288,17 +288,17 @@ const WHY_SWITCH = [
   {
     icon: "🔒",
     headline: "Your period data belongs to you",
-    body: "Other apps have faced regulatory scrutiny for sharing health data with advertisers. Dawn Phase is subscription-only — your data funds the product, not ads.",
+    body: "Flo has faced scrutiny for data sharing. Clue shares anonymised data with research partners. Dawn Phase is subscription-only — your data is never sold, shared, or used for advertising. Ever.",
   },
   {
     icon: "📊",
     headline: "Built for real cycles, not just 28 days",
-    body: "Most trackers break with PCOS, perimenopause, or irregular cycles. Dawn Phase supports 21–90 day cycles and never tells you your data is wrong.",
+    body: "Most apps assume a textbook cycle and produce wrong predictions when yours doesn't match. Dawn Phase supports 21–90 day cycles and was built specifically for PCOS and perimenopause users.",
   },
   {
     icon: "📋",
     headline: "Bring data to your next appointment",
-    body: "Generate a PDF report of your last 3 months in one tap. Doctors say it transforms the quality of the conversation.",
+    body: "Period Tracker, Flo, and Clue have no doctor export. Dawn Phase generates a PDF report you can actually bring to your GP or specialist — with your full symptom history across cycles.",
   },
 ];
 

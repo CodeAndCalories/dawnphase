@@ -71,6 +71,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/mittelschmerz-ovulation-pain",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/ovulation-mucus",                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/low-energy-during-period",          lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/flo-vs-clue-vs-period-tracker",      lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: "https://www.dawnphase.com/blog/flo-app-alternative",               lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: "https://www.dawnphase.com/blog/clue-app-alternative",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: "https://www.dawnphase.com/blog/best-period-tracker-perimenopause", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
