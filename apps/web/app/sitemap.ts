@@ -78,6 +78,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/blog/period-late-not-pregnant",          lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/pcos-no-period",                    lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.dawnphase.com/blog/ovulation-pain-every-month",        lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/spotting-before-period",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/breast-tenderness-before-period",   lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/period-cramps-but-no-period",       lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/cycle-syncing-for-pcos",            lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: "https://www.dawnphase.com/blog/pmdd-vs-pms-symptoms",              lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Landing pages (high-intent search)
     { url: "https://www.dawnphase.com/lp/privacy-period-tracker", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
     { url: "https://www.dawnphase.com/lp/pcos-period-tracker",    lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
