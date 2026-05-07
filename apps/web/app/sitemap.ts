@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { symptoms } from "@/data/symptoms";
 import { conditions } from "@/data/conditions";
+import { cyclePhases } from "@/data/cyclePhases";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const symptomUrls: MetadataRoute.Sitemap = symptoms.map((s) => ({
@@ -17,6 +18,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const cyclePhaseUrls: MetadataRoute.Sitemap = cyclePhases.map((p) => ({
+    url: `https://www.dawnphase.com/cycle-phase/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   return [
     { url: "https://www.dawnphase.com",                                       lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
     // Tools
@@ -28,6 +36,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "https://www.dawnphase.com/tools/pms-tracker",                     lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     // Conditions
     ...conditionUrls,
+    // Cycle phases
+    ...cyclePhaseUrls,
     // Symptoms
     { url: "https://www.dawnphase.com/symptoms",                              lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
     ...symptomUrls,

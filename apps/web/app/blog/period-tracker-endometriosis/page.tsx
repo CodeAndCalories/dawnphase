@@ -98,7 +98,7 @@ export default function Post() {
             {[
               {
                 label: "Detailed symptom logging",
-                note: "You need to be able to log pain location, pain intensity, type of pain (cramping, stabbing, aching), bloating, fatigue, digestive symptoms, and more — not just "mood" and "flow."",
+                note: 'You need to be able to log pain location, pain intensity, type of pain (cramping, stabbing, aching), bloating, fatigue, digestive symptoms, and more — not just "mood" and "flow."',
               },
               {
                 label: "Daily logging — not just period dates",
@@ -110,7 +110,7 @@ export default function Post() {
               },
               {
                 label: "No assumptions about cycle length",
-                note: "Apps that assume 28-day cycles and flag anything outside that as "irregular" are useless for endo. A good tracker accepts your cycle as it is.",
+                note: 'Apps that assume 28-day cycles and flag anything outside that as "irregular" are useless for endo. A good tracker accepts your cycle as it is.',
               },
               {
                 label: "A record you can share with your doctor",
