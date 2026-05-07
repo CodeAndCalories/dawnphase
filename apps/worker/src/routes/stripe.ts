@@ -34,10 +34,11 @@ stripe.post("/checkout", async (c) => {
   }
 
   // Read optional plan selection from request body
-  const reqBody = await c.req.json().catch(() => ({})) as { plan?: string };
-  const priceId = reqBody.plan === "annual" ? PRICE_ID_ANNUAL : PRICE_ID_MONTHLY;
+  const reqBody = await c.req.json().catch(() => ({})) as { plan?: string; no_trial?: boolean };
+  const priceId  = reqBody.plan === "annual" ? PRICE_ID_ANNUAL : PRICE_ID_MONTHLY;
+  const noTrial  = reqBody.no_trial === true;
 
-  console.log(`[stripe/checkout] userId=${userId} email=${userRecord.email} plan=${reqBody.plan ?? "monthly"}`);
+  console.log(`[stripe/checkout] userId=${userId} email=${userRecord.email} plan=${reqBody.plan ?? "monthly"} no_trial=${noTrial}`);
 
   let res: Response;
   try {
@@ -47,21 +48,24 @@ stripe.post("/checkout", async (c) => {
         Authorization: `Bearer ${c.env.STRIPE_SECRET_KEY}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: new URLSearchParams({
-        mode: "subscription",
-        "line_items[0][price]": priceId,
-        "line_items[0][quantity]": "1",
-        // 7-day trial — card is required but not charged until day 8
-        "subscription_data[trial_period_days]": String(TRIAL_DAYS),
-        success_url: `${appUrl}/dashboard?checkout=success`,
-        cancel_url:  `${appUrl}/`,
-        // Three ways for the webhook to find the user — metadata, reference
-        // id, and email — so a stale or missing field never silently drops updates.
-        "metadata[user_id]":   userId,
-        client_reference_id:   userId,
-        customer_email:        userRecord.email,
-        allow_promotion_codes: "true",
-      }),
+      body: (() => {
+        const params = new URLSearchParams({
+          mode: "subscription",
+          "line_items[0][price]": priceId,
+          "line_items[0][quantity]": "1",
+          success_url: `${appUrl}/dashboard?checkout=success`,
+          cancel_url:  noTrial ? `${appUrl}/upgrade` : `${appUrl}/`,
+          "metadata[user_id]":   userId,
+          client_reference_id:   userId,
+          customer_email:        userRecord.email,
+          allow_promotion_codes: "true",
+        });
+        // Only add trial when the user hasn't already consumed their free trial
+        if (!noTrial) {
+          params.set("subscription_data[trial_period_days]", String(TRIAL_DAYS));
+        }
+        return params;
+      })(),
     });
   } catch (fetchErr) {
     console.error("[stripe/checkout] fetch threw:", fetchErr);

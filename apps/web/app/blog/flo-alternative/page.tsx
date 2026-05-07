@@ -7,13 +7,13 @@ import RelatedArticles from "@/components/blog/RelatedArticles";
 import { ArticleSchema } from "@/components/SchemaMarkup";
 
 export const metadata: Metadata = {
-  title: "Best Flo App Alternatives in 2026 — Private & Accurate",
+  title: "Flo App Alternative? Here's What Women Are Switching To (2026)",
   description:
-    "Looking for a Flo alternative? We compare Dawn Phase, Clue, and Natural Cycles on privacy, price, and perimenopause support.",
+    "Flo tracks your cycle but sells your data and pushes premium hard. See what privacy-first women are using instead — with a free trial, no card needed.",
   openGraph: {
-    title: "Best Flo App Alternatives in 2026 — Private & Accurate",
+    title: "Flo App Alternative? Here's What Women Are Switching To (2026)",
     description:
-      "Looking for a Flo alternative? We compare Dawn Phase, Clue, and Natural Cycles on privacy, price, and perimenopause support.",
+      "Flo tracks your cycle but sells your data and pushes premium hard. See what privacy-first women are using instead — with a free trial, no card needed.",
     images: [{
       url: "https://www.dawnphase.com/og?title=Best%20Flo%20App%20Alternatives%20in%202026%20%E2%80%94%20Private%20%26%20Accurate&subtitle=Dawn%20Phase%20%E2%80%94%20Privacy-first%20cycle%20tracker",
       width: 1200,

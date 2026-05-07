@@ -43,20 +43,17 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   const id = newId();
   const passwordHash = await hashPassword(password);
 
-  // subscription_status starts as 'incomplete' until Stripe checkout
-  // completes. The webhook (checkout.session.completed) flips it to
-  // 'trialing' and sets trial_ends_at at that point.
   await dbRun(
     c.env.DB,
     `INSERT INTO users
-       (id, email, password_hash, mode, subscription_status, created_at)
+       (id, email, password_hash, mode, subscription_status, trial_ends_at, created_at)
      VALUES
-       (?, ?, ?, 'cycle', 'incomplete', datetime('now'))`,
+       (?, ?, ?, 'cycle', 'trialing', datetime('now', '+7 days'), datetime('now'))`,
     [id, email, passwordHash]
   );
 
   const token = await signJWT(
-    { sub: id, email, status: "incomplete" },
+    { sub: id, email, status: "trialing" },
     c.env.JWT_SECRET
   );
 
@@ -93,7 +90,7 @@ auth.post("/signup", zValidator("json", signupSchema), async (c) => {
   }).catch(() => {});
 
   return c.json(
-    { token, user: { id, email, name, mode: "cycle", status: "incomplete" } },
+    { token, user: { id, email, name, mode: "cycle", status: "trialing" } },
     201
   );
 });
@@ -145,7 +142,7 @@ auth.get("/me", async (c) => {
 
   const user = await dbFirst<User>(
     c.env.DB,
-    `SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, created_at
+    `SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, stripe_customer_id, created_at
      FROM users WHERE id = ?`,
     [payload.sub]
   );
@@ -182,7 +179,7 @@ auth.patch("/me", zValidator("json", patchMeSchema), async (c) => {
 
   const user = await dbFirst<User>(
     c.env.DB,
-    "SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, created_at FROM users WHERE id = ?",
+    "SELECT id, email, mode, birth_date, subscription_status, trial_ends_at, stripe_customer_id, created_at FROM users WHERE id = ?",
     [payload.sub]
   );
   if (!user) return c.json({ message: "User not found" }, 404);

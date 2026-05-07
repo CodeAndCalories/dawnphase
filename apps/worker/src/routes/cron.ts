@@ -539,6 +539,48 @@ export async function processPrePeriodCheckIns(
   return { sent, skipped, errors };
 }
 
+// ── Expired free-trial audit (daily) ─────────────────────────────────────────
+// Finds free-trial users whose trial_ends_at has passed but whose
+// subscription_status is still 'trialing' with no stripe_customer_id.
+// Logs each one so ops can monitor for anomalies; does not mutate state
+// (the dashboard hook enforces the wall client-side).
+
+interface ExpiredTrialRow {
+  id: string;
+  email: string;
+  trial_ends_at: string;
+  created_at: string;
+}
+
+export async function processExpiredTrials(
+  env: Env
+): Promise<{ flagged: number }> {
+  const rows = await dbAll<ExpiredTrialRow>(
+    env.DB,
+    `SELECT id, email, trial_ends_at, created_at
+     FROM users
+     WHERE subscription_status = 'trialing'
+       AND (stripe_customer_id IS NULL OR stripe_customer_id = '')
+       AND (trial_ends_at IS NULL OR trial_ends_at < datetime('now'))`,
+    []
+  );
+
+  if (rows.length === 0) {
+    console.log("[cron/expired-trials] no expired free trials found");
+    return { flagged: 0 };
+  }
+
+  for (const row of rows) {
+    console.warn(
+      `[cron/expired-trials] EXPIRED_TRIAL user_id=${row.id} email=${row.email}` +
+      ` trial_ends_at=${row.trial_ends_at ?? "null"} created_at=${row.created_at}`
+    );
+  }
+
+  console.log(`[cron/expired-trials] flagged ${rows.length} expired free-trial accounts`);
+  return { flagged: rows.length };
+}
+
 // ── HTTP routes ────────────────────────────────────────────────────────────────
 
 const cron = new Hono<{ Bindings: Env }>();
@@ -560,6 +602,11 @@ cron.get("/weekly", async (c) => {
 
 cron.get("/pre-period", async (c) => {
   const result = await processPrePeriodCheckIns(c.env);
+  return c.json(result);
+});
+
+cron.get("/expired-trials", async (c) => {
+  const result = await processExpiredTrials(c.env);
   return c.json(result);
 });
 

@@ -23,13 +23,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const symptom = symptoms.find((s) => s.slug === slug);
   if (!symptom) return {};
-  const title = `${symptom.name} — Causes, Tracking & Relief | Dawn Phase`;
+  const title = symptom.metaTitle ?? `${symptom.name} — Causes, Tracking & Relief | Dawn Phase`;
+  const description = symptom.metaDescription ?? symptom.description;
   return {
     title,
-    description: symptom.description,
+    description,
     openGraph: {
       title,
-      description: symptom.description,
+      description,
       images: [{
         url: `https://www.dawnphase.com/og?title=${encodeURIComponent(symptom.name)}&subtitle=${encodeURIComponent("Dawn Phase — Symptom guide")}`,
         width: 1200,

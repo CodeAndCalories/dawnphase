@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { login, signup, api } from "@/lib/api";
+import { login, signup } from "@/lib/api";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -111,7 +111,6 @@ function LoginForm() {
 function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState<"account" | "billing">("account");
 
   const { register, handleSubmit, formState } = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
@@ -122,7 +121,6 @@ function SignupForm() {
     setError(null);
     setLoading(true);
     try {
-      // Step 1 — create account; JWT stored in localStorage by signup()
       const refCode =
         typeof window !== "undefined"
           ? (localStorage.getItem("dp_ref_code") ?? undefined)
@@ -131,44 +129,11 @@ function SignupForm() {
       if (refCode && typeof window !== "undefined") {
         localStorage.removeItem("dp_ref_code");
       }
-
-      // Step 2 — redirect to Stripe checkout (7-day trial)
-      setStep("billing");
-      const plan =
-        typeof window !== "undefined"
-          ? (localStorage.getItem("dp_plan") ?? "monthly")
-          : "monthly";
-      const { url } = await api.post<{ url: string }>("/stripe/checkout", { plan });
-      window.location.href = url;
+      window.location.href = "/dashboard?checkout=success";
     } catch (err) {
-      // If we're already past account creation (step === "billing") the
-      // account exists but Stripe failed — send to dashboard instead of
-      // leaving the user stranded.
-      if (step === "billing") {
-        window.location.href = "/dashboard";
-        return;
-      }
       setError(err instanceof Error ? err.message : "Something went wrong");
       setLoading(false);
     }
-  }
-
-  // Full-page overlay while redirecting to Stripe — user should never
-  // see the form again at this point.
-  if (step === "billing" && loading) {
-    return (
-      <div className="bg-white rounded-2xl shadow-sm border border-[rgba(130,80,170,0.15)] p-12 flex flex-col items-center gap-5 text-center">
-        <div className="w-10 h-10 border-2 border-[#c94f68]/30 border-t-[#c94f68] rounded-full animate-spin" />
-        <div>
-          <p className="font-semibold text-[#5a3575] text-lg">
-            Setting up your trial…
-          </p>
-          <p className="text-sm text-[#3d2855] mt-1">
-            Taking you to secure checkout
-          </p>
-        </div>
-      </div>
-    );
   }
 
   return (
@@ -242,7 +207,7 @@ function SignupForm() {
       </button>
 
       <p className="text-center text-xs text-[#3d2855]/70">
-        No charge for 7 days. Card required to start trial.
+        Free for 7 days. No card required to start.
       </p>
     </form>
   );

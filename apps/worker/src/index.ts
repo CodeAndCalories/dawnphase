@@ -11,7 +11,7 @@ import insightsRoutes from "./routes/insights";
 import exportRoutes from "./routes/export";
 import stripeRoutes from "./routes/stripe";
 import remindersRoutes from "./routes/reminders";
-import cronRoutes, { processReminders, processMonthlyReports, processWeeklyDigests, processPrePeriodCheckIns } from "./routes/cron";
+import cronRoutes, { processReminders, processMonthlyReports, processWeeklyDigests, processPrePeriodCheckIns, processExpiredTrials } from "./routes/cron";
 import leadsRoutes from "./routes/leads";
 import feedbackRoutes from "./routes/feedback";
 import adminRoutes from "./routes/admin";
@@ -146,11 +146,12 @@ export default {
       // Every Monday at 08:00 UTC → weekly cycle digest
       ctx.waitUntil(processWeeklyDigests(env));
     } else {
-      // Daily 09:00 UTC → period reminders + pre-period check-ins
+      // Daily 09:00 UTC → period reminders + pre-period check-ins + expired trial audit
       ctx.waitUntil(
         Promise.all([
           processReminders(env),
           processPrePeriodCheckIns(env),
+          processExpiredTrials(env),
         ])
       );
     }

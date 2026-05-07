@@ -18,6 +18,7 @@ export interface User {
     | "canceled"
     | "incomplete";
   trial_ends_at: string | null;
+  stripe_customer_id: string | null;
   created_at: string;
 }
 
@@ -29,32 +30,37 @@ export const PAID_STATUSES = new Set<User["subscription_status"]>([
   "past_due",
 ]);
 
+// Returns true when a free-trial user's trial window has closed.
+// Stripe-managed trialing users (stripe_customer_id set) are never expired here
+// — their subscription state is governed by Stripe webhooks.
+function isTrialExpired(user: User): boolean {
+  if (user.subscription_status !== "trialing") return false;
+  if (user.stripe_customer_id) return false;
+  return !user.trial_ends_at || new Date(user.trial_ends_at) <= new Date();
+}
+
 // ── Hook ──────────────────────────────────────────────────────────────────────
 
 /**
  * Must be called at the top of every protected dashboard page.
  *
  * Normal flow:
- *   - No JWT          → /login
- *   - "incomplete"    → POST /stripe/checkout → redirect to Stripe
- *   - "canceled"      → /settings?resubscribe=1
- *   - paid status     → resolves { user }
+ *   - No JWT                                    → /login
+ *   - "canceled"                                → /settings?resubscribe=1
+ *   - "trialing" + no stripe_customer_id
+ *       + trial_ends_at null or in the past     → /upgrade
+ *   - paid status with valid trial              → resolves { user }
  *
  * Checkout-return flow (?checkout=success in URL):
- *   - Stripe fires the webhook asynchronously; the DB may still show
- *     "incomplete" for a few seconds after the user lands back here.
- *   - We poll /auth/me every 2 s for up to 10 s waiting for the webhook
- *     to flip the status.  statusMessage is "Activating your account…"
- *     during this time.
- *   - If the status updates in time → clean URL, grant access normally.
- *   - If 10 s elapse with no update → grant access anyway with
- *     activating=true so the page can show a soft banner instead of
- *     looping back to Stripe.
+ *   - Stripe fires the webhook asynchronously after the upgrade flow.
+ *   - We poll /auth/me every 2 s for up to 10 s waiting for the webhook.
+ *   - If status upgrades in time → clean URL, grant access normally.
+ *   - If 10 s elapse → grant access with activating=true for a soft banner.
  *
  * Returns:
  *   user          – resolved User, or null while loading
  *   loading       – true while any async work is in progress
- *   redirecting   – specifically true while POSTing to /stripe/checkout
+ *   redirecting   – unused (kept for API compatibility)
  *   activating    – true when let in after exhausted polling (webhook lag)
  *   statusMessage – human-readable string for the loading spinner, or null
  */
@@ -92,72 +98,57 @@ export function useRequireSubscription(): {
         const { user: me } = await api.get<{ user: User }>("/auth/me");
         if (!mounted) return;
 
-        // ── Already paid → grant access ───────────────────────────────────────
-        if (PAID_STATUSES.has(me.subscription_status)) {
-          setUser(me);
-          setLoading(false);
-          return;
-        }
-
         // ── Canceled → settings ───────────────────────────────────────────────
         if (me.subscription_status === "canceled") {
           router.push("/settings?resubscribe=1");
           return;
         }
 
-        // ── Incomplete status ─────────────────────────────────────────────────
-        if (checkoutReturn) {
-          // Coming back from Stripe — the webhook may not have fired yet.
-          // Poll /auth/me every 2 s for up to 10 s.
-          setStatusMessage("Activating your account…");
+        const trialExpired = isTrialExpired(me);
 
-          for (let attempt = 0; attempt < 5; attempt++) {
-            await new Promise<void>((r) => setTimeout(r, 2000));
-            if (!mounted) return;
-
-            try {
-              const { user: polled } = await api.get<{ user: User }>("/auth/me");
-              if (!mounted) return;
-
-              if (PAID_STATUSES.has(polled.subscription_status)) {
-                // Webhook landed — clean up URL and grant access
-                window.history.replaceState(null, "", "/dashboard");
-                setUser(polled);
-                setLoading(false);
-                setStatusMessage(null);
-                return;
-              }
-            } catch {
-              // Transient error — keep trying
-            }
-          }
-
-          // 10 s elapsed, webhook still hasn't fired. Let them in with a banner
-          // rather than looping them back to Stripe.
-          if (!mounted) return;
-          window.history.replaceState(null, "", "/dashboard");
-          setActivating(true);
+        // ── Valid paid status → grant access ──────────────────────────────────
+        if (PAID_STATUSES.has(me.subscription_status) && !trialExpired) {
           setUser(me);
           setLoading(false);
-          setStatusMessage(null);
           return;
         }
 
-        // ── Incomplete with no checkout param → send to Stripe ───────────────
-        setRedirecting(true);
-        setStatusMessage("Setting up your account…");
-        try {
-          const plan =
-            typeof window !== "undefined"
-              ? (localStorage.getItem("dp_plan") ?? "monthly")
-              : "monthly";
-          const { url } = await api.post<{ url: string }>("/stripe/checkout", { plan });
-          if (!mounted) return;
-          window.location.href = url;
-        } catch {
-          if (!mounted) return;
-          router.push("/signup");
+        // ── Expired / invalid → upgrade wall (unless returning from Stripe) ──
+        if (!checkoutReturn) {
+          router.push("/upgrade");
+          return;
         }
+
+        // ── checkoutReturn: poll for webhook to flip status ───────────────────
+        setStatusMessage("Activating your account…");
+
+        for (let attempt = 0; attempt < 5; attempt++) {
+          await new Promise<void>((r) => setTimeout(r, 2000));
+          if (!mounted) return;
+
+          try {
+            const { user: polled } = await api.get<{ user: User }>("/auth/me");
+            if (!mounted) return;
+
+            if (PAID_STATUSES.has(polled.subscription_status) && !isTrialExpired(polled)) {
+              window.history.replaceState(null, "", "/dashboard");
+              setUser(polled);
+              setLoading(false);
+              setStatusMessage(null);
+              return;
+            }
+          } catch {
+            // Transient error — keep trying
+          }
+        }
+
+        // 10 s elapsed — let them in with a banner rather than looping
+        if (!mounted) return;
+        window.history.replaceState(null, "", "/dashboard");
+        setActivating(true);
+        setUser(me);
+        setLoading(false);
+        setStatusMessage(null);
       } catch {
         if (!mounted) return;
         router.push("/login");
